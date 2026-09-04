@@ -1,0 +1,201 @@
+{% extends 'base.html' %}
+
+{% block title %}Saved Opportunities Wishlist — Rural Opportunity Connect{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 space-y-8">
+    <!-- Breadcrumb -->
+    <nav class="roc-breadcrumb" aria-label="Breadcrumb">
+        <a href="{% url 'landing_page' %}">Home</a>
+        <span class="roc-breadcrumb-separator"><i class="fas fa-chevron-right text-[10px]"></i></span>
+        <a href="{% url 'dashboard' %}">Dashboard</a>
+        <span class="roc-breadcrumb-separator"><i class="fas fa-chevron-right text-[10px]"></i></span>
+        <span class="text-slate-800 font-bold">Saved Wishlist</span>
+    </nav>
+
+    <!-- Executive Branded Header Banner -->
+    <div class="roc-card p-8 md:p-10 bg-gradient-to-r from-slate-950 via-[#071526] to-[#0c2340] text-white rounded-3xl shadow-xl mb-8 relative overflow-hidden border border-cyan-500/30" data-anim="fade-up">
+        <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-rose-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div class="space-y-3">
+                <div class="hero-badge-pulse inline-flex items-center gap-2 bg-cyan-500/20 text-cyan-300 border border-cyan-400/30 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider backdrop-blur-xs">
+                    <i class="fas fa-heart text-rose-400"></i> Personalized Saved Wishlist
+                </div>
+                <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight kinetic-headline">
+                    Saved Opportunities <span class="shiny-text">Wishlist</span>
+                </h1>
+                <p class="text-xs sm:text-sm text-slate-300 max-w-2xl font-normal leading-relaxed">
+                    Review and fast-track your bookmarked jobs, scholarships, welfare schemes, and skill programs before deadlines arrive.
+                </p>
+            </div>
+            <div class="flex items-center gap-3 shrink-0">
+                <div class="bg-white/10 backdrop-blur-md px-6 py-3.5 rounded-2xl border border-cyan-500/30 text-center shadow-lg hover-lift-3d card-specular-glare">
+                    <span class="text-2xl sm:text-3xl font-black text-cyan-300 block counter-value" data-counter="{{ total_count }}">{{ total_count }}</span>
+                    <span class="text-[10px] text-cyan-100 uppercase tracking-wider font-bold">Saved Items</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sector Filter Tabs -->
+    <div class="flex items-center gap-2 overflow-x-auto pb-2 border-b border-slate-200">
+        <a href="{% url 'saved_opportunities' %}?type=all"
+           class="px-4 py-2 rounded-xl text-xs font-bold transition shrink-0
+           {% if active_type == 'all' %}bg-brand-800 text-white shadow-xs{% else %}bg-white text-slate-600 hover:bg-slate-100 border border-slate-200{% endif %}">
+            All Items ({{ total_count }})
+        </a>
+        <a href="{% url 'saved_opportunities' %}?type=job"
+           class="px-4 py-2 rounded-xl text-xs font-bold transition shrink-0
+           {% if active_type == 'job' %}bg-blue-600 text-white shadow-xs{% else %}bg-white text-slate-600 hover:bg-slate-100 border border-slate-200{% endif %}">
+            💼 Jobs
+        </a>
+        <a href="{% url 'saved_opportunities' %}?type=scholarship"
+           class="px-4 py-2 rounded-xl text-xs font-bold transition shrink-0
+           {% if active_type == 'scholarship' %}bg-purple-600 text-white shadow-xs{% else %}bg-white text-slate-600 hover:bg-slate-100 border border-slate-200{% endif %}">
+            🎓 Scholarships
+        </a>
+        <a href="{% url 'saved_opportunities' %}?type=scheme"
+           class="px-4 py-2 rounded-xl text-xs font-bold transition shrink-0
+           {% if active_type == 'scheme' %}bg-emerald-600 text-white shadow-xs{% else %}bg-white text-slate-600 hover:bg-slate-100 border border-slate-200{% endif %}">
+            🏛️ Govt Schemes
+        </a>
+        <a href="{% url 'saved_opportunities' %}?type=skill"
+           class="px-4 py-2 rounded-xl text-xs font-bold transition shrink-0
+           {% if active_type == 'skill' %}bg-amber-600 text-white shadow-xs{% else %}bg-white text-slate-600 hover:bg-slate-100 border border-slate-200{% endif %}">
+            💻 Skill Courses
+        </a>
+        <a href="{% url 'saved_opportunities' %}?type=business"
+           class="px-4 py-2 rounded-xl text-xs font-bold transition shrink-0
+           {% if active_type == 'business' %}bg-rose-600 text-white shadow-xs{% else %}bg-white text-slate-600 hover:bg-slate-100 border border-slate-200{% endif %}">
+            🚀 Business Ideas
+        </a>
+    </div>
+
+    <!-- Saved Opportunities List -->
+    <div class="space-y-4 anim-grid-stagger" data-anim="fade-up">
+        {% if saved_items %}
+            {% for item in saved_items %}
+            {% with item_key=item.type|add:"_"|add:item.id|stringformat:"s" %}
+            <div class="roc-card p-6 bg-white border border-slate-200 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4 hover-lift-3d card-specular-glare transition-all">
+                <div class="flex-1 space-y-1">
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="roc-badge
+                            {% if item.type == 'job' %}roc-badge-blue
+                            {% elif item.type == 'scholarship' %}roc-badge-purple
+                            {% elif item.type == 'scheme' %}roc-badge-emerald
+                            {% elif item.type == 'skill' %}roc-badge-amber
+                            {% else %}roc-badge-rose{% endif %} text-[10px]">
+                            {{ item.type|capfirst }}
+                        </span>
+                        <span class="text-[11px] text-slate-400">
+                            <i class="fas fa-bookmark text-rose-400 mr-1"></i> Saved {{ item.saved_at|timesince }} ago
+                        </span>
+                    </div>
+
+                    {% if item.type == 'job' %}
+                        <h2 class="text-base sm:text-lg font-bold text-slate-900 hover:text-brand-800 transition">
+                            <a href="{% url 'job_detail' item.obj.id %}">{{ item.obj.title }}</a>
+                        </h2>
+                        <p class="text-xs text-slate-500 font-semibold">{{ item.obj.organization }} • {{ item.obj.location }} • ₹{{ item.obj.salary_min }}-₹{{ item.obj.salary_max }}</p>
+                    {% elif item.type == 'scholarship' %}
+                        <h2 class="text-base sm:text-lg font-bold text-slate-900 hover:text-brand-800 transition">
+                            <a href="{% url 'scholarship_detail' item.obj.id %}">{{ item.obj.name }}</a>
+                        </h2>
+                        <p class="text-xs text-slate-500 font-semibold">{{ item.obj.provider }} • {{ item.obj.amount }}</p>
+                    {% elif item.type == 'scheme' %}
+                        <h2 class="text-base sm:text-lg font-bold text-slate-900 hover:text-brand-800 transition">
+                            <a href="{% url 'scheme_detail' item.obj.id %}">{{ item.obj.name }}</a>
+                        </h2>
+                        <p class="text-xs text-slate-500 font-semibold">{{ item.obj.department }} • {{ item.obj.benefits }}</p>
+                    {% elif item.type == 'skill' %}
+                        <h2 class="text-base sm:text-lg font-bold text-slate-900 hover:text-brand-800 transition">
+                            <a href="{% url 'skill_detail' item.obj.id %}">{{ item.obj.name }}</a>
+                        </h2>
+                        <p class="text-xs text-slate-500 font-semibold">{{ item.obj.provider }} • {{ item.obj.duration }}</p>
+                    {% elif item.type == 'business' %}
+                        <h2 class="text-base sm:text-lg font-bold text-slate-900 hover:text-brand-800 transition">
+                            <a href="{% url 'business_detail' item.obj.id %}">{{ item.obj.name }}</a>
+                        </h2>
+                        <p class="text-xs text-slate-500 font-semibold">{{ item.obj.expected_income }} • {{ item.obj.investment_level|capfirst }} Capital</p>
+                    {% endif %}
+                </div>
+
+                <div class="flex items-center gap-2">
+                    {% if item_key in user_applied_keys %}
+                        <button class="btn-applied text-xs py-2 px-4" disabled>
+                            <i class="fas fa-check-circle text-emerald-600"></i> Applied ✓
+                        </button>
+                    {% else %}
+                        {% if item.type == 'job' %}
+                            <button onclick="quickApply('job', '{{ item.obj.id }}', '{{ item.obj.title|escapejs }}', '{{ item.obj.organization|escapejs }}', this)"
+                                    class="btn-primary text-xs py-2 px-4 btn-sheen spring-press">
+                                <i class="fas fa-paper-plane"></i> Quick Apply
+                            </button>
+                        {% elif item.type == 'scholarship' %}
+                            <button onclick="quickApply('scholarship', '{{ item.obj.id }}', '{{ item.obj.name|escapejs }}', '{{ item.obj.provider|escapejs }}', this)"
+                                    class="btn-primary text-xs py-2 px-4 btn-sheen spring-press">
+                                <i class="fas fa-paper-plane"></i> Quick Apply
+                            </button>
+                        {% elif item.type == 'scheme' %}
+                            <button onclick="quickApply('scheme', '{{ item.obj.id }}', '{{ item.obj.name|escapejs }}', '{{ item.obj.department|escapejs }}', this)"
+                                    class="btn-primary text-xs py-2 px-4 btn-sheen spring-press">
+                                <i class="fas fa-paper-plane"></i> Enroll
+                            </button>
+                        {% elif item.type == 'skill' %}
+                            <button onclick="quickApply('skill', '{{ item.obj.id }}', '{{ item.obj.name|escapejs }}', '{{ item.obj.provider|escapejs }}', this)"
+                                    class="btn-primary text-xs py-2 px-4 btn-sheen spring-press">
+                                <i class="fas fa-paper-plane"></i> Enroll
+                            </button>
+                        {% elif item.type == 'business' %}
+                            <button onclick="quickApply('business', '{{ item.obj.id }}', '{{ item.obj.name|escapejs }}', 'Micro-Enterprise Track', this)"
+                                    class="btn-primary text-xs py-2 px-4 btn-sheen spring-press">
+                                <i class="fas fa-paper-plane"></i> Track Idea
+                            </button>
+                        {% endif %}
+                    {% endif %}
+
+                    {% if item.type == 'job' %}
+                        <a href="{% url 'job_detail' item.obj.id %}" class="btn-secondary text-xs py-2 px-3 spring-press">View</a>
+                    {% elif item.type == 'scholarship' %}
+                        <a href="{% url 'scholarship_detail' item.obj.id %}" class="btn-secondary text-xs py-2 px-3 spring-press">View</a>
+                    {% elif item.type == 'scheme' %}
+                        <a href="{% url 'scheme_detail' item.obj.id %}" class="btn-secondary text-xs py-2 px-3 spring-press">View</a>
+                    {% elif item.type == 'skill' %}
+                        <a href="{% url 'skill_detail' item.obj.id %}" class="btn-secondary text-xs py-2 px-3 spring-press">View</a>
+                    {% elif item.type == 'business' %}
+                        <a href="{% url 'business_detail' item.obj.id %}" class="btn-secondary text-xs py-2 px-3 spring-press">View</a>
+                    {% endif %}
+
+                    <!-- Remove Bookmark Button with Smooth Fade Out Animation -->
+                    <button onclick="toggleSaveOpportunity('{{ item.type }}', '{{ item.id }}', this); const card = this.closest('.roc-card'); card.style.transition='all 0.35s ease'; card.style.opacity='0'; card.style.transform='scale(0.92) translateY(-10px)'; setTimeout(() => card.remove(), 350);"
+                            class="w-8 h-8 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 flex items-center justify-center text-xs transition spring-press"
+                            title="Remove from saved wishlist">
+                        <i class="fas fa-trash-can"></i>
+                    </button>
+                </div>
+            </div>
+            {% endwith %}
+            {% endfor %}
+        {% else %}
+            <!-- Empty State -->
+            <div class="roc-card p-12 text-center border border-dashed border-slate-300 rounded-3xl bg-white">
+                <div class="w-16 h-16 bg-rose-50 text-rose-500 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <h2 class="text-xl font-bold text-slate-800 mb-2">Your Saved Wishlist is Empty</h2>
+                <p class="text-xs text-slate-500 max-w-sm mx-auto mb-6">
+                    Click the heart icon on any job, scholarship, government scheme, or training course to bookmark it here for later.
+                </p>
+                <div class="flex flex-wrap justify-center gap-3">
+                    <a href="{% url 'jobs_list' %}" class="btn-primary text-xs py-2.5 px-5">
+                        <i class="fas fa-briefcase"></i> Explore Jobs
+                    </a>
+                    <a href="{% url 'scholarships_list' %}" class="btn-secondary text-xs py-2.5 px-5">
+                        <i class="fas fa-graduation-cap"></i> Explore Scholarships
+                    </a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

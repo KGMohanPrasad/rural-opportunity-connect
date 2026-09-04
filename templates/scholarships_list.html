@@ -1,0 +1,229 @@
+{% extends 'base.html' %}
+
+{% block title %}Higher Education Scholarships — Rural Opportunity Connect{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+    <!-- Breadcrumb -->
+    <nav class="roc-breadcrumb" aria-label="Breadcrumb">
+        <a href="{% url 'landing_page' %}">Home</a>
+        <span class="roc-breadcrumb-separator"><i class="fas fa-chevron-right text-[10px]"></i></span>
+        <span class="text-slate-800 font-bold">Scholarships & Education Grants</span>
+    </nav>
+
+    <!-- Executive Branded Header Banner -->
+    <div class="roc-card p-8 md:p-10 bg-gradient-to-r from-slate-950 via-[#071526] to-[#0c2340] text-white rounded-3xl shadow-xl mb-8 relative overflow-hidden border border-cyan-500/30">
+        <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div class="space-y-3">
+                <div class="inline-flex items-center gap-2 bg-cyan-500/20 text-cyan-300 border border-cyan-400/30 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider backdrop-blur-xs hero-badge-pulse">
+                    <i class="fas fa-graduation-cap text-cyan-400"></i> Higher Education & Merit Grants
+                </div>
+                <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight kinetic-headline">
+                    Find Scholarships for Your Education
+                </h1>
+                <p class="text-xs sm:text-sm text-slate-300 max-w-2xl font-normal leading-relaxed">
+                    Discover verified financial support, fee concessions, and government grants for rural students pursuing school, diploma, and college degrees.
+                </p>
+            </div>
+            <div class="flex items-center gap-3 shrink-0">
+                <div class="bg-white/10 backdrop-blur-md px-6 py-3.5 rounded-2xl border border-cyan-500/30 text-center shadow-lg">
+                    <span class="text-2xl sm:text-3xl font-black text-cyan-300 block counter-value" data-counter="{{ scholarships|length }}">{{ scholarships|length }}</span>
+                    <span class="text-[10px] text-cyan-100 uppercase tracking-wider font-bold">Grants Live</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <!-- Sidebar Filters -->
+        <aside class="lg:col-span-4 sticky top-24">
+            <div class="roc-card p-6 bg-white shadow-sm border border-slate-200">
+                <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-100">
+                    <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fas fa-sliders text-brand-800"></i> Filter Scholarships
+                    </h2>
+                    <a href="{% url 'scholarships_list' %}" class="text-xs font-bold text-brand-800 hover:text-brand-950 transition">
+                        Clear All
+                    </a>
+                </div>
+
+                <form method="GET" action="{% url 'scholarships_list' %}" class="space-y-4">
+                    {% if search %}
+                        <input type="hidden" name="search" value="{{ search }}">
+                    {% endif %}
+
+                    <!-- Education Level Filter -->
+                    <div>
+                        <label class="form-label" for="education">Education Level</label>
+                        <select id="education" name="education" class="form-select text-xs">
+                            <option value="">All Education Levels</option>
+                            <option value="12th" {% if filters.education == '12th' %}selected{% endif %}>12th Pass</option>
+                            <option value="bachelor" {% if filters.education == 'bachelor' %}selected{% endif %}>Bachelor's Degree</option>
+                            <option value="master" {% if filters.education == 'master' %}selected{% endif %}>Master's Degree</option>
+                            <option value="diploma" {% if filters.education == 'diploma' %}selected{% endif %}>Diploma</option>
+                        </select>
+                    </div>
+
+                    <!-- Category / Scheme Type -->
+                    <div>
+                        <label class="form-label" for="category">Category / Eligibility Type</label>
+                        <input type="text" id="category" name="category" value="{{ filters.category }}" placeholder="e.g. Merit, Rural, Need-based" class="form-input text-xs">
+                    </div>
+
+                    <button type="submit" class="btn-primary btn-magnetic btn-sheen w-full text-xs py-2.5 mt-2">
+                        <i class="fas fa-filter"></i> Apply Filters
+                    </button>
+                </form>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="lg:col-span-8 space-y-6">
+            <!-- Search Bar -->
+            <form method="GET" action="{% url 'scholarships_list' %}" class="flex gap-2">
+                <div class="relative flex-1">
+                    <input type="text" name="search" value="{{ search }}"
+                           placeholder="Search scholarships by name, degree, provider..."
+                           class="form-input pl-10 pr-12 py-3 text-sm bg-white shadow-xs">
+                    <i class="fas fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    <button type="button" onclick="triggerVoiceAssistant()" title="Voice search in regional language"
+                            class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-brand-800 p-1 rounded-lg transition">
+                        <i class="fas fa-microphone text-amber-500"></i>
+                    </button>
+                </div>
+                <button type="submit" class="btn-primary btn-magnetic btn-sheen px-5 text-xs font-bold">Search</button>
+            </form>
+
+            <!-- Results Listing Header -->
+            <div class="flex items-center justify-between">
+                <h2 class="text-sm font-bold text-slate-600 uppercase tracking-wider">Available Scholarships</h2>
+                {% if search or filters.education or filters.category %}
+                    <span class="text-xs text-brand-800 font-semibold bg-brand-50 px-2.5 py-1 rounded-lg border border-brand-200">
+                        Filtered Results
+                    </span>
+                {% endif %}
+            </div>
+
+            <!-- Scholarship Cards Grid -->
+            <div class="space-y-4 perspective-viewport anim-grid-stagger" data-anim="fade-up">
+                {% if scholarships %}
+                    {% for sc in scholarships %}
+                    {% with sc_key="scholarship_"|add:sc.id|stringformat:"s" %}
+                    <div class="tilt-card-3d roc-card hover-lift-3d card-specular-glare p-6 border border-slate-200 hover:border-purple-400 relative">
+                        <div class="tilt-glare"></div>
+                        <div class="depth-layer-1">
+                            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-3">
+                                <div class="flex-1">
+                                    <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                                        <h3 class="text-lg sm:text-xl font-bold text-slate-900 hover:text-brand-800 transition">
+                                            <a href="{% url 'scholarship_detail' sc.id %}">{{ sc.name }}</a>
+                                        </h3>
+                                        <span class="roc-badge roc-badge-purple text-[10px]">
+                                            {{ sc.get_education_level_display }}
+                                        </span>
+                                    </div>
+                                    <p class="text-xs text-slate-600 font-semibold flex items-center gap-1.5">
+                                        <i class="fas fa-building-columns text-slate-400"></i> {{ sc.provider }}
+                                    </p>
+                                </div>
+
+                                <div class="flex items-center gap-2 self-start depth-layer-2">
+                                    <button class="save-btn heart-pop {% if sc_key in user_saved_keys %}is-saved{% endif %}"
+                                            data-type="scholarship" data-id="{{ sc.id }}" title="Save to wishlist">
+                                        <i class="{% if sc_key in user_saved_keys %}fa-solid fa-heart text-red-500{% else %}fa-regular fa-heart text-slate-400{% endif %}"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <p class="text-xs text-slate-600 line-clamp-2 leading-relaxed mb-4">
+                                {{ sc.description }}
+                            </p>
+
+                            <!-- Key Specs Row -->
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs bg-slate-50 p-3.5 rounded-2xl border border-slate-100 mb-4">
+                                <div>
+                                    <span class="text-[11px] text-slate-400 font-medium block">Grant Amount</span>
+                                    <span class="font-black text-brand-800 text-sm">{{ sc.amount }}</span>
+                                </div>
+                                <div>
+                                    <span class="text-[11px] text-slate-400 font-medium block">Income Limit</span>
+                                    <span class="font-bold text-slate-800 truncate block">{{ sc.income_limit|default:"Rural applicants" }}</span>
+                                </div>
+                                <div>
+                                    <span class="text-[11px] text-slate-400 font-medium block">Category</span>
+                                    <span class="font-bold text-slate-800">{{ sc.category }}</span>
+                                </div>
+                            </div>
+
+                            <!-- Eligibility Preview -->
+                            <div class="mb-4 text-xs text-slate-600 bg-brand-50/50 p-3 rounded-xl border border-brand-100">
+                                <strong><i class="fas fa-check-circle text-emerald-600 mr-1"></i> Eligibility:</strong>
+                                <span class="line-clamp-1">{{ sc.eligibility }}</span>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="depth-layer-2 pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+                            <div class="flex items-center gap-2">
+                                <span class="roc-badge roc-badge-emerald text-[10px]">
+                                    <i class="fas fa-certificate text-amber-500 text-[9px]"></i> {{ sc.source_portal|default:"Buddy4Study" }}
+                                </span>
+                                <span class="text-[11px] text-slate-400">
+                                    <i class="fas fa-calendar-alt text-brand-700 mr-1"></i> {{ sc.application_deadline|date:"M d, Y" }}
+                                </span>
+                            </div>
+                            <div class="flex items-center gap-2 w-full sm:w-auto">
+                                {% if sc.source_url %}
+                                    <a href="{{ sc.source_url }}" target="_blank" rel="noopener noreferrer"
+                                       class="btn-outline text-xs py-2 px-3 flex-1 sm:flex-initial text-purple-700 hover:bg-purple-50">
+                                        <i class="fas fa-arrow-up-right-from-square"></i> Portal Link
+                                    </a>
+                                {% endif %}
+
+                                {% if user.is_authenticated %}
+                                    {% if sc_key in user_applied_keys %}
+                                        <button class="btn-applied text-xs py-2 px-4 flex-1 sm:flex-initial" disabled>
+                                            <i class="fas fa-check-circle text-emerald-600"></i> Already Applied ✓
+                                        </button>
+                                    {% else %}
+                                        <button onclick="quickApply('scholarship', '{{ sc.id }}', '{{ sc.name|escapejs }}', '{{ sc.provider|escapejs }}', this)"
+                                                class="btn-primary btn-sheen spring-press text-xs py-2 px-4 flex-1 sm:flex-initial shadow-xs">
+                                            <i class="fas fa-paper-plane"></i> Quick Apply
+                                        </button>
+                                    {% endif %}
+                                {% else %}
+                                    <a href="{% url 'login' %}?next={{ request.path }}"
+                                       class="btn-primary text-xs py-2 px-4 flex-1 sm:flex-initial shadow-xs">
+                                        <i class="fas fa-paper-plane"></i> Quick Apply
+                                    </a>
+                                {% endif %}
+
+                                <a href="{% url 'scholarship_detail' sc.id %}" class="btn-secondary text-xs py-2 px-3 flex-1 sm:flex-initial text-center">
+                                    Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endwith %}
+                    {% endfor %}
+                {% else %}
+                    <div class="roc-card p-12 text-center border border-dashed border-slate-300 rounded-3xl bg-white">
+                        <div class="w-16 h-16 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-2">No Scholarships Found</h3>
+                        <p class="text-xs text-slate-500 max-w-sm mx-auto mb-6">
+                            We couldn't find any scholarships matching your active filters. Try adjusting your education level or clearing the search bar.
+                        </p>
+                        <a href="{% url 'scholarships_list' %}" class="btn-primary text-xs py-2.5 px-5">
+                            Reset All Filters
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}

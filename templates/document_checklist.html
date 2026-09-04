@@ -1,0 +1,258 @@
+{% extends 'base.html' %}
+
+{% block title %}Digital Document Readiness Locker — Rural Opportunity Connect{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto px-4 sm:px-6 py-10 space-y-8">
+    <!-- Breadcrumb -->
+    <nav class="roc-breadcrumb" aria-label="Breadcrumb">
+        <a href="{% url 'landing_page' %}">Home</a>
+        <span class="roc-breadcrumb-separator"><i class="fas fa-chevron-right text-[10px]"></i></span>
+        <a href="{% url 'dashboard' %}">Dashboard</a>
+        <span class="roc-breadcrumb-separator"><i class="fas fa-chevron-right text-[10px]"></i></span>
+        <span class="text-slate-800 font-bold">Document Locker</span>
+    </nav>
+
+    <!-- Page Header & Readiness Progress Banner -->
+    <div class="roc-card p-8 bg-gradient-to-r from-slate-950 via-[#071526] to-[#0c2340] text-white rounded-3xl shadow-xl space-y-6 relative overflow-hidden border border-cyan-500/20" data-anim="fade-up">
+        <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div class="space-y-2">
+                <div class="hero-badge-pulse inline-flex items-center gap-2 bg-cyan-500/20 text-cyan-300 border border-cyan-400/30 text-xs font-bold px-3.5 py-1 rounded-full uppercase tracking-wider">
+                    <i class="fas fa-shield-halved text-cyan-400"></i> Verification Readiness
+                </div>
+                <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight kinetic-headline">
+                    Document <span class="shiny-text">Readiness Locker</span>
+                </h1>
+                <p class="text-xs sm:text-sm text-slate-300 max-w-xl">
+                    Maintain an active checklist of your verified government proofs to fast-track applications for Direct Benefit Transfer (DBT), scholarships, and jobs.
+                </p>
+            </div>
+
+            <!-- Readiness Circular SVG Ring / Numerical Score -->
+            <div class="bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/20 flex items-center gap-4 min-w-[200px] shadow-lg hover-lift-3d card-specular-glare">
+                <div class="relative w-16 h-16 shrink-0">
+                    <svg class="w-16 h-16 transform -rotate-90" viewBox="0 0 64 64">
+                        <circle class="circle-progress-track" cx="32" cy="32" r="26" stroke-width="5" fill="transparent"/>
+                        <circle class="circle-progress-bar" cx="32" cy="32" r="26" stroke-width="5" fill="transparent" stroke-linecap="round" data-percent="{{ percentage }}"/>
+                    </svg>
+                    <div class="absolute inset-0 flex items-center justify-center text-xs font-black text-cyan-300">
+                        <span class="counter-value" data-counter="{{ percentage }}">{{ percentage }}</span>%
+                    </div>
+                </div>
+                <div class="text-left">
+                    <div class="text-2xl font-black text-cyan-300 mb-0.5">
+                        <span class="counter-value" data-counter="{{ ready_count }}">{{ ready_count }}</span>/{{ total_documents }}
+                    </div>
+                    <p class="text-[11px] text-cyan-100 font-semibold uppercase tracking-wider">Ready Proofs</p>
+                    <span class="text-[10px] text-cyan-200 mt-0.5 block">Official Status Active</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checklist Form -->
+    <div class="roc-card p-8 bg-white border border-slate-200 shadow-sm rounded-3xl">
+        <form method="POST" action="{% url 'document_checklist' %}" class="space-y-6">
+            {% csrf_token %}
+
+            <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+                <div>
+                    <h2 class="text-lg font-bold text-slate-900">Official Document Checklist</h2>
+                    <p class="text-xs text-slate-500">Check each document you currently possess and have scanned/verified.</p>
+                </div>
+                <span class="roc-badge roc-badge-emerald text-[10px]">Auto-saved on Submit</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 anim-grid-stagger" data-anim="fade-up">
+                <!-- 1. Aadhaar Card -->
+                <label class="checklist-interactive-item {% if checklist.aadhaar %}checked{% endif %} flex items-start gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-cyan-500 bg-slate-50 hover:bg-white transition cursor-pointer hover-lift-3d card-specular-glare">
+                    <div class="relative w-6 h-6 mt-0.5 shrink-0 flex items-center justify-center">
+                        <input type="checkbox" name="aadhaar" {% if checklist.aadhaar %}checked{% endif %}
+                               class="opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10">
+                        <svg class="w-6 h-6" viewBox="0 0 52 52">
+                            <circle class="svg-check-circle" cx="26" cy="26" r="24" fill="none" stroke="#06b6d4" stroke-width="3"/>
+                            <path class="svg-check-mark" fill="none" stroke="#06b6d4" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                        </svg>
+                    </div>
+                    <div class="space-y-0.5">
+                        <span class="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+                            <i class="fas fa-id-card text-cyan-600"></i> Aadhaar Card (DBT Linked)
+                        </span>
+                        <p class="text-xs text-slate-500">Essential for all DBT subsidies, PM-KISAN, and central scholarships.</p>
+                    </div>
+                </label>
+
+                <!-- 2. Academic Marksheet -->
+                <label class="checklist-interactive-item {% if checklist.marksheet %}checked{% endif %} flex items-start gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-cyan-500 bg-slate-50 hover:bg-white transition cursor-pointer hover-lift-3d card-specular-glare">
+                    <div class="relative w-6 h-6 mt-0.5 shrink-0 flex items-center justify-center">
+                        <input type="checkbox" name="marksheet" {% if checklist.marksheet %}checked{% endif %}
+                               class="opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10">
+                        <svg class="w-6 h-6" viewBox="0 0 52 52">
+                            <circle class="svg-check-circle" cx="26" cy="26" r="24" fill="none" stroke="#06b6d4" stroke-width="3"/>
+                            <path class="svg-check-mark" fill="none" stroke="#06b6d4" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                        </svg>
+                    </div>
+                    <div class="space-y-0.5">
+                        <span class="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+                            <i class="fas fa-graduation-cap text-purple-600"></i> 10th / 12th / Degree Marksheet
+                        </span>
+                        <p class="text-xs text-slate-500">Used for merit-based scholarships and formal job qualifications.</p>
+                    </div>
+                </label>
+
+                <!-- 3. Income Certificate -->
+                <label class="checklist-interactive-item {% if checklist.income_certificate %}checked{% endif %} flex items-start gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-cyan-500 bg-slate-50 hover:bg-white transition cursor-pointer hover-lift-3d card-specular-glare">
+                    <div class="relative w-6 h-6 mt-0.5 shrink-0 flex items-center justify-center">
+                        <input type="checkbox" name="income_certificate" {% if checklist.income_certificate %}checked{% endif %}
+                               class="opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10">
+                        <svg class="w-6 h-6" viewBox="0 0 52 52">
+                            <circle class="svg-check-circle" cx="26" cy="26" r="24" fill="none" stroke="#06b6d4" stroke-width="3"/>
+                            <path class="svg-check-mark" fill="none" stroke="#06b6d4" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                        </svg>
+                    </div>
+                    <div class="space-y-0.5">
+                        <span class="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+                            <i class="fas fa-file-invoice-dollar text-emerald-600"></i> Annual Income Certificate
+                        </span>
+                        <p class="text-xs text-slate-500">Required for fee concessions and need-based welfare allowances.</p>
+                    </div>
+                </label>
+
+                <!-- 4. Community / Caste Certificate -->
+                <label class="checklist-interactive-item {% if checklist.community_certificate %}checked{% endif %} flex items-start gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-cyan-500 bg-slate-50 hover:bg-white transition cursor-pointer hover-lift-3d card-specular-glare">
+                    <div class="relative w-6 h-6 mt-0.5 shrink-0 flex items-center justify-center">
+                        <input type="checkbox" name="community_certificate" {% if checklist.community_certificate %}checked{% endif %}
+                               class="opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10">
+                        <svg class="w-6 h-6" viewBox="0 0 52 52">
+                            <circle class="svg-check-circle" cx="26" cy="26" r="24" fill="none" stroke="#06b6d4" stroke-width="3"/>
+                            <path class="svg-check-mark" fill="none" stroke="#06b6d4" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                        </svg>
+                    </div>
+                    <div class="space-y-0.5">
+                        <span class="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+                            <i class="fas fa-users text-blue-600"></i> Community / Caste Certificate
+                        </span>
+                        <p class="text-xs text-slate-500">Used for government quota schemes and category fellowships.</p>
+                    </div>
+                </label>
+
+                <!-- 5. Nativity / Residence Proof -->
+                <label class="checklist-interactive-item {% if checklist.residence_certificate %}checked{% endif %} flex items-start gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-cyan-500 bg-slate-50 hover:bg-white transition cursor-pointer hover-lift-3d card-specular-glare">
+                    <div class="relative w-6 h-6 mt-0.5 shrink-0 flex items-center justify-center">
+                        <input type="checkbox" name="residence_certificate" {% if checklist.residence_certificate %}checked{% endif %}
+                               class="opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10">
+                        <svg class="w-6 h-6" viewBox="0 0 52 52">
+                            <circle class="svg-check-circle" cx="26" cy="26" r="24" fill="none" stroke="#06b6d4" stroke-width="3"/>
+                            <path class="svg-check-mark" fill="none" stroke="#06b6d4" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                        </svg>
+                    </div>
+                    <div class="space-y-0.5">
+                        <span class="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+                            <i class="fas fa-house-chimney text-amber-600"></i> Nativity / Domicile Certificate
+                        </span>
+                        <p class="text-xs text-slate-500">Determines state residency and district panchayat eligibility.</p>
+                    </div>
+                </label>
+
+                <!-- 6. Bank Passbook / Account Details -->
+                <label class="checklist-interactive-item {% if checklist.bank_details %}checked{% endif %} flex items-start gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-cyan-500 bg-slate-50 hover:bg-white transition cursor-pointer hover-lift-3d card-specular-glare">
+                    <div class="relative w-6 h-6 mt-0.5 shrink-0 flex items-center justify-center">
+                        <input type="checkbox" name="bank_details" {% if checklist.bank_details %}checked{% endif %}
+                               class="opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10">
+                        <svg class="w-6 h-6" viewBox="0 0 52 52">
+                            <circle class="svg-check-circle" cx="26" cy="26" r="24" fill="none" stroke="#06b6d4" stroke-width="3"/>
+                            <path class="svg-check-mark" fill="none" stroke="#06b6d4" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                        </svg>
+                    </div>
+                    <div class="space-y-0.5">
+                        <span class="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+                            <i class="fas fa-building-columns text-teal-600"></i> Bank Account / Passbook (DBT Linked)
+                        </span>
+                        <p class="text-xs text-slate-500">Must be seeded with Aadhaar for Direct Benefit Transfer (DBT).</p>
+                    </div>
+                </label>
+
+                <!-- 7. Passport / Ration Card / Family ID -->
+                <label class="checklist-interactive-item {% if checklist.passport %}checked{% endif %} flex items-start gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-cyan-500 bg-slate-50 hover:bg-white transition cursor-pointer hover-lift-3d card-specular-glare">
+                    <div class="relative w-6 h-6 mt-0.5 shrink-0 flex items-center justify-center">
+                        <input type="checkbox" name="passport" {% if checklist.passport %}checked{% endif %}
+                               class="opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10">
+                        <svg class="w-6 h-6" viewBox="0 0 52 52">
+                            <circle class="svg-check-circle" cx="26" cy="26" r="24" fill="none" stroke="#06b6d4" stroke-width="3"/>
+                            <path class="svg-check-mark" fill="none" stroke="#06b6d4" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                        </svg>
+                    </div>
+                    <div class="space-y-0.5">
+                        <span class="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+                            <i class="fas fa-address-book text-rose-600"></i> Passport / Family Ration Card
+                        </span>
+                        <p class="text-xs text-slate-500">Valid photo ID proof for abroad studies, grants, and BPL rations.</p>
+                    </div>
+                </label>
+
+                <!-- 8. PAN Card -->
+                <label class="checklist-interactive-item {% if checklist.pan_card %}checked{% endif %} flex items-start gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-cyan-500 bg-slate-50 hover:bg-white transition cursor-pointer hover-lift-3d card-specular-glare">
+                    <div class="relative w-6 h-6 mt-0.5 shrink-0 flex items-center justify-center">
+                        <input type="checkbox" name="pan_card" {% if checklist.pan_card %}checked{% endif %}
+                               class="opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10">
+                        <svg class="w-6 h-6" viewBox="0 0 52 52">
+                            <circle class="svg-check-circle" cx="26" cy="26" r="24" fill="none" stroke="#06b6d4" stroke-width="3"/>
+                            <path class="svg-check-mark" fill="none" stroke="#06b6d4" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                        </svg>
+                    </div>
+                    <div class="space-y-0.5">
+                        <span class="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+                            <i class="fas fa-credit-card text-indigo-600"></i> PAN Card (Permanent Account)
+                        </span>
+                        <p class="text-xs text-slate-500">Required for business registration, PMEGP loans, and payroll jobs.</p>
+                    </div>
+                </label>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="pt-6 border-t border-slate-100 flex items-center justify-between">
+                <p class="text-xs text-slate-400">Keep this locker updated before applying for new schemes.</p>
+                <button type="submit" class="btn-primary text-xs py-2.5 px-6 shadow-md btn-sheen spring-press">
+                    <i class="fas fa-floppy-disk"></i> Update Readiness Locker
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Official Help Resources -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6" data-anim="fade-up">
+        <div class="roc-card p-6 bg-white border border-slate-200 shadow-xs space-y-2 hover-lift-3d card-specular-glare">
+            <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg">
+                <i class="fas fa-map-location-dot"></i>
+            </div>
+            <h3 class="text-sm font-bold text-slate-900">Locate Nearest CSC Center</h3>
+            <p class="text-xs text-slate-500 leading-relaxed">Find your local Gram Panchayat Common Service Center for physical biometric authentication and document issuance.</p>
+            <a href="https://locator.csccloud.in/" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-blue-600 hover:underline inline-block pt-1">
+                Find CSC Center →
+            </a>
+        </div>
+
+        <div class="roc-card p-6 bg-white border border-slate-200 shadow-xs space-y-2 hover-lift-3d card-specular-glare">
+            <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg">
+                <i class="fas fa-link"></i>
+            </div>
+            <h3 class="text-sm font-bold text-slate-900">Aadhaar-Bank DBT Seeding</h3>
+            <p class="text-xs text-slate-500 leading-relaxed">Check if your bank account is active for NPCI Aadhaar mapper to receive direct government funds.</p>
+            <a href="https://myaadhaar.uidai.gov.in/" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-emerald-700 hover:underline inline-block pt-1">
+                Check Seeding Status →
+            </a>
+        </div>
+
+        <div class="roc-card p-6 bg-white border border-slate-200 shadow-xs space-y-2 hover-lift-3d card-specular-glare">
+            <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-lg">
+                <i class="fas fa-cloud-arrow-up"></i>
+            </div>
+            <h3 class="text-sm font-bold text-slate-900">DigiLocker Integration</h3>
+            <p class="text-xs text-slate-500 leading-relaxed">Access digitally signed government certificates issued by Ministry of Electronics & IT directly online.</p>
+            <a href="https://www.digilocker.gov.in/" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-purple-700 hover:underline inline-block pt-1">
+                Open DigiLocker →
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

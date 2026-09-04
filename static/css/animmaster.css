@@ -1,0 +1,770 @@
+/* ==========================================================================
+   Animmaster Pro Animation Suite — Rural Opportunity Connect (Pass 2.1)
+   Visibly Noticeable, Enterprise-Grade Interactive Experience
+   GPU-Accelerated (transform & opacity only), 60-120 FPS, Zero Layout Shifts.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. PAGE TRANSITIONS & BRANDED LOADER
+   -------------------------------------------------------------------------- */
+#pageTransitionBar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3.5px;
+    width: 0%;
+    background: linear-gradient(90deg, #06b6d4 0%, #00f2fe 50%, #0284c7 100%);
+    z-index: 99999;
+    box-shadow: 0 0 12px #00f2fe, 0 0 24px rgba(6, 182, 212, 0.7);
+    pointer-events: none;
+    transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+    opacity: 0;
+}
+
+#pageTransitionBar.active {
+    opacity: 1;
+}
+
+#pageLoadingOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(7, 21, 38, 0.94);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    z-index: 99998;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#pageLoadingOverlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.loader-logo-pulse {
+    animation: loaderLogoPulse 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes loaderLogoPulse {
+    0%, 100% {
+        transform: scale(0.95);
+        filter: drop-shadow(0 0 14px rgba(6, 182, 212, 0.45));
+    }
+    50% {
+        transform: scale(1.08);
+        filter: drop-shadow(0 0 30px rgba(0, 242, 254, 0.9));
+    }
+}
+
+.loader-progress-ring {
+    width: 50px;
+    height: 50px;
+    border: 3.5px solid rgba(6, 182, 212, 0.2);
+    border-top-color: #00f2fe;
+    border-radius: 50%;
+    animation: loaderSpin 0.75s linear infinite;
+}
+
+@keyframes loaderSpin {
+    to { transform: rotate(360deg); }
+}
+
+.page-enter-fade {
+    animation: pageEnterFade 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pageEnterFade {
+    0% {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --------------------------------------------------------------------------
+   2. SCROLL ANIMATIONS, READING PROGRESS & PARALLAX
+   -------------------------------------------------------------------------- */
+#scrollProgressBar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background: linear-gradient(90deg, #06b6d4 0%, #00f2fe 50%, #0284c7 100%);
+    z-index: 9999;
+    pointer-events: none;
+    box-shadow: 0 0 10px rgba(0, 242, 254, 0.6);
+    transition: width 0.05s linear;
+}
+
+/* Scroll reveal utility classes with VISIBLE displacement */
+[data-anim] {
+    opacity: 0;
+    will-change: transform, opacity;
+    transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-anim="fade-up"] {
+    transform: translateY(32px);
+}
+
+[data-anim="fade-down"] {
+    transform: translateY(-32px);
+}
+
+[data-anim="zoom-in"] {
+    transform: scale(0.9);
+}
+
+[data-anim="slide-right"] {
+    transform: translateX(-40px);
+}
+
+[data-anim="slide-left"] {
+    transform: translateX(40px);
+}
+
+/* Triggered state */
+[data-anim].anim-in {
+    opacity: 1;
+    transform: translate(0) scale(1);
+}
+
+.stagger-1 { transition-delay: 0.05s; }
+.stagger-2 { transition-delay: 0.10s; }
+.stagger-3 { transition-delay: 0.15s; }
+.stagger-4 { transition-delay: 0.20s; }
+.stagger-5 { transition-delay: 0.25s; }
+.stagger-6 { transition-delay: 0.30s; }
+.stagger-7 { transition-delay: 0.35s; }
+.stagger-8 { transition-delay: 0.40s; }
+
+/* Parallax Sections */
+[data-parallax] {
+    will-change: transform;
+    transition: transform 0.12s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* --------------------------------------------------------------------------
+   3. HERO BACKGROUND, MESH & AURORA
+   -------------------------------------------------------------------------- */
+.anim-mesh-bg {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #071526 0%, #0c2744 50%, #083344 100%) !important;
+}
+
+.anim-mesh-bg::before {
+    content: '';
+    position: absolute;
+    inset: -50%;
+    background: radial-gradient(circle at 25% 35%, rgba(6, 182, 212, 0.28) 0%, transparent 45%),
+                radial-gradient(circle at 75% 65%, rgba(2, 132, 199, 0.32) 0%, transparent 48%),
+                radial-gradient(circle at 50% 85%, rgba(13, 148, 136, 0.22) 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, rgba(0, 242, 254, 0.20) 0%, transparent 42%);
+    filter: blur(65px);
+    animation: meshFlow 20s ease-in-out infinite alternate;
+    pointer-events: none;
+    will-change: transform;
+}
+
+@keyframes meshFlow {
+    0% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.18) rotate(5deg) translate(-25px, 20px); }
+    100% { transform: scale(1.06) rotate(-4deg) translate(30px, -25px); }
+}
+
+.hero-aurora-glow {
+    position: absolute;
+    width: 680px;
+    height: 400px;
+    background: radial-gradient(ellipse at center, rgba(0, 242, 254, 0.22), rgba(6, 182, 212, 0.10) 45%, transparent 70%);
+    filter: blur(60px);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: auroraDrift 14s ease-in-out infinite alternate;
+}
+
+@keyframes auroraDrift {
+    0% { transform: translate(-30px, -20px) scale(0.92); }
+    50% { transform: translate(45px, 35px) scale(1.12); }
+    100% { transform: translate(-25px, 45px) scale(0.96); }
+}
+
+.hero-float-card {
+    animation: heroCardFloat 5.5s ease-in-out infinite;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 16px 36px -8px rgba(7, 21, 38, 0.45);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-float-card:hover {
+    transform: translateY(-8px) scale(1.04) !important;
+}
+
+.hero-float-card-delay {
+    animation-delay: -2.8s;
+}
+
+@keyframes heroCardFloat {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-16px) rotate(1.4deg); }
+}
+
+/* --------------------------------------------------------------------------
+   4. KINETIC HEADLINE & SWEEPING SHINY TEXT
+   -------------------------------------------------------------------------- */
+.kinetic-headline {
+    display: inline-block;
+    overflow: hidden;
+}
+
+.word-reveal {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+    margin-right: 0.28em;
+}
+
+.word-reveal-inner {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(120%) rotate(4deg);
+    transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
+}
+
+.word-reveal-inner.revealed {
+    opacity: 1;
+    transform: translateY(0%) rotate(0deg);
+}
+
+/* Continuous Radiant Shiny Text */
+.shiny-text {
+    background: linear-gradient(120deg, #ffffff 20%, #67e8f9 45%, #00f2fe 55%, #ffffff 80%);
+    background-size: 200% auto;
+    color: #ffffff;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shinyTextSweep 4s linear infinite;
+    display: inline-block;
+}
+
+.shiny-text-dark {
+    background: linear-gradient(120deg, #0284c7 20%, #00f2fe 45%, #06b6d4 55%, #0369a1 80%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shinyTextSweep 4s linear infinite;
+    display: inline-block;
+}
+
+@keyframes shinyTextSweep {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+}
+
+/* --------------------------------------------------------------------------
+   5. VISIBLY NOTICEABLE 3D CARDS & HOVER ELEVATION
+   -------------------------------------------------------------------------- */
+/* Core Card Hover Elevation (Universal) */
+.hover-lift-3d {
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease !important;
+    will-change: transform, box-shadow;
+}
+
+.hover-lift-3d:hover {
+    transform: translateY(-8px) scale(1.018) !important;
+    box-shadow: 0 22px 42px -12px rgba(6, 182, 212, 0.28), 0 0 0 1.5px rgba(6, 182, 212, 0.4) !important;
+    border-color: #06b6d4 !important;
+}
+
+/* 3D Perspective Tilt Card with Smooth Damping */
+.tilt-card-3d {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+    will-change: transform;
+}
+
+.card-specular-glare {
+    position: relative;
+    overflow: hidden;
+}
+
+.card-specular-glare::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle 300px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.22), transparent 70%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 10;
+}
+
+.card-specular-glare:hover::after {
+    opacity: 1;
+}
+
+/* Depth Layers inside Cards */
+.depth-layer-1 {
+    transform: translateZ(12px);
+}
+
+.depth-layer-2 {
+    transform: translateZ(24px);
+}
+
+.depth-layer-3 {
+    transform: translateZ(36px);
+}
+
+/* Animated Gradient Border for Selected / Featured Cards */
+.border-gradient-glow {
+    position: relative;
+    background: #ffffff;
+    border-radius: 1.25rem;
+    z-index: 1;
+}
+
+.border-gradient-glow::before {
+    content: '';
+    position: absolute;
+    inset: -2.5px;
+    border-radius: 1.38rem;
+    background: linear-gradient(135deg, #06b6d4, #3b82f6, #00f2fe, #10b981);
+    background-size: 300% 300%;
+    animation: borderGradientShift 7s ease infinite;
+    z-index: -1;
+    opacity: 0.8;
+}
+
+@keyframes borderGradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Card Exit Collapse on Remove / Dismiss */
+.card-exit-collapse {
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, max-height 0.4s ease 0.15s, margin 0.4s ease 0.15s !important;
+    transform: scale(0.85) translateY(20px) !important;
+    opacity: 0 !important;
+    max-height: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    overflow: hidden !important;
+}
+
+/* --------------------------------------------------------------------------
+   6. DYNAMIC OPPORTUNITY GRID & SKELETON
+   -------------------------------------------------------------------------- */
+.anim-grid-stagger > * {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1), transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.anim-grid-stagger.anim-in > *:nth-child(1) { transition-delay: 0.04s; }
+.anim-grid-stagger.anim-in > *:nth-child(2) { transition-delay: 0.08s; }
+.anim-grid-stagger.anim-in > *:nth-child(3) { transition-delay: 0.12s; }
+.anim-grid-stagger.anim-in > *:nth-child(4) { transition-delay: 0.16s; }
+.anim-grid-stagger.anim-in > *:nth-child(5) { transition-delay: 0.20s; }
+.anim-grid-stagger.anim-in > *:nth-child(6) { transition-delay: 0.24s; }
+.anim-grid-stagger.anim-in > *:nth-child(7) { transition-delay: 0.28s; }
+.anim-grid-stagger.anim-in > *:nth-child(8) { transition-delay: 0.32s; }
+.anim-grid-stagger.anim-in > *:nth-child(n+9) { transition-delay: 0.36s; }
+
+.anim-grid-stagger.anim-in > * {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.skeleton-card-shimmer {
+    position: relative;
+    overflow: hidden;
+    background: #f1f5f9;
+    border-radius: 1.25rem;
+}
+
+.skeleton-card-shimmer::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.7), transparent);
+    animation: skeletonShimmer 1.4s infinite;
+}
+
+@keyframes skeletonShimmer {
+    100% { transform: translateX(100%); }
+}
+
+.filter-transition-fade {
+    animation: filterFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes filterFadeIn {
+    0% { opacity: 0; transform: scale(0.96) translateY(10px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* --------------------------------------------------------------------------
+   7. NOTICEABLE BUTTON INTERACTIONS (MAGNETIC, SHEEN, RIPPLE, SPRING)
+   -------------------------------------------------------------------------- */
+.btn-magnetic {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+    will-change: transform;
+    overflow: hidden;
+}
+
+.btn-magnetic:active, .spring-press:active {
+    transform: scale(0.93) !important;
+    transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+/* Coordinate Ripple Wave */
+.ripple-wave {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transform: scale(0);
+    animation: rippleAnimation 0.6s linear;
+    pointer-events: none;
+}
+
+@keyframes rippleAnimation {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* Button Light Sheen Sweep */
+.btn-sheen, .btn-shimmer-sweep {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-sheen::after, .btn-shimmer-sweep::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -60%;
+    width: 40%;
+    height: 200%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+    transform: rotate(25deg);
+    animation: btnSheenSweep 3.5s infinite ease-in-out;
+    pointer-events: none;
+}
+
+@keyframes btnSheenSweep {
+    0%, 65% { left: -60%; }
+    100% { left: 140%; }
+}
+
+/* Glowing Ambient CTA */
+.btn-glow-pulse {
+    position: relative;
+}
+
+.btn-glow-pulse::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    background: inherit;
+    filter: blur(14px);
+    opacity: 0.5;
+    z-index: -1;
+    animation: ctaGlowBreath 2.8s ease-in-out infinite;
+}
+
+@keyframes ctaGlowBreath {
+    0%, 100% { opacity: 0.35; filter: blur(10px); }
+    50% { opacity: 0.85; filter: blur(18px); }
+}
+
+.btn-magnetic:hover .btn-icon-nudge {
+    transform: translateX(5px);
+}
+
+.btn-icon-nudge {
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* --------------------------------------------------------------------------
+   8. QUICK APPLY WORKFLOW & TOAST
+   -------------------------------------------------------------------------- */
+.apply-loading-spinner {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 2.5px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: loaderSpin 0.6s linear infinite;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.btn-applied-success {
+    background: linear-gradient(135deg, #059669 0%, #10b981 100%) !important;
+    color: white !important;
+    animation: applySuccessPulse 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 4px 18px rgba(16, 185, 129, 0.4) !important;
+}
+
+@keyframes applySuccessPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.modal-spring-enter, .modal-spring-entry {
+    animation: modalSpringIn 0.48s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes modalSpringIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.85) translateY(24px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Floating Interactive Toast */
+#rocToast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(40px) scale(0.9);
+    background: rgba(7, 21, 38, 0.96);
+    color: white;
+    padding: 14px 24px;
+    border-radius: 9999px;
+    border: 1px solid rgba(6, 182, 212, 0.4);
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5), 0 0 25px rgba(6, 182, 212, 0.3);
+    z-index: 99999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    backdrop-filter: blur(12px);
+}
+
+#rocToast.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0) scale(1);
+}
+
+/* --------------------------------------------------------------------------
+   9. BOOKMARK POP & CONFETTI SPARKS
+   -------------------------------------------------------------------------- */
+.heart-pop:active i, .btn-bookmark.bookmarked i {
+    animation: heartPopAnim 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes heartPopAnim {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.6); filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.8)); }
+    100% { transform: scale(1); }
+}
+
+.confetti-particle {
+    position: fixed;
+    pointer-events: none;
+    border-radius: 50%;
+    z-index: 99999;
+    will-change: transform, opacity;
+}
+
+/* --------------------------------------------------------------------------
+   10. APPLICATION TRACKER & RADAR PULSE
+   -------------------------------------------------------------------------- */
+.timeline-pulse-node {
+    position: relative;
+}
+
+.timeline-pulse-node::after {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    background: rgba(6, 182, 212, 0.45);
+    animation: timelinePulse 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+@keyframes timelinePulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.9;
+    }
+    100% {
+        transform: scale(2.6);
+        opacity: 0;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   11. SVG CHECKMARKS & CIRCULAR PROGRESS RINGS
+   -------------------------------------------------------------------------- */
+.svg-check-circle {
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    transition: stroke-dashoffset 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.svg-check-mark {
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    transition: stroke-dashoffset 0.35s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
+}
+
+.checked .svg-check-circle,
+.is-complete .svg-check-circle {
+    stroke-dashoffset: 0;
+}
+
+.checked .svg-check-mark,
+.is-complete .svg-check-mark {
+    stroke-dashoffset: 0;
+}
+
+.circle-progress-track {
+    stroke: #e2e8f0;
+}
+
+.circle-progress-bar {
+    stroke: #06b6d4;
+    transition: stroke-dashoffset 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    filter: drop-shadow(0 0 6px rgba(6, 182, 212, 0.5));
+}
+
+/* --------------------------------------------------------------------------
+   12. NAVBAR & FLOATING BACK TO TOP
+   -------------------------------------------------------------------------- */
+.nav-sliding-pill {
+    position: absolute;
+    bottom: -2px;
+    height: 3.5px;
+    background: linear-gradient(90deg, #06b6d4, #00f2fe);
+    border-radius: 9999px;
+    transition: left 0.3s cubic-bezier(0.16, 1, 0.3, 1), width 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+    opacity: 0;
+    pointer-events: none;
+    box-shadow: 0 0 12px rgba(0, 242, 254, 0.85);
+}
+
+nav.nav-glass-scrolled {
+    background: rgba(7, 21, 38, 0.96) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.3) !important;
+    border-bottom: 1px solid rgba(6, 182, 212, 0.25) !important;
+}
+
+#backToTopBtn {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #06b6d4 0%, #0284c7 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 24px rgba(6, 182, 212, 0.45);
+    z-index: 900;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px) scale(0.85);
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#backToTopBtn.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+}
+
+#backToTopBtn:hover {
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 14px 32px rgba(0, 242, 254, 0.65);
+}
+
+/* --------------------------------------------------------------------------
+   13. TRANSLATOR CROSS-FADE
+   -------------------------------------------------------------------------- */
+.lang-crossfade {
+    transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lang-crossfade.fading {
+    opacity: 0.15;
+}
+
+/* --------------------------------------------------------------------------
+   14. MOBILE & REDUCED MOTION
+   -------------------------------------------------------------------------- */
+@media (hover: none) and (pointer: coarse) {
+    #cursorSpotlight {
+        display: none !important;
+    }
+
+    .tilt-card-3d {
+        transform: none !important;
+    }
+
+    .card-specular-glare::after {
+        display: none !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    [data-anim] {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    #cursorSpotlight,
+    #pageLoadingOverlay,
+    .confetti-particle {
+        display: none !important;
+    }
+}

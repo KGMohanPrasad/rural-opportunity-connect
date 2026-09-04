@@ -1,0 +1,234 @@
+{% extends 'base.html' %}
+
+{% block title %}Rural Micro-Enterprise & Business Ideas — Rural Opportunity Connect{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+    <!-- Breadcrumb -->
+    <nav class="roc-breadcrumb" aria-label="Breadcrumb">
+        <a href="{% url 'landing_page' %}">Home</a>
+        <span class="roc-breadcrumb-separator"><i class="fas fa-chevron-right text-[10px]"></i></span>
+        <span class="text-slate-800 font-bold">Micro-Enterprises & Business Ideas</span>
+    </nav>
+
+    <!-- Executive Branded Header Banner -->
+    <div class="roc-card p-8 md:p-10 bg-gradient-to-r from-slate-950 via-[#071526] to-[#0c2340] text-white rounded-3xl shadow-xl mb-8 relative overflow-hidden border border-cyan-500/30">
+        <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div class="space-y-3">
+                <div class="inline-flex items-center gap-2 bg-cyan-500/20 text-cyan-300 border border-cyan-400/30 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider backdrop-blur-xs hero-badge-pulse">
+                    <i class="fas fa-store text-cyan-400"></i> Micro-Enterprise & Startup Incubator
+                </div>
+                <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight kinetic-headline">
+                    Low-Investment Rural Business Opportunities
+                </h1>
+                <p class="text-xs sm:text-sm text-slate-300 max-w-2xl font-normal leading-relaxed">
+                    Discover actionable micro-enterprise models, market demand blueprints, and village entrepreneurship guides with funding subsidy schemes.
+                </p>
+            </div>
+            <div class="flex items-center gap-3 shrink-0">
+                <div class="bg-white/10 backdrop-blur-md px-6 py-3.5 rounded-2xl border border-cyan-500/30 text-center shadow-lg">
+                    <span class="text-2xl sm:text-3xl font-black text-cyan-300 block counter-value" data-counter="{{ business_ideas|length }}">{{ business_ideas|length }}</span>
+                    <span class="text-[10px] text-cyan-100 uppercase tracking-wider font-bold">Ideas Active</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <!-- Sidebar Filters -->
+        <aside class="lg:col-span-4 sticky top-24">
+            <div class="roc-card p-6 bg-white shadow-sm border border-slate-200">
+                <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-100">
+                    <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fas fa-sliders text-brand-800"></i> Filter Ideas
+                    </h2>
+                    <a href="{% url 'business_list' %}" class="text-xs font-bold text-brand-800 hover:text-brand-950 transition">
+                        Clear All
+                    </a>
+                </div>
+
+                <form method="GET" action="{% url 'business_list' %}" class="space-y-4">
+                    {% if search %}
+                        <input type="hidden" name="search" value="{{ search }}">
+                    {% endif %}
+
+                    <!-- Category Filter -->
+                    <div>
+                        <label class="form-label" for="category">Sector / Category</label>
+                        <select id="category" name="category" class="form-select text-xs">
+                            <option value="">All Categories</option>
+                            <option value="agriculture" {% if filters.category == 'agriculture' %}selected{% endif %}>Agro-Business & Farming</option>
+                            <option value="retail" {% if filters.category == 'retail' %}selected{% endif %}>Retail & Distribution</option>
+                            <option value="services" {% if filters.category == 'services' %}selected{% endif %}>Local Services & Repairs</option>
+                            <option value="manufacturing" {% if filters.category == 'manufacturing' %}selected{% endif %}>Small Scale Manufacturing</option>
+                            <option value="digital" {% if filters.category == 'digital' %}selected{% endif %}>Digital & CSC Kiosks</option>
+                        </select>
+                    </div>
+
+                    <!-- Investment Level -->
+                    <div>
+                        <label class="form-label" for="investment">Initial Investment Capital</label>
+                        <select id="investment" name="investment" class="form-select text-xs">
+                            <option value="">All Investment Ranges</option>
+                            <option value="low" {% if filters.investment == 'low' %}selected{% endif %}>Low (Under ₹25,000)</option>
+                            <option value="medium" {% if filters.investment == 'medium' %}selected{% endif %}>Medium (₹25,000 - ₹1,00,000)</option>
+                            <option value="high" {% if filters.investment == 'high' %}selected{% endif %}>High (Above ₹1,00,000)</option>
+                        </select>
+                    </div>
+
+                    <!-- Complexity -->
+                    <div>
+                        <label class="form-label" for="complexity">Setup Complexity</label>
+                        <select id="complexity" name="complexity" class="form-select text-xs">
+                            <option value="">All Complexity Levels</option>
+                            <option value="easy" {% if filters.complexity == 'easy' %}selected{% endif %}>Easy (Self-start in 1 week)</option>
+                            <option value="moderate" {% if filters.complexity == 'moderate' %}selected{% endif %}>Moderate (Needs minor training)</option>
+                            <option value="complex" {% if filters.complexity == 'complex' %}selected{% endif %}>Complex (Needs machinery / license)</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn-primary btn-magnetic btn-sheen w-full text-xs py-2.5 mt-2">
+                        <i class="fas fa-filter"></i> Apply Filters
+                    </button>
+                </form>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="lg:col-span-8 space-y-6">
+            <!-- Search Bar -->
+            <form method="GET" action="{% url 'business_list' %}" class="flex gap-2">
+                <div class="relative flex-1">
+                    <input type="text" name="search" value="{{ search }}"
+                           placeholder="Search micro-enterprise ideas (e.g. Vermicompost, Solar, Dairy, CSC)..."
+                           class="form-input pl-10 pr-12 py-3 text-sm bg-white shadow-xs">
+                    <i class="fas fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    <button type="button" onclick="triggerVoiceAssistant()" title="Voice search in regional language"
+                            class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-brand-800 p-1 rounded-lg transition">
+                        <i class="fas fa-microphone text-amber-500"></i>
+                    </button>
+                </div>
+                <button type="submit" class="btn-primary btn-magnetic btn-sheen px-5 text-xs font-bold">Search</button>
+            </form>
+
+            <!-- Results Listing Header -->
+            <div class="flex items-center justify-between">
+                <h2 class="text-sm font-bold text-slate-600 uppercase tracking-wider">Micro-Enterprise Blueprints</h2>
+                {% if search or filters.category or filters.investment or filters.complexity %}
+                    <span class="text-xs text-brand-800 font-semibold bg-brand-50 px-2.5 py-1 rounded-lg border border-brand-200">
+                        Filtered Results
+                    </span>
+                {% endif %}
+            </div>
+
+            <!-- Business Ideas Cards Grid -->
+            <div class="space-y-4 perspective-viewport anim-grid-stagger" data-anim="fade-up">
+                {% if business_ideas %}
+                    {% for biz in business_ideas %}
+                    {% with biz_key="business_"|add:biz.id|stringformat:"s" %}
+                    <div class="tilt-card-3d roc-card hover-lift-3d card-specular-glare p-6 border border-slate-200 hover:border-rose-400 relative">
+                        <div class="tilt-glare"></div>
+                        <div class="depth-layer-1">
+                            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-3">
+                                <div class="flex-1">
+                                    <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                                        <h3 class="text-lg sm:text-xl font-bold text-slate-900 hover:text-brand-800 transition">
+                                            <a href="{% url 'business_detail' biz.id %}">{{ biz.title }}</a>
+                                        </h3>
+                                        <span class="roc-badge roc-badge-rose text-[10px]">
+                                            {{ biz.get_category_display }}
+                                        </span>
+                                    </div>
+                                    <p class="text-xs text-slate-600 font-semibold flex items-center gap-1.5">
+                                        <i class="fas fa-chart-line text-slate-400"></i> Investment: {{ biz.investment_range }}
+                                    </p>
+                                </div>
+
+                                <div class="flex items-center gap-2 self-start depth-layer-2">
+                                    <button class="save-btn heart-pop {% if biz_key in user_saved_keys %}is-saved{% endif %}"
+                                            data-type="business" data-id="{{ biz.id }}" title="Save to wishlist">
+                                        <i class="{% if biz_key in user_saved_keys %}fa-solid fa-heart text-red-500{% else %}fa-regular fa-heart text-slate-400{% endif %}"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <p class="text-xs text-slate-600 line-clamp-2 leading-relaxed mb-4">
+                                {{ biz.description }}
+                            </p>
+
+                            <!-- Key Specs Row -->
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs bg-slate-50 p-3 rounded-2xl border border-slate-100 mb-4">
+                                <div class="flex items-center gap-1.5 text-slate-700">
+                                    <i class="fas fa-coins text-brand-700"></i>
+                                    <span class="capitalize">{{ biz.investment_level }} Capital</span>
+                                </div>
+                                <div class="flex items-center gap-1.5 text-slate-700">
+                                    <i class="fas fa-gauge-high text-brand-700"></i>
+                                    <span class="capitalize">{{ biz.opportunity_level }} Setup</span>
+                                </div>
+                                <div class="flex items-center gap-1.5 text-slate-700">
+                                    <i class="fas fa-chart-line text-brand-700"></i>
+                                    <span class="font-bold text-emerald-700">{{ biz.expected_income }}</span>
+                                </div>
+                                <div class="flex items-center gap-1.5 text-slate-700">
+                                    <i class="fas fa-shop text-brand-700"></i>
+                                    <span class="truncate">{{ biz.market_demand }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="depth-layer-2 pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+                            <div class="flex items-center gap-2">
+                                <span class="roc-badge roc-badge-emerald text-[10px]">
+                                    <i class="fas fa-seedling text-amber-500 text-[9px]"></i> Rural Livelihood Model
+                                </span>
+                            </div>
+                            <div class="flex items-center gap-2 w-full sm:w-auto">
+                                {% if user.is_authenticated %}
+                                    {% if biz_key in user_applied_keys %}
+                                        <button class="btn-applied text-xs py-2 px-4 flex-1 sm:flex-initial" disabled>
+                                            <i class="fas fa-check-circle text-emerald-600"></i> Tracking Idea ✓
+                                        </button>
+                                    {% else %}
+                                        <button onclick="quickApply('business', '{{ biz.id }}', '{{ biz.name|escapejs }}', 'Micro-Enterprise Track', this)"
+                                                class="btn-primary text-xs py-2 px-4 flex-1 sm:flex-initial shadow-xs">
+                                            <i class="fas fa-paper-plane"></i> Track Idea
+                                        </button>
+                                    {% endif %}
+                                {% else %}
+                                    <a href="{% url 'login' %}?next={{ request.path }}"
+                                       class="btn-primary text-xs py-2 px-4 flex-1 sm:flex-initial shadow-xs">
+                                        <i class="fas fa-paper-plane"></i> Track Idea
+                                    </a>
+                                {% endif %}
+
+                                <a href="{% url 'business_detail' biz.id %}" class="btn-secondary text-xs py-2 px-4 flex-1 sm:flex-initial text-center">
+                                    View Blueprint
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endwith %}
+                    {% endfor %}
+                {% else %}
+                    <div class="roc-card p-12 text-center border border-dashed border-slate-300 rounded-3xl bg-white">
+                        <div class="w-16 h-16 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">
+                            <i class="fas fa-store"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-2">No Business Ideas Found</h3>
+                        <p class="text-xs text-slate-500 max-w-sm mx-auto mb-6">
+                            We couldn't find any enterprise models matching your filters. Try selecting a different investment range or clear keywords.
+                        </p>
+                        <a href="{% url 'business_list' %}" class="btn-primary text-xs py-2.5 px-5">
+                            Reset All Filters
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}

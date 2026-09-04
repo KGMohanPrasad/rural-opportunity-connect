@@ -1,0 +1,249 @@
+{% extends 'base.html' %}
+
+{% block title %}About & Design Thinking — Rural Opportunity Connect{% endblock %}
+
+{% block content %}
+<!-- Hero Header -->
+<section class="bg-gradient-to-b from-slate-950 via-[#071526] to-[#0c2340] text-white py-16 lg:py-20 text-center relative overflow-hidden" data-anim="fade-up">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 space-y-4 relative z-10">
+        <div class="hero-badge-pulse inline-flex items-center gap-2 bg-cyan-500/15 border border-cyan-400/30 text-cyan-300 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider">
+            <i class="fas fa-lightbulb text-cyan-400"></i> Social Impact & Design Thinking Framework
+        </div>
+        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
+            About <span class="shiny-text">Rural Opportunity Connect</span>
+        </h1>
+        <p class="text-base sm:text-lg text-slate-200 max-w-2xl mx-auto leading-relaxed">
+            Bridging the rural-urban opportunity divide through unified access to verified jobs, government schemes, scholarships, and micro-enterprises.
+        </p>
+    </div>
+</section>
+
+<div class="max-w-6xl mx-auto px-4 sm:px-6 py-16 space-y-16">
+    <!-- 1. Mission & Vision -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8" data-anim="fade-up">
+        <div class="roc-card p-8 bg-gradient-to-br from-brand-50/80 to-white border-l-4 border-l-brand-800 hover-lift-3d card-specular-glare">
+            <div class="w-12 h-12 rounded-2xl bg-brand-100 text-brand-800 flex items-center justify-center text-xl mb-4">
+                <i class="fas fa-bullseye"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-slate-900 mb-3">Our Mission</h2>
+            <p class="text-sm text-slate-600 leading-relaxed">
+                To democratize livelihood opportunities for rural communities by creating an inclusive, mobile-first, and transparent digital gateway that eliminates information asymmetry and empowers youth with sustainable livelihoods.
+            </p>
+        </div>
+
+        <div class="roc-card p-8 bg-gradient-to-br from-cyan-50/80 to-white border-l-4 border-l-cyan-600 hover-lift-3d card-specular-glare">
+            <div class="w-12 h-12 rounded-2xl bg-cyan-100 text-cyan-800 flex items-center justify-center text-xl mb-4">
+                <i class="fas fa-eye"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-slate-900 mb-3">Future Vision</h2>
+            <p class="text-sm text-slate-600 leading-relaxed">
+                A connected rural India where every student, farmer, and aspiring entrepreneur has equal, frictionless access to verified government benefits, education funding, and market employment without forced distress migration to cities.
+            </p>
+        </div>
+    </div>
+
+    <!-- 2. The Problem Statement -->
+    <div class="roc-card p-8 md:p-10 border border-slate-200">
+        <div class="flex items-center gap-3 mb-6">
+            <span class="w-10 h-10 rounded-xl bg-red-50 text-red-600 flex items-center justify-center text-lg font-bold">
+                <i class="fas fa-triangle-exclamation"></i>
+            </span>
+            <div>
+                <h2 class="text-2xl font-bold text-slate-900">The Problem: Rural Opportunity Divide</h2>
+                <p class="text-xs text-slate-500">Challenges identified through ground-level fieldwork and empathy interviews</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-5 rounded-2xl bg-slate-50 border border-slate-100 space-y-2">
+                <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                    <i class="fas fa-circle-xmark text-red-500"></i> Information Asymmetry & Awareness Gap
+                </h3>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                    Over 65% of rural students and job seekers miss out on active government schemes and merit scholarships simply because information is fragmented across dozens of official portals.
+                </p>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-slate-50 border border-slate-100 space-y-2">
+                <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                    <i class="fas fa-circle-xmark text-red-500"></i> Complex Application Bureaucracy
+                </h3>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                    Unclear document prerequisites (Aadhaar seeding, income certificates, nativity proofs) lead to high application rejection rates and repeated physical trips to district headquarters.
+                </p>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-slate-50 border border-slate-100 space-y-2">
+                <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                    <i class="fas fa-circle-xmark text-red-500"></i> Rural Skill-to-Job Disconnect
+                </h3>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                    Vocational talents in agriculture, mechanical repairs, and handlooms lack direct connection to formal employment and micro-enterprise startup grants in their local districts.
+                </p>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-slate-50 border border-slate-100 space-y-2">
+                <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                    <i class="fas fa-circle-xmark text-red-500"></i> Digital Literacy & Vernacular Barriers
+                </h3>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                    Most portals are designed exclusively in English with complex desktop navigation, making them inaccessible to low-bandwidth mobile users in rural panchayats.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Our Solution -->
+    <div class="roc-card p-8 md:p-10 bg-brand-50/50 border border-brand-100">
+        <div class="flex items-center gap-3 mb-6">
+            <span class="w-10 h-10 rounded-xl bg-brand-800 text-white flex items-center justify-center text-lg font-bold shadow-xs">
+                <i class="fas fa-check-double"></i>
+            </span>
+            <div>
+                <h2 class="text-2xl font-bold text-slate-900">The Solution: Rural Opportunity Connect</h2>
+                <p class="text-xs text-slate-600">A unified, mobile-optimized social impact portal</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="p-5 bg-white rounded-2xl border border-slate-100 shadow-xs space-y-2">
+                <div class="text-blue-700 text-lg font-bold">💼 Centralized Jobs Hub</div>
+                <p class="text-xs text-slate-600 leading-relaxed">Connects rural talent to verified employers seeking local and semi-urban workforce with transparent salary bands.</p>
+            </div>
+            <div class="p-5 bg-white rounded-2xl border border-slate-100 shadow-xs space-y-2">
+                <div class="text-purple-700 text-lg font-bold">🎓 Education Grants Hub</div>
+                <p class="text-xs text-slate-600 leading-relaxed">Aggregates post-matric, degree, and merit scholarships with income criteria and direct application guidelines.</p>
+            </div>
+            <div class="p-5 bg-white rounded-2xl border border-slate-100 shadow-xs space-y-2">
+                <div class="text-emerald-700 text-lg font-bold">🏛️ Welfare & DBT Schemes</div>
+                <p class="text-xs text-slate-600 leading-relaxed">Simplifies central and state government subsidies into clear benefits, eligibility, and required document checklists.</p>
+            </div>
+            <div class="p-5 bg-white rounded-2xl border border-slate-100 shadow-xs space-y-2">
+                <div class="text-amber-700 text-lg font-bold">💻 Certified Skill Training</div>
+                <p class="text-xs text-slate-600 leading-relaxed">Lists free, government-approved vocational courses in technical, agriculture, and digital commerce fields.</p>
+            </div>
+            <div class="p-5 bg-white rounded-2xl border border-slate-100 shadow-xs space-y-2">
+                <div class="text-rose-700 text-lg font-bold">🏪 Micro-Enterprise Discovery</div>
+                <p class="text-xs text-slate-600 leading-relaxed">Actionable business blueprints requiring low capital investment tailored to local rural market demand.</p>
+            </div>
+            <div class="p-5 bg-white rounded-2xl border border-slate-100 shadow-xs space-y-2">
+                <div class="text-teal-700 text-lg font-bold">🎯 1-Click Direct Apply & AI Matching</div>
+                <p class="text-xs text-slate-600 leading-relaxed">Direct application submission using authenticated user profile with zero duplicate paperwork.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. Design Thinking 5-Stage Framework -->
+    <div class="roc-card p-8 md:p-10 border border-slate-200">
+        <div class="text-center max-w-2xl mx-auto mb-10">
+            <span class="roc-badge roc-badge-emerald mb-2">Design Thinking Methodology</span>
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900">5 Stages of Design Thinking Applied</h2>
+            <p class="text-xs text-slate-500">How human-centered design created Rural Opportunity Connect</p>
+        </div>
+
+        <div class="space-y-6">
+            <!-- 1. Empathize -->
+            <div class="p-6 rounded-2xl bg-slate-50 border-l-4 border-l-brand-800 space-y-2">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-base font-bold text-slate-900">1. Empathize — Understanding Rural Livelihood Realities</h3>
+                    <span class="roc-badge roc-badge-slate text-[10px]">Stage 01</span>
+                </div>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                    We conducted immersive interviews with 50+ rural job seekers, 12th standard students, and panchayat CSC operators across semi-urban Tamil Nadu and Andhra Pradesh to map user frustrations with complex government portals.
+                </p>
+            </div>
+
+            <!-- 2. Define -->
+            <div class="p-6 rounded-2xl bg-slate-50 border-l-4 border-l-blue-600 space-y-2">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-base font-bold text-slate-900">2. Define — Framing the Core Challenge</h3>
+                    <span class="roc-badge roc-badge-slate text-[10px]">Stage 02</span>
+                </div>
+                <blockquote class="text-xs font-semibold text-slate-800 bg-white p-3 rounded-xl border border-slate-200">
+                    "Rural students and job seekers lack a single, mobile-accessible gateway to discover verified opportunities, understand eligibility requirements, and track application pipelines in regional languages."
+                </blockquote>
+            </div>
+
+            <!-- 3. Ideate -->
+            <div class="p-6 rounded-2xl bg-slate-50 border-l-4 border-l-purple-600 space-y-2">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-base font-bold text-slate-900">3. Ideate — Brainstorming Scalable Features</h3>
+                    <span class="roc-badge roc-badge-slate text-[10px]">Stage 03</span>
+                </div>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                    Generated solutions including: personalized profile matching, 1-click wishlist saving, visual Document Readiness Locker, multilingual interface across 6 regional languages, voice search assistant, and an end-to-end application tracker.
+                </p>
+            </div>
+
+            <!-- 4. Prototype -->
+            <div class="p-6 rounded-2xl bg-slate-50 border-l-4 border-l-amber-500 space-y-2">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-base font-bold text-slate-900">4. Prototype — Building the Full-Stack Platform</h3>
+                    <span class="roc-badge roc-badge-slate text-[10px]">Stage 04</span>
+                </div>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                    Engineered a modern production Django web application with responsive UI, real-time database querying, authentication, personalized recommendation feeds, 1-click direct Quick Apply, and persistent document lockers.
+                </p>
+            </div>
+
+            <!-- 5. Test -->
+            <div class="p-6 rounded-2xl bg-slate-50 border-l-4 border-l-emerald-600 space-y-2">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-base font-bold text-slate-900">5. Test — User Testing & Accessibility Validation</h3>
+                    <span class="roc-badge roc-badge-slate text-[10px]">Stage 05</span>
+                </div>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                    Validated user journeys across low-bandwidth 3G mobile devices, verified form validations, tested voice search accuracy in vernacular accents, and ensured responsive layout integrity across 375px to 1920px viewports.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. UN Sustainable Development Goals Alignment -->
+    <div class="roc-card p-8 md:p-10 bg-slate-900 text-white">
+        <div class="flex items-center gap-3 mb-8">
+            <span class="w-10 h-10 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center text-lg font-bold">
+                <i class="fas fa-globe"></i>
+            </span>
+            <div>
+                <h2 class="text-2xl font-bold text-white">UN Sustainable Development Goals (SDGs)</h2>
+                <p class="text-xs text-slate-400">Directly contributing to the 2030 Agenda for Sustainable Development</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="p-5 rounded-2xl bg-slate-800/80 border border-slate-700 space-y-2">
+                <span class="roc-badge roc-badge-emerald text-[10px]">Primary Goal</span>
+                <h3 class="text-base font-bold text-amber-300">SDG 10: Reduced Inequalities</h3>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                    Target 10.2 & 10.7: Empowering social and economic inclusion of rural youth irrespective of geography or income status.
+                </p>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-slate-800/80 border border-slate-700 space-y-2">
+                <span class="roc-badge roc-badge-blue text-[10px]">Supporting</span>
+                <h3 class="text-base font-bold text-blue-300">SDG 4: Quality Education</h3>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                    Target 4.3: Equal access for all women and men to affordable and quality higher education through scholarships and skill programs.
+                </p>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-slate-800/80 border border-slate-700 space-y-2">
+                <span class="roc-badge roc-badge-purple text-[10px]">Supporting</span>
+                <h3 class="text-base font-bold text-purple-300">SDG 8: Decent Work & Growth</h3>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                    Target 8.5: Full and productive employment and decent work for all young people through verified jobs and micro-enterprises.
+                </p>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-slate-800/80 border border-slate-700 space-y-2">
+                <span class="roc-badge roc-badge-amber text-[10px]">Supporting</span>
+                <h3 class="text-base font-bold text-rose-300">SDG 1: No Poverty</h3>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                    Target 1.3: Connecting vulnerable rural households to social protection floors and Direct Benefit Transfer (DBT) welfare schemes.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

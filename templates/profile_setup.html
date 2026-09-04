@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+
+{% block title %}Complete Your Profile Setup — Rural Opportunity Connect{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 py-12 space-y-8">
+    <!-- Executive Branded Header Banner -->
+    <div class="roc-card p-8 md:p-10 bg-gradient-to-r from-slate-950 via-[#071526] to-[#0c2340] text-white rounded-3xl shadow-xl mb-8 relative overflow-hidden border border-cyan-500/30 text-center" data-anim="fade-up">
+        <div class="hero-badge-pulse inline-flex items-center gap-2 bg-cyan-500/20 text-cyan-300 border border-cyan-400/30 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider backdrop-blur-xs mb-3">
+            <i class="fas fa-sparkles text-cyan-400"></i> Onboarding Profile Setup
+        </div>
+        <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight mb-2">
+            Complete Your <span class="shiny-text">Opportunity Profile</span>
+        </h1>
+        <p class="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto font-normal leading-relaxed">
+            This information allows our AI matching engine to recommend verified jobs, scholarships, and welfare schemes tailored to your background.
+        </p>
+    </div>
+
+    <!-- 4-Step Progress Stepper -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-center anim-grid-stagger" data-anim="fade-up">
+        <div class="p-3.5 rounded-2xl bg-[#0c2340] border-2 border-cyan-500/60 text-white shadow-sm hover-lift-3d card-specular-glare">
+            <span class="w-6 h-6 rounded-full bg-cyan-500 text-slate-950 text-xs font-bold inline-flex items-center justify-center mb-1">1</span>
+            <p class="text-xs font-bold text-cyan-200">Personal Info</p>
+            <p class="text-[10px] text-cyan-300/80">Age & District</p>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-white border border-slate-200 text-slate-700 shadow-xs hover-lift-3d card-specular-glare">
+            <span class="w-6 h-6 rounded-full bg-slate-200 text-slate-700 text-xs font-bold inline-flex items-center justify-center mb-1">2</span>
+            <p class="text-xs font-bold">Education</p>
+            <p class="text-[10px] text-slate-400">Level & Stream</p>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-white border border-slate-200 text-slate-700 shadow-xs hover-lift-3d card-specular-glare">
+            <span class="w-6 h-6 rounded-full bg-slate-200 text-slate-700 text-xs font-bold inline-flex items-center justify-center mb-1">3</span>
+            <p class="text-xs font-bold">Skills</p>
+            <p class="text-[10px] text-slate-400">Vocational Talent</p>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-white border border-slate-200 text-slate-700 shadow-xs hover-lift-3d card-specular-glare">
+            <span class="w-6 h-6 rounded-full bg-slate-200 text-slate-700 text-xs font-bold inline-flex items-center justify-center mb-1">4</span>
+            <p class="text-xs font-bold">Focus</p>
+            <p class="text-[10px] text-slate-400">Goals & Income</p>
+        </div>
+    </div>
+
+    <!-- Form Card -->
+    <div class="roc-card p-8 md:p-12 bg-white shadow-xl border border-slate-200 rounded-3xl">
+        <form method="POST" class="space-y-8">
+            {% csrf_token %}
+
+            <!-- Step 1 Section: Personal Info -->
+            <div class="space-y-4 pb-6 border-b border-slate-100">
+                <div class="flex items-center gap-2">
+                    <span class="w-7 h-7 rounded-lg bg-brand-100 text-brand-800 flex items-center justify-center text-xs font-bold">1</span>
+                    <h2 class="text-base font-bold text-slate-900">Step 1 — Personal & Geographic Details</h2>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="form-label" for="age">Age</label>
+                        <input type="number" id="age" name="age" value="{{ profile.age|default:'' }}" min="14" max="80"
+                               placeholder="e.g. 21" class="form-input text-xs">
+                        <p class="form-help">Helps determine age-limited youth subsidies and fellowships.</p>
+                    </div>
+
+                    <div>
+                        <label class="form-label" for="location">Location / District / State</label>
+                        <input type="text" id="location" name="location" value="{{ profile.location|default:'' }}"
+                               placeholder="e.g. Salem, Tamil Nadu" class="form-input text-xs">
+                        <p class="form-help">Used to surface local panchayat and district-specific schemes.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2 Section: Education -->
+            <div class="space-y-4 pb-6 border-b border-slate-100">
+                <div class="flex items-center gap-2">
+                    <span class="w-7 h-7 rounded-lg bg-brand-100 text-brand-800 flex items-center justify-center text-xs font-bold">2</span>
+                    <h2 class="text-base font-bold text-slate-900">Step 2 — Educational Background</h2>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="form-label" for="education">Highest Education Level</label>
+                        <select id="education" name="education" class="form-select text-xs">
+                            <option value="">-- Select Highest Education --</option>
+                            {% for value, label in education_choices %}
+                                <option value="{{ value }}" {% if profile.education == value %}selected{% endif %}>{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="form-label" for="course">Current Course / Academic Stream</label>
+                        <input type="text" id="course" name="course" value="{{ profile.course|default:'' }}"
+                               placeholder="e.g. B.Sc Agriculture, Diploma Mech, 12th Bio-Maths" class="form-input text-xs">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3 Section: Skills & Experience -->
+            <div class="space-y-4 pb-6 border-b border-slate-100">
+                <div class="flex items-center gap-2">
+                    <span class="w-7 h-7 rounded-lg bg-brand-100 text-brand-800 flex items-center justify-center text-xs font-bold">3</span>
+                    <h2 class="text-base font-bold text-slate-900">Step 3 — Skills & Prior Experience</h2>
+                </div>
+
+                <div>
+                    <label class="form-label" for="skills">Skills (Comma-separated)</label>
+                    <input type="text" id="skills" name="skills" value="{{ profile.skills|default:'' }}"
+                           placeholder="e.g. MS Office, Data Entry, Organic Farming, Welding, Electrician, Python"
+                           class="form-input text-xs">
+                    <p class="form-help">List both vocational and digital skills for higher match accuracy.</p>
+                </div>
+
+                <div>
+                    <label class="form-label" for="experience">Work Experience / Prior Training</label>
+                    <textarea id="experience" name="experience" rows="3"
+                              placeholder="Describe any past jobs, apprenticeships, family business work, or farm projects..."
+                              class="form-textarea text-xs">{{ profile.experience|default:'' }}</textarea>
+                </div>
+            </div>
+
+            <!-- Step 4 Section: Interests & Focus -->
+            <div class="space-y-4">
+                <div class="flex items-center gap-2">
+                    <span class="w-7 h-7 rounded-lg bg-brand-100 text-brand-800 flex items-center justify-center text-xs font-bold">4</span>
+                    <h2 class="text-base font-bold text-slate-900">Step 4 — Opportunity Focus & Income Criteria</h2>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="form-label" for="annual_income">Annual Family Income</label>
+                        <input type="text" id="annual_income" name="annual_income" value="{{ profile.annual_income|default:'' }}"
+                               placeholder="e.g. Less than ₹1,50,000" class="form-input text-xs">
+                        <p class="form-help">Used to match means-based scholarships and BPL DBT grants.</p>
+                    </div>
+
+                    <div>
+                        <label class="form-label" for="preferred_opportunity">Primary Opportunity Interest</label>
+                        <select id="preferred_opportunity" name="preferred_opportunity" class="form-select text-xs">
+                            <option value="">-- Select Main Interest --</option>
+                            {% for value, label in opportunity_choices %}
+                                <option value="{{ value }}" {% if profile.preferred_opportunity == value %}selected{% endif %}>{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="form-label" for="interests">Career Aspirations / Topics</label>
+                    <input type="text" id="interests" name="interests" value="{{ profile.interests|default:'' }}"
+                           placeholder="e.g. Poultry Farming, Solar Tech, Banking Exams, Small Retail" class="form-input text-xs">
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="pt-6 border-t border-slate-100">
+                <button type="submit" class="btn-primary w-full py-3.5 text-sm font-bold shadow-lg shadow-brand-950/20 btn-sheen spring-press">
+                    <i class="fas fa-check-circle"></i> Complete Setup & Launch My Dashboard
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

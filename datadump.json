@@ -1,0 +1,1864 @@
+[
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$600000$1e9nfuxTTcd6D3wWer2J6S$SfSGGlZ9OVU4D4vtTZzh6G5ys9YvIlA8FNXNCaGfaKM=",
+    "last_login": "2026-09-02T06:43:05.682Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "admin@roc.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-09-01T15:22:39.485Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$3IxdIezJPYPJx8DySE090H$dNyG+GXH4HyEizIoXDADlcAdsaQZdakPkGswQpC/qO4=",
+    "last_login": "2026-09-01T15:38:18.533Z",
+    "is_superuser": false,
+    "username": "Bharathkumar B",
+    "first_name": "Bharathkumar",
+    "last_name": "B",
+    "email": "bharathbalasundaram079@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-09-01T15:38:15.592Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$a1h3km7mfBFFdUXwW4qf0p$KgOucgj8PNbH7brKCx+jK8w/3v/FXSk2fIa3/sCNUa8=",
+    "last_login": "2026-09-02T03:49:33.027Z",
+    "is_superuser": false,
+    "username": "123456",
+    "first_name": "Elavarasan",
+    "last_name": "T",
+    "email": "elavarasan17r@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-09-02T03:49:31.957Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$EjmR3cxRgxPqB3DMmk2QF3$wFphxZ7g9jv4I/C0jsM+J0yUtBjFX91oYRjPYdELB2c=",
+    "last_login": "2026-09-02T14:21:07.832Z",
+    "is_superuser": false,
+    "username": "mohan",
+    "first_name": "Mohan",
+    "last_name": "Prasad",
+    "email": "contact.k.gmohanprasad@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-09-02T10:00:35.349Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "d7lr1hexnmp2on198v20w3n9ydmdpa5h",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQAP-yZ0NgoRR69O4bml2W2qqBpLQn499Nkx70OjOZN4y0b_O4t7yOi8AAFi6_jCk9czmEPKjcq0q1bOvC6kjUaZu6Vcmv69n-DWZqMwwQs_bGCppeo7M6SDbWT9glyybwFIkdR2R0fUdOUGwKIU2E4gW7zB4-X8aYN8M:1x1byf:Xw7UK1SVdel_DtPF9OGowJwbnCYYa-R9T3UCyvoXFiI",
+    "expire_date": "2026-09-16T03:49:33.037Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "e4s9yiuhoufcxjfux7b5twj1i95vq49v",
+  "fields": {
+    "session_data": ".eJxVjDkOwjAQAP-yNbJ8rp2U9LzBWl84gGwpTirE31GkFNDOjOYNnvat-n3k1S8JZhBw-WWB4jO3Q6QHtXtnsbdtXQI7EnbawW495df1bP8GlUaFGRQiSk5ZSiuEyRYLOjPFSWG0MZCwWiNx44p1oShH2nLtsCSXeCo6SPh8AbY0Nyc:1x1egb:ft7Ri7Loq9OMbDb4jXqlfxK-0wzKeszlKsm2fuDbZ4I",
+    "expire_date": "2026-09-16T06:43:05.690Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "ghnup7wl7pmjx9mls9rjr7sf0t0fz0bp",
+  "fields": {
+    "session_data": ".eJxVjDkOwjAQAP-yNbJ8rp2U9LzBWl84gGwpTirE31GkFNDOjOYNnvat-n3k1S8JZhBw-WWB4jO3Q6QHtXtnsbdtXQI7EnbawW495df1bP8GlUaFGRQiSk5ZSiuEyRYLOjPFSWG0MZCwWiNx44p1oShH2nLtsCSXeCo6SPh8AbY0Nyc:1x1eg9:tDXGJaQ10etyp9KwrDP2J_3H5KZBoeXVRPHkuVfwFAg",
+    "expire_date": "2026-09-16T06:42:37.419Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "igr10mh3z5zscyvrd0c4kwg8ga10rt81",
+  "fields": {
+    "session_data": ".eJxVjDkOwjAQAP-yNbJ8rp2U9LzBWl84gGwpTirE31GkFNDOjOYNnvat-n3k1S8JZhBw-WWB4jO3Q6QHtXtnsbdtXQI7EnbawW495df1bP8GlUaFGRQiSk5ZSiuEyRYLOjPFSWG0MZCwWiNx44p1oShH2nLtsCSXeCo6SPh8AbY0Nyc:1x1efx:VJ6M5zkkrePJyfQX_rZcFW3nyk3ZWewYsjs-p8W_WWc",
+    "expire_date": "2026-09-16T06:42:25.702Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "je0iqbytzo5yklc7ww4v57m5x3fqlsz4",
+  "fields": {
+    "session_data": ".eJxVjDEOgzAMAP_iuYpIDHHD2J03RLYTGtoKJAJT1b9XSAztene6N0TetxL3mtc4JeihhcsvE9Znng-RHjzfF6PLvK2TmCMxp61mWFJ-3c72b1C4FujBOWwok0VJQb3LmIKQihcrnQbm3LQonlvFzvIVw4hEyRIHsTRa7eDzBeYbN_k:1x1lpr:WuX4Oo6zLddKA2KhjamZzyiNSKPZGeRfOju54JNOR8U",
+    "expire_date": "2026-09-16T14:21:07.837Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "knxpznmqezb4swun6p3hac8hsdco4ooh",
+  "fields": {
+    "session_data": ".eJxVjDEOgzAMAP_iuYpIDHHD2J03RLYTGtoKJAJT1b9XSAztene6N0TetxL3mtc4JeihhcsvE9Znng-RHjzfF6PLvK2TmCMxp61mWFJ-3c72b1C4FujBOWwok0VJQb3LmIKQihcrnQbm3LQonlvFzvIVw4hEyRIHsTRa7eDzBeYbN_k:1x1hlj:rrWEYF_SZ_NIND47gczXdmSdV1O8UX21jjyOn69tReE",
+    "expire_date": "2026-09-16T10:00:35.928Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "uxetauyw92385r7zse52wvuswnljlh5k",
+  "fields": {
+    "session_data": ".eJxVjDEOgzAMAP_iuYpKSJyEsTtvQE5sF9oKJAJT1b9XSAztene6Nwy0b-OwV1mHiaEDC5dflqk8ZT4EP2i-L6Ys87ZO2RyJOW01_cLyup3t32CkOkIHV8uBs5MUmogaVLFNqkq2FN9wwpyi9zG5mAmDJO9atiwFkVhLtAKfL_R0OJc:1x1QZ0:Pb1i1CmNmiX0-XbkVwX8RfGUDqLPVl--VRIojfZfe50",
+    "expire_date": "2026-09-15T15:38:18.550Z"
+  }
+},
+{
+  "model": "accounts.userprofile",
+  "pk": 1,
+  "fields": {
+    "user": [
+      "Bharathkumar B"
+    ],
+    "age": 19,
+    "location": "Coimbatore",
+    "education": "bachelor",
+    "course": "Computer Science and Engineering",
+    "skills": "MS office",
+    "experience": "2 years experience",
+    "annual_income": "<2 Lakhs",
+    "interests": "Education Business",
+    "preferred_opportunity": "business",
+    "created_at": "2026-09-01T15:38:18.473Z",
+    "updated_at": "2026-09-01T15:39:56.321Z"
+  }
+},
+{
+  "model": "accounts.userprofile",
+  "pk": 2,
+  "fields": {
+    "user": [
+      "123456"
+    ],
+    "age": 19,
+    "location": "TN",
+    "education": "bachelor",
+    "course": "CSE",
+    "skills": "Python Expert",
+    "experience": "no work experience",
+    "annual_income": "100000",
+    "interests": "Data science",
+    "preferred_opportunity": "jobs",
+    "created_at": "2026-09-02T03:49:32.996Z",
+    "updated_at": "2026-09-02T03:50:49.976Z"
+  }
+},
+{
+  "model": "accounts.userprofile",
+  "pk": 3,
+  "fields": {
+    "user": [
+      "admin"
+    ],
+    "age": null,
+    "location": "",
+    "education": "",
+    "course": "",
+    "skills": "",
+    "experience": "",
+    "annual_income": "",
+    "interests": "",
+    "preferred_opportunity": "",
+    "created_at": "2026-09-02T06:42:37.331Z",
+    "updated_at": "2026-09-02T06:42:37.331Z"
+  }
+},
+{
+  "model": "accounts.userprofile",
+  "pk": 4,
+  "fields": {
+    "user": [
+      "mohan"
+    ],
+    "age": 18,
+    "location": "pollachi",
+    "education": "bachelor",
+    "course": "BE CSE",
+    "skills": "-",
+    "experience": "-",
+    "annual_income": "300000",
+    "interests": "-",
+    "preferred_opportunity": "scholarships",
+    "created_at": "2026-09-02T10:00:35.897Z",
+    "updated_at": "2026-09-02T10:20:26.958Z"
+  }
+},
+{
+  "model": "opportunities.job",
+  "pk": 1,
+  "fields": {
+    "title": "Data Entry Operator",
+    "organization": "ABC Tech Solutions",
+    "description": "Seeking a data entry operator to handle large databases and maintain data quality.",
+    "location": "Bangalore",
+    "salary_min": 15000,
+    "salary_max": 20000,
+    "job_type": "full_time",
+    "required_skills": "MS Office, Data Entry, Typing Speed",
+    "experience_required": "1-2 years",
+    "deadline": "2026-10-16",
+    "source_portal": "National Career Service",
+    "source_url": "https://www.ncs.gov.in/",
+    "is_external": false,
+    "created_at": "2026-09-01T15:22:31.030Z",
+    "updated_at": "2026-09-01T15:22:31.030Z"
+  }
+},
+{
+  "model": "opportunities.job",
+  "pk": 2,
+  "fields": {
+    "title": "Farm Assistant",
+    "organization": "Green Valley Farms",
+    "description": "Looking for enthusiastic farm assistants to help with crop management and harvesting.",
+    "location": "Tamil Nadu",
+    "salary_min": 12000,
+    "salary_max": 18000,
+    "job_type": "full_time",
+    "required_skills": "Agriculture Knowledge, Physical Fitness",
+    "experience_required": "Fresher or 1+ year",
+    "deadline": "2026-10-01",
+    "source_portal": "National Career Service",
+    "source_url": "https://www.ncs.gov.in/",
+    "is_external": false,
+    "created_at": "2026-09-01T15:22:31.040Z",
+    "updated_at": "2026-09-01T15:22:31.040Z"
+  }
+},
+{
+  "model": "opportunities.job",
+  "pk": 3,
+  "fields": {
+    "title": "Computer Operator",
+    "organization": "Digital Services India",
+    "description": "Operate computers and peripherals for data management and file organization.",
+    "location": "Pune",
+    "salary_min": 18000,
+    "salary_max": 25000,
+    "job_type": "full_time",
+    "required_skills": "Computer Literacy, MS Office, Internet",
+    "experience_required": "2+ years",
+    "deadline": "2026-10-31",
+    "source_portal": "National Career Service",
+    "source_url": "https://www.ncs.gov.in/",
+    "is_external": false,
+    "created_at": "2026-09-01T15:22:31.049Z",
+    "updated_at": "2026-09-01T15:22:31.049Z"
+  }
+},
+{
+  "model": "opportunities.job",
+  "pk": 4,
+  "fields": {
+    "title": "Electrician",
+    "organization": "Power Solutions Co.",
+    "description": "Skilled electrician needed for residential and commercial installations.",
+    "location": "Delhi",
+    "salary_min": 20000,
+    "salary_max": 30000,
+    "job_type": "full_time",
+    "required_skills": "Electrical Work, Safety Knowledge, Problem Solving",
+    "experience_required": "3+ years",
+    "deadline": "2026-10-21",
+    "source_portal": "National Career Service",
+    "source_url": "https://www.ncs.gov.in/",
+    "is_external": false,
+    "created_at": "2026-09-01T15:22:31.057Z",
+    "updated_at": "2026-09-01T15:22:31.057Z"
+  }
+},
+{
+  "model": "opportunities.job",
+  "pk": 5,
+  "fields": {
+    "title": "Solar Technician",
+    "organization": "Renewable Energy Ltd",
+    "description": "Install and maintain solar panel systems for homes and businesses.",
+    "location": "Karnataka",
+    "salary_min": 22000,
+    "salary_max": 32000,
+    "job_type": "full_time",
+    "required_skills": "Solar Installation, Electrical Knowledge, Customer Service",
+    "experience_required": "2+ years",
+    "deadline": "2026-10-26",
+    "source_portal": "National Career Service",
+    "source_url": "https://www.ncs.gov.in/",
+    "is_external": false,
+    "created_at": "2026-09-01T15:22:31.066Z",
+    "updated_at": "2026-09-01T15:22:31.066Z"
+  }
+},
+{
+  "model": "opportunities.job",
+  "pk": 6,
+  "fields": {
+    "title": "Delivery Executive",
+    "organization": "FastDeliver Logistics",
+    "description": "Deliver packages to customers efficiently and collect payments.",
+    "location": "Chennai",
+    "salary_min": 16000,
+    "salary_max": 22000,
+    "job_type": "full_time",
+    "required_skills": "Communication, Time Management, Bike License",
+    "experience_required": "Fresher or 1+ year",
+    "deadline": "2026-10-06",
+    "source_portal": "National Career Service",
+    "source_url": "https://www.ncs.gov.in/",
+    "is_external": false,
+    "created_at": "2026-09-01T15:22:31.075Z",
+    "updated_at": "2026-09-01T15:22:31.075Z"
+  }
+},
+{
+  "model": "opportunities.job",
+  "pk": 7,
+  "fields": {
+    "title": "Tailoring Assistant",
+    "organization": "Fashion Studio India",
+    "description": "Assist in tailoring and altering garments for customers.",
+    "location": "Hyderabad",
+    "salary_min": 14000,
+    "salary_max": 19000,
+    "job_type": "full_time",
+    "required_skills": "Sewing, Tailoring, Attention to Detail",
+    "experience_required": "1-2 years",
+    "deadline": "2026-10-11",
+    "source_portal": "National Career Service",
+    "source_url": "https://www.ncs.gov.in/",
+    "is_external": false,
+    "created_at": "2026-09-01T15:22:31.084Z",
+    "updated_at": "2026-09-01T15:22:31.084Z"
+  }
+},
+{
+  "model": "opportunities.job",
+  "pk": 8,
+  "fields": {
+    "title": "Agriculture Field Assistant",
+    "organization": "Modern Agriculture Foundation",
+    "description": "Support agricultural researchers in field trials and data collection.",
+    "location": "Gujarat",
+    "salary_min": 13000,
+    "salary_max": 19000,
+    "job_type": "part_time",
+    "required_skills": "Agriculture, Data Collection, Basic Computer Skills",
+    "experience_required": "Fresher",
+    "deadline": "2026-09-26",
+    "source_portal": "National Career Service",
+    "source_url": "https://www.ncs.gov.in/",
+    "is_external": false,
+    "created_at": "2026-09-01T15:22:31.092Z",
+    "updated_at": "2026-09-01T15:22:31.092Z"
+  }
+},
+{
+  "model": "opportunities.job",
+  "pk": 9,
+  "fields": {
+    "title": "Call Center Executive",
+    "organization": "Customer Care Solutions",
+    "description": "Handle customer inquiries and provide support over the phone.",
+    "location": "Kolkata",
+    "salary_min": 15000,
+    "salary_max": 21000,
+    "job_type": "full_time",
+    "required_skills": "Communication, English Language, Customer Service",
+    "experience_required": "Fresher or 1+ year",
+    "deadline": "2026-10-19",
+    "source_portal": "National Career Service",
+    "source_url": "https://www.ncs.gov.in/",
+    "is_external": false,
+    "created_at": "2026-09-01T15:22:31.101Z",
+    "updated_at": "2026-09-01T15:22:31.101Z"
+  }
+},
+{
+  "model": "opportunities.job",
+  "pk": 10,
+  "fields": {
+    "title": "Office Assistant",
+    "organization": "Corporate Solutions Ltd",
+    "description": "Assist with office administration and support various departments.",
+    "location": "Mumbai",
+    "salary_min": 17000,
+    "salary_max": 24000,
+    "job_type": "full_time",
+    "required_skills": "MS Office, Communication, Organization",
+    "experience_required": "1+ year",
+    "deadline": "2026-10-23",
+    "source_portal": "National Career Service",
+    "source_url": "https://www.ncs.gov.in/",
+    "is_external": false,
+    "created_at": "2026-09-01T15:22:31.109Z",
+    "updated_at": "2026-09-01T15:22:31.109Z"
+  }
+},
+{
+  "model": "opportunities.job",
+  "pk": 11,
+  "fields": {
+    "title": "CSC Village Level Entrepreneur (VLE) Operator",
+    "organization": "CSC e-Governance Services India (NCS Partner)",
+    "description": "Operate village digital kiosk assisting citizens with certificate applications, Aadhaar banking, insurance, and bill payments.",
+    "location": "Rural Districts, Pan-India",
+    "salary_min": 18000,
+    "salary_max": 35000,
+    "job_type": "full_time",
+    "required_skills": "Computer Literacy, Customer Service, Typing, Local Language",
+    "experience_required": "Fresher to 1 year",
+    "deadline": "2026-10-17",
+    "source_portal": "National Career Service",
+    "source_url": "https://www.ncs.gov.in/",
+    "is_external": true,
+    "created_at": "2026-09-02T10:38:37.528Z",
+    "updated_at": "2026-09-02T14:23:17.011Z"
+  }
+},
+{
+  "model": "opportunities.job",
+  "pk": 12,
+  "fields": {
+    "title": "Gramin Bank Business Correspondent (BC)",
+    "organization": "National Payments Corporation & Rural Banks",
+    "description": "Provide micro-ATM banking services, cash deposits, DBT disbursements, and savings enrollment in rural panchayats.",
+    "location": "Semi-Urban & Village Hubs",
+    "salary_min": 16000,
+    "salary_max": 28000,
+    "job_type": "full_time",
+    "required_skills": "Basic Accounts, Smartphone Handling, Micro-ATM Operations",
+    "experience_required": "10th / 12th Pass",
+    "deadline": "2026-10-12",
+    "source_portal": "National Career Service",
+    "source_url": "https://www.ncs.gov.in/",
+    "is_external": true,
+    "created_at": "2026-09-02T10:38:37.535Z",
+    "updated_at": "2026-09-02T14:23:17.018Z"
+  }
+},
+{
+  "model": "opportunities.job",
+  "pk": 13,
+  "fields": {
+    "title": "Agro-Drone Mapping & Spraying Associate",
+    "organization": "Kisan Drone Kendra (NCS Agri-Tech)",
+    "description": "Pilot agricultural spraying drones across farm clusters for pesticide and liquid fertilizer application.",
+    "location": "Tier-3 & Agricultural Clusters",
+    "salary_min": 22000,
+    "salary_max": 38000,
+    "job_type": "contract",
+    "required_skills": "Drone Operation Basics, Field Navigation, Agriculture Knowledge",
+    "experience_required": "DGCA Drone License or Agri Diploma",
+    "deadline": "2026-10-22",
+    "source_portal": "National Career Service",
+    "source_url": "https://www.ncs.gov.in/",
+    "is_external": true,
+    "created_at": "2026-09-02T10:38:37.541Z",
+    "updated_at": "2026-09-02T14:23:17.024Z"
+  }
+},
+{
+  "model": "opportunities.job",
+  "pk": 14,
+  "fields": {
+    "title": "Rural Logistics & Delivery Executive",
+    "organization": "India Post Payments & Gramin Logistics",
+    "description": "Package fulfillment, courier delivery, and last-mile pickup across village post offices.",
+    "location": "Local Panchayat Beats",
+    "salary_min": 14000,
+    "salary_max": 22000,
+    "job_type": "full_time",
+    "required_skills": "Two Wheeler Driving, Route Familiarity, Basic Smartphone Usage",
+    "experience_required": "Valid Driving License",
+    "deadline": "2026-10-02",
+    "source_portal": "National Career Service",
+    "source_url": "https://www.ncs.gov.in/",
+    "is_external": true,
+    "created_at": "2026-09-02T10:38:37.548Z",
+    "updated_at": "2026-09-02T14:23:17.030Z"
+  }
+},
+{
+  "model": "opportunities.savedopportunity",
+  "pk": 1,
+  "fields": {
+    "user": 3,
+    "opportunity_type": "job",
+    "opportunity_id": 1,
+    "saved_at": "2026-09-02T06:43:05.880Z"
+  }
+},
+{
+  "model": "scholarships.scholarship",
+  "pk": 1,
+  "fields": {
+    "name": "HDFC Bank Scholarship for Rural Students",
+    "provider": "HDFC Bank",
+    "description": "Merit-based scholarship for rural students pursuing higher education.",
+    "amount": "₹50,000 - ₹1,00,000",
+    "education_level": "bachelor",
+    "eligibility": "Merit above 75%, Rural background, Annual income < ₹3 lakhs",
+    "income_limit": "< ₹3,00,000",
+    "category": "Merit",
+    "course": "Engineering, Commerce, Science",
+    "required_documents": "Aadhaar, Mark Sheet, Income Certificate, Community Certificate",
+    "application_deadline": "2026-10-31",
+    "source_portal": "Buddy4Study",
+    "source_url": "https://www.buddy4study.com/",
+    "is_external": false,
+    "created_at": "2026-09-01T15:22:31.117Z",
+    "updated_at": "2026-09-01T15:22:31.117Z"
+  }
+},
+{
+  "model": "scholarships.scholarship",
+  "pk": 2,
+  "fields": {
+    "name": "Central Sector Scholarship for Girls",
+    "provider": "Ministry of Education",
+    "description": "Scholarship for girls from economically weaker sections.",
+    "amount": "₹25,000 - ₹40,000",
+    "education_level": "bachelor",
+    "eligibility": "Girls only, Merit above 60%, Annual income < ₹4.5 lakhs",
+    "income_limit": "< ₹4,50,000",
+    "category": "Special Category",
+    "course": "All courses",
+    "required_documents": "Aadhaar, Mark Sheet, Income Certificate, Caste Certificate",
+    "application_deadline": "2026-11-15",
+    "source_portal": "Buddy4Study",
+    "source_url": "https://www.buddy4study.com/",
+    "is_external": false,
+    "created_at": "2026-09-01T15:22:31.123Z",
+    "updated_at": "2026-09-01T15:22:31.123Z"
+  }
+},
+{
+  "model": "scholarships.scholarship",
+  "pk": 3,
+  "fields": {
+    "name": "Vidyasaarathi Scholarship",
+    "provider": "VidyaSaarathi NGO",
+    "description": "Comprehensive support for meritorious rural students.",
+    "amount": "₹30,000 - ₹70,000",
+    "education_level": "12th",
+    "eligibility": "Merit above 70%, Rural school background, Annual income < ₹2.5 lakhs",
+    "income_limit": "< ₹2,50,000",
+    "category": "Need-Based",
+    "course": "Any stream",
+    "required_documents": "Aadhaar, Certificate, Income Proof",
+    "application_deadline": "2026-10-21",
+    "source_portal": "Buddy4Study",
+    "source_url": "https://www.buddy4study.com/",
+    "is_external": false,
+    "created_at": "2026-09-01T15:22:31.130Z",
+    "updated_at": "2026-09-01T15:22:31.131Z"
+  }
+},
+{
+  "model": "scholarships.scholarship",
+  "pk": 4,
+  "fields": {
+    "name": "Post Matric Scholarship for OBC Students",
+    "provider": "Department of Social Justice",
+    "description": "Scholarship for OBC category students pursuing higher education.",
+    "amount": "₹15,000 - ₹35,000",
+    "education_level": "bachelor",
+    "eligibility": "OBC category, Annual income < ₹2.5 lakhs",
+    "income_limit": "< ₹2,50,000",
+    "category": "Reserved Category",
+    "course": "All courses",
+    "required_documents": "OBC Certificate, Aadhaar, Mark Sheet, Income Certificate",
+    "application_deadline": "2026-11-30",
+    "source_portal": "Buddy4Study",
+    "source_url": "https://www.buddy4study.com/",
+    "is_external": false,
+    "created_at": "2026-09-01T15:22:31.136Z",
+    "updated_at": "2026-09-01T15:22:31.136Z"
+  }
+},
+{
+  "model": "scholarships.scholarship",
+  "pk": 5,
+  "fields": {
+    "name": "NSP Agricultural Scholarships",
+    "provider": "National Scholarship Portal",
+    "description": "Scholarships for students pursuing agriculture and related courses.",
+    "amount": "₹20,000 - ₹50,000",
+    "education_level": "diploma",
+    "eligibility": "Agriculture students, Merit above 65%",
+    "income_limit": "< ₹3,00,000",
+    "category": "Course-Specific",
+    "course": "Agriculture, Horticulture",
+    "required_documents": "Aadhaar, Mark Sheet, Admission Letter",
+    "application_deadline": "2026-11-05",
+    "source_portal": "Buddy4Study",
+    "source_url": "https://www.buddy4study.com/",
+    "is_external": false,
+    "created_at": "2026-09-01T15:22:31.142Z",
+    "updated_at": "2026-09-01T15:22:31.142Z"
+  }
+},
+{
+  "model": "scholarships.scholarship",
+  "pk": 6,
+  "fields": {
+    "name": "HDFC Bank Parivartan’s ECSS Programme",
+    "provider": "HDFC Bank (Buddy4Study Partner)",
+    "description": "Annual financial assistance for meritorious rural students facing personal or financial crisis.",
+    "amount": "₹75,000 / year",
+    "education_level": "bachelor",
+    "eligibility": "Enrolled in undergraduate degree or diploma; Annual family income ≤ ₹2.5 Lakhs.",
+    "income_limit": "≤ ₹2,50,000",
+    "category": "Merit-cum-Means",
+    "course": "All Undergraduate & Professional Courses",
+    "required_documents": "Marksheets, Income Certificate, College Fee Receipt, Aadhaar",
+    "application_deadline": "2026-10-17",
+    "source_portal": "Buddy4Study",
+    "source_url": "https://www.buddy4study.com/page/hdfc-bank-parivartans-ecss-programme",
+    "is_external": true,
+    "created_at": "2026-09-02T10:38:37.428Z",
+    "updated_at": "2026-09-02T14:23:16.922Z"
+  }
+},
+{
+  "model": "scholarships.scholarship",
+  "pk": 7,
+  "fields": {
+    "name": "Tata Trust Medical and Healthcare Grant",
+    "provider": "Tata Trusts (Buddy4Study Partner)",
+    "description": "Full and partial tuition support for students from agrarian families pursuing nursing, pharmacy, and allied health.",
+    "amount": "Up to ₹1,00,000",
+    "education_level": "bachelor",
+    "eligibility": "Min. 60% marks in 12th; Priority for students from backward rural districts.",
+    "income_limit": "≤ ₹4,00,000",
+    "category": "Healthcare Merit",
+    "course": "B.Sc Nursing, B.Pharm, Paramedical",
+    "required_documents": "Marksheets, Admission Proof, Tahsildar Income Certificate",
+    "application_deadline": "2026-11-01",
+    "source_portal": "Buddy4Study",
+    "source_url": "https://www.buddy4study.com/page/tata-trusts-scholarship",
+    "is_external": true,
+    "created_at": "2026-09-02T10:38:37.438Z",
+    "updated_at": "2026-09-02T14:23:16.929Z"
+  }
+},
+{
+  "model": "scholarships.scholarship",
+  "pk": 8,
+  "fields": {
+    "name": "Reliance Foundation Undergraduate Scholarship",
+    "provider": "Reliance Foundation (Buddy4Study)",
+    "description": "Empowering top-ranking students with holistic financial assistance and leadership mentoring.",
+    "amount": "₹2,00,000 (Over degree duration)",
+    "education_level": "bachelor",
+    "eligibility": "First-year degree students; Aptitude test qualification; Family income ≤ ₹2.5 Lakhs.",
+    "income_limit": "≤ ₹2,50,000",
+    "category": "Merit-cum-Means",
+    "course": "Any recognized UG Degree",
+    "required_documents": "12th Marksheet, Bonafide Certificate, Income Proof",
+    "application_deadline": "2026-10-22",
+    "source_portal": "Buddy4Study",
+    "source_url": "https://www.buddy4study.com/page/reliance-foundation-undergraduate-scholarships",
+    "is_external": true,
+    "created_at": "2026-09-02T10:38:37.446Z",
+    "updated_at": "2026-09-02T14:23:16.936Z"
+  }
+},
+{
+  "model": "scholarships.scholarship",
+  "pk": 9,
+  "fields": {
+    "name": "Santoor Women’s Rural Scholarship",
+    "provider": "Wipro Cares (Buddy4Study)",
+    "description": "Empowering rural young women to pursue higher education after 12th standard in state universities.",
+    "amount": "₹24,000 / year",
+    "education_level": "bachelor",
+    "eligibility": "Female applicants passed 10th & 12th from government schools in rural areas.",
+    "income_limit": "Rural / General",
+    "category": "Women Empowerment",
+    "course": "Humanities, Science, Commerce",
+    "required_documents": "Govt School Transfer Certificate, 12th Marksheet, Aadhaar",
+    "application_deadline": "2026-10-07",
+    "source_portal": "Buddy4Study",
+    "source_url": "https://www.buddy4study.com/page/santoor-scholarship-programme",
+    "is_external": true,
+    "created_at": "2026-09-02T10:38:37.453Z",
+    "updated_at": "2026-09-02T14:23:16.943Z"
+  }
+},
+{
+  "model": "scholarships.scholarship",
+  "pk": 10,
+  "fields": {
+    "name": "Keep India Smiling Foundational Scholarship",
+    "provider": "Colgate-Palmolive (Buddy4Study)",
+    "description": "Financial support and foundational mentoring for deserving candidates from underserved backgrounds.",
+    "amount": "₹30,000 / year",
+    "education_level": "12th",
+    "eligibility": "Passed 10th with at least 75%; Enrolled in 11th/12th; Family income ≤ ₹5 Lakhs.",
+    "income_limit": "≤ ₹5,00,000",
+    "category": "Foundational",
+    "course": "Higher Secondary (11th & 12th)",
+    "required_documents": "10th Marksheet, School ID, Income Proof",
+    "application_deadline": "2026-10-12",
+    "source_portal": "Buddy4Study",
+    "source_url": "https://www.buddy4study.com/page/keep-india-smiling-foundational-scholarship-programme",
+    "is_external": true,
+    "created_at": "2026-09-02T10:38:37.462Z",
+    "updated_at": "2026-09-02T14:23:16.949Z"
+  }
+},
+{
+  "model": "scholarships.scholarship",
+  "pk": 11,
+  "fields": {
+    "name": "Vidyasaarathi SNL Polytechnic Diploma Grant",
+    "provider": "NSDL Vidyasaarathi",
+    "description": "Tuition concession and book grant for students enrolled in rural technical polytechnic diplomas.",
+    "amount": "₹15,000 / year",
+    "education_level": "diploma",
+    "eligibility": "Minimum 50% in 10th standard; Enrolled in 3-year Polytechnic course.",
+    "income_limit": "≤ ₹3,00,000",
+    "category": "Technical Education",
+    "course": "Diploma in Mechanical, Electrical, Civil, IT",
+    "required_documents": "Diploma Admission Letter, Fee Receipt, Bank Passbook",
+    "application_deadline": "2026-10-27",
+    "source_portal": "Buddy4Study",
+    "source_url": "https://www.vidyasaarathi.co.in/",
+    "is_external": true,
+    "created_at": "2026-09-02T10:38:37.470Z",
+    "updated_at": "2026-09-02T14:23:16.956Z"
+  }
+},
+{
+  "model": "scholarships.scholarship",
+  "pk": 12,
+  "fields": {
+    "name": "Central Sector Scheme of Scholarships for College Students",
+    "provider": "Department of Higher Education (NSP Portal)",
+    "description": "Financial assistance to meritorious students from low-income families to meet day-to-day expenses while pursuing higher studies.",
+    "amount": "₹12,000 – ₹20,000 / year",
+    "education_level": "bachelor",
+    "eligibility": "Above 80th percentile in 12th Board examinations; Family income below ₹4.5 Lakhs.",
+    "income_limit": "≤ ₹4,50,000",
+    "category": "Central Sector",
+    "course": "Graduation / Post Graduation",
+    "required_documents": "Aadhaar, Bank Account, 12th Marksheet, Income Certificate",
+    "application_deadline": "2026-11-06",
+    "source_portal": "National Scholarship Portal",
+    "source_url": "https://scholarships.gov.in/",
+    "is_external": true,
+    "created_at": "2026-09-02T10:38:37.478Z",
+    "updated_at": "2026-09-02T14:23:16.963Z"
+  }
+},
+{
+  "model": "scholarships.scholarship",
+  "pk": 13,
+  "fields": {
+    "name": "Post-Matric Scholarship for SC/ST/OBC Students",
+    "provider": "Ministry of Social Justice & Empowerment (NSP)",
+    "description": "100% compulsory fee reimbursement and maintenance allowance for post-secondary education.",
+    "amount": "Full Tuition + ₹13,500 Allowance",
+    "education_level": "bachelor",
+    "eligibility": "Belonging to SC/ST/OBC category; Enrolled in recognized state university or college.",
+    "income_limit": "≤ ₹2,50,000",
+    "category": "Affirmative Grant",
+    "course": "Degree, Engineering, Agriculture, Arts",
+    "required_documents": "Community Certificate, Income Certificate, Domicile Certificate",
+    "application_deadline": "2026-11-11",
+    "source_portal": "National Scholarship Portal",
+    "source_url": "https://scholarships.gov.in/",
+    "is_external": true,
+    "created_at": "2026-09-02T10:38:37.487Z",
+    "updated_at": "2026-09-02T14:23:16.969Z"
+  }
+},
+{
+  "model": "government_schemes.governmentscheme",
+  "pk": 1,
+  "fields": {
+    "name": "PM-KISAN Samman Nidhi",
+    "department": "Ministry of Agriculture & Farmers Welfare",
+    "category": "agriculture",
+    "description": "Direct income support to all farming families.",
+    "target_beneficiaries": "All agricultural land holding farmers",
+    "benefits": "₹6,000 per annum in 3 installments",
+    "eligibility": "Should have agricultural land",
+    "required_documents": "Land records, Aadhaar, Bank account details",
+    "application_process": "Apply online at pmkisan.gov.in or through village patwari",
+    "official_website": "https://pmkisan.gov.in/",
+    "source_portal": "myScheme.gov.in",
+    "source_url": "https://www.myscheme.gov.in/",
+    "is_external": false,
+    "created_at": "2026-09-01T15:22:31.148Z",
+    "updated_at": "2026-09-01T15:22:31.148Z"
+  }
+},
+{
+  "model": "government_schemes.governmentscheme",
+  "pk": 2,
+  "fields": {
+    "name": "MGNREGA",
+    "department": "Ministry of Rural Development",
+    "category": "employment",
+    "description": "Guarantee of 100 days of wage employment per financial year.",
+    "target_beneficiaries": "Rural laborers and landless workers",
+    "benefits": "Minimum wage employment guaranteed",
+    "eligibility": "Adult member of rural household",
+    "required_documents": "Aadhaar, Job card application",
+    "application_process": "Apply at nearest Gram Panchayat office",
+    "official_website": "https://nrega.nic.in/",
+    "source_portal": "myScheme.gov.in",
+    "source_url": "https://www.myscheme.gov.in/",
+    "is_external": false,
+    "created_at": "2026-09-01T15:22:31.152Z",
+    "updated_at": "2026-09-01T15:22:31.153Z"
+  }
+},
+{
+  "model": "government_schemes.governmentscheme",
+  "pk": 3,
+  "fields": {
+    "name": "Pradhan Mantri Awas Yojana - Gramin",
+    "department": "Ministry of Rural Development",
+    "category": "housing",
+    "description": "Housing assistance for BPL and AAY families.",
+    "target_beneficiaries": "BPL and AAY families below poverty line",
+    "benefits": "₹1,20,000 to ₹1,30,000 for house construction",
+    "eligibility": "BPL/AAY family, Annual income < ₹1.80 lakhs",
+    "required_documents": "Aadhaar, BPL certificate, Income proof",
+    "application_process": "Apply through Gram Panchayat or online",
+    "official_website": "https://pmayg.nic.in/",
+    "source_portal": "myScheme.gov.in",
+    "source_url": "https://www.myscheme.gov.in/",
+    "is_external": false,
+    "created_at": "2026-09-01T15:22:31.157Z",
+    "updated_at": "2026-09-01T15:22:31.157Z"
+  }
+},
+{
+  "model": "government_schemes.governmentscheme",
+  "pk": 4,
+  "fields": {
+    "name": "Pradhan Mantri Mudra Yojana",
+    "department": "Ministry of Finance",
+    "category": "entrepreneurship",
+    "description": "Collateral-free loans for small businesses and entrepreneurs.",
+    "target_beneficiaries": "Small business owners and entrepreneurs",
+    "benefits": "Loans up to ₹10 lakhs at reasonable interest",
+    "eligibility": "Indian citizen, business plan required",
+    "required_documents": "Business plan, ID proof, Address proof",
+    "application_process": "Apply at participating banks or online",
+    "official_website": "https://www.mudra.org.in/",
+    "source_portal": "myScheme.gov.in",
+    "source_url": "https://www.myscheme.gov.in/",
+    "is_external": false,
+    "created_at": "2026-09-01T15:22:31.162Z",
+    "updated_at": "2026-09-01T15:22:31.162Z"
+  }
+},
+{
+  "model": "government_schemes.governmentscheme",
+  "pk": 5,
+  "fields": {
+    "name": "National Scholarship Portal",
+    "department": "Ministry of Education",
+    "category": "education",
+    "description": "Multiple scholarships for students from classes 1 to postgraduate.",
+    "target_beneficiaries": "Students from economically weaker sections",
+    "benefits": "Various scholarships ranging from ₹12,000 to ₹1,00,000",
+    "eligibility": "Student pursuing education, income limits apply",
+    "required_documents": "Aadhaar, Academic records, Income certificate",
+    "application_process": "Apply online at scholarships.gov.in",
+    "official_website": "https://scholarships.gov.in/",
+    "source_portal": "myScheme.gov.in",
+    "source_url": "https://www.myscheme.gov.in/",
+    "is_external": false,
+    "created_at": "2026-09-01T15:22:31.166Z",
+    "updated_at": "2026-09-01T15:22:31.166Z"
+  }
+},
+{
+  "model": "government_schemes.governmentscheme",
+  "pk": 6,
+  "fields": {
+    "name": "PM Kisan Samman Nidhi (PM-KISAN)",
+    "department": "Ministry of Agriculture & Farmers Welfare",
+    "category": "agriculture",
+    "description": "Direct income support of ₹6,000 per year in three equal 4-monthly installments to all landholding farmer families.",
+    "target_beneficiaries": "Small, marginal, and rural landholder farmers",
+    "benefits": "₹6,000/year directly transferred to Aadhaar-seeded bank account (DBT)",
+    "eligibility": "Farmer families with cultivable landholding in revenue records; Aadhaar authenticated.",
+    "required_documents": "Aadhaar Card, Land Record Details (Patta/Khatoni), Bank Passbook",
+    "application_process": "Online at pmkisan.gov.in, via Common Service Center (CSC), or State Agriculture Office.",
+    "official_website": "https://pmkisan.gov.in/",
+    "source_portal": "myScheme.gov.in",
+    "source_url": "https://www.myscheme.gov.in/schemes/pm-kisan",
+    "is_external": true,
+    "created_at": "2026-09-02T10:38:37.495Z",
+    "updated_at": "2026-09-02T14:23:16.977Z"
+  }
+},
+{
+  "model": "government_schemes.governmentscheme",
+  "pk": 7,
+  "fields": {
+    "name": "Pradhan Mantri Awas Yojana - Gramin (PMAY-G)",
+    "department": "Ministry of Rural Development",
+    "category": "housing",
+    "description": "Assistance for construction of pucca houses with basic amenities for rural families living in kutcha/dilapidated homes.",
+    "target_beneficiaries": "Houseless rural families and those living in 0, 1 or 2 room kutcha houses (SECC list)",
+    "benefits": "₹1,20,000 in plain areas / ₹1,30,000 in hilly/difficult areas + 90 days MGNREGA wages",
+    "eligibility": "Identified through SECC 2011 priority list and verified by Gram Sabha.",
+    "required_documents": "Aadhaar Card, Bank Account Details, MGNREGA Job Card, Land Ownership Proof",
+    "application_process": "Through Gram Panchayat office or online via AwaasSoft portal.",
+    "official_website": "https://pmayg.nic.in/",
+    "source_portal": "myScheme.gov.in",
+    "source_url": "https://www.myscheme.gov.in/schemes/pmay-g",
+    "is_external": true,
+    "created_at": "2026-09-02T10:38:37.502Z",
+    "updated_at": "2026-09-02T14:23:16.983Z"
+  }
+},
+{
+  "model": "government_schemes.governmentscheme",
+  "pk": 8,
+  "fields": {
+    "name": "Ayushman Bharat - PMJAY Health Insurance",
+    "department": "National Health Authority (Ministry of Health)",
+    "category": "healthcare",
+    "description": "World’s largest health assurance scheme providing comprehensive secondary and tertiary hospitalization cover.",
+    "target_beneficiaries": "Vulnerable and low-income rural families (Bottom 40% population)",
+    "benefits": "Cashless health insurance cover up to ₹5,00,000 per family per year at empaneled hospitals.",
+    "eligibility": "Listed in SECC 2011 database or verified ration card holder under NFSA.",
+    "required_documents": "Aadhaar Card, Ration Card, PMJAY e-Card",
+    "application_process": "Create Ayushman Card at any empaneled hospital, CSC Center, or via PMJAY App.",
+    "official_website": "https://pmjay.gov.in/",
+    "source_portal": "myScheme.gov.in",
+    "source_url": "https://www.myscheme.gov.in/schemes/pmjay",
+    "is_external": true,
+    "created_at": "2026-09-02T10:38:37.508Z",
+    "updated_at": "2026-09-02T14:23:16.990Z"
+  }
+},
+{
+  "model": "government_schemes.governmentscheme",
+  "pk": 9,
+  "fields": {
+    "name": "National Rural Livelihoods Mission (NRLM - Aajeevika)",
+    "department": "Ministry of Rural Development",
+    "category": "women",
+    "description": "Poverty alleviation initiative promoting self-employment and organization of rural poor into Self Help Groups (SHGs).",
+    "target_beneficiaries": "Rural women, SHGs, and marginalized households",
+    "benefits": "Revolving fund, Community Investment Fund (CIF), and collateral-free bank loans up to ₹20 Lakhs with interest subvention.",
+    "eligibility": "Rural women residing in target village clusters forming groups of 10-20 members.",
+    "required_documents": "SHG Resolution Copy, Member Aadhaar details, Group Bank Account",
+    "application_process": "Through Village Organization (VO), Block Resource Center, or Gram Panchayat Desk.",
+    "official_website": "https://aajeevika.gov.in/",
+    "source_portal": "myScheme.gov.in",
+    "source_url": "https://www.myscheme.gov.in/schemes/day-nrlm",
+    "is_external": true,
+    "created_at": "2026-09-02T10:38:37.516Z",
+    "updated_at": "2026-09-02T14:23:16.997Z"
+  }
+},
+{
+  "model": "government_schemes.governmentscheme",
+  "pk": 10,
+  "fields": {
+    "name": "Pradhan Mantri Matsya Sampada Yojana (PMMSY)",
+    "department": "Department of Fisheries",
+    "category": "agriculture",
+    "description": "Financial subsidy and infrastructure development for aquaculture, pond fish farming, and biofloc units in rural villages.",
+    "target_beneficiaries": "Fish farmers, coastal/inland youth, SHGs, and rural entrepreneurs",
+    "benefits": "40% to 60% capital subsidy on pond construction, motorized boats, cold storage, and fingerlings.",
+    "eligibility": "Individual farmers or cooperatives having access to water bodies or land.",
+    "required_documents": "Land/Water Lease Deed, Project Proposal, Aadhaar, Bank Details",
+    "application_process": "Submit DPR to District Fisheries Office or through PMMSY online portal.",
+    "official_website": "https://pmmsy.dof.gov.in/",
+    "source_portal": "myScheme.gov.in",
+    "source_url": "https://www.myscheme.gov.in/schemes/pmmsy",
+    "is_external": true,
+    "created_at": "2026-09-02T10:38:37.522Z",
+    "updated_at": "2026-09-02T14:23:17.003Z"
+  }
+},
+{
+  "model": "skills.skillprogram",
+  "pk": 1,
+  "fields": {
+    "name": "Basic Computer Skills",
+    "category": "Digital Skills",
+    "provider": "NASSCOM Foundation",
+    "description": "Learn fundamentals of computer usage, MS Office, and internet.",
+    "duration": "3 Months",
+    "level": "beginner",
+    "price_type": "free",
+    "price": "",
+    "prerequisites": "None",
+    "certificate": true,
+    "source_portal": "Skill India Digital",
+    "source_url": "https://www.skillindiadigital.gov.in/",
+    "is_external": false,
+    "created_at": "2026-09-01T15:22:31.171Z",
+    "updated_at": "2026-09-01T15:22:31.171Z"
+  }
+},
+{
+  "model": "skills.skillprogram",
+  "pk": 2,
+  "fields": {
+    "name": "Digital Marketing Fundamentals",
+    "category": "Digital Skills",
+    "provider": "Google Digital Garage",
+    "description": "Learn social media, email marketing, and online advertising.",
+    "duration": "2 Months",
+    "level": "intermediate",
+    "price_type": "free",
+    "price": "",
+    "prerequisites": "Basic computer knowledge",
+    "certificate": true,
+    "source_portal": "Skill India Digital",
+    "source_url": "https://www.skillindiadigital.gov.in/",
+    "is_external": false,
+    "created_at": "2026-09-01T15:22:31.175Z",
+    "updated_at": "2026-09-01T15:22:31.175Z"
+  }
+},
+{
+  "model": "skills.skillprogram",
+  "pk": 3,
+  "fields": {
+    "name": "Organic Farming Techniques",
+    "category": "Agriculture",
+    "provider": "National Institute of Organic Farming",
+    "description": "Learn sustainable organic farming methods for higher yield.",
+    "duration": "6 Weeks",
+    "level": "intermediate",
+    "price_type": "free",
+    "price": "",
+    "prerequisites": "Agricultural background preferred",
+    "certificate": true,
+    "source_portal": "Skill India Digital",
+    "source_url": "https://www.skillindiadigital.gov.in/",
+    "is_external": false,
+    "created_at": "2026-09-01T15:22:31.182Z",
+    "updated_at": "2026-09-01T15:22:31.182Z"
+  }
+},
+{
+  "model": "skills.skillprogram",
+  "pk": 4,
+  "fields": {
+    "name": "Solar Panel Installation",
+    "category": "Technical Skills",
+    "provider": "Ministry of New and Renewable Energy",
+    "description": "Hands-on training in solar panel installation and maintenance.",
+    "duration": "4 Months",
+    "level": "intermediate",
+    "price_type": "paid",
+    "price": "₹10,000",
+    "prerequisites": "Basic electrical knowledge",
+    "certificate": true,
+    "source_portal": "Skill India Digital",
+    "source_url": "https://www.skillindiadigital.gov.in/",
+    "is_external": false,
+    "created_at": "2026-09-01T15:22:31.187Z",
+    "updated_at": "2026-09-01T15:22:31.187Z"
+  }
+},
+{
+  "model": "skills.skillprogram",
+  "pk": 5,
+  "fields": {
+    "name": "Spoken English for Rural Areas",
+    "category": "Communication",
+    "provider": "British Council",
+    "description": "Improve English communication skills for better job opportunities.",
+    "duration": "3 Months",
+    "level": "beginner",
+    "price_type": "free",
+    "price": "",
+    "prerequisites": "None",
+    "certificate": true,
+    "source_portal": "Skill India Digital",
+    "source_url": "https://www.skillindiadigital.gov.in/",
+    "is_external": false,
+    "created_at": "2026-09-01T15:22:31.191Z",
+    "updated_at": "2026-09-01T15:22:31.191Z"
+  }
+},
+{
+  "model": "skills.skillprogram",
+  "pk": 6,
+  "fields": {
+    "name": "Financial Literacy",
+    "category": "Financial Skills",
+    "provider": "NABARD",
+    "description": "Learn financial management, budgeting, and business planning.",
+    "duration": "8 Weeks",
+    "level": "beginner",
+    "price_type": "free",
+    "price": "",
+    "prerequisites": "None",
+    "certificate": true,
+    "source_portal": "Skill India Digital",
+    "source_url": "https://www.skillindiadigital.gov.in/",
+    "is_external": false,
+    "created_at": "2026-09-01T15:22:31.197Z",
+    "updated_at": "2026-09-01T15:22:31.197Z"
+  }
+},
+{
+  "model": "skills.skillprogram",
+  "pk": 7,
+  "fields": {
+    "name": "Smartphone and Internet Basics",
+    "category": "Digital Skills",
+    "provider": "NASSCOM",
+    "description": "Master smartphone usage and internet navigation.",
+    "duration": "2 Months",
+    "level": "beginner",
+    "price_type": "free",
+    "price": "",
+    "prerequisites": "None",
+    "certificate": true,
+    "source_portal": "Skill India Digital",
+    "source_url": "https://www.skillindiadigital.gov.in/",
+    "is_external": false,
+    "created_at": "2026-09-01T15:22:31.202Z",
+    "updated_at": "2026-09-01T15:22:31.202Z"
+  }
+},
+{
+  "model": "skills.skillprogram",
+  "pk": 8,
+  "fields": {
+    "name": "Food Processing",
+    "category": "Entrepreneurship",
+    "provider": "Ministry of Food Processing",
+    "description": "Learn to process and preserve agricultural produce.",
+    "duration": "3 Months",
+    "level": "intermediate",
+    "price_type": "paid",
+    "price": "₹8,000",
+    "prerequisites": "None",
+    "certificate": true,
+    "source_portal": "Skill India Digital",
+    "source_url": "https://www.skillindiadigital.gov.in/",
+    "is_external": false,
+    "created_at": "2026-09-01T15:22:31.207Z",
+    "updated_at": "2026-09-01T15:22:31.207Z"
+  }
+},
+{
+  "model": "skills.skillprogram",
+  "pk": 9,
+  "fields": {
+    "name": "PMKVY 4.0 Agricultural Drone Pilot Certification",
+    "category": "technical",
+    "provider": "National Skill Development Corporation (NSDC)",
+    "description": "Government funded hands-on pilot training covering DGCA regulations, precision farming spraying, and drone maintenance.",
+    "duration": "6 Weeks (Full Time)",
+    "level": "intermediate",
+    "price_type": "free",
+    "price": "100% Free (Govt Funded)",
+    "prerequisites": "10th Pass with 18+ years of age",
+    "certificate": true,
+    "source_portal": "Skill India Digital",
+    "source_url": "https://www.skillindiadigital.gov.in/",
+    "is_external": true,
+    "created_at": "2026-09-02T10:38:37.554Z",
+    "updated_at": "2026-09-02T14:23:17.036Z"
+  }
+},
+{
+  "model": "skills.skillprogram",
+  "pk": 10,
+  "fields": {
+    "name": "PM Vishwakarma Artisan & Modern Carpentry Kit",
+    "category": "technical",
+    "provider": "Ministry of Skill Development & Entrepreneurship",
+    "description": "Advanced skill upgradation with modern power tools, digital marketing, and ₹15,000 toolkit incentive.",
+    "duration": "7 Days Intensive + 15 Days Advanced",
+    "level": "beginner",
+    "price_type": "free",
+    "price": "Free + ₹500/day Stipend",
+    "prerequisites": "Traditional artisan / craftsman family background",
+    "certificate": true,
+    "source_portal": "Skill India Digital",
+    "source_url": "https://pmvishwakarma.gov.in/",
+    "is_external": true,
+    "created_at": "2026-09-02T10:38:37.562Z",
+    "updated_at": "2026-09-02T14:23:17.043Z"
+  }
+},
+{
+  "model": "skills.skillprogram",
+  "pk": 11,
+  "fields": {
+    "name": "DDU-GKY Solar PV Rooftop Installation Technician",
+    "category": "technical",
+    "provider": "Skill Council for Green Jobs (DDU-GKY)",
+    "description": "Complete solar technician trade course covering inverter wiring, panel mounting, earthing, and grid synchronization.",
+    "duration": "3 Months",
+    "level": "intermediate",
+    "price_type": "free",
+    "price": "100% Free with Placement",
+    "prerequisites": "10th/12th or ITI Electrical/Fitter",
+    "certificate": true,
+    "source_portal": "Skill India Digital",
+    "source_url": "https://www.skillindiadigital.gov.in/",
+    "is_external": true,
+    "created_at": "2026-09-02T10:38:37.568Z",
+    "updated_at": "2026-09-02T14:23:17.049Z"
+  }
+},
+{
+  "model": "skills.skillprogram",
+  "pk": 12,
+  "fields": {
+    "name": "Digital Saksharta for Rural Women Entrepreneurs",
+    "category": "life_skills",
+    "provider": "National Digital Literacy Mission",
+    "description": "Learn UPI digital payments, ONDC product listing, WhatsApp for Business, and bookkeeping for micro-enterprises.",
+    "duration": "3 Weeks (Self-paced)",
+    "level": "beginner",
+    "price_type": "free",
+    "price": "Free",
+    "prerequisites": "Smartphone with internet connectivity",
+    "certificate": true,
+    "source_portal": "Skill India Digital",
+    "source_url": "https://www.skillindiadigital.gov.in/",
+    "is_external": true,
+    "created_at": "2026-09-02T10:38:37.575Z",
+    "updated_at": "2026-09-02T14:23:17.055Z"
+  }
+},
+{
+  "model": "business.businessopportunity",
+  "pk": 1,
+  "fields": {
+    "name": "Dairy Farming",
+    "category": "Agriculture",
+    "description": "Start a dairy farm with high-quality cattle for milk production.",
+    "investment_level": "high",
+    "opportunity_level": "moderate",
+    "required_skills": "Animal husbandry, Business management, Veterinary knowledge",
+    "expected_income": "₹30,000 - ₹80,000 per month",
+    "market_demand": "Very High",
+    "resources": "Land, cattle, feed, equipment, veterinary services",
+    "source_portal": "PMEGP / Startup India",
+    "source_url": "https://www.startupindia.gov.in/",
+    "is_external": false,
+    "created_at": "2026-09-01T15:22:31.214Z",
+    "updated_at": "2026-09-01T15:22:31.214Z"
+  }
+},
+{
+  "model": "business.businessopportunity",
+  "pk": 2,
+  "fields": {
+    "name": "Organic Vegetable Farming",
+    "category": "Agriculture",
+    "description": "Grow certified organic vegetables for local and urban markets.",
+    "investment_level": "medium",
+    "opportunity_level": "moderate",
+    "required_skills": "Agriculture, Organic farming, Marketing",
+    "expected_income": "₹20,000 - ₹60,000 per month",
+    "market_demand": "High",
+    "resources": "Land, seeds, fertilizer, irrigation, storage facilities",
+    "source_portal": "PMEGP / Startup India",
+    "source_url": "https://www.startupindia.gov.in/",
+    "is_external": false,
+    "created_at": "2026-09-01T15:22:31.220Z",
+    "updated_at": "2026-09-01T15:22:31.220Z"
+  }
+},
+{
+  "model": "business.businessopportunity",
+  "pk": 3,
+  "fields": {
+    "name": "Poultry Farming",
+    "category": "Agriculture",
+    "description": "Raise poultry for eggs and meat production.",
+    "investment_level": "medium",
+    "opportunity_level": "easy",
+    "required_skills": "Animal care, Basic business knowledge",
+    "expected_income": "₹15,000 - ₹40,000 per month",
+    "market_demand": "High",
+    "resources": "Shed, poultry birds, feed, equipment",
+    "source_portal": "PMEGP / Startup India",
+    "source_url": "https://www.startupindia.gov.in/",
+    "is_external": false,
+    "created_at": "2026-09-01T15:22:31.225Z",
+    "updated_at": "2026-09-01T15:22:31.225Z"
+  }
+},
+{
+  "model": "business.businessopportunity",
+  "pk": 4,
+  "fields": {
+    "name": "Food Processing and Preservation",
+    "category": "Food Processing",
+    "description": "Process and preserve agricultural products for sale.",
+    "investment_level": "medium",
+    "opportunity_level": "moderate",
+    "required_skills": "Food preservation, Packaging, Marketing",
+    "expected_income": "₹25,000 - ₹70,000 per month",
+    "market_demand": "High",
+    "resources": "Processing equipment, storage, packaging materials, certifications",
+    "source_portal": "PMEGP / Startup India",
+    "source_url": "https://www.startupindia.gov.in/",
+    "is_external": false,
+    "created_at": "2026-09-01T15:22:31.232Z",
+    "updated_at": "2026-09-01T15:22:31.232Z"
+  }
+},
+{
+  "model": "business.businessopportunity",
+  "pk": 5,
+  "fields": {
+    "name": "Handicrafts Business",
+    "category": "Handicrafts",
+    "description": "Create and sell traditional handicrafts online and offline.",
+    "investment_level": "low",
+    "opportunity_level": "easy",
+    "required_skills": "Craftsmanship, Digital marketing, Customer service",
+    "expected_income": "₹10,000 - ₹50,000 per month",
+    "market_demand": "Medium",
+    "resources": "Raw materials, workspace, marketing channels",
+    "source_portal": "PMEGP / Startup India",
+    "source_url": "https://www.startupindia.gov.in/",
+    "is_external": false,
+    "created_at": "2026-09-01T15:22:31.237Z",
+    "updated_at": "2026-09-01T15:22:31.237Z"
+  }
+},
+{
+  "model": "business.businessopportunity",
+  "pk": 6,
+  "fields": {
+    "name": "Tailoring and Garment Production",
+    "category": "Tailoring",
+    "description": "Provide tailoring services or produce garments for retail.",
+    "investment_level": "low",
+    "opportunity_level": "easy",
+    "required_skills": "Sewing, Garment design, Customer service",
+    "expected_income": "₹12,000 - ₹45,000 per month",
+    "market_demand": "High",
+    "resources": "Sewing machines, fabric, workspace",
+    "source_portal": "PMEGP / Startup India",
+    "source_url": "https://www.startupindia.gov.in/",
+    "is_external": false,
+    "created_at": "2026-09-01T15:22:31.242Z",
+    "updated_at": "2026-09-01T15:22:31.242Z"
+  }
+},
+{
+  "model": "business.businessopportunity",
+  "pk": 7,
+  "fields": {
+    "name": "Agro-Forestry",
+    "category": "Agriculture",
+    "description": "Combine agriculture with tree cultivation for multiple income streams.",
+    "investment_level": "medium",
+    "opportunity_level": "moderate",
+    "required_skills": "Agriculture, Forestry, Land management",
+    "expected_income": "₹20,000 - ₹60,000 per month",
+    "market_demand": "Medium",
+    "resources": "Land, seedlings, maintenance equipment",
+    "source_portal": "PMEGP / Startup India",
+    "source_url": "https://www.startupindia.gov.in/",
+    "is_external": false,
+    "created_at": "2026-09-01T15:22:31.250Z",
+    "updated_at": "2026-09-01T15:22:31.250Z"
+  }
+},
+{
+  "model": "business.businessopportunity",
+  "pk": 8,
+  "fields": {
+    "name": "Online Tutoring and Education",
+    "category": "Education",
+    "description": "Provide online tutoring and skill-sharing services to rural students.",
+    "investment_level": "low",
+    "opportunity_level": "easy",
+    "required_skills": "Subject expertise, Teaching, Digital literacy",
+    "expected_income": "₹5,000 - ₹30,000 per month",
+    "market_demand": "High",
+    "resources": "Internet, laptop, online platform access",
+    "source_portal": "PMEGP / Startup India",
+    "source_url": "https://www.startupindia.gov.in/",
+    "is_external": false,
+    "created_at": "2026-09-01T15:22:31.255Z",
+    "updated_at": "2026-09-01T15:22:31.255Z"
+  }
+},
+{
+  "model": "business.businessopportunity",
+  "pk": 9,
+  "fields": {
+    "name": "PMEGP Honey Bee Keeping & Apiculture Processing",
+    "category": "agriculture",
+    "description": "Establish a 50-box bee colony producing raw honey, beeswax, and royal jelly for herbal and consumer markets.",
+    "investment_level": "low",
+    "opportunity_level": "easy",
+    "required_skills": "Apiculture basics, hive maintenance, honey extraction",
+    "expected_income": "₹25,000 – ₹50,000 / month",
+    "market_demand": "Very High in urban & wellness retail",
+    "resources": "Wooden hives, honey extractor, protective suit, KVIC subsidy",
+    "source_portal": "PMEGP / Startup India",
+    "source_url": "https://www.kviconline.gov.in/pmegpeportal/pmegphome/index.jsp",
+    "is_external": true,
+    "created_at": "2026-09-02T10:38:37.581Z",
+    "updated_at": "2026-09-02T14:23:17.061Z"
+  }
+},
+{
+  "model": "business.businessopportunity",
+  "pk": 10,
+  "fields": {
+    "name": "Village Solar Charging & Battery Swap Hub",
+    "category": "technology",
+    "description": "Provide decentralized solar battery charging for e-rickshaws, farm sprayers, and home lighting in un-electrified pockets.",
+    "investment_level": "medium",
+    "opportunity_level": "moderate",
+    "required_skills": "Solar battery management, basic electrical wiring",
+    "expected_income": "₹30,000 – ₹60,000 / month",
+    "market_demand": "Expanding rapidly across rural EV transit",
+    "resources": "Solar PV arrays, hybrid inverters, battery rack, street-side shop",
+    "source_portal": "PMEGP / Startup India",
+    "source_url": "https://www.startupindia.gov.in/",
+    "is_external": true,
+    "created_at": "2026-09-02T10:38:37.588Z",
+    "updated_at": "2026-09-02T14:23:17.068Z"
+  }
+},
+{
+  "model": "business.businessopportunity",
+  "pk": 11,
+  "fields": {
+    "name": "Cold-Pressed Groundnut & Sesame Oil Expeller",
+    "category": "agriculture",
+    "description": "Process locally grown groundnuts, mustard, and sesame seeds into pure unrefined wood-pressed oil (Chekku/Ghani).",
+    "investment_level": "medium",
+    "opportunity_level": "moderate",
+    "required_skills": "Oil expeller machine operation, food grade packaging",
+    "expected_income": "₹40,000 – ₹80,000 / month",
+    "market_demand": "High premium demand for organic cold-pressed oil",
+    "resources": "Wooden ghani expeller, filter press, seed cleaner, FSSAI registration",
+    "source_portal": "PMEGP / Startup India",
+    "source_url": "https://www.kviconline.gov.in/pmegpeportal/pmegphome/index.jsp",
+    "is_external": true,
+    "created_at": "2026-09-02T10:38:37.599Z",
+    "updated_at": "2026-09-02T14:23:17.074Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 1,
+  "fields": {
+    "user": 2,
+    "opportunity_type": "job",
+    "opportunity_id": 10,
+    "opportunity_name": "Office Assistant",
+    "organization": "Corporate Solutions Ltd",
+    "status": "applied",
+    "applied_date": "2026-09-02T03:51:10.649Z",
+    "updated_date": "2026-09-02T03:51:10.649Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 2,
+  "fields": {
+    "user": 2,
+    "opportunity_type": "scholarship",
+    "opportunity_id": 4,
+    "opportunity_name": "Post Matric Scholarship for OBC Students",
+    "organization": "Department of Social Justice",
+    "status": "applied",
+    "applied_date": "2026-09-02T03:56:22.476Z",
+    "updated_date": "2026-09-02T03:56:22.476Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 3,
+  "fields": {
+    "user": 2,
+    "opportunity_type": "skill",
+    "opportunity_id": 8,
+    "opportunity_name": "Food Processing",
+    "organization": "Ministry of Food Processing",
+    "status": "applied",
+    "applied_date": "2026-09-02T04:04:59.780Z",
+    "updated_date": "2026-09-02T04:04:59.781Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 4,
+  "fields": {
+    "user": 2,
+    "opportunity_type": "business",
+    "opportunity_id": 8,
+    "opportunity_name": "Online Tutoring and Education",
+    "organization": "Self-employment opportunity",
+    "status": "applied",
+    "applied_date": "2026-09-02T04:09:37.733Z",
+    "updated_date": "2026-09-02T04:09:37.733Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 5,
+  "fields": {
+    "user": 2,
+    "opportunity_type": "business",
+    "opportunity_id": 1,
+    "opportunity_name": "Dairy Farming",
+    "organization": "Self-employment opportunity",
+    "status": "applied",
+    "applied_date": "2026-09-02T04:14:36.680Z",
+    "updated_date": "2026-09-02T04:14:36.680Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 6,
+  "fields": {
+    "user": 2,
+    "opportunity_type": "business",
+    "opportunity_id": 3,
+    "opportunity_name": "Poultry Farming",
+    "organization": "Self-employment opportunity",
+    "status": "applied",
+    "applied_date": "2026-09-02T04:19:59.447Z",
+    "updated_date": "2026-09-02T04:19:59.447Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 7,
+  "fields": {
+    "user": 2,
+    "opportunity_type": "skill",
+    "opportunity_id": 8,
+    "opportunity_name": "Food Processing",
+    "organization": "Ministry of Food Processing",
+    "status": "applied",
+    "applied_date": "2026-09-02T04:20:53.743Z",
+    "updated_date": "2026-09-02T04:20:53.743Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 8,
+  "fields": {
+    "user": 2,
+    "opportunity_type": "scholarship",
+    "opportunity_id": 4,
+    "opportunity_name": "Post Matric Scholarship for OBC Students",
+    "organization": "Department of Social Justice",
+    "status": "applied",
+    "applied_date": "2026-09-02T05:38:42.432Z",
+    "updated_date": "2026-09-02T05:38:42.433Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 9,
+  "fields": {
+    "user": 3,
+    "opportunity_type": "job",
+    "opportunity_id": 1,
+    "opportunity_name": "Junior Agronomist",
+    "organization": "Rural Tech Agro",
+    "status": "applied",
+    "applied_date": "2026-09-02T06:43:05.843Z",
+    "updated_date": "2026-09-02T06:43:05.843Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 10,
+  "fields": {
+    "user": 2,
+    "opportunity_type": "business",
+    "opportunity_id": 8,
+    "opportunity_name": "Online Tutoring and Education",
+    "organization": "Self-employment opportunity",
+    "status": "applied",
+    "applied_date": "2026-09-02T06:44:07.978Z",
+    "updated_date": "2026-09-02T06:44:07.978Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 11,
+  "fields": {
+    "user": 2,
+    "opportunity_type": "job",
+    "opportunity_id": 10,
+    "opportunity_name": "Office Assistant",
+    "organization": "Corporate Solutions Ltd",
+    "status": "applied",
+    "applied_date": "2026-09-02T06:44:48.907Z",
+    "updated_date": "2026-09-02T06:44:48.907Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 12,
+  "fields": {
+    "user": 2,
+    "opportunity_type": "scheme",
+    "opportunity_id": 4,
+    "opportunity_name": "Pradhan Mantri Mudra Yojana",
+    "organization": "Ministry of Finance",
+    "status": "applied",
+    "applied_date": "2026-09-02T07:39:18.026Z",
+    "updated_date": "2026-09-02T07:39:18.026Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 13,
+  "fields": {
+    "user": 4,
+    "opportunity_type": "job",
+    "opportunity_id": 10,
+    "opportunity_name": "Office Assistant",
+    "organization": "Corporate Solutions Ltd",
+    "status": "applied",
+    "applied_date": "2026-09-02T10:01:17.861Z",
+    "updated_date": "2026-09-02T10:01:17.861Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 14,
+  "fields": {
+    "user": 4,
+    "opportunity_type": "job",
+    "opportunity_id": 9,
+    "opportunity_name": "Call Center Executive",
+    "organization": "Customer Care Solutions",
+    "status": "applied",
+    "applied_date": "2026-09-02T10:01:29.608Z",
+    "updated_date": "2026-09-02T10:01:29.608Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 15,
+  "fields": {
+    "user": 4,
+    "opportunity_type": "scheme",
+    "opportunity_id": 5,
+    "opportunity_name": "National Scholarship Portal",
+    "organization": "Ministry of Education",
+    "status": "applied",
+    "applied_date": "2026-09-02T10:02:22.568Z",
+    "updated_date": "2026-09-02T10:02:22.568Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 16,
+  "fields": {
+    "user": 4,
+    "opportunity_type": "job",
+    "opportunity_id": 10,
+    "opportunity_name": "Office Assistant",
+    "organization": "Corporate Solutions Ltd",
+    "status": "applied",
+    "applied_date": "2026-09-02T10:03:50.834Z",
+    "updated_date": "2026-09-02T10:03:50.834Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 17,
+  "fields": {
+    "user": 4,
+    "opportunity_type": "job",
+    "opportunity_id": 9,
+    "opportunity_name": "Call Center Executive",
+    "organization": "Customer Care Solutions",
+    "status": "applied",
+    "applied_date": "2026-09-02T10:14:07.062Z",
+    "updated_date": "2026-09-02T10:14:07.062Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 18,
+  "fields": {
+    "user": 4,
+    "opportunity_type": "job",
+    "opportunity_id": 9,
+    "opportunity_name": "Call Center Executive",
+    "organization": "Customer Care Solutions",
+    "status": "applied",
+    "applied_date": "2026-09-02T10:14:14.816Z",
+    "updated_date": "2026-09-02T10:14:14.816Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 19,
+  "fields": {
+    "user": 4,
+    "opportunity_type": "scholarship",
+    "opportunity_id": 4,
+    "opportunity_name": "Post Matric Scholarship for OBC Students",
+    "organization": "Department of Social Justice",
+    "status": "applied",
+    "applied_date": "2026-09-02T10:14:54.061Z",
+    "updated_date": "2026-09-02T10:14:54.062Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 20,
+  "fields": {
+    "user": 4,
+    "opportunity_type": "scholarship",
+    "opportunity_id": 4,
+    "opportunity_name": "Post Matric Scholarship for OBC Students",
+    "organization": "Department of Social Justice",
+    "status": "applied",
+    "applied_date": "2026-09-02T10:20:43.930Z",
+    "updated_date": "2026-09-02T10:20:43.930Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 21,
+  "fields": {
+    "user": 4,
+    "opportunity_type": "scholarship",
+    "opportunity_id": 2,
+    "opportunity_name": "Central Sector Scholarship for Girls",
+    "organization": "Ministry of Education",
+    "status": "applied",
+    "applied_date": "2026-09-02T10:28:54.970Z",
+    "updated_date": "2026-09-02T10:29:44.249Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 22,
+  "fields": {
+    "user": 4,
+    "opportunity_type": "scholarship",
+    "opportunity_id": 13,
+    "opportunity_name": "Post-Matric Scholarship for SC/ST/OBC Students",
+    "organization": "Ministry of Social Justice & Empowerment (NSP)",
+    "status": "applied",
+    "applied_date": "2026-09-02T14:29:23.438Z",
+    "updated_date": "2026-09-02T14:29:23.438Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 23,
+  "fields": {
+    "user": 4,
+    "opportunity_type": "scheme",
+    "opportunity_id": 10,
+    "opportunity_name": "Pradhan Mantri Matsya Sampada Yojana (PMMSY)",
+    "organization": "Department of Fisheries",
+    "status": "applied",
+    "applied_date": "2026-09-02T14:30:15.006Z",
+    "updated_date": "2026-09-02T14:30:15.006Z"
+  }
+},
+{
+  "model": "applications.documentchecklist",
+  "pk": 1,
+  "fields": {
+    "user": 1,
+    "aadhaar": false,
+    "marksheet": false,
+    "income_certificate": false,
+    "community_certificate": false,
+    "bank_details": false,
+    "residence_certificate": false,
+    "passport": false,
+    "pan_card": false,
+    "updated_at": "2026-09-01T15:38:18.496Z"
+  }
+},
+{
+  "model": "applications.documentchecklist",
+  "pk": 2,
+  "fields": {
+    "user": 2,
+    "aadhaar": false,
+    "marksheet": false,
+    "income_certificate": false,
+    "community_certificate": false,
+    "bank_details": false,
+    "residence_certificate": false,
+    "passport": false,
+    "pan_card": false,
+    "updated_at": "2026-09-02T03:49:33.006Z"
+  }
+},
+{
+  "model": "applications.documentchecklist",
+  "pk": 3,
+  "fields": {
+    "user": 3,
+    "aadhaar": true,
+    "marksheet": true,
+    "income_certificate": false,
+    "community_certificate": false,
+    "bank_details": true,
+    "residence_certificate": false,
+    "passport": false,
+    "pan_card": false,
+    "updated_at": "2026-09-02T06:43:05.893Z"
+  }
+},
+{
+  "model": "applications.documentchecklist",
+  "pk": 4,
+  "fields": {
+    "user": 4,
+    "aadhaar": false,
+    "marksheet": false,
+    "income_certificate": false,
+    "community_certificate": false,
+    "bank_details": false,
+    "residence_certificate": false,
+    "passport": false,
+    "pan_card": false,
+    "updated_at": "2026-09-02T10:00:35.904Z"
+  }
+}
+]

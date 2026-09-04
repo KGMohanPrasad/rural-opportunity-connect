@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+
+{% block title %}Application Tracker — Rural Opportunity Connect{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 space-y-8">
+    <!-- Breadcrumb -->
+    <nav class="roc-breadcrumb" aria-label="Breadcrumb">
+        <a href="{% url 'landing_page' %}">Home</a>
+        <span class="roc-breadcrumb-separator"><i class="fas fa-chevron-right text-[10px]"></i></span>
+        <a href="{% url 'dashboard' %}">Dashboard</a>
+        <span class="roc-breadcrumb-separator"><i class="fas fa-chevron-right text-[10px]"></i></span>
+        <span class="text-slate-800 font-bold">Application Tracker</span>
+    </nav>
+
+    <!-- Executive Branded Header Banner -->
+    <div class="roc-card p-8 md:p-10 bg-gradient-to-r from-slate-950 via-[#071526] to-[#0c2340] text-white rounded-3xl shadow-xl mb-8 relative overflow-hidden border border-cyan-500/30">
+        <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div class="space-y-3">
+                <div class="inline-flex items-center gap-2 bg-cyan-500/20 text-cyan-300 border border-cyan-400/30 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider backdrop-blur-xs">
+                    <i class="fas fa-list-check text-cyan-400"></i> Direct Application Pipeline
+                </div>
+                <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight kinetic-headline">
+                    Application Tracker & Pipeline
+                </h1>
+                <p class="text-xs sm:text-sm text-slate-300 max-w-2xl font-normal leading-relaxed">
+                    Real-time status updates and submission verification across your jobs, scholarships, welfare schemes, and skill courses.
+                </p>
+            </div>
+            <div class="flex items-center gap-3 shrink-0">
+                <a href="{% url 'jobs_list' %}" class="btn-primary btn-magnetic btn-glow-pulse text-xs py-3 px-5 shadow-lg shadow-cyan-950/50">
+                    <i class="fas fa-plus"></i> Explore Opportunities
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5 Pipeline Stage Counter Cards with Animated Rollups -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4" data-anim="fade-up">
+        <!-- Total -->
+        <div class="roc-card hover-lift-3d p-5 bg-white border border-slate-200">
+            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Total Submissions</span>
+            <div class="text-2xl sm:text-3xl font-black text-slate-900 counter-value" data-counter="{{ total_applications }}">{{ total_applications }}</div>
+        </div>
+        <!-- Under Review -->
+        <div class="roc-card hover-lift-3d p-5 bg-white border border-slate-200">
+            <span class="text-[11px] font-bold text-amber-500 uppercase tracking-wider block mb-1">Under Review</span>
+            <div class="text-2xl sm:text-3xl font-black text-amber-600 counter-value" data-counter="{{ under_review_count }}">{{ under_review_count }}</div>
+        </div>
+        <!-- Shortlisted -->
+        <div class="roc-card hover-lift-3d p-5 bg-white border border-slate-200">
+            <span class="text-[11px] font-bold text-blue-500 uppercase tracking-wider block mb-1">Shortlisted</span>
+            <div class="text-2xl sm:text-3xl font-black text-blue-600 counter-value" data-counter="{{ shortlisted_count }}">{{ shortlisted_count }}</div>
+        </div>
+        <!-- Selected / Granted -->
+        <div class="roc-card hover-lift-3d p-5 bg-white border border-slate-200">
+            <span class="text-[11px] font-bold text-cyan-500 uppercase tracking-wider block mb-1">Selected / Granted</span>
+            <div class="text-2xl sm:text-3xl font-black text-cyan-600 counter-value" data-counter="{{ selected_count }}">{{ selected_count }}</div>
+        </div>
+        <!-- Rejected / Closed -->
+        <div class="roc-card hover-lift-3d p-5 bg-white border border-slate-200">
+            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Archived / Other</span>
+            <div class="text-2xl sm:text-3xl font-black text-slate-600 counter-value" data-counter="{{ rejected_count }}">{{ rejected_count }}</div>
+        </div>
+    </div>
+
+    <!-- Applications List -->
+    <div class="space-y-6 anim-grid-stagger" data-anim="fade-up">
+        {% if applications %}
+            {% for app in applications %}
+            <div class="roc-card p-6 bg-white border border-slate-200 shadow-xs space-y-6 hover-lift-3d card-specular-glare">
+                <!-- Card Header -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+                    <div>
+                        <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                            <span class="roc-badge
+                                {% if app.opportunity_type == 'job' %}roc-badge-blue
+                                {% elif app.opportunity_type == 'scholarship' %}roc-badge-purple
+                                {% elif app.opportunity_type == 'scheme' %}roc-badge-emerald
+                                {% elif app.opportunity_type == 'skill' %}roc-badge-amber
+                                {% else %}roc-badge-rose{% endif %} text-[10px]">
+                                {{ app.get_opportunity_type_display }}
+                            </span>
+                            <span class="text-xs text-slate-400 font-mono">Ref: ROC-{{ app.id|stringformat:"05d" }}</span>
+                        </div>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900">{{ app.opportunity_name }}</h2>
+                        <p class="text-xs text-slate-500 font-medium">
+                            <i class="fas fa-building mr-1 text-slate-400"></i> {{ app.organization|default:"Rural Opportunity Hub" }}
+                            <span class="mx-1.5 text-slate-300">•</span>
+                            <i class="fas fa-calendar mr-1 text-slate-400"></i> Submitted on {{ app.applied_date|date:"F d, Y" }}
+                        </p>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <span class="roc-badge
+                            {% if app.status == 'selected' %}roc-badge-emerald
+                            {% elif app.status == 'shortlisted' %}roc-badge-blue
+                            {% elif app.status == 'under_review' %}roc-badge-amber
+                            {% elif app.status == 'rejected' %}roc-badge-red
+                            {% else %}roc-badge-slate{% endif %} text-xs px-3.5 py-1.5 font-bold">
+                            {{ app.get_status_display }}
+                        </span>
+                        <button onclick="window.print()" class="btn-outline text-xs py-1.5 px-3" title="Print application receipt">
+                            <i class="fas fa-print"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 4-Stage Progress Stepper with Animated Connectors & Pulse Nodes -->
+                <div class="py-2 relative">
+                    <div class="grid grid-cols-4 gap-2 text-center relative z-10">
+                        <!-- Step 1: Applied -->
+                        <div class="space-y-1.5">
+                            <div class="w-8 h-8 rounded-full {% if app.status == 'applied' %}bg-cyan-500 timeline-pulse-node{% else %}bg-emerald-600{% endif %} text-white flex items-center justify-center text-xs font-bold mx-auto shadow-xs">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <p class="text-xs font-bold text-slate-900">1. Applied</p>
+                            <p class="text-[10px] text-slate-400">Direct 1-Click Submission</p>
+                        </div>
+
+                        <!-- Step 2: Under Review -->
+                        <div class="space-y-1.5">
+                            <div class="w-8 h-8 rounded-full {% if app.status == 'under_review' %}bg-amber-500 timeline-pulse-node text-white{% elif app.status != 'applied' %}bg-emerald-600 text-white{% else %}bg-slate-100 text-slate-400{% endif %} flex items-center justify-center text-xs font-bold mx-auto">
+                                {% if app.status != 'applied' %}<i class="fas fa-check"></i>{% else %}2{% endif %}
+                            </div>
+                            <p class="text-xs font-bold {% if app.status != 'applied' %}text-slate-900{% else %}text-slate-400{% endif %}">2. Under Review</p>
+                            <p class="text-[10px] text-slate-400">Document & Profile Audit</p>
+                        </div>
+
+                        <!-- Step 3: Shortlisted -->
+                        <div class="space-y-1.5">
+                            <div class="w-8 h-8 rounded-full {% if app.status == 'shortlisted' %}bg-blue-600 timeline-pulse-node text-white{% elif app.status == 'selected' %}bg-emerald-600 text-white{% else %}bg-slate-100 text-slate-400{% endif %} flex items-center justify-center text-xs font-bold mx-auto">
+                                {% if app.status == 'selected' %}<i class="fas fa-check"></i>{% elif app.status == 'shortlisted' %}<i class="fas fa-hourglass-half"></i>{% else %}3{% endif %}
+                            </div>
+                            <p class="text-xs font-bold {% if app.status == 'shortlisted' or app.status == 'selected' %}text-slate-900{% else %}text-slate-400{% endif %}">3. Shortlisted</p>
+                            <p class="text-[10px] text-slate-400">Eligibility Approved</p>
+                        </div>
+
+                        <!-- Step 4: Selected -->
+                        <div class="space-y-1.5">
+                            <div class="w-8 h-8 rounded-full {% if app.status == 'selected' %}bg-emerald-600 timeline-pulse-node text-white{% elif app.status == 'rejected' %}bg-red-500 text-white{% else %}bg-slate-100 text-slate-400{% endif %} flex items-center justify-center text-xs font-bold mx-auto">
+                                {% if app.status == 'selected' %}<i class="fas fa-check"></i>{% elif app.status == 'rejected' %}<i class="fas fa-xmark"></i>{% else %}4{% endif %}
+                            </div>
+                            <p class="text-xs font-bold {% if app.status == 'selected' %}text-emerald-700{% elif app.status == 'rejected' %}text-red-600{% else %}text-slate-400{% endif %}">
+                                {% if app.status == 'rejected' %}4. Not Selected{% else %}4. Selected / Enrolled{% endif %}
+                            </p>
+                            <p class="text-[10px] text-slate-400">Final Confirmation</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer Status Note -->
+                <div class="pt-3 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+                    <p class="flex items-center gap-1.5">
+                        <i class="fas fa-info-circle text-brand-700"></i>
+                        Our coordination desk notifies registered phone and email when official nodal officers take action.
+                    </p>
+                    {% if app.opportunity_type == 'job' %}
+                        <a href="{% url 'job_detail' app.opportunity_id %}" class="text-brand-800 hover:text-brand-950 font-bold shrink-0">View Job Details →</a>
+                    {% elif app.opportunity_type == 'scholarship' %}
+                        <a href="{% url 'scholarship_detail' app.opportunity_id %}" class="text-brand-800 hover:text-brand-950 font-bold shrink-0">View Scholarship Details →</a>
+                    {% elif app.opportunity_type == 'scheme' %}
+                        <a href="{% url 'scheme_detail' app.opportunity_id %}" class="text-brand-800 hover:text-brand-950 font-bold shrink-0">View Scheme Details →</a>
+                    {% elif app.opportunity_type == 'skill' %}
+                        <a href="{% url 'skill_detail' app.opportunity_id %}" class="text-brand-800 hover:text-brand-950 font-bold shrink-0">View Skill Details →</a>
+                    {% elif app.opportunity_type == 'business' %}
+                        <a href="{% url 'business_detail' app.opportunity_id %}" class="text-brand-800 hover:text-brand-950 font-bold shrink-0">View Blueprint →</a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <!-- Empty State -->
+            <div class="roc-card p-12 text-center border border-dashed border-slate-300 rounded-3xl bg-white">
+                <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
+                    <i class="fas fa-list-check"></i>
+                </div>
+                <h2 class="text-xl font-bold text-slate-800 mb-2">No Applications Submitted Yet</h2>
+                <p class="text-xs text-slate-500 max-w-sm mx-auto mb-6">
+                    Use our 1-Click Quick Apply on any job, scholarship, scheme, or skill program to start tracking your progress here.
+                </p>
+                <div class="flex flex-wrap justify-center gap-3">
+                    <a href="{% url 'jobs_list' %}" class="btn-primary text-xs py-2.5 px-5">
+                        <i class="fas fa-briefcase"></i> Explore Jobs
+                    </a>
+                    <a href="{% url 'scholarships_list' %}" class="btn-secondary text-xs py-2.5 px-5">
+                        <i class="fas fa-graduation-cap"></i> Explore Scholarships
+                    </a>
+                    <a href="{% url 'schemes_list' %}" class="btn-outline text-xs py-2.5 px-5">
+                        <i class="fas fa-building-columns"></i> Browse Schemes
+                    </a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

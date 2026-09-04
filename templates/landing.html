@@ -1,0 +1,615 @@
+{% extends 'base.html' %}
+
+{% block title %}Rural Opportunity Connect — Discover Opportunities. Build Your Future.{% endblock %}
+
+{% block content %}
+<!-- 1. Hero Section -->
+<section class="relative anim-mesh-bg text-white overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-28">
+    <!-- Subtle Background Glow & Aurora Elements -->
+    <div class="hero-aurora-glow top-10 left-1/4 pointer-events-none"></div>
+    <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <!-- Left Headline & CTA -->
+            <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                <div class="inline-flex items-center gap-2 bg-cyan-500/15 border border-cyan-400/30 text-cyan-300 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider backdrop-blur-xs hero-badge-pulse">
+                    <i class="fas fa-sparkles text-cyan-400"></i> Empowering Inclusive Rural Growth
+                </div>
+
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
+                    <span class="kinetic-headline">Discover Verified Opportunities.</span> <br class="hidden sm:inline">
+                    <span class="shiny-text">
+                        Build Your Future.
+                    </span>
+                </h1>
+
+                <p class="text-base sm:text-lg lg:text-xl text-slate-200 max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
+                    Find verified rural jobs, higher education scholarships, government welfare schemes, certified skill programs, and micro-enterprise blueprints — all in one accessible, multilingual platform.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                    <a href="{% url 'jobs_list' %}" class="btn-primary btn-magnetic btn-shimmer-sweep btn-glow-pulse w-full sm:w-auto text-base py-3.5 px-7 shadow-lg shadow-cyan-950/40">
+                        <i class="fas fa-compass mr-2 btn-icon-nudge"></i> Explore Opportunities
+                    </a>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'dashboard' %}" class="btn-secondary btn-magnetic w-full sm:w-auto text-base py-3.5 px-7">
+                            <i class="fas fa-chart-pie mr-2"></i> Open My Dashboard
+                        </a>
+                    {% else %}
+                        <a href="{% url 'register' %}" class="btn-secondary btn-magnetic w-full sm:w-auto text-base py-3.5 px-7">
+                            <i class="fas fa-user-plus mr-2"></i> Create Free Profile
+                        </a>
+                    {% endif %}
+                </div>
+
+                <!-- Live Quick Search Bar -->
+                <div class="pt-4 max-w-xl mx-auto lg:mx-0">
+                    <form method="GET" action="{% url 'jobs_list' %}" class="relative flex items-center">
+                        <input type="text" name="search" placeholder="Search opportunities (e.g. Agriculture, Accounts, Tamil Nadu)..."
+                               class="w-full pl-11 pr-28 py-3.5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder-cyan-200/60 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:bg-white/15 transition shadow-inner">
+                        <i class="fas fa-search absolute left-4 text-cyan-300 text-sm"></i>
+                        <button type="submit" class="absolute right-2 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs transition">
+                            Search
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Right Hero Composition Showcase with 3D WebGL Globe & Tilt Card -->
+            <div class="lg:col-span-5 relative perspective-viewport">
+                <div class="relative mx-auto max-w-md">
+                    <!-- 3D Three.js Interactive Rural Opportunity Network Globe -->
+                    <div id="hero3dCanvasContainer" class="rounded-3xl cursor-grab active:cursor-grabbing w-full h-[320px] relative overflow-hidden mb-5 bg-[#071526]/80 border border-cyan-500/30 backdrop-blur-md shadow-2xl flex items-center justify-center">
+                        <div class="absolute top-3 left-3 flex items-center gap-2 bg-[#0c2340]/90 backdrop-blur-md px-3 py-1 rounded-full border border-cyan-400/30 text-[11px] font-bold text-cyan-200 pointer-events-none z-10 shadow-sm">
+                            <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+                            3D Opportunity Network
+                        </div>
+                        <div class="absolute bottom-3 right-3 text-[10px] font-semibold text-cyan-300/80 bg-slate-950/70 px-2.5 py-1 rounded-full border border-cyan-500/20 pointer-events-none z-10 flex items-center gap-1">
+                            <i class="fas fa-hand-pointer text-cyan-400"></i> Drag to rotate globe
+                        </div>
+                    </div>
+
+                    <!-- Main Showcase Card with 3D Tilt & Specular Glare -->
+                    <div class="tilt-card-3d glass-surface-3d rounded-3xl p-6 shadow-2xl border border-white/60 text-slate-800 space-y-4 relative">
+                        <div class="tilt-glare"></div>
+                        <div class="depth-layer-2 flex items-center justify-between pb-3 border-b border-slate-100">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-8 h-8 rounded-lg bg-cyan-600 text-white flex items-center justify-center text-sm font-bold shadow-md">
+                                    <i class="fas fa-bolt"></i>
+                                </div>
+                                <div>
+                                    <h2 class="text-sm font-bold text-slate-900 leading-none">Smart Opportunity Match</h2>
+                                    <span class="text-[11px] text-slate-400">Personalized Rural Recommendations</span>
+                                </div>
+                            </div>
+                            <span class="roc-badge roc-badge-cyan text-[10px]">Verified</span>
+                        </div>
+
+                        <!-- Sample Live Preview Cards -->
+                        <div class="depth-layer-1 space-y-3">
+                            <div class="p-3.5 rounded-2xl bg-cyan-50/70 border border-cyan-100 flex items-center justify-between gap-3 hover:bg-cyan-50 transition transform hover:translate-x-1">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center text-base">💼</div>
+                                    <div>
+                                        <h3 class="text-xs font-bold text-slate-900">Farm Assistant & Data Entry</h3>
+                                        <p class="text-[11px] text-slate-500">₹15,000 – ₹25,000 / mo • Rural Sectors</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs font-black text-cyan-700">95% Match</span>
+                            </div>
+
+                            <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-between gap-3 hover:bg-slate-100/70 transition transform hover:translate-x-1">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-base">🎓</div>
+                                    <div>
+                                        <h3 class="text-xs font-bold text-slate-900">Post-Matric Rural Scholarship</h3>
+                                        <p class="text-[11px] text-slate-500">₹20,000 / yr • Fee Concession Grant</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs font-black text-cyan-700">92% Match</span>
+                            </div>
+
+                            <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-between gap-3 hover:bg-slate-100/70 transition transform hover:translate-x-1">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center text-base">🏛️</div>
+                                    <div>
+                                        <h3 class="text-xs font-bold text-slate-900">PM-KISAN DBT Support Scheme</h3>
+                                        <p class="text-[11px] text-slate-500">Direct Benefit Transfer • Central Govt</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs font-black text-cyan-700">98% Match</span>
+                            </div>
+                        </div>
+
+                        <div class="depth-layer-2 pt-2">
+                            <a href="{% url 'jobs_list' %}" class="block text-center text-xs font-bold text-cyan-700 hover:text-cyan-800 transition">
+                                View all {{ total_opportunities }} verified opportunities →
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Floating Stat Pill with 3D Depth & Float Animation -->
+                    <div class="absolute -top-3 -right-3 depth-layer-3 animate-float-3d bg-cyan-400 text-slate-950 font-black text-xs px-4 py-2 rounded-2xl shadow-xl flex items-center gap-1.5 border-2 border-white z-20">
+                        <i class="fas fa-check-circle"></i> 100% Free Access
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 2. Dynamic Statistics Section (Real Database Values) -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 -mt-8 relative z-20">
+    <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-100">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 text-center divide-y lg:divide-y-0 lg:divide-x divide-slate-100" data-anim="fade-up">
+            <!-- Total Opportunities -->
+            <div class="pt-4 lg:pt-0">
+                <div class="text-3xl sm:text-4xl font-black text-brand-800 mb-1 counter-value" data-counter="{{ total_opportunities }}">{{ total_opportunities }}</div>
+                <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Total Live Hubs</p>
+            </div>
+            <!-- Jobs -->
+            <div class="pt-4 lg:pt-0 lg:pl-4">
+                <div class="text-3xl sm:text-4xl font-black text-blue-600 mb-1 counter-value" data-counter="{{ jobs_count }}">{{ jobs_count }}</div>
+                <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Available Jobs</p>
+            </div>
+            <!-- Scholarships -->
+            <div class="pt-4 lg:pt-0 lg:pl-4">
+                <div class="text-3xl sm:text-4xl font-black text-purple-600 mb-1 counter-value" data-counter="{{ scholarships_count }}">{{ scholarships_count }}</div>
+                <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Scholarships</p>
+            </div>
+            <!-- Government Schemes -->
+            <div class="pt-4 lg:pt-0 lg:pl-4">
+                <div class="text-3xl sm:text-4xl font-black text-emerald-600 mb-1 counter-value" data-counter="{{ schemes_count }}">{{ schemes_count }}</div>
+                <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Govt Schemes</p>
+            </div>
+            <!-- Skill Programs -->
+            <div class="pt-4 lg:pt-0 lg:pl-4">
+                <div class="text-3xl sm:text-4xl font-black text-amber-600 mb-1 counter-value" data-counter="{{ skills_count }}">{{ skills_count }}</div>
+                <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Skill Programs</p>
+            </div>
+            <!-- Business Ideas -->
+            <div class="pt-4 lg:pt-0 lg:pl-4">
+                <div class="text-3xl sm:text-4xl font-black text-rose-600 mb-1 counter-value" data-counter="{{ business_count }}">{{ business_count }}</div>
+                <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Business Ideas</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 3. Explore Opportunity Categories Section -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 py-20">
+    <div class="text-center max-w-3xl mx-auto mb-14">
+        <span class="roc-badge roc-badge-emerald mb-3">Opportunity Gateway</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
+            Explore Opportunities by Sector
+        </h2>
+        <p class="text-slate-600 text-base">
+            Every sector is categorized, verified, and mapped directly to rural qualification levels and livelihood goals.
+        </p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 perspective-viewport" data-anim="fade-up">
+        <!-- 1. Jobs -->
+        <div class="tilt-card-3d roc-card hover-lift-3d card-specular-glare p-6 flex flex-col justify-between group border-t-4 border-t-blue-500 relative">
+            <div class="tilt-glare"></div>
+            <div class="depth-layer-1">
+                <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform depth-layer-2 shadow-xs">
+                    💼
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition depth-layer-2">Jobs</h3>
+                <p class="text-xs text-slate-500 leading-relaxed mb-4">
+                    Local, semi-urban, and remote employment matching your qualifications and vocational skills.
+                </p>
+            </div>
+            <div class="depth-layer-2 pt-4 border-t border-slate-100 flex items-center justify-between">
+                <span class="text-xs font-extrabold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-lg">{{ jobs_count }} Available</span>
+                <a href="{% url 'jobs_list' %}" class="text-xs font-bold text-slate-700 hover:text-blue-600 transition">
+                    View <i class="fas fa-arrow-right text-[10px]"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- 2. Scholarships -->
+        <div class="tilt-card-3d roc-card hover-lift-3d card-specular-glare p-6 flex flex-col justify-between group border-t-4 border-t-purple-500 relative">
+            <div class="tilt-glare"></div>
+            <div class="depth-layer-1">
+                <div class="w-14 h-14 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform depth-layer-2 shadow-xs">
+                    🎓
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 mb-2 group-hover:text-purple-600 transition depth-layer-2">Scholarships</h3>
+                <p class="text-xs text-slate-500 leading-relaxed mb-4">
+                    Higher education grants, tuition waivers, and post-matric financial support schemes.
+                </p>
+            </div>
+            <div class="depth-layer-2 pt-4 border-t border-slate-100 flex items-center justify-between">
+                <span class="text-xs font-extrabold text-purple-600 bg-purple-50 px-2.5 py-1 rounded-lg">{{ scholarships_count }} Available</span>
+                <a href="{% url 'scholarships_list' %}" class="text-xs font-bold text-slate-700 hover:text-purple-600 transition">
+                    View <i class="fas fa-arrow-right text-[10px]"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- 3. Government Schemes -->
+        <div class="tilt-card-3d roc-card hover-lift-3d card-specular-glare p-6 flex flex-col justify-between group border-t-4 border-t-cyan-500 relative">
+            <div class="tilt-glare"></div>
+            <div class="depth-layer-1">
+                <div class="w-14 h-14 bg-cyan-50 text-cyan-600 rounded-2xl flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform depth-layer-2 shadow-xs">
+                    🏛️
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 mb-2 group-hover:text-cyan-600 transition depth-layer-2">Govt Schemes</h3>
+                <p class="text-xs text-slate-500 leading-relaxed mb-4">
+                    Subsidies, agricultural support, welfare schemes, and direct financial assistance.
+                </p>
+            </div>
+            <div class="depth-layer-2 pt-4 border-t border-slate-100 flex items-center justify-between">
+                <span class="text-xs font-extrabold text-cyan-600 bg-cyan-50 px-2.5 py-1 rounded-lg">{{ schemes_count }} Available</span>
+                <a href="{% url 'schemes_list' %}" class="text-xs font-bold text-slate-700 hover:text-cyan-600 transition">
+                    View <i class="fas fa-arrow-right text-[10px]"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- 4. Skills -->
+        <div class="tilt-card-3d roc-card hover-lift-3d card-specular-glare p-6 flex flex-col justify-between group border-t-4 border-t-amber-500 relative">
+            <div class="tilt-glare"></div>
+            <div class="depth-layer-1">
+                <div class="w-14 h-14 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform depth-layer-2 shadow-xs">
+                    💻
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 mb-2 group-hover:text-amber-600 transition depth-layer-2">Skill Programs</h3>
+                <p class="text-xs text-slate-500 leading-relaxed mb-4">
+                    Free technical, digital, and vocational training courses with verified certification.
+                </p>
+            </div>
+            <div class="depth-layer-2 pt-4 border-t border-slate-100 flex items-center justify-between">
+                <span class="text-xs font-extrabold text-amber-600 bg-amber-50 px-2.5 py-1 rounded-lg">{{ skills_count }} Available</span>
+                <a href="{% url 'skills_list' %}" class="text-xs font-bold text-slate-700 hover:text-amber-600 transition">
+                    View <i class="fas fa-arrow-right text-[10px]"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- 5. Business Ideas -->
+        <div class="tilt-card-3d roc-card p-6 flex flex-col justify-between group border-t-4 border-t-rose-500 relative">
+            <div class="tilt-glare"></div>
+            <div class="depth-layer-1">
+                <div class="w-14 h-14 bg-rose-50 text-rose-600 rounded-2xl flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform depth-layer-2 shadow-xs">
+                    🚀
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 mb-2 group-hover:text-rose-600 transition depth-layer-2">Business Ideas</h3>
+                <p class="text-xs text-slate-500 leading-relaxed mb-4">
+                    Low-investment micro-enterprise models, market demand insights, and launch guides.
+                </p>
+            </div>
+            <div class="depth-layer-2 pt-4 border-t border-slate-100 flex items-center justify-between">
+                <span class="text-xs font-extrabold text-rose-600 bg-rose-50 px-2.5 py-1 rounded-lg">{{ business_count }} Available</span>
+                <a href="{% url 'business_list' %}" class="text-xs font-bold text-slate-700 hover:text-rose-600 transition">
+                    View <i class="fas fa-arrow-right text-[10px]"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 4. How Rural Opportunity Connect Works -->
+<section class="bg-slate-100/70 py-20 border-y border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <span class="roc-badge roc-badge-emerald mb-3">Simple 4-Step Process</span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
+                How Rural Opportunity Connect Works
+            </h2>
+            <p class="text-slate-600 text-base">
+                We simplify the journey from discovering an opportunity to tracking your actual application outcome.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative perspective-viewport">
+            <!-- Step 1 -->
+            <div class="tilt-card-3d roc-card p-6 bg-white relative">
+                <div class="tilt-glare"></div>
+                <div class="depth-layer-2 w-12 h-12 rounded-2xl bg-brand-800 text-white font-black text-lg flex items-center justify-center mb-5 shadow-xs">
+                    01
+                </div>
+                <div class="depth-layer-1">
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Create Your Profile</h3>
+                    <p class="text-xs text-slate-500 leading-relaxed">
+                        Set up your basic educational qualification, skills, village location, and opportunity preferences.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="tilt-card-3d roc-card p-6 bg-white relative">
+                <div class="tilt-glare"></div>
+                <div class="depth-layer-2 w-12 h-12 rounded-2xl bg-brand-800 text-white font-black text-lg flex items-center justify-center mb-5 shadow-xs">
+                    02
+                </div>
+                <div class="depth-layer-1">
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Discover Opportunities</h3>
+                    <p class="text-xs text-slate-500 leading-relaxed">
+                        Our recommendation engine matches verified jobs, schemes, and grants tailored to your profile.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="tilt-card-3d roc-card p-6 bg-white relative">
+                <div class="tilt-glare"></div>
+                <div class="depth-layer-2 w-12 h-12 rounded-2xl bg-brand-800 text-white font-black text-lg flex items-center justify-center mb-5 shadow-xs">
+                    03
+                </div>
+                <div class="depth-layer-1">
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">1-Click Quick Apply</h3>
+                    <p class="text-xs text-slate-500 leading-relaxed">
+                        Submit applications instantly with your profile. No repetitive forms or unnecessary paperwork.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="tilt-card-3d roc-card p-6 bg-white relative">
+                <div class="tilt-glare"></div>
+                <div class="depth-layer-2 w-12 h-12 rounded-2xl bg-brand-800 text-white font-black text-lg flex items-center justify-center mb-5 shadow-xs">
+                    04
+                </div>
+                <div class="depth-layer-1">
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Track Your Progress</h3>
+                    <p class="text-xs text-slate-500 leading-relaxed">
+                        Monitor status updates across Under Review, Shortlisted, and Selected in your Application Tracker.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 5. Why Use Rural Opportunity Connect (6 Feature Cards) -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 py-20">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="roc-badge roc-badge-emerald mb-3">Core Platform Value</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
+            Why Use Rural Opportunity Connect?
+        </h2>
+        <p class="text-slate-600 text-base">
+            Designed specifically for rural students, job seekers, and village entrepreneurs.
+        </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 perspective-viewport">
+        <!-- Feature 1 -->
+        <div class="tilt-card-3d roc-card p-7 hover:border-brand-500 transition duration-300 relative">
+            <div class="tilt-glare"></div>
+            <div class="depth-layer-2 w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl mb-4 shadow-xs">
+                <i class="fas fa-wand-magic-sparkles"></i>
+            </div>
+            <div class="depth-layer-1">
+                <h3 class="text-lg font-bold text-slate-900 mb-2">Personalized Discovery</h3>
+                <p class="text-xs text-slate-500 leading-relaxed">
+                    Receive prioritized opportunities matched to your exact education stream, income level, and regional district.
+                </p>
+            </div>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="tilt-card-3d roc-card p-7 hover:border-brand-500 transition duration-300 relative">
+            <div class="tilt-glare"></div>
+            <div class="depth-layer-2 w-12 h-12 rounded-2xl bg-blue-100 text-blue-700 flex items-center justify-center text-xl mb-4 shadow-xs">
+                <i class="fas fa-bolt"></i>
+            </div>
+            <div class="depth-layer-1">
+                <h3 class="text-lg font-bold text-slate-900 mb-2">1-Click Quick Apply</h3>
+                <p class="text-xs text-slate-500 leading-relaxed">
+                    Directly submit applications using your saved profile with zero redundant personal information forms.
+                </p>
+            </div>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="tilt-card-3d roc-card p-7 hover:border-brand-500 transition duration-300 relative">
+            <div class="tilt-glare"></div>
+            <div class="depth-layer-2 w-12 h-12 rounded-2xl bg-purple-100 text-purple-700 flex items-center justify-center text-xl mb-4 shadow-xs">
+                <i class="fas fa-list-check"></i>
+            </div>
+            <div class="depth-layer-1">
+                <h3 class="text-lg font-bold text-slate-900 mb-2">Application Tracking</h3>
+                <p class="text-xs text-slate-500 leading-relaxed">
+                    Never lose track of deadlines or status updates with our visual application timeline pipeline.
+                </p>
+            </div>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="tilt-card-3d roc-card p-7 hover:border-brand-500 transition duration-300 relative">
+            <div class="tilt-glare"></div>
+            <div class="depth-layer-2 w-12 h-12 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center text-xl mb-4 shadow-xs">
+                <i class="fas fa-folder-open"></i>
+            </div>
+            <div class="depth-layer-1">
+                <h3 class="text-lg font-bold text-slate-900 mb-2">Document Readiness Locker</h3>
+                <p class="text-xs text-slate-500 leading-relaxed">
+                    Check off your Aadhaar, income, and community certificates to prepare for seamless DBT scheme enrollment.
+                </p>
+            </div>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="tilt-card-3d roc-card p-7 hover:border-brand-500 transition duration-300 relative">
+            <div class="tilt-glare"></div>
+            <div class="depth-layer-2 w-12 h-12 rounded-2xl bg-teal-100 text-teal-700 flex items-center justify-center text-xl mb-4 shadow-xs">
+                <i class="fas fa-language"></i>
+            </div>
+            <div class="depth-layer-1">
+                <h3 class="text-lg font-bold text-slate-900 mb-2">Global Multilingual Support</h3>
+                <p class="text-xs text-slate-500 leading-relaxed">
+                    Switch effortlessly between English, Tamil, Hindi, Telugu, Kannada, and Malayalam across every single page.
+                </p>
+            </div>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="tilt-card-3d roc-card p-7 hover:border-brand-500 transition duration-300 relative">
+            <div class="tilt-glare"></div>
+            <div class="depth-layer-2 w-12 h-12 rounded-2xl bg-rose-100 text-rose-700 flex items-center justify-center text-xl mb-4 shadow-xs">
+                <i class="fas fa-tree"></i>
+            </div>
+            <div class="depth-layer-1">
+                <h3 class="text-lg font-bold text-slate-900 mb-2">Rural-Focused Opportunities</h3>
+                <p class="text-xs text-slate-500 leading-relaxed">
+                    Curated specifically around agriculture, rural healthcare, local banking, micro-enterprises, and state quotas.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 6. UN SDG 10 Alignment Showcase -->
+<section class="bg-gradient-to-r from-[#071526] via-[#0c2340] to-slate-950 text-white py-16 border-y border-cyan-900/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <div class="lg:col-span-8 space-y-4">
+                <div class="inline-flex items-center gap-2 bg-cyan-500/10 border border-cyan-400/30 px-3.5 py-1.5 rounded-full text-xs font-bold text-cyan-300">
+                    <i class="fas fa-globe text-cyan-400"></i> Aligned with UN Sustainable Development Goals
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-white">
+                    SDG 10: Reducing the Rural-Urban Opportunity Gap
+                </h2>
+                <p class="text-sm sm:text-base text-slate-300 leading-relaxed">
+                    By providing equal digital access to employment, education grants, and skill training, Rural Opportunity Connect enables rural youth and families to prosper locally without forced urban migration.
+                </p>
+            </div>
+            <div class="lg:col-span-4 flex justify-start lg:justify-end">
+                <a href="{% url 'about' %}" class="btn-secondary text-sm py-3 px-6 shadow-md border-cyan-500/30">
+                    <i class="fas fa-circle-info text-cyan-400"></i> Explore Design Thinking Process
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 7. Connected Opportunity Networks -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 py-20">
+    <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="roc-badge roc-badge-emerald mb-3">Integrated Partner Network</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
+            Connected to India's Largest Opportunity Networks
+        </h2>
+        <p class="text-slate-600 text-base">
+            We fetch and synchronize verified opportunities from official government portals and leading CSR networks in real-time.
+        </p>
+    </div>
+
+    <div class="slider-drag-container py-2" data-anim="fade-up">
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 text-center perspective-viewport min-w-[640px] lg:min-w-0">
+        <!-- Buddy4Study -->
+        <a href="https://www.buddy4study.com/" target="_blank" rel="noopener noreferrer"
+           class="tilt-card-3d roc-card p-5 bg-white border border-slate-200 hover:border-purple-400 group relative">
+            <div class="tilt-glare"></div>
+            <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-3 group-hover:scale-110 transition-transform depth-layer-2 shadow-xs">
+                🎓
+            </div>
+            <div class="depth-layer-1">
+                <h3 class="text-xs font-bold text-slate-900 group-hover:text-purple-700">Buddy4Study</h3>
+                <span class="text-[10px] text-slate-400">CSR Scholarships</span>
+            </div>
+        </a>
+
+        <!-- myScheme -->
+        <a href="https://www.myscheme.gov.in/" target="_blank" rel="noopener noreferrer"
+           class="tilt-card-3d roc-card p-5 bg-white border border-slate-200 hover:border-emerald-400 group relative">
+            <div class="tilt-glare"></div>
+            <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-3 group-hover:scale-110 transition-transform depth-layer-2 shadow-xs">
+                🏛️
+            </div>
+            <div class="depth-layer-1">
+                <h3 class="text-xs font-bold text-slate-900 group-hover:text-emerald-700">myScheme.gov.in</h3>
+                <span class="text-[10px] text-slate-400">Central & State DBT</span>
+            </div>
+        </a>
+
+        <!-- NSP -->
+        <a href="https://scholarships.gov.in/" target="_blank" rel="noopener noreferrer"
+           class="tilt-card-3d roc-card p-5 bg-white border border-slate-200 hover:border-blue-400 group relative">
+            <div class="tilt-glare"></div>
+            <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-3 group-hover:scale-110 transition-transform depth-layer-2 shadow-xs">
+                📜
+            </div>
+            <div class="depth-layer-1">
+                <h3 class="text-xs font-bold text-slate-900 group-hover:text-blue-700">National Scholarships</h3>
+                <span class="text-[10px] text-slate-400">Govt Grants (NSP)</span>
+            </div>
+        </a>
+
+        <!-- NCS -->
+        <a href="https://www.ncs.gov.in/" target="_blank" rel="noopener noreferrer"
+           class="tilt-card-3d roc-card p-5 bg-white border border-slate-200 hover:border-blue-400 group relative">
+            <div class="tilt-glare"></div>
+            <div class="w-12 h-12 bg-sky-50 text-sky-600 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-3 group-hover:scale-110 transition-transform depth-layer-2 shadow-xs">
+                💼
+            </div>
+            <div class="depth-layer-1">
+                <h3 class="text-xs font-bold text-slate-900 group-hover:text-sky-700">Career Service (NCS)</h3>
+                <span class="text-[10px] text-slate-400">Rural Employment</span>
+            </div>
+        </a>
+
+        <!-- Skill India -->
+        <a href="https://www.skillindiadigital.gov.in/" target="_blank" rel="noopener noreferrer"
+           class="tilt-card-3d roc-card p-5 bg-white border border-slate-200 hover:border-amber-400 group relative">
+            <div class="tilt-glare"></div>
+            <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-3 group-hover:scale-110 transition-transform depth-layer-2 shadow-xs">
+                💻
+            </div>
+            <div class="depth-layer-1">
+                <h3 class="text-xs font-bold text-slate-900 group-hover:text-amber-700">Skill India Digital</h3>
+                <span class="text-[10px] text-slate-400">PMKVY & NSDC</span>
+            </div>
+        </a>
+
+        <!-- Startup India / PMEGP -->
+        <a href="https://www.startupindia.gov.in/" target="_blank" rel="noopener noreferrer"
+           class="tilt-card-3d roc-card p-5 bg-white border border-slate-200 hover:border-rose-400 group relative">
+            <div class="tilt-glare"></div>
+            <div class="w-12 h-12 bg-rose-50 text-rose-600 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-3 group-hover:scale-110 transition-transform depth-layer-2 shadow-xs">
+                🚀
+            </div>
+            <div class="depth-layer-1">
+                <h3 class="text-xs font-bold text-slate-900 group-hover:text-rose-700">PMEGP / Startup</h3>
+                <span class="text-[10px] text-slate-400">KVIC Subsidies</span>
+            </div>
+        </a>
+        </div>
+    </div>
+
+    <div class="mt-8 text-center">
+        <a href="{% url 'partners' %}" class="btn-outline text-xs py-2.5 px-6 inline-flex items-center gap-2">
+            <i class="fas fa-satellite-dish text-brand-700"></i> Explore Live Partner Feeds & Directory →
+        </a>
+    </div>
+</section>
+
+<!-- 8. Bottom CTA -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 py-20">
+    <div class="roc-gradient-primary rounded-3xl p-10 md:p-16 text-white text-center shadow-2xl relative overflow-hidden border border-cyan-500/20">
+        <div class="relative z-10 max-w-3xl mx-auto space-y-6">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white">
+                Your next opportunity is closer than you think.
+            </h2>
+            <p class="text-base sm:text-lg text-slate-200 max-w-2xl mx-auto leading-relaxed">
+                Join thousands of rural students, job seekers, and entrepreneurs discovering verified livelihood gateways today.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+                <a href="{% url 'jobs_list' %}" class="bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-extrabold px-8 py-3.5 rounded-xl text-sm transition shadow-lg shadow-cyan-950/50 inline-flex items-center gap-2">
+                    <i class="fas fa-compass text-slate-950"></i> Explore Opportunities
+                </a>
+                {% if not user.is_authenticated %}
+                    <a href="{% url 'register' %}" class="bg-[#071526]/80 hover:bg-[#071526] text-white font-bold px-8 py-3.5 rounded-xl text-sm transition border border-cyan-400/40 inline-flex items-center gap-2">
+                        <i class="fas fa-user-plus text-cyan-400"></i> Create Free Account
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

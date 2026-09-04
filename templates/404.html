@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}404 — Opportunity Not Found - Rural Opportunity Connect{% endblock %}
+
+{% block content %}
+<div class="min-h-[65vh] flex items-center justify-center px-4 py-16">
+    <div class="max-w-xl w-full text-center roc-card p-8 md:p-12 shadow-xl border border-slate-200 rounded-3xl bg-white">
+        <div class="w-20 h-20 bg-brand-50 text-brand-700 rounded-3xl flex items-center justify-center text-4xl mx-auto mb-6 shadow-xs">
+            <i class="fas fa-seedling text-brand-600"></i>
+        </div>
+        <span class="roc-badge roc-badge-amber mb-3">Error 404</span>
+        <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-3">Opportunity Not Found</h1>
+        <p class="text-slate-600 text-sm mb-8 max-w-md mx-auto leading-relaxed">
+            Oops! The opportunity or page you are looking for might have expired, been relocated, or is temporarily unavailable.
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <a href="{% url 'landing_page' %}" class="btn-primary w-full sm:w-auto text-xs py-2.5 px-5">
+                <i class="fas fa-home"></i> Back to Home
+            </a>
+            <a href="{% url 'jobs_list' %}" class="btn-secondary w-full sm:w-auto text-xs py-2.5 px-5">
+                <i class="fas fa-briefcase"></i> Explore Jobs
+            </a>
+            <a href="{% url 'schemes_list' %}" class="btn-outline w-full sm:w-auto text-xs py-2.5 px-5">
+                <i class="fas fa-building-columns"></i> Browse Schemes
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

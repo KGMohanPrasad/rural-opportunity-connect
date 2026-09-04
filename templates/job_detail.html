@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ job.title }} — Rural Opportunity Connect{% endblock %}
+
+{% block content %}
+{% with job_key="job_"|add:job.id|stringformat:"s" %}
+<div class="max-w-6xl mx-auto px-4 sm:px-6 py-10">
+    <!-- Breadcrumb -->
+    <nav class="roc-breadcrumb" aria-label="Breadcrumb">
+        <a href="{% url 'landing_page' %}">Home</a>
+        <span class="roc-breadcrumb-separator"><i class="fas fa-chevron-right text-[10px]"></i></span>
+        <a href="{% url 'jobs_list' %}">Jobs</a>
+        <span class="roc-breadcrumb-separator"><i class="fas fa-chevron-right text-[10px]"></i></span>
+        <span class="text-slate-800 font-bold truncate max-w-xs">{{ job.title }}</span>
+    </nav>
+
+    <!-- Header Banner Card -->
+    <div class="roc-card p-8 bg-gradient-to-r from-slate-950 via-[#071526] to-[#0c2340] text-white rounded-3xl shadow-xl mb-8 relative overflow-hidden border border-cyan-500/20" data-anim="fade-up" data-parallax="0.05">
+        <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div class="space-y-3">
+                <div class="flex flex-wrap items-center gap-2.5">
+                    <span class="hero-badge-pulse roc-badge bg-cyan-500/20 text-cyan-300 border border-cyan-400/30 text-[10px]">
+                        💼 Verified Job Opportunity
+                    </span>
+                    <span class="roc-badge bg-white/10 text-white text-[10px]">
+                        {{ job.get_job_type_display }}
+                    </span>
+                </div>
+                <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight kinetic-headline">
+                    <span class="shiny-text">{{ job.title }}</span>
+                </h1>
+                <p class="text-cyan-200 font-medium text-sm sm:text-base flex items-center gap-2">
+                    <i class="fas fa-building text-cyan-400"></i> {{ job.organization }}
+                    <span class="text-cyan-400/50">•</span>
+                    <i class="fas fa-location-dot text-cyan-400"></i> {{ job.location }}
+                </p>
+            </div>
+
+            <!-- Header Quick Actions -->
+            <div class="flex items-center gap-3 self-start md:self-center">
+                <button class="save-btn heart-pop spring-press {% if job_key in user_saved_keys %}is-saved bg-white text-red-500{% else %}bg-white/10 hover:bg-white/20 border-white/20 text-white{% endif %}"
+                        data-type="job" data-id="{{ job.id }}" title="Save to wishlist">
+                    <i class="{% if job_key in user_saved_keys %}fa-solid fa-heart text-red-500{% else %}fa-regular fa-heart text-white{% endif %}"></i>
+                </button>
+                {% if user.is_authenticated %}
+                    {% if job_key in user_applied_keys %}
+                        <button class="btn-applied text-xs py-3 px-6 shadow-md" disabled>
+                            <i class="fas fa-check-circle text-emerald-600"></i> Already Applied ✓
+                        </button>
+                    {% else %}
+                        <button onclick="quickApply('job', '{{ job.id }}', '{{ job.title|escapejs }}', '{{ job.organization|escapejs }}', this)"
+                                class="btn-primary btn-magnetic text-xs py-3 px-6 shadow-lg shadow-emerald-950/50 btn-sheen spring-press">
+                            <i class="fas fa-paper-plane"></i> Quick Apply
+                        </button>
+                    {% endif %}
+                {% else %}
+                    <a href="{% url 'login' %}?next={{ request.path }}" class="btn-primary text-xs py-3 px-6 shadow-lg btn-sheen spring-press">
+                        <i class="fas fa-paper-plane"></i> Login to Quick Apply
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Grid: Detailed Content (Col 8) + Sidebar (Col 4) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start" data-anim="fade-up">
+        <!-- Main Details Column -->
+        <div class="lg:col-span-8 space-y-8">
+            <!-- Job Description -->
+            <div class="roc-card p-8 bg-white space-y-4 hover-lift-3d card-specular-glare">
+                <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2.5 pb-3 border-b border-slate-100">
+                    <i class="fas fa-align-left text-brand-800 text-sm"></i> Role Overview & Description
+                </h2>
+                <div class="text-sm text-slate-700 leading-relaxed whitespace-pre-line">
+                    {{ job.description }}
+                </div>
+            </div>
+
+            <!-- Required Skills -->
+            <div class="roc-card p-8 bg-white space-y-4 hover-lift-3d card-specular-glare">
+                <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2.5 pb-3 border-b border-slate-100">
+                    <i class="fas fa-tools text-brand-800 text-sm"></i> Required Skills & Competencies
+                </h2>
+                <div class="flex flex-wrap gap-2 pt-2">
+                    {% for skill in skills_list %}
+                        <span class="bg-brand-50 text-brand-900 border border-brand-200 text-xs font-semibold px-3.5 py-1.5 rounded-xl flex items-center gap-1.5 hover-lift-3d">
+                            <i class="fas fa-check-circle text-emerald-600 text-[10px]"></i> {{ skill }}
+                        </span>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Experience & Eligibility -->
+            <div class="roc-card p-8 bg-white space-y-4 hover-lift-3d card-specular-glare">
+                <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2.5 pb-3 border-b border-slate-100">
+                    <i class="fas fa-user-check text-brand-800 text-sm"></i> Experience & Eligibility
+                </h2>
+                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 space-y-2 text-xs text-slate-700 leading-relaxed">
+                    <p><strong>Work Experience Requirement:</strong> {{ job.experience_required }}</p>
+                    <p><strong>Working Mode / Shift:</strong> Standard rural enterprise schedule with localized support.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar Summary & Application Box -->
+        <div class="lg:col-span-4 space-y-6 sticky top-24">
+            <div class="roc-card p-6 bg-white shadow-sm border border-slate-200 space-y-6 hover-lift-3d card-specular-glare">
+                <h3 class="text-base font-bold text-slate-900 pb-3 border-b border-slate-100">
+                    Job Summary
+                </h3>
+
+                <div class="space-y-3.5 text-xs">
+                    <div class="flex justify-between items-center py-1 border-b border-slate-50">
+                        <span class="text-slate-400 font-semibold">Verified Source</span>
+                        <span class="font-bold text-blue-700">{{ job.source_portal|default:"National Career Service" }}</span>
+                    </div>
+                    <div class="flex justify-between items-center py-1 border-b border-slate-50">
+                        <span class="text-slate-400 font-semibold">Monthly Salary</span>
+                        <span class="font-bold text-slate-900 text-sm text-brand-800">₹{{ job.salary_min }} – ₹{{ job.salary_max }}</span>
+                    </div>
+                    <div class="flex justify-between items-center py-1 border-b border-slate-50">
+                        <span class="text-slate-400 font-semibold">Location</span>
+                        <span class="font-bold text-slate-900">{{ job.location }}</span>
+                    </div>
+                    <div class="flex justify-between items-center py-1 border-b border-slate-50">
+                        <span class="text-slate-400 font-semibold">Job Type</span>
+                        <span class="font-bold text-slate-900">{{ job.get_job_type_display }}</span>
+                    </div>
+                    <div class="flex justify-between items-center py-1 border-b border-slate-50">
+                        <span class="text-slate-400 font-semibold">Experience</span>
+                        <span class="font-bold text-slate-900">{{ job.experience_required }}</span>
+                    </div>
+                    <div class="flex justify-between items-center py-1">
+                        <span class="text-slate-400 font-semibold">Application Deadline</span>
+                        <span class="font-bold text-red-600">{{ job.deadline|date:"F d, Y" }}</span>
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-slate-100 space-y-2">
+                    {% if job.source_url %}
+                        <a href="{{ job.source_url }}" target="_blank" rel="noopener noreferrer"
+                           class="btn-secondary w-full text-xs py-3 text-center flex items-center justify-center gap-2 border border-blue-200 text-blue-800 hover:bg-blue-50">
+                            <i class="fas fa-arrow-up-right-from-square"></i> Open on {{ job.source_portal|default:"NCS" }}
+                        </a>
+                    {% endif %}
+
+                    {% if user.is_authenticated %}
+                        {% if job_key in user_applied_keys %}
+                            <button class="btn-applied w-full text-xs py-3 text-center" disabled>
+                                <i class="fas fa-check-circle text-emerald-600"></i> Already Applied ✓
+                            </button>
+                        {% else %}
+                            <button onclick="quickApply('job', '{{ job.id }}', '{{ job.title|escapejs }}', '{{ job.organization|escapejs }}', this)"
+                                    class="btn-primary btn-magnetic w-full text-xs py-3 shadow-md btn-sheen spring-press">
+                                <i class="fas fa-paper-plane"></i> Quick Apply Directly
+                            </button>
+                        {% endif %}
+                    {% else %}
+                        <a href="{% url 'login' %}?next={{ request.path }}" class="btn-primary w-full text-xs py-3 text-center block btn-sheen spring-press">
+                            Login to Quick Apply
+                        </a>
+                    {% endif %}
+
+                    <a href="{% url 'jobs_list' %}" class="btn-outline w-full text-xs py-2.5 text-center block spring-press">
+                        ← Back to All Jobs
+                    </a>
+                </div>
+            </div>
+
+            <!-- Readiness Checklist Reminder Card -->
+            <div class="roc-card p-5 bg-emerald-50/80 border border-emerald-200/80 rounded-2xl space-y-2">
+                <div class="flex items-center gap-2 text-xs font-bold text-brand-900">
+                    <i class="fas fa-shield-halved text-brand-700"></i> Document Readiness Tip
+                </div>
+                <p class="text-[11px] text-brand-800 leading-relaxed">
+                    Have your 10th/12th marksheets, Aadhaar, and bank details verified in your Digital Document Locker for expedited employer verification.
+                </p>
+                <a href="{% url 'document_checklist' %}" class="text-[11px] font-bold text-brand-800 hover:underline block pt-1">
+                    Open Document Locker →
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endwith %}
+{% endblock %}

@@ -1,0 +1,333 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard — Rural Opportunity Connect{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 space-y-10">
+    <!-- Top Greeting & Action Header -->
+    <div class="roc-card p-8 bg-gradient-to-r from-slate-950 via-[#071526] to-[#0c2340] text-white rounded-3xl shadow-xl relative overflow-hidden border border-cyan-500/20">
+        <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div class="space-y-2">
+                <div class="inline-flex items-center gap-2 bg-cyan-500/20 text-cyan-300 border border-cyan-400/30 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                    <i class="fas fa-sparkles text-cyan-400"></i> Personalized Opportunity Hub
+                </div>
+                <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight kinetic-headline">
+                    Welcome back, {{ user.first_name|default:user.username }}! 👋
+                </h1>
+                <p class="text-xs sm:text-sm text-slate-300 font-normal">
+                    Here are your tailored recommendations, active applications, and document readiness status.
+                </p>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-3">
+                <a href="{% url 'profile' %}" class="btn-secondary btn-magnetic text-xs py-2.5 px-4 shadow-sm border-cyan-500/30">
+                    <i class="fas fa-user-pen text-cyan-400"></i> Edit Profile
+                </a>
+                <a href="{% url 'jobs_list' %}" class="btn-primary btn-magnetic btn-sheen text-xs py-2.5 px-4 shadow-md shadow-cyan-950/40">
+                    <i class="fas fa-compass"></i> Explore All
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4 KPI Performance Cards with 3D Tilt & Rollup Counters -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 perspective-viewport" data-anim="fade-up">
+        <!-- 1. Profile Strength -->
+        <div class="tilt-card-3d roc-card hover-lift-3d card-specular-glare p-6 bg-white border border-slate-200 shadow-xs flex flex-col justify-between relative">
+            <div class="tilt-glare"></div>
+            <div class="depth-layer-1">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Profile Strength</span>
+                    <span class="w-8 h-8 rounded-xl bg-brand-50 text-brand-800 flex items-center justify-center text-sm font-bold depth-layer-2 shadow-xs">
+                        <i class="fas fa-user-check"></i>
+                    </span>
+                </div>
+                <div class="text-3xl font-extrabold text-slate-900 mb-2 depth-layer-2 counter-value" data-counter="{{ profile_percentage }}%">{{ profile_percentage }}%</div>
+                <!-- Progress bar -->
+                <div class="w-full bg-slate-100 rounded-full h-2.5 mb-2 overflow-hidden">
+                    <div class="bg-brand-600 h-2.5 rounded-full transition-all duration-700" style="width: {{ profile_percentage }}%"></div>
+                </div>
+            </div>
+            <a href="{% url 'profile' %}" class="depth-layer-2 text-xs font-bold text-brand-800 hover:text-brand-950 pt-2 flex items-center gap-1">
+                Complete Setup <i class="fas fa-arrow-right text-[10px]"></i>
+            </a>
+        </div>
+
+        <!-- 2. Active Applications -->
+        <div class="tilt-card-3d roc-card hover-lift-3d card-specular-glare p-6 bg-white border border-slate-200 shadow-xs flex flex-col justify-between relative">
+            <div class="tilt-glare"></div>
+            <div class="depth-layer-1">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Active Applications</span>
+                    <span class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-sm font-bold depth-layer-2 shadow-xs">
+                        <i class="fas fa-list-check"></i>
+                    </span>
+                </div>
+                <div class="text-3xl font-extrabold text-blue-600 mb-2 depth-layer-2 counter-value" data-counter="{{ applications_count }}">{{ applications_count }}</div>
+                <p class="text-xs text-slate-500">Submitted & tracked opportunities</p>
+            </div>
+            <a href="{% url 'applications' %}" class="depth-layer-2 text-xs font-bold text-blue-600 hover:text-blue-800 pt-2 flex items-center gap-1">
+                View Tracker <i class="fas fa-arrow-right text-[10px]"></i>
+            </a>
+        </div>
+
+        <!-- 3. Saved Wishlist -->
+        <div class="tilt-card-3d roc-card hover-lift-3d card-specular-glare p-6 bg-white border border-slate-200 shadow-xs flex flex-col justify-between relative">
+            <div class="tilt-glare"></div>
+            <div class="depth-layer-1">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Saved Wishlist</span>
+                    <span class="w-8 h-8 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-sm font-bold depth-layer-2 shadow-xs">
+                        <i class="fas fa-heart"></i>
+                    </span>
+                </div>
+                <div class="text-3xl font-extrabold text-rose-600 mb-2 depth-layer-2 counter-value" data-counter="{{ saved_count }}">{{ saved_count }}</div>
+                <p class="text-xs text-slate-500">Bookmarked for future reference</p>
+            </div>
+            <a href="{% url 'saved_opportunities' %}" class="depth-layer-2 text-xs font-bold text-rose-600 hover:text-rose-800 pt-2 flex items-center gap-1">
+                Open Wishlist <i class="fas fa-arrow-right text-[10px]"></i>
+            </a>
+        </div>
+
+        <!-- 4. Document Readiness -->
+        <div class="tilt-card-3d roc-card hover-lift-3d card-specular-glare p-6 bg-white border border-slate-200 shadow-xs flex flex-col justify-between relative">
+            <div class="tilt-glare"></div>
+            <div class="depth-layer-1">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Document Readiness</span>
+                    <span class="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-sm font-bold depth-layer-2 shadow-xs">
+                        <i class="fas fa-folder-open"></i>
+                    </span>
+                </div>
+                <div class="text-3xl font-extrabold text-amber-600 mb-2 depth-layer-2">{{ document_count }}/{{ document_total }}</div>
+                <p class="text-xs text-slate-500">Verified official certificates</p>
+            </div>
+            <a href="{% url 'document_checklist' %}" class="depth-layer-2 text-xs font-bold text-amber-600 hover:text-amber-800 pt-2 flex items-center gap-1">
+                Open Document Locker <i class="fas fa-arrow-right text-[10px]"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Recommended Opportunities Feed -->
+    <div class="space-y-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">Recommended for Your Profile</h2>
+                <p class="text-xs text-slate-500 mt-0.5">Matched based on your education, village district, and vocational skills.</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 perspective-viewport">
+            <!-- Jobs Recommendations -->
+            {% for job in recommended_jobs %}
+            {% with job_key="job_"|add:job.id|stringformat:"s" %}
+            <div class="tilt-card-3d roc-card p-6 border border-slate-200 hover:border-brand-500 flex flex-col justify-between relative">
+                <div class="tilt-glare"></div>
+                <div class="depth-layer-1">
+                    <div class="flex items-start justify-between gap-2 mb-2">
+                        <span class="roc-badge roc-badge-emerald text-[10px]">95% Match</span>
+                        <div class="depth-layer-2">
+                            <button class="save-btn {% if job_key in user_saved_keys %}is-saved{% endif %}"
+                                    data-type="job" data-id="{{ job.id }}" title="Save to wishlist">
+                                <i class="{% if job_key in user_saved_keys %}fa-solid fa-heart text-red-500{% else %}fa-regular fa-heart text-slate-400{% endif %}"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <span class="text-[10px] font-bold uppercase text-blue-600 tracking-wider block mb-1">💼 Employment</span>
+                    <h3 class="text-base font-bold text-slate-900 mb-1 hover:text-brand-800 transition">
+                        <a href="{% url 'job_detail' job.id %}">{{ job.title }}</a>
+                    </h3>
+                    <p class="text-xs text-slate-500 font-semibold mb-2">{{ job.organization }} • {{ job.location }}</p>
+                    <p class="text-xs font-bold text-brand-800 mb-3">₹{{ job.salary_min }} – ₹{{ job.salary_max }} / mo</p>
+                </div>
+
+                <div class="depth-layer-2 pt-4 border-t border-slate-100 flex items-center justify-between gap-2">
+                    <a href="{% url 'job_detail' job.id %}" class="btn-secondary text-xs py-1.5 px-3">
+                        Details
+                    </a>
+                    {% if job_key in user_applied_keys %}
+                        <button class="btn-applied text-xs py-1.5 px-3" disabled>
+                            <i class="fas fa-check-circle text-emerald-600"></i> Applied ✓
+                        </button>
+                    {% else %}
+                        <button onclick="quickApply('job', '{{ job.id }}', '{{ job.title|escapejs }}', '{{ job.organization|escapejs }}', this)"
+                                class="btn-primary text-xs py-1.5 px-3 shadow-xs">
+                            <i class="fas fa-paper-plane"></i> Quick Apply
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+            {% endwith %}
+            {% endfor %}
+
+            <!-- Scholarships Recommendations -->
+            {% for sc in recommended_scholarships %}
+            {% with sc_key="scholarship_"|add:sc.id|stringformat:"s" %}
+            <div class="tilt-card-3d roc-card p-6 border border-slate-200 hover:border-brand-500 flex flex-col justify-between relative">
+                <div class="tilt-glare"></div>
+                <div class="depth-layer-1">
+                    <div class="flex items-start justify-between gap-2 mb-2">
+                        <span class="roc-badge roc-badge-purple text-[10px]">92% Match</span>
+                        <div class="depth-layer-2">
+                            <button class="save-btn {% if sc_key in user_saved_keys %}is-saved{% endif %}"
+                                    data-type="scholarship" data-id="{{ sc.id }}" title="Save to wishlist">
+                                <i class="{% if sc_key in user_saved_keys %}fa-solid fa-heart text-red-500{% else %}fa-regular fa-heart text-slate-400{% endif %}"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <span class="text-[10px] font-bold uppercase text-purple-600 tracking-wider block mb-1">🎓 Scholarship</span>
+                    <h3 class="text-base font-bold text-slate-900 mb-1 hover:text-brand-800 transition">
+                        <a href="{% url 'scholarship_detail' sc.id %}">{{ sc.name }}</a>
+                    </h3>
+                    <p class="text-xs text-slate-500 font-semibold mb-2">{{ sc.provider }}</p>
+                    <p class="text-xs font-black text-brand-800 mb-3">{{ sc.amount }}</p>
+                </div>
+
+                <div class="depth-layer-2 pt-4 border-t border-slate-100 flex items-center justify-between gap-2">
+                    <a href="{% url 'scholarship_detail' sc.id %}" class="btn-secondary text-xs py-1.5 px-3">
+                        Details
+                    </a>
+                    {% if sc_key in user_applied_keys %}
+                        <button class="btn-applied text-xs py-1.5 px-3" disabled>
+                            <i class="fas fa-check-circle text-emerald-600"></i> Applied ✓
+                        </button>
+                    {% else %}
+                        <button onclick="quickApply('scholarship', '{{ sc.id }}', '{{ sc.name|escapejs }}', '{{ sc.provider|escapejs }}', this)"
+                                class="btn-primary text-xs py-1.5 px-3 shadow-xs">
+                            <i class="fas fa-paper-plane"></i> Quick Apply
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+            {% endwith %}
+            {% endfor %}
+
+            <!-- Schemes Recommendations -->
+            {% for scm in recommended_schemes %}
+            {% with scm_key="scheme_"|add:scm.id|stringformat:"s" %}
+            <div class="tilt-card-3d roc-card p-6 border border-slate-200 hover:border-brand-500 flex flex-col justify-between relative">
+                <div class="tilt-glare"></div>
+                <div class="depth-layer-1">
+                    <div class="flex items-start justify-between gap-2 mb-2">
+                        <span class="roc-badge roc-badge-emerald text-[10px]">98% Match</span>
+                        <div class="depth-layer-2">
+                            <button class="save-btn {% if scm_key in user_saved_keys %}is-saved{% endif %}"
+                                    data-type="scheme" data-id="{{ scm.id }}" title="Save to wishlist">
+                                <i class="{% if scm_key in user_saved_keys %}fa-solid fa-heart text-red-500{% else %}fa-regular fa-heart text-slate-400{% endif %}"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <span class="text-[10px] font-bold uppercase text-emerald-600 tracking-wider block mb-1">🏛️ Govt Welfare</span>
+                    <h3 class="text-base font-bold text-slate-900 mb-1 hover:text-brand-800 transition">
+                        <a href="{% url 'scheme_detail' scm.id %}">{{ scm.name }}</a>
+                    </h3>
+                    <p class="text-xs text-slate-500 font-semibold mb-2">{{ scm.department }}</p>
+                    <p class="text-xs text-slate-600 line-clamp-2 mb-3"><strong>Benefits:</strong> {{ scm.benefits }}</p>
+                </div>
+
+                <div class="depth-layer-2 pt-4 border-t border-slate-100 flex items-center justify-between gap-2">
+                    <a href="{% url 'scheme_detail' scm.id %}" class="btn-secondary text-xs py-1.5 px-3">
+                        Details
+                    </a>
+                    {% if scm_key in user_applied_keys %}
+                        <button class="btn-applied text-xs py-1.5 px-3" disabled>
+                            <i class="fas fa-check-circle text-emerald-600"></i> Enrolled ✓
+                        </button>
+                    {% else %}
+                        <button onclick="quickApply('scheme', '{{ scm.id }}', '{{ scm.name|escapejs }}', '{{ scm.department|escapejs }}', this)"
+                                class="btn-primary text-xs py-1.5 px-3 shadow-xs">
+                            <i class="fas fa-paper-plane"></i> Quick Enroll
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+            {% endwith %}
+            {% endfor %}
+
+            <!-- Skill Programs Recommendations -->
+            {% for skl in recommended_skills %}
+            {% with skl_key="skill_"|add:skl.id|stringformat:"s" %}
+            <div class="tilt-card-3d roc-card p-6 border border-slate-200 hover:border-brand-500 flex flex-col justify-between relative">
+                <div class="tilt-glare"></div>
+                <div class="depth-layer-1">
+                    <div class="flex items-start justify-between gap-2 mb-2">
+                        <span class="roc-badge roc-badge-amber text-[10px]">90% Match</span>
+                        <div class="depth-layer-2">
+                            <button class="save-btn {% if skl_key in user_saved_keys %}is-saved{% endif %}"
+                                    data-type="skill" data-id="{{ skl.id }}" title="Save to wishlist">
+                                <i class="{% if skl_key in user_saved_keys %}fa-solid fa-heart text-red-500{% else %}fa-regular fa-heart text-slate-400{% endif %}"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <span class="text-[10px] font-bold uppercase text-amber-600 tracking-wider block mb-1">💻 Skill Course</span>
+                    <h3 class="text-base font-bold text-slate-900 mb-1 hover:text-brand-800 transition">
+                        <a href="{% url 'skill_detail' skl.id %}">{{ skl.name }}</a>
+                    </h3>
+                    <p class="text-xs text-slate-500 font-semibold mb-2">{{ skl.provider }} • {{ skl.duration }}</p>
+                    <span class="roc-badge roc-badge-emerald text-[9px] mb-3">Free Certified</span>
+                </div>
+
+                <div class="depth-layer-2 pt-4 border-t border-slate-100 flex items-center justify-between gap-2">
+                    <a href="{% url 'skill_detail' skl.id %}" class="btn-secondary text-xs py-1.5 px-3">
+                        Details
+                    </a>
+                    {% if skl_key in user_applied_keys %}
+                        <button class="btn-applied text-xs py-1.5 px-3" disabled>
+                            <i class="fas fa-check-circle text-emerald-600"></i> Enrolled ✓
+                        </button>
+                    {% else %}
+                        <button onclick="quickApply('skill', '{{ skl.id }}', '{{ skl.name|escapejs }}', '{{ skl.provider|escapejs }}', this)"
+                                class="btn-primary text-xs py-1.5 px-3 shadow-xs">
+                            <i class="fas fa-paper-plane"></i> Quick Enroll
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+            {% endwith %}
+            {% endfor %}
+
+            <!-- Business Recommendations -->
+            {% for biz in recommended_business %}
+            {% with biz_key="business_"|add:biz.id|stringformat:"s" %}
+            <div class="tilt-card-3d roc-card p-6 border border-slate-200 hover:border-brand-500 flex flex-col justify-between relative">
+                <div class="tilt-glare"></div>
+                <div class="depth-layer-1">
+                    <div class="flex items-start justify-between gap-2 mb-2">
+                        <span class="roc-badge roc-badge-rose text-[10px]">88% Match</span>
+                        <div class="depth-layer-2">
+                            <button class="save-btn {% if biz_key in user_saved_keys %}is-saved{% endif %}"
+                                    data-type="business" data-id="{{ biz.id }}" title="Save to wishlist">
+                                <i class="{% if biz_key in user_saved_keys %}fa-solid fa-heart text-red-500{% else %}fa-regular fa-heart text-slate-400{% endif %}"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <span class="text-[10px] font-bold uppercase text-rose-600 tracking-wider block mb-1">🚀 Micro-Enterprise</span>
+                    <h3 class="text-base font-bold text-slate-900 mb-1 hover:text-brand-800 transition">
+                        <a href="{% url 'business_detail' biz.id %}">{{ biz.name }}</a>
+                    </h3>
+                    <p class="text-xs text-slate-500 font-semibold mb-2">{{ biz.investment_level|capfirst }} Capital • {{ biz.opportunity_level|capfirst }} Setup</p>
+                    <p class="text-xs font-bold text-emerald-700 mb-3">{{ biz.expected_income }}</p>
+                </div>
+
+                <div class="depth-layer-2 pt-4 border-t border-slate-100 flex items-center justify-between gap-2">
+                    <a href="{% url 'business_detail' biz.id %}" class="btn-secondary text-xs py-1.5 px-3">
+                        Blueprint
+                    </a>
+                    {% if biz_key in user_applied_keys %}
+                        <button class="btn-applied text-xs py-1.5 px-3" disabled>
+                            <i class="fas fa-check-circle text-emerald-600"></i> Tracking ✓
+                        </button>
+                    {% else %}
+                        <button onclick="quickApply('business', '{{ biz.id }}', '{{ biz.name|escapejs }}', 'Micro-Enterprise Track', this)"
+                                class="btn-primary text-xs py-1.5 px-3 shadow-xs">
+                            <i class="fas fa-paper-plane"></i> Track Idea
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+            {% endwith %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

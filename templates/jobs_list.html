@@ -1,0 +1,264 @@
+{% extends 'base.html' %}
+
+{% block title %}Find Jobs — Rural Opportunity Connect{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+    <!-- Breadcrumb -->
+    <nav class="roc-breadcrumb" aria-label="Breadcrumb">
+        <a href="{% url 'landing_page' %}">Home</a>
+        <span class="roc-breadcrumb-separator"><i class="fas fa-chevron-right text-[10px]"></i></span>
+        <span class="text-slate-800 font-bold">Jobs & Employment</span>
+    </nav>
+
+    <!-- Executive Branded Header Banner -->
+    <div class="roc-card p-8 md:p-10 bg-gradient-to-r from-slate-950 via-[#071526] to-[#0c2340] text-white rounded-3xl shadow-xl mb-8 relative overflow-hidden border border-cyan-500/30" data-parallax="0.08">
+        <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div class="space-y-3">
+                <div class="inline-flex items-center gap-2 bg-cyan-500/20 text-cyan-300 border border-cyan-400/30 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider backdrop-blur-xs hero-badge-pulse">
+                    <i class="fas fa-briefcase text-cyan-400"></i> Verified Rural Employment Gateway
+                </div>
+                <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight kinetic-headline">
+                    Find Jobs That Match Your Skills
+                </h1>
+                <p class="text-xs sm:text-sm text-slate-300 max-w-2xl font-normal leading-relaxed">
+                    Explore verified local, semi-urban, and remote rural employment opportunities across agriculture, healthcare, finance, and logistics.
+                </p>
+            </div>
+            <div class="flex items-center gap-3 shrink-0">
+                <div class="bg-white/10 backdrop-blur-md px-6 py-3.5 rounded-2xl border border-cyan-500/30 text-center shadow-lg">
+                    <span class="text-2xl sm:text-3xl font-black text-cyan-300 block counter-value" data-counter="{{ jobs|length }}">{{ jobs|length }}</span>
+                    <span class="text-[10px] text-cyan-100 uppercase tracking-wider font-bold">Jobs Live</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Layout: Sidebar Filters + Jobs Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <!-- Sidebar Filters -->
+        <aside class="lg:col-span-4 sticky top-24">
+            <div class="roc-card p-6 bg-white shadow-sm border border-slate-200">
+                <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-100">
+                    <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fas fa-sliders text-brand-800"></i> Filter Jobs
+                    </h2>
+                    <a href="{% url 'jobs_list' %}" class="text-xs font-bold text-brand-800 hover:text-brand-950 transition">
+                        Clear All
+                    </a>
+                </div>
+
+                <form method="GET" action="{% url 'jobs_list' %}" class="space-y-4">
+                    <!-- Retain Search query if active -->
+                    {% if search %}
+                        <input type="hidden" name="search" value="{{ search }}">
+                    {% endif %}
+
+                    <!-- Location Filter -->
+                    <div>
+                        <label class="form-label" for="location">Location / District</label>
+                        <div class="relative">
+                            <input type="text" id="location" name="location" value="{{ filters.location }}" placeholder="e.g. Tamil Nadu, Salem" class="form-input pl-9 text-xs">
+                            <i class="fas fa-location-dot absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                        </div>
+                    </div>
+
+                    <!-- Job Type Filter -->
+                    <div>
+                        <label class="form-label" for="job_type">Job Type</label>
+                        <select id="job_type" name="job_type" class="form-select text-xs">
+                            <option value="">All Job Types</option>
+                            <option value="full_time" {% if filters.job_type == 'full_time' %}selected{% endif %}>Full Time</option>
+                            <option value="part_time" {% if filters.job_type == 'part_time' %}selected{% endif %}>Part Time</option>
+                            <option value="contract" {% if filters.job_type == 'contract' %}selected{% endif %}>Contract</option>
+                            <option value="freelance" {% if filters.job_type == 'freelance' %}selected{% endif %}>Freelance</option>
+                            <option value="internship" {% if filters.job_type == 'internship' %}selected{% endif %}>Internship</option>
+                        </select>
+                    </div>
+
+                    <!-- Experience Level -->
+                    <div>
+                        <label class="form-label" for="experience">Experience Required</label>
+                        <input type="text" id="experience" name="experience" value="{{ filters.experience }}" placeholder="e.g. Fresher, 1 year" class="form-input text-xs">
+                    </div>
+
+                    <!-- Salary Range -->
+                    <div>
+                        <label class="form-label">Monthly Salary Range (₹)</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <input type="number" name="salary_min" value="{{ filters.salary_min }}" placeholder="Min (₹)" class="form-input text-xs">
+                            <input type="number" name="salary_max" value="{{ filters.salary_max }}" placeholder="Max (₹)" class="form-input text-xs">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-primary btn-magnetic btn-sheen w-full text-xs py-2.5 mt-2">
+                        <i class="fas fa-filter"></i> Apply Filters
+                    </button>
+                </form>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="lg:col-span-8 space-y-6">
+            <!-- Search Bar with Voice Input -->
+            <form method="GET" action="{% url 'jobs_list' %}" class="flex gap-2">
+                <div class="relative flex-1">
+                    <input type="text" name="search" value="{{ search }}"
+                           placeholder="Search jobs, skills or companies (e.g. Data Entry, Agriculture, Accounts)..."
+                           class="form-input pl-10 pr-12 py-3 text-sm bg-white shadow-xs">
+                    <i class="fas fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    <button type="button" onclick="triggerVoiceAssistant()" title="Voice search in regional language"
+                            class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-brand-800 p-1 rounded-lg transition">
+                        <i class="fas fa-microphone text-amber-500"></i>
+                    </button>
+                </div>
+                <button type="submit" class="btn-primary btn-magnetic btn-sheen px-5 text-xs font-bold">Search</button>
+            </form>
+
+            <!-- Results Listing Header -->
+            <div class="flex items-center justify-between">
+                <h2 class="text-sm font-bold text-slate-600 uppercase tracking-wider">Available Job Openings</h2>
+                {% if search or filters.location or filters.job_type or filters.salary_min or filters.salary_max or filters.experience %}
+                    <span class="text-xs text-brand-800 font-semibold bg-brand-50 px-2.5 py-1 rounded-lg border border-brand-200">
+                        Filtered Results
+                    </span>
+                {% endif %}
+            </div>
+
+            <!-- Jobs Cards Grid -->
+            <div class="space-y-4 perspective-viewport anim-grid-stagger" data-anim="fade-up">
+                {% if jobs %}
+                    {% for job in jobs %}
+                    {% with job_key="job_"|add:job.id|stringformat:"s" %}
+                    <div class="tilt-card-3d roc-card hover-lift-3d card-specular-glare p-6 border border-slate-200 hover:border-cyan-500 relative">
+                        <div class="tilt-glare"></div>
+                        <div class="depth-layer-1">
+                            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-3">
+                                <div class="flex-1">
+                                    <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                                        <h3 class="text-lg sm:text-xl font-bold text-slate-900 hover:text-brand-800 transition">
+                                            <a href="{% url 'job_detail' job.id %}">{{ job.title }}</a>
+                                        </h3>
+                                        <span class="roc-badge
+                                            {% if job.job_type == 'full_time' %}roc-badge-emerald
+                                            {% elif job.job_type == 'internship' %}roc-badge-purple
+                                            {% elif job.job_type == 'part_time' %}roc-badge-blue
+                                            {% else %}roc-badge-slate{% endif %} text-[10px]">
+                                            {{ job.get_job_type_display }}
+                                        </span>
+                                    </div>
+                                    <p class="text-xs text-slate-600 font-semibold flex items-center gap-1.5">
+                                        <i class="fas fa-building text-slate-400"></i> {{ job.organization }}
+                                    </p>
+                                </div>
+
+                                <div class="flex items-center gap-2 self-start depth-layer-2">
+                                    <button class="save-btn heart-pop {% if job_key in user_saved_keys %}is-saved{% endif %}"
+                                            data-type="job" data-id="{{ job.id }}" title="Save to wishlist">
+                                        <i class="{% if job_key in user_saved_keys %}fa-solid fa-heart text-red-500{% else %}fa-regular fa-heart text-slate-400{% endif %}"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <p class="text-xs text-slate-600 line-clamp-2 leading-relaxed mb-4">
+                                {{ job.description }}
+                            </p>
+
+                            <!-- Key Specs Row -->
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs bg-slate-50 p-3 rounded-2xl border border-slate-100 mb-4">
+                                <div class="flex items-center gap-1.5 text-slate-700">
+                                    <i class="fas fa-location-dot text-brand-700"></i>
+                                    <span class="font-medium truncate">{{ job.location }}</span>
+                                </div>
+                                <div class="flex items-center gap-1.5 text-slate-700">
+                                    <i class="fas fa-indian-rupee-sign text-brand-700"></i>
+                                    <span class="font-bold">₹{{ job.salary_min }} - ₹{{ job.salary_max }}</span>
+                                </div>
+                                <div class="flex items-center gap-1.5 text-slate-700">
+                                    <i class="fas fa-user-clock text-brand-700"></i>
+                                    <span class="truncate">{{ job.experience_required }}</span>
+                                </div>
+                                <div class="flex items-center gap-1.5 text-slate-700">
+                                    <i class="fas fa-calendar-xmark text-brand-700"></i>
+                                    <span>{{ job.deadline|date:"M d, Y" }}</span>
+                                </div>
+                            </div>
+
+                            <!-- Required Skills Tags -->
+                            {% if job.required_skills %}
+                            <div class="flex flex-wrap items-center gap-1.5 mb-4">
+                                <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mr-1">Skills:</span>
+                                {% for skill in job.required_skills.split|slice:":4" %}
+                                    <span class="bg-brand-50 text-brand-900 border border-brand-200 text-[11px] font-semibold px-2.5 py-0.5 rounded-lg">
+                                        {{ skill }}
+                                    </span>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="depth-layer-2 pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+                            <div class="flex items-center gap-2">
+                                <span class="roc-badge roc-badge-blue text-[10px]">
+                                    💼 {{ job.source_portal|default:"NCS Verified" }}
+                                </span>
+                                <span class="text-[11px] text-slate-400">
+                                    <i class="fas fa-clock mr-1"></i> Posted {{ job.created_at|timesince }} ago
+                                </span>
+                            </div>
+                            <div class="flex items-center gap-2 w-full sm:w-auto">
+                                {% if job.source_url %}
+                                    <a href="{{ job.source_url }}" target="_blank" rel="noopener noreferrer"
+                                       class="btn-outline text-xs py-2 px-3 flex-1 sm:flex-initial text-blue-700 hover:bg-blue-50">
+                                        <i class="fas fa-arrow-up-right-from-square"></i> Portal
+                                    </a>
+                                {% endif %}
+
+                                {% if user.is_authenticated %}
+                                    {% if job_key in user_applied_keys %}
+                                        <button class="btn-applied text-xs py-2 px-4 flex-1 sm:flex-initial" disabled>
+                                            <i class="fas fa-check-circle text-emerald-600"></i> Already Applied ✓
+                                        </button>
+                                    {% else %}
+                                        <button onclick="quickApply('job', '{{ job.id }}', '{{ job.title|escapejs }}', '{{ job.organization|escapejs }}', this)"
+                                                class="btn-primary btn-sheen spring-press text-xs py-2 px-4 flex-1 sm:flex-initial">
+                                            <i class="fas fa-paper-plane"></i> Quick Apply
+                                        </button>
+                                    {% endif %}
+                                {% else %}
+                                    <a href="{% url 'login' %}?next={{ request.path }}"
+                                       class="btn-primary text-xs py-2 px-4 flex-1 sm:flex-initial">
+                                        <i class="fas fa-paper-plane"></i> Quick Apply
+                                    </a>
+                                {% endif %}
+
+                                <a href="{% url 'job_detail' job.id %}" class="btn-secondary text-xs py-2 px-4 flex-1 sm:flex-initial">
+                                    View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endwith %}
+                    {% endfor %}
+                {% else %}
+                    <!-- Clean Empty State -->
+                    <div class="roc-card p-12 text-center border border-dashed border-slate-300 rounded-3xl bg-white">
+                        <div class="w-16 h-16 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-2">No Opportunities Match Your Current Filters</h3>
+                        <p class="text-xs text-slate-500 max-w-sm mx-auto mb-6">
+                            We couldn't find any job openings matching your active search criteria. Try clearing filters or searching for another keyword.
+                        </p>
+                        <a href="{% url 'jobs_list' %}" class="btn-primary text-xs py-2.5 px-5">
+                            Clear Filters
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ scheme.name }} — Rural Opportunity Connect{% endblock %}
+
+{% block content %}
+{% with scm_key="scheme_"|add:scheme.id|stringformat:"s" %}
+<div class="max-w-6xl mx-auto px-4 sm:px-6 py-10">
+    <!-- Breadcrumb -->
+    <nav class="roc-breadcrumb" aria-label="Breadcrumb">
+        <a href="{% url 'landing_page' %}">Home</a>
+        <span class="roc-breadcrumb-separator"><i class="fas fa-chevron-right text-[10px]"></i></span>
+        <a href="{% url 'schemes_list' %}">Government Schemes</a>
+        <span class="roc-breadcrumb-separator"><i class="fas fa-chevron-right text-[10px]"></i></span>
+        <span class="text-slate-800 font-bold truncate max-w-xs">{{ scheme.name }}</span>
+    </nav>
+
+    <!-- Header Banner Card -->
+    <div class="roc-card p-8 bg-gradient-to-r from-slate-950 via-[#071526] to-[#0c2340] text-white rounded-3xl shadow-xl mb-8 relative overflow-hidden border border-cyan-500/20" data-anim="fade-up">
+        <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div class="space-y-3">
+                <div class="flex flex-wrap items-center gap-2.5">
+                    <span class="hero-badge-pulse roc-badge bg-cyan-500/20 text-cyan-300 border border-cyan-400/30 text-[10px]">
+                        🏛️ Government Welfare Initiative
+                    </span>
+                    <span class="roc-badge bg-cyan-400 text-slate-950 text-[10px] font-bold">
+                        {{ scheme.get_category_display }}
+                    </span>
+                </div>
+                <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+                    <span class="shiny-text">{{ scheme.name }}</span>
+                </h1>
+                <p class="text-cyan-200 font-medium text-sm sm:text-base flex items-center gap-2">
+                    <i class="fas fa-building text-cyan-400"></i> {{ scheme.department }}
+                </p>
+            </div>
+
+            <!-- Header Quick Actions -->
+            <div class="flex items-center gap-3 self-start md:self-center">
+                <button class="save-btn heart-pop spring-press {% if scm_key in user_saved_keys %}is-saved bg-white text-red-500{% else %}bg-white/10 hover:bg-white/20 border-white/20 text-white{% endif %}"
+                        data-type="scheme" data-id="{{ scheme.id }}" title="Save to wishlist">
+                    <i class="{% if scm_key in user_saved_keys %}fa-solid fa-heart text-red-500{% else %}fa-regular fa-heart text-white{% endif %}"></i>
+                </button>
+                {% if user.is_authenticated %}
+                    {% if scm_key in user_applied_keys %}
+                        <button class="btn-applied text-xs py-3 px-6 shadow-md" disabled>
+                            <i class="fas fa-check-circle text-emerald-600"></i> Enrolled / Applied ✓
+                        </button>
+                    {% else %}
+                        <button onclick="quickApply('scheme', '{{ scheme.id }}', '{{ scheme.name|escapejs }}', '{{ scheme.department|escapejs }}', this)"
+                                class="btn-primary text-xs py-3 px-6 shadow-lg shadow-emerald-950/50 btn-sheen spring-press">
+                            <i class="fas fa-paper-plane"></i> Enroll / Apply
+                        </button>
+                    {% endif %}
+                {% else %}
+                    <a href="{% url 'login' %}?next={{ request.path }}" class="btn-primary text-xs py-3 px-6 shadow-lg btn-sheen spring-press">
+                        <i class="fas fa-sign-in-alt"></i> Login to Apply
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Grid: Detailed Content (Col 8) + Sidebar (Col 4) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start" data-anim="fade-up">
+        <!-- Main Details Column -->
+        <div class="lg:col-span-8 space-y-8">
+            <!-- About the Scheme -->
+            <div class="roc-card p-8 bg-white space-y-4 hover-lift-3d card-specular-glare">
+                <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2.5 pb-3 border-b border-slate-100">
+                    <i class="fas fa-circle-info text-brand-800 text-sm"></i> Scheme Overview & Purpose
+                </h2>
+                <div class="text-sm text-slate-700 leading-relaxed whitespace-pre-line">
+                    {{ scheme.description }}
+                </div>
+            </div>
+
+            <!-- Benefits & Aid -->
+            <div class="roc-card p-8 bg-white space-y-4 hover-lift-3d card-specular-glare">
+                <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2.5 pb-3 border-b border-slate-100">
+                    <i class="fas fa-hand-holding-dollar text-brand-800 text-sm"></i> Benefits & Financial Assistance
+                </h2>
+                <div class="bg-emerald-50/70 p-5 rounded-2xl border border-emerald-200 text-sm text-slate-800 leading-relaxed whitespace-pre-line font-medium">
+                    {{ scheme.benefits }}
+                </div>
+            </div>
+
+            <!-- Eligibility Criteria -->
+            <div class="roc-card p-8 bg-white space-y-4 hover-lift-3d card-specular-glare">
+                <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2.5 pb-3 border-b border-slate-100">
+                    <i class="fas fa-user-check text-brand-800 text-sm"></i> Eligibility Criteria
+                </h2>
+                <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100 text-sm text-slate-800 leading-relaxed whitespace-pre-line">
+                    {{ scheme.eligibility }}
+                </div>
+            </div>
+
+            <!-- Required Documents -->
+            <div class="roc-card p-8 bg-white space-y-4 hover-lift-3d card-specular-glare">
+                <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2.5 pb-3 border-b border-slate-100">
+                    <i class="fas fa-file-shield text-brand-800 text-sm"></i> Required Documentation
+                </h2>
+                <div class="bg-amber-50/70 p-5 rounded-2xl border border-amber-200 text-sm text-slate-800 leading-relaxed whitespace-pre-line">
+                    {{ scheme.required_documents }}
+                </div>
+                <div class="pt-2">
+                    <a href="{% url 'document_checklist' %}" class="btn-secondary text-xs py-2.5 px-4 inline-flex items-center gap-2 spring-press">
+                        <i class="fas fa-list-check"></i> Check Document Readiness Locker →
+                    </a>
+                </div>
+            </div>
+
+            <!-- Application Process -->
+            <div class="roc-card p-8 bg-white space-y-4 hover-lift-3d card-specular-glare">
+                <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2.5 pb-3 border-b border-slate-100">
+                    <i class="fas fa-route text-brand-800 text-sm"></i> How to Apply Step-by-Step
+                </h2>
+                <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100 text-sm text-slate-800 leading-relaxed whitespace-pre-line">
+                    {{ scheme.application_process }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar Summary & Application Box -->
+        <div class="lg:col-span-4 space-y-6 sticky top-24">
+            <div class="roc-card p-6 bg-white shadow-sm border border-slate-200 space-y-6 hover-lift-3d card-specular-glare">
+                <h3 class="text-base font-bold text-slate-900 pb-3 border-b border-slate-100">
+                    Scheme Summary
+                </h3>
+
+                <div class="space-y-3.5 text-xs">
+                    <div class="flex justify-between items-center py-1 border-b border-slate-50">
+                        <span class="text-slate-400 font-semibold">Verified Source</span>
+                        <span class="font-bold text-emerald-700">{{ scheme.source_portal|default:"myScheme.gov.in" }}</span>
+                    </div>
+                    <div class="flex justify-between items-center py-1 border-b border-slate-50">
+                        <span class="text-slate-400 font-semibold">Department</span>
+                        <span class="font-bold text-slate-900 truncate max-w-[170px] text-right">{{ scheme.department }}</span>
+                    </div>
+                    <div class="flex justify-between items-center py-1 border-b border-slate-50">
+                        <span class="text-slate-400 font-semibold">Sector Category</span>
+                        <span class="font-bold text-slate-900">{{ scheme.get_category_display }}</span>
+                    </div>
+                    <div class="flex justify-between items-center py-1 border-b border-slate-50">
+                        <span class="text-slate-400 font-semibold">Beneficiary Group</span>
+                        <span class="font-bold text-slate-900 truncate max-w-[170px] text-right">{{ scheme.target_beneficiaries }}</span>
+                    </div>
+                    {% if scheme.source_url or scheme.official_website %}
+                    <div class="flex justify-between items-center py-1">
+                        <span class="text-slate-400 font-semibold">Official Portal</span>
+                        <a href="{{ scheme.source_url|default:scheme.official_website }}" target="_blank" rel="noopener noreferrer"
+                           class="text-brand-800 hover:text-brand-950 font-bold flex items-center gap-1 spring-press">
+                            Visit <i class="fas fa-arrow-up-right-from-square text-[10px]"></i>
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="pt-4 border-t border-slate-100 space-y-2">
+                    {% if scheme.source_url or scheme.official_website %}
+                        <a href="{{ scheme.source_url|default:scheme.official_website }}" target="_blank" rel="noopener noreferrer"
+                           class="btn-secondary w-full text-xs py-3 text-center flex items-center justify-center gap-2 border border-emerald-200 text-emerald-800 hover:bg-emerald-50 spring-press">
+                            <i class="fas fa-arrow-up-right-from-square"></i> Open on {{ scheme.source_portal|default:"myScheme" }}
+                        </a>
+                    {% endif %}
+
+                    {% if user.is_authenticated %}
+                        {% if scm_key in user_applied_keys %}
+                            <button class="btn-applied w-full text-xs py-3 text-center" disabled>
+                                <i class="fas fa-check-circle text-emerald-600"></i> Enrolled / Applied ✓
+                            </button>
+                        {% else %}
+                            <button onclick="quickApply('scheme', '{{ scheme.id }}', '{{ scheme.name|escapejs }}', '{{ scheme.department|escapejs }}', this)"
+                                    class="btn-primary w-full text-xs py-3 shadow-md btn-sheen spring-press">
+                                <i class="fas fa-paper-plane"></i> Quick Apply / Track in ROC
+                            </button>
+                        {% endif %}
+                    {% else %}
+                        <a href="{% url 'login' %}?next={{ request.path }}" class="btn-primary w-full text-xs py-3 text-center block btn-sheen spring-press">
+                            Login to Apply
+                        </a>
+                    {% endif %}
+
+                    <a href="{% url 'schemes_list' %}" class="btn-outline w-full text-xs py-2.5 text-center block spring-press">
+                        ← Back to Government Schemes
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endwith %}
+{% endblock %}

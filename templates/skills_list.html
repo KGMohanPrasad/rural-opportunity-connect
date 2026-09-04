@@ -1,0 +1,240 @@
+{% extends 'base.html' %}
+
+{% block title %}Free Certified Skill Programs — Rural Opportunity Connect{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+    <!-- Breadcrumb -->
+    <nav class="roc-breadcrumb" aria-label="Breadcrumb">
+        <a href="{% url 'landing_page' %}">Home</a>
+        <span class="roc-breadcrumb-separator"><i class="fas fa-chevron-right text-[10px]"></i></span>
+        <span class="text-slate-800 font-bold">Skill Training & Courses</span>
+    </nav>
+
+    <!-- Executive Branded Header Banner -->
+    <div class="roc-card p-8 md:p-10 bg-gradient-to-r from-slate-950 via-[#071526] to-[#0c2340] text-white rounded-3xl shadow-xl mb-8 relative overflow-hidden border border-cyan-500/30">
+        <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div class="space-y-3">
+                <div class="inline-flex items-center gap-2 bg-cyan-500/20 text-cyan-300 border border-cyan-400/30 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider backdrop-blur-xs hero-badge-pulse">
+                    <i class="fas fa-laptop-code text-cyan-400"></i> Certified Vocational & Digital Skills
+                </div>
+                <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight kinetic-headline">
+                    Upgrade Your Skills with Certified Training
+                </h1>
+                <p class="text-xs sm:text-sm text-slate-300 max-w-2xl font-normal leading-relaxed">
+                    Government-approved technical, digital, and vocational training courses designed for rural livelihood enhancement and guaranteed placement support.
+                </p>
+            </div>
+            <div class="flex items-center gap-3 shrink-0">
+                <div class="bg-white/10 backdrop-blur-md px-6 py-3.5 rounded-2xl border border-cyan-500/30 text-center shadow-lg">
+                    <span class="text-2xl sm:text-3xl font-black text-cyan-300 block counter-value" data-counter="{{ skills|length }}">{{ skills|length }}</span>
+                    <span class="text-[10px] text-cyan-100 uppercase tracking-wider font-bold">Courses Live</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <!-- Sidebar Filters -->
+        <aside class="lg:col-span-4 sticky top-24">
+            <div class="roc-card p-6 bg-white shadow-sm border border-slate-200">
+                <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-100">
+                    <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fas fa-sliders text-brand-800"></i> Filter Skills
+                    </h2>
+                    <a href="{% url 'skills_list' %}" class="text-xs font-bold text-brand-800 hover:text-brand-950 transition">
+                        Clear All
+                    </a>
+                </div>
+
+                <form method="GET" action="{% url 'skills_list' %}" class="space-y-4">
+                    {% if search %}
+                        <input type="hidden" name="search" value="{{ search }}">
+                    {% endif %}
+
+                    <!-- Category Filter -->
+                    <div>
+                        <label class="form-label" for="category">Category</label>
+                        <select id="category" name="category" class="form-select text-xs">
+                            <option value="">All Skill Categories</option>
+                            <option value="technical" {% if filters.category == 'technical' %}selected{% endif %}>Technical & IT</option>
+                            <option value="agricultural" {% if filters.category == 'agricultural' %}selected{% endif %}>Agricultural & Agro-Tech</option>
+                            <option value="business" {% if filters.category == 'business' %}selected{% endif %}>Business & Retail</option>
+                            <option value="vocational" {% if filters.category == 'vocational' %}selected{% endif %}>Vocational & Handlooms</option>
+                            <option value="healthcare" {% if filters.category == 'healthcare' %}selected{% endif %}>Healthcare & Nursing</option>
+                        </select>
+                    </div>
+
+                    <!-- Level Filter -->
+                    <div>
+                        <label class="form-label" for="level">Difficulty Level</label>
+                        <select id="level" name="level" class="form-select text-xs">
+                            <option value="">All Levels</option>
+                            <option value="beginner" {% if filters.level == 'beginner' %}selected{% endif %}>Beginner</option>
+                            <option value="intermediate" {% if filters.level == 'intermediate' %}selected{% endif %}>Intermediate</option>
+                            <option value="advanced" {% if filters.level == 'advanced' %}selected{% endif %}>Advanced</option>
+                        </select>
+                    </div>
+
+                    <!-- Price Type -->
+                    <div>
+                        <label class="form-label" for="price_type">Course Fee</label>
+                        <select id="price_type" name="price_type" class="form-select text-xs">
+                            <option value="">All (Free & Subsidized)</option>
+                            <option value="free" {% if filters.price_type == 'free' %}selected{% endif %}>Free Only (100% Subsidized)</option>
+                            <option value="paid" {% if filters.price_type == 'paid' %}selected{% endif %}>Paid / Nominal Fee</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn-primary btn-magnetic btn-sheen w-full text-xs py-2.5 mt-2">
+                        <i class="fas fa-filter"></i> Apply Filters
+                    </button>
+                </form>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="lg:col-span-8 space-y-6">
+            <!-- Search Bar -->
+            <form method="GET" action="{% url 'skills_list' %}" class="flex gap-2">
+                <div class="relative flex-1">
+                    <input type="text" name="search" value="{{ search }}"
+                           placeholder="Search courses by skill name, provider (e.g. Krishi Vigyan, Electrician, Python)..."
+                           class="form-input pl-10 pr-12 py-3 text-sm bg-white shadow-xs">
+                    <i class="fas fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    <button type="button" onclick="triggerVoiceAssistant()" title="Voice search in regional language"
+                            class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-brand-800 p-1 rounded-lg transition">
+                        <i class="fas fa-microphone text-amber-500"></i>
+                    </button>
+                </div>
+                <button type="submit" class="btn-primary btn-magnetic btn-sheen px-5 text-xs font-bold">Search</button>
+            </form>
+
+            <!-- Results Listing Header -->
+            <div class="flex items-center justify-between">
+                <h2 class="text-sm font-bold text-slate-600 uppercase tracking-wider">Available Training Programs</h2>
+                {% if search or filters.category or filters.level or filters.price_type %}
+                    <span class="text-xs text-brand-800 font-semibold bg-brand-50 px-2.5 py-1 rounded-lg border border-brand-200">
+                        Filtered Results
+                    </span>
+                {% endif %}
+            </div>
+
+            <!-- Skills Cards Grid -->
+            <div class="space-y-4 perspective-viewport anim-grid-stagger" data-anim="fade-up">
+                {% if skills %}
+                    {% for skl in skills %}
+                    {% with skl_key="skill_"|add:skl.id|stringformat:"s" %}
+                    <div class="tilt-card-3d roc-card hover-lift-3d card-specular-glare p-6 border border-slate-200 hover:border-amber-400 relative">
+                        <div class="tilt-glare"></div>
+                        <div class="depth-layer-1">
+                            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-3">
+                                <div class="flex-1">
+                                    <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                                        <h3 class="text-lg sm:text-xl font-bold text-slate-900 hover:text-brand-800 transition">
+                                            <a href="{% url 'skill_detail' skl.id %}">{{ skl.name }}</a>
+                                        </h3>
+                                        <span class="roc-badge roc-badge-amber text-[10px]">
+                                            {{ skl.category }}
+                                        </span>
+                                    </div>
+                                    <p class="text-xs text-slate-600 font-semibold flex items-center gap-1.5">
+                                        <i class="fas fa-chalkboard-user text-slate-400"></i> {{ skl.provider }}
+                                    </p>
+                                </div>
+
+                                <div class="flex items-center gap-2 self-start depth-layer-2">
+                                    <button class="save-btn heart-pop {% if skl_key in user_saved_keys %}is-saved{% endif %}"
+                                            data-type="skill" data-id="{{ skl.id }}" title="Save to wishlist">
+                                        <i class="{% if skl_key in user_saved_keys %}fa-solid fa-heart text-red-500{% else %}fa-regular fa-heart text-slate-400{% endif %}"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <p class="text-xs text-slate-600 line-clamp-2 leading-relaxed mb-4">
+                                {{ skl.description }}
+                            </p>
+
+                            <!-- Key Specs Row -->
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs bg-slate-50 p-3 rounded-2xl border border-slate-100 mb-4">
+                                <div class="flex items-center gap-1.5 text-slate-700">
+                                    <i class="fas fa-clock text-brand-700"></i>
+                                    <span class="font-medium truncate">{{ skl.duration }}</span>
+                                </div>
+                                <div class="flex items-center gap-1.5 text-slate-700">
+                                    <i class="fas fa-layer-group text-brand-700"></i>
+                                    <span class="font-bold capitalize">{{ skl.get_level_display }}</span>
+                                </div>
+                                <div class="flex items-center gap-1.5 text-slate-700">
+                                    <i class="fas fa-tag text-brand-700"></i>
+                                    <span class="font-bold uppercase {% if skl.price_type == 'free' %}text-emerald-700{% else %}text-slate-800{% endif %}">{{ skl.price_type }}</span>
+                                </div>
+                                <div class="flex items-center gap-1.5 text-slate-700">
+                                    <i class="fas fa-certificate text-brand-700"></i>
+                                    <span>{% if skl.certificate %}Certificate Included{% else %}Training Only{% endif %}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="depth-layer-2 pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+                            <div class="flex items-center gap-2">
+                                <span class="roc-badge roc-badge-emerald text-[10px]">
+                                    <i class="fas fa-shield-halved text-amber-500 text-[9px]"></i> {{ skl.source_portal|default:"Skill India Digital" }}
+                                </span>
+                            </div>
+                            <div class="flex items-center gap-2 w-full sm:w-auto">
+                                {% if skl.source_url %}
+                                    <a href="{{ skl.source_url }}" target="_blank" rel="noopener noreferrer"
+                                       class="btn-outline text-xs py-2 px-3 flex-1 sm:flex-initial text-amber-700 hover:bg-amber-50">
+                                        <i class="fas fa-arrow-up-right-from-square"></i> Portal Link
+                                    </a>
+                                {% endif %}
+
+                                {% if user.is_authenticated %}
+                                    {% if skl_key in user_applied_keys %}
+                                        <button class="btn-applied text-xs py-2 px-4 flex-1 sm:flex-initial" disabled>
+                                            <i class="fas fa-check-circle text-emerald-600"></i> Enrolled ✓
+                                        </button>
+                                    {% else %}
+                                        <button onclick="quickApply('skill', '{{ skl.id }}', '{{ skl.name|escapejs }}', '{{ skl.provider|escapejs }}', this)"
+                                                class="btn-primary text-xs py-2 px-4 flex-1 sm:flex-initial shadow-xs">
+                                            <i class="fas fa-paper-plane"></i> Quick Enroll
+                                        </button>
+                                    {% endif %}
+                                {% else %}
+                                    <a href="{% url 'login' %}?next={{ request.path }}"
+                                       class="btn-primary text-xs py-2 px-4 flex-1 sm:flex-initial shadow-xs">
+                                        <i class="fas fa-paper-plane"></i> Quick Enroll
+                                    </a>
+                                {% endif %}
+
+                                <a href="{% url 'skill_detail' skl.id %}" class="btn-secondary text-xs py-2 px-4 flex-1 sm:flex-initial text-center">
+                                    Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endwith %}
+                    {% endfor %}
+                {% else %}
+                    <div class="roc-card p-12 text-center border border-dashed border-slate-300 rounded-3xl bg-white">
+                        <div class="w-16 h-16 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-2">No Training Programs Found</h3>
+                        <p class="text-xs text-slate-500 max-w-sm mx-auto mb-6">
+                            We couldn't find any skill courses matching your filter. Try picking a different category or clearing the search bar.
+                        </p>
+                        <a href="{% url 'skills_list' %}" class="btn-primary text-xs py-2.5 px-5">
+                            Reset All Filters
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}

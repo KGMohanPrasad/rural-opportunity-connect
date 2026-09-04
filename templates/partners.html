@@ -1,0 +1,255 @@
+{% extends 'base.html' %}
+
+{% block title %}Connected Portals & Live Feeds (Buddy4Study, myScheme, NSP) — Rural Opportunity Connect{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 space-y-12">
+    <!-- Breadcrumb -->
+    <nav class="roc-breadcrumb" aria-label="Breadcrumb">
+        <a href="{% url 'landing_page' %}">Home</a>
+        <span class="roc-breadcrumb-separator"><i class="fas fa-chevron-right text-[10px]"></i></span>
+        <span class="text-slate-800 font-bold">Connected Opportunity Networks</span>
+    </nav>
+
+    <!-- Header Banner -->
+    <div class="roc-card p-8 md:p-12 bg-gradient-to-r from-slate-950 via-[#071526] to-[#0c2340] text-white rounded-3xl shadow-xl relative overflow-hidden border border-cyan-500/20" data-anim="fade-up">
+        <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-8">
+            <div class="space-y-4 max-w-2xl">
+                <div class="hero-badge-pulse inline-flex items-center gap-2 bg-cyan-500/20 border border-cyan-400/30 text-cyan-300 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">
+                    <i class="fas fa-satellite-dish text-cyan-400"></i> Unified Opportunity Aggregator
+                </div>
+                <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight kinetic-headline">
+                    Connected Networks & <span class="shiny-text">Live Partner Feeds</span>
+                </h1>
+                <p class="text-sm sm:text-base text-slate-300 leading-relaxed font-normal">
+                    Rural Opportunity Connect integrates directly with India's largest verified education, employment, and government welfare platforms including <strong>Buddy4Study</strong>, <strong>National Scholarship Portal</strong>, <strong>myScheme.gov.in</strong>, <strong>Skill India</strong>, and <strong>NCS</strong>.
+                </p>
+            </div>
+
+            <!-- Live Status & Sync Trigger Box -->
+            <div class="bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/20 text-center min-w-[220px] shadow-2xl space-y-3 hover-lift-3d card-specular-glare">
+                <div class="flex items-center justify-center gap-2 text-xs font-bold text-cyan-300">
+                    <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse"></span>
+                    <span>Live Network Sync Active</span>
+                </div>
+                <div class="text-3xl font-black text-white counter-value" data-counter="{{ total_external_count }}">{{ total_external_count }}</div>
+                <p class="text-[11px] text-cyan-200 uppercase font-semibold">Synced Partner Opportunities</p>
+
+                <button onclick="triggerPartnerSync(this)" class="btn-primary text-xs w-full py-2.5 shadow-md btn-sheen spring-press">
+                    <i class="fas fa-rotate mr-1"></i> Sync Fresh Feeds
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 1. Connected Partner Portals Grid -->
+    <div>
+        <div class="text-center max-w-2xl mx-auto mb-10" data-anim="fade-up">
+            <span class="roc-badge roc-badge-emerald mb-2">Verified Ecosystem</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Connected Opportunity Gateways</h2>
+            <p class="text-xs sm:text-sm text-slate-500 mt-1">Direct API feeds and verified pipelines powering Rural Opportunity Connect.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 anim-grid-stagger" data-anim="fade-up">
+            {% for portal in portals %}
+            <div class="roc-card p-7 bg-white border border-slate-200 hover:border-cyan-500 transition duration-300 flex flex-col justify-between hover-lift-3d card-specular-glare">
+                <div>
+                    <div class="flex items-start justify-between gap-3 mb-3">
+                        <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center text-2xl shadow-xs">
+                            {{ portal.icon }}
+                        </div>
+                        <span class="roc-badge roc-badge-emerald text-[10px]">{{ portal.badge }}</span>
+                    </div>
+
+                    <h3 class="text-lg font-bold text-slate-900 mb-1">{{ portal.name }}</h3>
+                    <p class="text-xs font-semibold text-brand-800 mb-2">{{ portal.type }}</p>
+                    <p class="text-xs text-slate-600 leading-relaxed mb-4">{{ portal.description }}</p>
+                </div>
+
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                    <span class="text-xs font-black text-brand-900 bg-brand-50 px-2.5 py-1 rounded-lg">
+                        {{ portal.live_count }} Opportunities Live
+                    </span>
+                    <a href="{{ portal.website }}" target="_blank" rel="noopener noreferrer"
+                       class="text-xs font-bold text-slate-700 hover:text-brand-800 transition flex items-center gap-1">
+                        Visit Official <i class="fas fa-arrow-up-right-from-square text-[10px]"></i>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- 2. Live Buddy4Study & NSP Scholarships Showcase -->
+    <div class="roc-card p-8 bg-white border border-slate-200 rounded-3xl space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
+            <div>
+                <div class="flex items-center gap-2 mb-1">
+                    <span class="w-7 h-7 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center text-sm">🎓</span>
+                    <h2 class="text-xl font-bold text-slate-900">Featured Scholarships from Buddy4Study & NSP</h2>
+                </div>
+                <p class="text-xs text-slate-500">Corporate CSR grants, philanthropic fellowships, and national education funds.</p>
+            </div>
+            <a href="{% url 'scholarships_list' %}" class="text-xs font-bold text-brand-800 hover:underline">
+                View All Scholarships →
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {% for sc in buddy4study_scholarships %}
+            {% with sc_key="scholarship_"|add:sc.id|stringformat:"s" %}
+            <div class="p-5 rounded-2xl bg-slate-50 hover:bg-white border border-slate-200 transition duration-200 flex flex-col justify-between shadow-xs">
+                <div>
+                    <div class="flex items-start justify-between gap-2 mb-2">
+                        <span class="roc-badge roc-badge-purple text-[10px]">
+                            ✨ {{ sc.source_portal|default:"Buddy4Study" }}
+                        </span>
+                        <span class="text-xs font-black text-brand-800">{{ sc.amount }}</span>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-900 mb-1 hover:text-brand-800">
+                        <a href="{% url 'scholarship_detail' sc.id %}">{{ sc.name }}</a>
+                    </h3>
+                    <p class="text-xs text-slate-500 mb-3">{{ sc.provider }}</p>
+                    <p class="text-xs text-slate-600 line-clamp-2 mb-4">{{ sc.eligibility }}</p>
+                </div>
+
+                <div class="pt-3 border-t border-slate-200 flex items-center justify-between gap-2">
+                    {% if sc.source_url %}
+                    <a href="{{ sc.source_url }}" target="_blank" rel="noopener noreferrer"
+                       class="text-xs font-bold text-purple-700 hover:text-purple-900 flex items-center gap-1">
+                        Apply on Buddy4Study <i class="fas fa-arrow-up-right-from-square text-[10px]"></i>
+                    </a>
+                    {% endif %}
+                    <div class="flex items-center gap-2">
+                        {% if user.is_authenticated %}
+                            {% if sc_key in user_applied_keys %}
+                                <button class="btn-applied text-[11px] py-1.5 px-3" disabled>
+                                    <i class="fas fa-check-circle text-emerald-600"></i> Applied ✓
+                                </button>
+                            {% else %}
+                                <button onclick="quickApply('scholarship', '{{ sc.id }}', '{{ sc.name|escapejs }}', '{{ sc.provider|escapejs }}', this)"
+                                        class="btn-primary text-[11px] py-1.5 px-3">
+                                    Quick Apply
+                                </button>
+                            {% endif %}
+                        {% else %}
+                            <a href="{% url 'login' %}?next={{ request.path }}" class="btn-primary text-[11px] py-1.5 px-3">
+                                Quick Apply
+                            </a>
+                        {% endif %}
+                        <a href="{% url 'scholarship_detail' sc.id %}" class="btn-secondary text-[11px] py-1.5 px-3">
+                            Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endwith %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- 3. Live myScheme.gov.in Welfare Schemes Showcase -->
+    <div class="roc-card p-8 bg-white border border-slate-200 rounded-3xl space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
+            <div>
+                <div class="flex items-center gap-2 mb-1">
+                    <span class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm">🏛️</span>
+                    <h2 class="text-xl font-bold text-slate-900">Direct Welfare Subsidies from myScheme.gov.in</h2>
+                </div>
+                <p class="text-xs text-slate-500">Aadhaar-enabled Direct Benefit Transfer (DBT) and agricultural welfare initiatives.</p>
+            </div>
+            <a href="{% url 'schemes_list' %}" class="text-xs font-bold text-brand-800 hover:underline">
+                View All Schemes →
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {% for sc in myscheme_schemes %}
+            {% with scm_key="scheme_"|add:sc.id|stringformat:"s" %}
+            <div class="p-5 rounded-2xl bg-slate-50 hover:bg-white border border-slate-200 transition duration-200 flex flex-col justify-between shadow-xs">
+                <div>
+                    <div class="flex items-start justify-between gap-2 mb-2">
+                        <span class="roc-badge roc-badge-emerald text-[10px]">
+                            🏛️ myScheme.gov.in Verified
+                        </span>
+                        <span class="text-xs font-bold text-slate-500 capitalize">{{ sc.category }}</span>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-900 mb-1 hover:text-brand-800">
+                        <a href="{% url 'scheme_detail' sc.id %}">{{ sc.name }}</a>
+                    </h3>
+                    <p class="text-xs text-slate-500 mb-3">{{ sc.department }}</p>
+                    <p class="text-xs text-slate-600 line-clamp-2 mb-4"><strong>Benefits:</strong> {{ sc.benefits }}</p>
+                </div>
+
+                <div class="pt-3 border-t border-slate-200 flex items-center justify-between gap-2">
+                    {% if sc.source_url or sc.official_website %}
+                    <a href="{{ sc.source_url|default:sc.official_website }}" target="_blank" rel="noopener noreferrer"
+                       class="text-xs font-bold text-emerald-700 hover:text-emerald-900 flex items-center gap-1">
+                        Open on myScheme <i class="fas fa-arrow-up-right-from-square text-[10px]"></i>
+                    </a>
+                    {% endif %}
+                    <div class="flex items-center gap-2">
+                        {% if user.is_authenticated %}
+                            {% if scm_key in user_applied_keys %}
+                                <button class="btn-applied text-[11px] py-1.5 px-3" disabled>
+                                    <i class="fas fa-check-circle text-emerald-600"></i> Enrolled ✓
+                                </button>
+                            {% else %}
+                                <button onclick="quickApply('scheme', '{{ sc.id }}', '{{ sc.name|escapejs }}', '{{ sc.department|escapejs }}', this)"
+                                        class="btn-primary text-[11px] py-1.5 px-3">
+                                    Enroll / Track
+                                </button>
+                            {% endif %}
+                        {% else %}
+                            <a href="{% url 'login' %}?next={{ request.path }}" class="btn-primary text-[11px] py-1.5 px-3">
+                                Enroll / Track
+                            </a>
+                        {% endif %}
+                        <a href="{% url 'scheme_detail' sc.id %}" class="btn-secondary text-[11px] py-1.5 px-3">
+                            Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endwith %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script>
+async function triggerPartnerSync(btn) {
+    const originalText = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Syncing Feeds...';
+
+    const token = getCsrfToken();
+    const formData = new FormData();
+    formData.append('source', 'all');
+
+    try {
+        const response = await fetch('/api/sync-partners/', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': token,
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        });
+        const data = await response.json();
+        if (data.status === 'success') {
+            showToast(data.message, 'success');
+            setTimeout(() => window.location.reload(), 1200);
+        } else {
+            btn.disabled = false;
+            btn.innerHTML = originalText;
+            showToast('Could not sync feeds.', 'error');
+        }
+    } catch (err) {
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+        showToast('Sync request completed.', 'info');
+    }
+}
+</script>
+{% endblock %}
