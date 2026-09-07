@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.db.models import Q
 from .models import GovernmentScheme
 
@@ -26,6 +26,6 @@ def scheme_list(request):
 
 def scheme_detail(request, scheme_id):
     """View scheme details"""
-    scheme = GovernmentScheme.objects.get(id=scheme_id)
+    scheme = get_object_or_404(GovernmentScheme, id=scheme_id)
     context = {'scheme': scheme}
     return render(request, 'scheme_detail.html', context)

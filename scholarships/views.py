@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.db.models import Q
 from .models import Scholarship
 
@@ -30,6 +30,6 @@ def scholarship_list(request):
 
 def scholarship_detail(request, scholarship_id):
     """View scholarship details"""
-    scholarship = Scholarship.objects.get(id=scholarship_id)
+    scholarship = get_object_or_404(Scholarship, id=scholarship_id)
     context = {'scholarship': scholarship}
     return render(request, 'scholarship_detail.html', context)

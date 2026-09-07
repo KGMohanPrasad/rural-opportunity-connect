@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.db.models import Q
 from .models import Job
 from accounts.models import UserProfile
@@ -48,9 +48,10 @@ def job_list(request):
 
 def job_detail(request, job_id):
     """View job details"""
-    job = Job.objects.get(id=job_id)
+    job = get_object_or_404(Job, id=job_id)
+    skills = [s.strip() for s in job.required_skills.split(',') if s.strip()] if job.required_skills else []
     context = {
         'job': job,
-        'skills_list': job.required_skills.split(',')
+        'skills_list': skills
     }
     return render(request, 'job_detail.html', context)

@@ -14,7 +14,7 @@
     </nav>
 
     <!-- Executive Branded Header Banner -->
-    <div class="roc-card p-8 md:p-10 bg-gradient-to-r from-slate-950 via-[#071526] to-[#0c2340] text-white rounded-3xl shadow-xl mb-8 relative overflow-hidden border border-cyan-500/30">
+    <div class="roc-card p-8 md:p-10 bg-gradient-to-r from-slate-950 via-[#071526] to-[#0c2340] text-white rounded-3xl shadow-xl mb-8 relative overflow-hidden border border-cyan-500/30" data-anim="fade-up">
         <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
         <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div class="space-y-3">
@@ -28,7 +28,8 @@
                     Real-time status updates and submission verification across your jobs, scholarships, welfare schemes, and skill courses.
                 </p>
             </div>
-            <div class="flex items-center gap-3 shrink-0">
+            <div class="flex items-center gap-4 shrink-0">
+                <canvas class="header-3d-canvas w-24 h-20 hidden md:block" aria-hidden="true"></canvas>
                 <a href="{% url 'jobs_list' %}" class="btn-primary btn-magnetic btn-glow-pulse text-xs py-3 px-5 shadow-lg shadow-cyan-950/50">
                     <i class="fas fa-plus"></i> Explore Opportunities
                 </a>
@@ -107,8 +108,13 @@
                     </div>
                 </div>
 
-                <!-- 4-Stage Progress Stepper with Animated Connectors & Pulse Nodes -->
-                <div class="py-2 relative">
+                <!-- 4-Stage Progress Stepper with 3D Connected Path & Glowing Nodes -->
+                <div class="py-4 relative">
+                    <!-- Connected 3D Beam Background -->
+                    <div class="absolute top-8 left-12 right-12 h-1 bg-slate-200 rounded-full z-0 hidden sm:block">
+                        <div class="h-full bg-gradient-to-r from-cyan-500 via-blue-600 to-emerald-500 rounded-full"
+                             style="width: {% if app.status == 'selected' or app.status == 'rejected' %}100%{% elif app.status == 'shortlisted' %}66%{% elif app.status == 'under_review' %}33%{% else %}10%{% endif %};"></div>
+                    </div>
                     <div class="grid grid-cols-4 gap-2 text-center relative z-10">
                         <!-- Step 1: Applied -->
                         <div class="space-y-1.5">

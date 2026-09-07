@@ -14,6 +14,7 @@ from business.models import BusinessOpportunity
 import requests
 
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
+from django.db.models import Q
 
 @ensure_csrf_cookie
 def landing_page(request):
@@ -25,6 +26,10 @@ def landing_page(request):
     business_count = BusinessOpportunity.objects.count()
     total_opportunities = jobs_count + scholarships_count + schemes_count + skills_count + business_count
 
+    featured_job = Job.objects.order_by('id').first()
+    featured_scholarship = Scholarship.objects.order_by('id').first()
+    featured_scheme = GovernmentScheme.objects.order_by('id').first()
+
     context = {
         'total_opportunities': total_opportunities,
         'jobs_count': jobs_count,
@@ -32,6 +37,9 @@ def landing_page(request):
         'schemes_count': schemes_count,
         'skills_count': skills_count,
         'business_count': business_count,
+        'featured_job': featured_job,
+        'featured_scholarship': featured_scholarship,
+        'featured_scheme': featured_scheme,
     }
     return render(request, 'landing.html', context)
 
@@ -101,7 +109,7 @@ def logout_view(request):
 @login_required(login_url='login')
 def profile_setup(request):
     """Profile setup wizard"""
-    profile = UserProfile.objects.get(user=request.user)
+    profile, _ = UserProfile.objects.get_or_create(user=request.user)
     
     if request.method == 'POST':
         profile.age = request.POST.get('age')
@@ -129,7 +137,7 @@ from services.recommendation_service import RecommendationService
 @login_required(login_url='login')
 def dashboard(request):
     """User dashboard with personalized recommendations and progress metrics"""
-    profile = UserProfile.objects.get(user=request.user)
+    profile, _ = UserProfile.objects.get_or_create(user=request.user)
     
     # Get intelligent recommendations from microservice or local service
     recommendations = RecommendationService.get_recommendations(profile)
@@ -152,7 +160,7 @@ def dashboard(request):
 @login_required(login_url='login')
 def profile_view(request):
     """View and edit user profile with live profile strength score"""
-    profile = UserProfile.objects.get(user=request.user)
+    profile, _ = UserProfile.objects.get_or_create(user=request.user)
     
     if request.method == 'POST':
         profile.age = request.POST.get('age') or None
@@ -181,7 +189,7 @@ def profile_view(request):
 @login_required(login_url='login')
 def saved_opportunities(request):
     """View saved wishlist opportunities with sector filtering"""
-    profile = UserProfile.objects.get(user=request.user)
+    profile, _ = UserProfile.objects.get_or_create(user=request.user)
     active_type = request.GET.get('type', 'all').strip().lower()
     
     all_saved = SavedOpportunity.objects.filter(user=profile).order_by('-saved_at')
@@ -235,7 +243,7 @@ def saved_opportunities(request):
 @login_required(login_url='login')
 def application_tracker(request):
     """Track user application pipeline with stage-wise metric counters"""
-    profile = UserProfile.objects.get(user=request.user)
+    profile, _ = UserProfile.objects.get_or_create(user=request.user)
     applications = Application.objects.filter(user=profile).order_by('-applied_date')
     
     total_applications = applications.count()
@@ -257,7 +265,7 @@ def application_tracker(request):
 @login_required(login_url='login')
 def document_checklist(request):
     """Digital document readiness checklist with verification score"""
-    profile = UserProfile.objects.get(user=request.user)
+    profile, _ = UserProfile.objects.get_or_create(user=request.user)
     checklist, _ = DocumentChecklist.objects.get_or_create(user=profile)
     
     if request.method == 'POST':
@@ -289,7 +297,7 @@ def document_checklist(request):
 @require_http_methods(['POST'])
 def save_opportunity(request):
     """Save/unsave an opportunity bookmark"""
-    profile = UserProfile.objects.get(user=request.user)
+    profile, _ = UserProfile.objects.get_or_create(user=request.user)
     opp_type = request.POST.get('type')
     opp_id = request.POST.get('id')
     
@@ -383,4 +391,102 @@ def custom_404(request, exception=None):
 def custom_500(request):
     """Custom 500 error page"""
     return render(request, '500.html', status=500)
+
+
+def quick_search_api(request):
+    """Universal Quick Search endpoint for Quick Access Hub"""
+    q = request.GET.get('q', '').strip()
+    if not q:
+        return JsonResponse({'results': []})
+
+    results = []
+
+    # 1. Search Jobs
+    jobs = Job.objects.filter(
+        Q(title__icontains=q) | Q(organization__icontains=q) | Q(required_skills__icontains=q) | Q(location__icontains=q)
+    )[:6]
+    for j in jobs:
+        sal = f"₹{j.salary_min:,} - ₹{j.salary_max:,}/mo" if j.salary_min and j.salary_max else "Competitive"
+        results.append({
+            'type': 'Job',
+            'category': 'jobs',
+            'applyType': 'job',
+            'id': j.id,
+            'title': j.title,
+            'org': j.organization,
+            'meta': f"{j.location} • {sal}",
+            'detail_url': f"/jobs/{j.id}/",
+            'badge_color': 'blue'
+        })
+
+    # 2. Search Scholarships
+    scholarships = Scholarship.objects.filter(
+        Q(name__icontains=q) | Q(provider__icontains=q) | Q(eligibility__icontains=q)
+    )[:5]
+    for sc in scholarships:
+        results.append({
+            'type': 'Scholarship',
+            'category': 'scholarships',
+            'applyType': 'scholarship',
+            'id': sc.id,
+            'title': sc.name,
+            'org': sc.provider,
+            'meta': sc.amount or "Merit Grant",
+            'detail_url': f"/scholarships/{sc.id}/",
+            'badge_color': 'amber'
+        })
+
+    # 3. Search Government Schemes
+    schemes = GovernmentScheme.objects.filter(
+        Q(name__icontains=q) | Q(department__icontains=q) | Q(description__icontains=q) | Q(benefits__icontains=q)
+    )[:5]
+    for s in schemes:
+        benefit_preview = s.benefits[:45] + '...' if len(s.benefits) > 45 else s.benefits
+        results.append({
+            'type': 'Scheme',
+            'category': 'schemes',
+            'applyType': 'scheme',
+            'id': s.id,
+            'title': s.name,
+            'org': s.department,
+            'meta': benefit_preview or "Govt Welfare Subsidy",
+            'detail_url': f"/schemes/{s.id}/",
+            'badge_color': 'emerald'
+        })
+
+    # 4. Search Skills
+    skills = SkillProgram.objects.filter(
+        Q(name__icontains=q) | Q(provider__icontains=q) | Q(category__icontains=q)
+    )[:5]
+    for sk in skills:
+        results.append({
+            'type': 'Skill',
+            'category': 'skills',
+            'applyType': 'skill',
+            'id': sk.id,
+            'title': sk.name,
+            'org': sk.provider,
+            'meta': f"{sk.duration} • {sk.get_level_display() if hasattr(sk, 'get_level_display') else sk.level}",
+            'detail_url': f"/skills/{sk.id}/",
+            'badge_color': 'purple'
+        })
+
+    # 5. Search Business Opportunities
+    businesses = BusinessOpportunity.objects.filter(
+        Q(name__icontains=q) | Q(category__icontains=q) | Q(description__icontains=q)
+    )[:5]
+    for b in businesses:
+        results.append({
+            'type': 'Business',
+            'category': 'business',
+            'applyType': 'business',
+            'id': b.id,
+            'title': b.name,
+            'org': b.category,
+            'meta': b.expected_income or "Micro-Enterprise Plan",
+            'detail_url': f"/business/{b.id}/",
+            'badge_color': 'orange'
+        })
+
+    return JsonResponse({'results': results[:15]})
 

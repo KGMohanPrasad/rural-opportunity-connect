@@ -34,27 +34,22 @@
                 </p>
             </div>
 
-            <!-- Header Quick Actions -->
-            <div class="flex items-center gap-3 self-start md:self-center">
+            <!-- Header Quick Actions & 3D Emblem -->
+            <div class="flex items-center gap-4 self-start md:self-center">
+                <canvas class="header-3d-canvas w-24 h-20 hidden md:block" aria-hidden="true"></canvas>
                 <button class="save-btn heart-pop spring-press {% if sc_key in user_saved_keys %}is-saved bg-white text-red-500{% else %}bg-white/10 hover:bg-white/20 border-white/20 text-white{% endif %}"
                         data-type="scholarship" data-id="{{ scholarship.id }}" title="Save to wishlist">
                     <i class="{% if sc_key in user_saved_keys %}fa-solid fa-heart text-red-500{% else %}fa-regular fa-heart text-white{% endif %}"></i>
                 </button>
-                {% if user.is_authenticated %}
-                    {% if sc_key in user_applied_keys %}
-                        <button class="btn-applied text-xs py-3 px-6 shadow-md" disabled>
-                            <i class="fas fa-check-circle text-emerald-600"></i> Already Applied ✓
-                        </button>
-                    {% else %}
-                        <button onclick="quickApply('scholarship', '{{ scholarship.id }}', '{{ scholarship.name|escapejs }}', '{{ scholarship.provider|escapejs }}', this)"
-                                class="btn-primary text-xs py-3 px-6 shadow-lg shadow-emerald-950/50 btn-sheen spring-press">
-                            <i class="fas fa-paper-plane"></i> Quick Apply
-                        </button>
-                    {% endif %}
+                {% if user.is_authenticated and sc_key in user_applied_keys %}
+                    <button class="btn-applied text-xs py-3 px-6 shadow-md" disabled>
+                        <i class="fas fa-check-circle text-emerald-600"></i> Already Applied ✓
+                    </button>
                 {% else %}
-                    <a href="{% url 'login' %}?next={{ request.path }}" class="btn-primary text-xs py-3 px-6 shadow-lg btn-sheen spring-press">
-                        <i class="fas fa-sign-in-alt"></i> Login to Quick Apply
-                    </a>
+                    <button onclick="quickApply('scholarship', '{{ scholarship.id }}', '{{ scholarship.name|escapejs }}', '{{ scholarship.provider|escapejs }}', this)"
+                            class="btn-primary text-xs py-3 px-6 shadow-lg shadow-emerald-950/50 btn-sheen spring-press cursor-pointer">
+                        <i class="fas fa-paper-plane"></i> Quick Apply
+                    </button>
                 {% endif %}
             </div>
         </div>
@@ -97,7 +92,7 @@
             <!-- Required Documents -->
             <div class="roc-card p-8 bg-white space-y-4 hover-lift-3d card-specular-glare">
                 <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2.5 pb-3 border-b border-slate-100">
-                    <i class="fas fa-file-shield text-brand-800 text-sm"></i> Required Documentation
+                    <i class="fas fa-file-shield text-brand-800 text-sm"></i> Required Documentation Checklist
                 </h2>
                 <div class="bg-amber-50/70 p-5 rounded-2xl border border-amber-200 text-sm text-slate-800 leading-relaxed whitespace-pre-line">
                     {{ scholarship.required_documents }}
@@ -106,6 +101,89 @@
                     <a href="{% url 'document_checklist' %}" class="btn-secondary text-xs py-2.5 px-4 inline-flex items-center gap-2 spring-press">
                         <i class="fas fa-list-check"></i> Verify in Document Readiness Locker →
                     </a>
+                </div>
+            </div>
+
+            <!-- Grant Breakdown & DBT Direct Payment Policy -->
+            <div class="roc-card p-8 bg-white space-y-4 hover-lift-3d card-specular-glare">
+                <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2.5 pb-3 border-b border-slate-100">
+                    <i class="fas fa-money-bill-transfer text-brand-800 text-sm"></i> Disbursement & Financial Benefit Breakdown
+                </h2>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 text-xs">
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1.5">
+                        <div class="text-cyan-700 font-extrabold text-sm flex items-center gap-1.5">
+                            <i class="fas fa-graduation-cap"></i> Tuition Fee
+                        </div>
+                        <p class="text-slate-600 leading-relaxed">Direct waiver or reimbursement credited towards college semester fees.</p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1.5">
+                        <div class="text-purple-700 font-extrabold text-sm flex items-center gap-1.5">
+                            <i class="fas fa-book-open"></i> Study Materials
+                        </div>
+                        <p class="text-slate-600 leading-relaxed">Annual stipend for textbooks, stationary, and digital study tools.</p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1.5">
+                        <div class="text-emerald-700 font-extrabold text-sm flex items-center gap-1.5">
+                            <i class="fas fa-building-columns"></i> DBT Transfer
+                        </div>
+                        <p class="text-slate-600 leading-relaxed">100% direct bank credit to student's Aadhaar-linked savings account.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4-Step Student Application Roadmap -->
+            <div class="roc-card p-8 bg-white space-y-4 hover-lift-3d card-specular-glare">
+                <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2.5 pb-3 border-b border-slate-100">
+                    <i class="fas fa-timeline text-brand-800 text-sm"></i> Student Application & Verification Workflow
+                </h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 pt-2 text-xs">
+                    <div class="p-4 rounded-2xl bg-purple-50/60 border border-purple-200 space-y-1.5">
+                        <span class="w-6 h-6 rounded-full bg-purple-700 text-white font-bold flex items-center justify-center text-xs">1</span>
+                        <h4 class="font-bold text-slate-900">Quick Apply in ROC</h4>
+                        <p class="text-slate-600 leading-relaxed text-[11px]">Match qualifications and pre-verify documents.</p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1.5">
+                        <span class="w-6 h-6 rounded-full bg-slate-700 text-white font-bold flex items-center justify-center text-xs">2</span>
+                        <h4 class="font-bold text-slate-900">College Verification</h4>
+                        <p class="text-slate-600 leading-relaxed text-[11px]">Principal / Nodal officer confirms student enrollment.</p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1.5">
+                        <span class="w-6 h-6 rounded-full bg-slate-700 text-white font-bold flex items-center justify-center text-xs">3</span>
+                        <h4 class="font-bold text-slate-900">Merit Screening</h4>
+                        <p class="text-slate-600 leading-relaxed text-[11px]">Department approves quota and income ceiling.</p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 space-y-1.5">
+                        <span class="w-6 h-6 rounded-full bg-emerald-700 text-white font-bold flex items-center justify-center text-xs">4</span>
+                        <h4 class="font-bold text-emerald-950">Bank Credit</h4>
+                        <p class="text-emerald-800 leading-relaxed text-[11px]">Direct transfer via PFMS / Aadhaar payment bridge.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scholarship FAQs -->
+            <div class="roc-card p-8 bg-white space-y-4 hover-lift-3d card-specular-glare">
+                <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2.5 pb-3 border-b border-slate-100">
+                    <i class="fas fa-circle-question text-brand-800 text-sm"></i> Frequently Asked Questions
+                </h2>
+                <div class="space-y-3 pt-2 text-xs">
+                    <details class="group bg-slate-50 p-4 rounded-2xl border border-slate-200 cursor-pointer">
+                        <summary class="font-bold text-slate-900 flex items-center justify-between">
+                            <span>Does the bank account have to be in the student's name?</span>
+                            <i class="fas fa-chevron-down text-slate-400 group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <p class="pt-2 text-slate-600 leading-relaxed">
+                            Yes. Direct Benefit Transfer (DBT) guidelines mandate an active bank savings account in the student's own name, seeded with their Aadhaar number.
+                        </p>
+                    </details>
+                    <details class="group bg-slate-50 p-4 rounded-2xl border border-slate-200 cursor-pointer">
+                        <summary class="font-bold text-slate-900 flex items-center justify-between">
+                            <span>Is this scholarship renewable for next academic year?</span>
+                            <i class="fas fa-chevron-down text-slate-400 group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <p class="pt-2 text-slate-600 leading-relaxed">
+                            Yes! Recipients who maintain the required academic score (usually 50% to 60% aggregate) and minimum 75% attendance are automatically eligible for annual renewal.
+                        </p>
+                    </details>
                 </div>
             </div>
         </div>
@@ -152,21 +230,15 @@
                         </a>
                     {% endif %}
 
-                    {% if user.is_authenticated %}
-                        {% if sc_key in user_applied_keys %}
-                            <button class="btn-applied w-full text-xs py-3 text-center" disabled>
-                                <i class="fas fa-check-circle text-emerald-600"></i> Already Applied ✓
-                            </button>
-                        {% else %}
-                            <button onclick="quickApply('scholarship', '{{ scholarship.id }}', '{{ scholarship.name|escapejs }}', '{{ scholarship.provider|escapejs }}', this)"
-                                    class="btn-primary w-full text-xs py-3 shadow-md btn-sheen spring-press">
-                                <i class="fas fa-paper-plane"></i> Quick Apply in ROC
-                            </button>
-                        {% endif %}
+                    {% if user.is_authenticated and sc_key in user_applied_keys %}
+                        <button class="btn-applied w-full text-xs py-3 text-center" disabled>
+                            <i class="fas fa-check-circle text-emerald-600"></i> Already Applied ✓
+                        </button>
                     {% else %}
-                        <a href="{% url 'login' %}?next={{ request.path }}" class="btn-primary w-full text-xs py-3 text-center block btn-sheen spring-press">
-                            Login to Quick Apply
-                        </a>
+                        <button onclick="quickApply('scholarship', '{{ scholarship.id }}', '{{ scholarship.name|escapejs }}', '{{ scholarship.provider|escapejs }}', this)"
+                                class="btn-primary w-full text-xs py-3 shadow-md btn-sheen spring-press cursor-pointer">
+                            <i class="fas fa-paper-plane"></i> Quick Apply in ROC
+                        </button>
                     {% endif %}
 
                     <a href="{% url 'scholarships_list' %}" class="btn-outline w-full text-xs py-2.5 text-center block spring-press">

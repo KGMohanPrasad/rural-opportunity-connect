@@ -11,4 +11,8 @@ python manage.py collectstatic --no-input
 echo "==> Running database migrations..."
 python manage.py migrate --no-input
 
+echo "==> Loading fixtures and authentic schemes/scholarships..."
+python manage.py loaddata datadump.json || true
+python populate_authentic_schemes_scholarships.py || true
+
 echo "==> Build complete and ready for 24/7 service!"

@@ -36,27 +36,22 @@
                 </p>
             </div>
 
-            <!-- Header Quick Actions -->
-            <div class="flex items-center gap-3 self-start md:self-center">
+            <!-- Header Quick Actions & 3D Emblem -->
+            <div class="flex items-center gap-4 self-start md:self-center">
+                <canvas class="header-3d-canvas w-24 h-20 hidden md:block" aria-hidden="true"></canvas>
                 <button class="save-btn heart-pop spring-press {% if job_key in user_saved_keys %}is-saved bg-white text-red-500{% else %}bg-white/10 hover:bg-white/20 border-white/20 text-white{% endif %}"
                         data-type="job" data-id="{{ job.id }}" title="Save to wishlist">
                     <i class="{% if job_key in user_saved_keys %}fa-solid fa-heart text-red-500{% else %}fa-regular fa-heart text-white{% endif %}"></i>
                 </button>
-                {% if user.is_authenticated %}
-                    {% if job_key in user_applied_keys %}
-                        <button class="btn-applied text-xs py-3 px-6 shadow-md" disabled>
-                            <i class="fas fa-check-circle text-emerald-600"></i> Already Applied ✓
-                        </button>
-                    {% else %}
-                        <button onclick="quickApply('job', '{{ job.id }}', '{{ job.title|escapejs }}', '{{ job.organization|escapejs }}', this)"
-                                class="btn-primary btn-magnetic text-xs py-3 px-6 shadow-lg shadow-emerald-950/50 btn-sheen spring-press">
-                            <i class="fas fa-paper-plane"></i> Quick Apply
-                        </button>
-                    {% endif %}
+                {% if user.is_authenticated and job_key in user_applied_keys %}
+                    <button class="btn-applied text-xs py-3 px-6 shadow-md" disabled>
+                        <i class="fas fa-check-circle text-emerald-600"></i> Already Applied ✓
+                    </button>
                 {% else %}
-                    <a href="{% url 'login' %}?next={{ request.path }}" class="btn-primary text-xs py-3 px-6 shadow-lg btn-sheen spring-press">
-                        <i class="fas fa-paper-plane"></i> Login to Quick Apply
-                    </a>
+                    <button onclick="quickApply('job', '{{ job.id }}', '{{ job.title|escapejs }}', '{{ job.organization|escapejs }}', this)"
+                            class="btn-primary btn-magnetic text-xs py-3 px-6 shadow-lg shadow-emerald-950/50 btn-sheen spring-press cursor-pointer">
+                        <i class="fas fa-paper-plane"></i> Quick Apply
+                    </button>
                 {% endif %}
             </div>
         </div>
@@ -93,11 +88,132 @@
             <!-- Experience & Eligibility -->
             <div class="roc-card p-8 bg-white space-y-4 hover-lift-3d card-specular-glare">
                 <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2.5 pb-3 border-b border-slate-100">
-                    <i class="fas fa-user-check text-brand-800 text-sm"></i> Experience & Eligibility
+                    <i class="fas fa-user-check text-brand-800 text-sm"></i> Experience & Candidate Eligibility
                 </h2>
-                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 space-y-2 text-xs text-slate-700 leading-relaxed">
-                    <p><strong>Work Experience Requirement:</strong> {{ job.experience_required }}</p>
-                    <p><strong>Working Mode / Shift:</strong> Standard rural enterprise schedule with localized support.</p>
+                <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100 space-y-3 text-xs text-slate-700 leading-relaxed">
+                    <div class="flex items-start gap-2.5">
+                        <i class="fas fa-briefcase text-cyan-600 mt-0.5"></i>
+                        <div>
+                            <strong class="text-slate-900 font-bold block text-sm">Experience Requirement:</strong>
+                            <span>{{ job.experience_required }}</span>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-2.5">
+                        <i class="fas fa-calendar-day text-cyan-600 mt-0.5"></i>
+                        <div>
+                            <strong class="text-slate-900 font-bold block text-sm">Working Mode & Schedule:</strong>
+                            <span>Full-time day shift with local community coordination and field travel allowance.</span>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-2.5">
+                        <i class="fas fa-language text-cyan-600 mt-0.5"></i>
+                        <div>
+                            <strong class="text-slate-900 font-bold block text-sm">Language Proficiency:</strong>
+                            <span>Proficiency in regional state language (Tamil / Telugu / Hindi / Kannada) with basic functional English.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4-Stage Selection & Onboarding Roadmap -->
+            <div class="roc-card p-8 bg-white space-y-5 hover-lift-3d card-specular-glare">
+                <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2.5 pb-3 border-b border-slate-100">
+                    <i class="fas fa-route text-brand-800 text-sm"></i> Selection & Hiring Roadmap
+                </h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
+                    <div class="p-4 rounded-2xl bg-cyan-50/70 border border-cyan-200/70 space-y-2 relative">
+                        <span class="w-6 h-6 rounded-full bg-cyan-600 text-white font-black text-xs flex items-center justify-center">1</span>
+                        <h4 class="text-xs font-bold text-slate-900">Direct Application</h4>
+                        <p class="text-[11px] text-slate-600 leading-relaxed">Profile screening by employer HR desk within 48 hours.</p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/70 space-y-2 relative">
+                        <span class="w-6 h-6 rounded-full bg-slate-700 text-white font-black text-xs flex items-center justify-center">2</span>
+                        <h4 class="text-xs font-bold text-slate-900">Document Verification</h4>
+                        <p class="text-[11px] text-slate-600 leading-relaxed">Automated check of Aadhaar, marksheets via ROC Locker.</p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/70 space-y-2 relative">
+                        <span class="w-6 h-6 rounded-full bg-slate-700 text-white font-black text-xs flex items-center justify-center">3</span>
+                        <h4 class="text-xs font-bold text-slate-900">Practical Assessment</h4>
+                        <p class="text-[11px] text-slate-600 leading-relaxed">Short telephonic interview or local hub demonstration.</p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200/80 space-y-2 relative">
+                        <span class="w-6 h-6 rounded-full bg-emerald-600 text-white font-black text-xs flex items-center justify-center">4</span>
+                        <h4 class="text-xs font-bold text-emerald-950">Offer & Placement</h4>
+                        <p class="text-[11px] text-emerald-800 leading-relaxed">Official appointment letter issued with immediate start.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Employee Benefits & Social Security -->
+            <div class="roc-card p-8 bg-white space-y-4 hover-lift-3d card-specular-glare">
+                <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2.5 pb-3 border-b border-slate-100">
+                    <i class="fas fa-gift text-brand-800 text-sm"></i> Benefits, Allowances & Social Security
+                </h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2 text-xs">
+                    <div class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100">
+                        <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center text-sm"><i class="fas fa-heart-pulse"></i></div>
+                        <div>
+                            <span class="font-bold text-slate-900 block">ESI Health Coverage</span>
+                            <span class="text-slate-500 text-[11px]">Free medical care for applicant and dependents.</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100">
+                        <div class="w-8 h-8 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center text-sm"><i class="fas fa-piggy-bank"></i></div>
+                        <div>
+                            <span class="font-bold text-slate-900 block">Provident Fund (EPF)</span>
+                            <span class="text-slate-500 text-[11px]">Government mandated monthly retirement savings.</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100">
+                        <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center text-sm"><i class="fas fa-gas-pump"></i></div>
+                        <div>
+                            <span class="font-bold text-slate-900 block">Field Travel Allowance</span>
+                            <span class="text-slate-500 text-[11px]">Reimbursement for regional outreach & logistics.</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100">
+                        <div class="w-8 h-8 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center text-sm"><i class="fas fa-certificate"></i></div>
+                        <div>
+                            <span class="font-bold text-slate-900 block">On-the-Job Skill Upgradation</span>
+                            <span class="text-slate-500 text-[11px]">Free NSDC certified continuous training programs.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Frequently Asked Questions Accordion -->
+            <div class="roc-card p-8 bg-white space-y-4 hover-lift-3d card-specular-glare">
+                <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2.5 pb-3 border-b border-slate-100">
+                    <i class="fas fa-circle-question text-brand-800 text-sm"></i> Frequently Asked Questions
+                </h2>
+                <div class="space-y-3 pt-2 text-xs">
+                    <details class="group bg-slate-50 p-4 rounded-2xl border border-slate-200 cursor-pointer">
+                        <summary class="font-bold text-slate-900 flex items-center justify-between">
+                            <span>Can freshers or 10th/12th pass applicants apply?</span>
+                            <i class="fas fa-chevron-down text-slate-400 group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <p class="pt-2 text-slate-600 leading-relaxed">
+                            Yes! Many positions under Rural Opportunity Connect are tailored for rural youth and vocational learners. Detailed on-site orientation and team mentorship are provided.
+                        </p>
+                    </details>
+                    <details class="group bg-slate-50 p-4 rounded-2xl border border-slate-200 cursor-pointer">
+                        <summary class="font-bold text-slate-900 flex items-center justify-between">
+                            <span>Is there any application fee or registration charge?</span>
+                            <i class="fas fa-chevron-down text-slate-400 group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <p class="pt-2 text-slate-600 leading-relaxed">
+                            No. All applications, interviews, and verified hiring procedures on Rural Opportunity Connect are <strong>100% Free</strong>. Never pay any fee to agents.
+                        </p>
+                    </details>
+                    <details class="group bg-slate-50 p-4 rounded-2xl border border-slate-200 cursor-pointer">
+                        <summary class="font-bold text-slate-900 flex items-center justify-between">
+                            <span>How soon will I receive an update after Quick Apply?</span>
+                            <i class="fas fa-chevron-down text-slate-400 group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <p class="pt-2 text-slate-600 leading-relaxed">
+                            Your application immediately reflects in your <a href="{% url 'applications' %}" class="text-cyan-700 underline font-semibold">Application Tracker</a>. Employers typically review and respond within 2 to 4 business days.
+                        </p>
+                    </details>
                 </div>
             </div>
         </div>
@@ -144,21 +260,15 @@
                         </a>
                     {% endif %}
 
-                    {% if user.is_authenticated %}
-                        {% if job_key in user_applied_keys %}
-                            <button class="btn-applied w-full text-xs py-3 text-center" disabled>
-                                <i class="fas fa-check-circle text-emerald-600"></i> Already Applied ✓
-                            </button>
-                        {% else %}
-                            <button onclick="quickApply('job', '{{ job.id }}', '{{ job.title|escapejs }}', '{{ job.organization|escapejs }}', this)"
-                                    class="btn-primary btn-magnetic w-full text-xs py-3 shadow-md btn-sheen spring-press">
-                                <i class="fas fa-paper-plane"></i> Quick Apply Directly
-                            </button>
-                        {% endif %}
+                    {% if user.is_authenticated and job_key in user_applied_keys %}
+                        <button class="btn-applied w-full text-xs py-3 text-center" disabled>
+                            <i class="fas fa-check-circle text-emerald-600"></i> Already Applied ✓
+                        </button>
                     {% else %}
-                        <a href="{% url 'login' %}?next={{ request.path }}" class="btn-primary w-full text-xs py-3 text-center block btn-sheen spring-press">
-                            Login to Quick Apply
-                        </a>
+                        <button onclick="quickApply('job', '{{ job.id }}', '{{ job.title|escapejs }}', '{{ job.organization|escapejs }}', this)"
+                                class="btn-primary btn-magnetic w-full text-xs py-3 shadow-md btn-sheen spring-press cursor-pointer">
+                            <i class="fas fa-paper-plane"></i> Quick Apply Directly
+                        </button>
                     {% endif %}
 
                     <a href="{% url 'jobs_list' %}" class="btn-outline w-full text-xs py-2.5 text-center block spring-press">

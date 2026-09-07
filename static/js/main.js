@@ -72,95 +72,427 @@ function showToast(message, type = 'success', duration = 4000, actionUrl = null,
     }, duration);
 }
 
-// 3. 1-Click Quick Apply Function
-async function quickApply(type, id, name, org, btn) {
-    // If not authenticated, redirect to login with next parameter
-    const isAuthenticated = document.body.dataset.authenticated === 'true';
-    if (!isAuthenticated) {
-        const nextUrl = encodeURIComponent(window.location.pathname + window.location.search);
-        window.location.href = `/login/?next=${nextUrl}`;
-        return;
+// 3. Global 1-Click Quick Apply Modal System
+var currentApplyBtn = window.currentApplyBtn || null;
+
+function openQuickApplyModal(type, id, name, org, btn) {
+    currentApplyBtn = btn || null;
+
+    const modal = document.getElementById('quickApplyModal');
+    const modalTitle = document.getElementById('qaModalTitle');
+    const modalOrg = document.getElementById('qaModalOrg');
+    const typeBadge = document.getElementById('qaModalTypeBadge');
+    const typeIcon = document.getElementById('qaModalIcon');
+
+    const inputType = document.getElementById('qaInputType');
+    const inputId = document.getElementById('qaInputId');
+    const inputName = document.getElementById('qaInputName');
+    const inputOrg = document.getElementById('qaInputOrg');
+
+    if (inputType) inputType.value = type || 'job';
+    if (inputId) inputId.value = id || '0';
+    if (inputName) inputName.value = name || 'Verified Opportunity';
+    if (inputOrg) inputOrg.value = org || 'Rural Opportunity Connect';
+
+    if (modalTitle) modalTitle.textContent = name || 'Verified Opportunity';
+    if (modalOrg) modalOrg.textContent = org || 'Rural Opportunity Connect';
+
+    // Type styling and icons
+    let badgeText = 'Opportunity';
+    let iconClass = 'fas fa-briefcase';
+    if (type === 'job') {
+        badgeText = '💼 Rural Job';
+        iconClass = 'fas fa-briefcase';
+    } else if (type === 'scholarship') {
+        badgeText = '🎓 Scholarship Grant';
+        iconClass = 'fas fa-graduation-cap';
+    } else if (type === 'scheme') {
+        badgeText = '🏛️ Govt Welfare';
+        iconClass = 'fas fa-building-columns';
+    } else if (type === 'skill') {
+        badgeText = '💻 Skill Program';
+        iconClass = 'fas fa-laptop-code';
+    } else if (type === 'business') {
+        badgeText = '🚀 Business Idea';
+        iconClass = 'fas fa-store';
     }
 
-    if (!btn) return;
-    const originalHtml = btn.innerHTML;
-    btn.disabled = true;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Applying...';
+    if (typeBadge) typeBadge.textContent = badgeText;
+    if (typeIcon) typeIcon.innerHTML = `<i class="${iconClass}"></i>`;
 
-    const token = getCsrfToken();
-    const formData = new FormData();
-    formData.append('opportunity_type', type);
-    formData.append('opportunity_id', id);
-    formData.append('opportunity_name', name || '');
-    formData.append('organization', org || '');
-    formData.append('is_ajax', '1');
-
-    try {
-        const response = await fetch('/applications/apply/', {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-CSRFToken': token,
-                'X-Requested-With': 'XMLHttpRequest',
-                'Accept': 'application/json'
-            }
+    if (modal) {
+        modal.classList.remove('hidden');
+        requestAnimationFrame(() => {
+            modal.classList.remove('opacity-0');
+            const card = document.getElementById('quickApplyModalCard');
+            if (card) card.classList.remove('scale-95');
         });
-
-        if (response.redirected && response.url.includes('/login/')) {
-            const nextUrl = encodeURIComponent(window.location.pathname + window.location.search);
-            window.location.href = `/login/?next=${nextUrl}`;
-            return;
-        }
-
-        const data = await response.json();
-
-        if (data.status === 'success') {
-            // Transform button to Already Applied state
-            btn.className = 'btn-applied text-xs py-2 px-4';
-            btn.innerHTML = '<i class="fas fa-check-circle text-emerald-600"></i> Already Applied ✓';
-            btn.disabled = true;
-
-            showToast(
-                `Application for "${name || 'opportunity'}" submitted successfully! 🎉`,
-                'success',
-                6000,
-                '/applications/',
-                'View Tracker →'
-            );
-        } else if (data.status === 'already_applied') {
-            btn.className = 'btn-applied text-xs py-2 px-4';
-            btn.innerHTML = '<i class="fas fa-check-circle text-emerald-600"></i> Already Applied ✓';
-            btn.disabled = true;
-
-            showToast(
-                `You have already applied for "${name || 'this opportunity'}".`,
-                'info',
-                5000,
-                '/applications/',
-                'Open Tracker →'
-            );
-        } else {
-            btn.disabled = false;
-            btn.innerHTML = originalHtml;
-            showToast(data.message || 'Could not submit application. Please try again.', 'error');
-        }
-    } catch (err) {
-        btn.disabled = false;
-        btn.innerHTML = originalHtml;
-        showToast('Application submission failed. Please check your network and try again.', 'error');
+        document.body.classList.add('overflow-hidden');
     }
 }
 
-// 4. Universal Save / Wishlist Toggle
-async function toggleSaveOpportunity(type, id, btn) {
-    const isAuthenticated = document.body.dataset.authenticated === 'true';
-    if (!isAuthenticated) {
-        const nextUrl = encodeURIComponent(window.location.pathname + window.location.search);
-        window.location.href = `/login/?next=${nextUrl}`;
+function closeQuickApplyModal() {
+    const modal = document.getElementById('quickApplyModal');
+    const card = document.getElementById('quickApplyModalCard');
+    if (modal) {
+        if (card) card.classList.add('scale-95');
+        modal.classList.add('opacity-0');
+        setTimeout(() => {
+            modal.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        }, 200);
+    }
+}
+
+// Alias quickApply to openQuickApplyModal so all templates work seamlessly
+function quickApply(type, id, name, org, btn) {
+    return openQuickApplyModal(type, id, name, org, btn);
+}
+window.quickApply = quickApply;
+window.openQuickApplyModal = openQuickApplyModal;
+window.closeQuickApplyModal = closeQuickApplyModal;
+
+// 3.1 Global Voice Search Assistant
+let recognitionInstance = null;
+
+function triggerVoiceAssistant() {
+    const modal = document.getElementById('voiceModal');
+    const statusText = document.getElementById('voiceStatusText');
+    const transcriptText = document.getElementById('voiceTranscript');
+
+    if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+    }
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+        if (statusText) statusText.textContent = "Voice Search Not Supported";
+        if (transcriptText) transcriptText.textContent = "Your browser does not support Web Speech API. Please type your search query in the input bar.";
         return;
     }
 
+    try {
+        if (recognitionInstance) {
+            recognitionInstance.stop();
+        }
+
+        recognitionInstance = new SpeechRecognition();
+        recognitionInstance.lang = localStorage.getItem('roc_lang') === 'ta' ? 'ta-IN' : (localStorage.getItem('roc_lang') === 'hi' ? 'hi-IN' : 'en-IN');
+        recognitionInstance.interimResults = true;
+        recognitionInstance.maxAlternatives = 1;
+
+        if (statusText) statusText.textContent = "Listening... Speak now";
+        if (transcriptText) transcriptText.textContent = 'Listening for keywords like "Tamil Nadu", "Agriculture", "Scholarships"...';
+
+        recognitionInstance.onresult = (event) => {
+            const transcript = Array.from(event.results)
+                .map(res => res[0].transcript)
+                .join('');
+            if (transcriptText) transcriptText.textContent = `"${transcript}"`;
+
+            if (event.results[0].isFinal) {
+                setTimeout(() => {
+                    closeVoiceAssistant();
+                    const searchInput = document.querySelector('input[name="search"]') || document.getElementById('quickAccessInput');
+                    if (searchInput) {
+                        searchInput.value = transcript;
+                        if (searchInput.form) {
+                            searchInput.form.submit();
+                        } else if (typeof handleQuickAccessSearch === 'function') {
+                            handleQuickAccessSearch();
+                        }
+                    } else {
+                        window.location.href = `/opportunities/?search=${encodeURIComponent(transcript)}`;
+                    }
+                }, 700);
+            }
+        };
+
+        recognitionInstance.onerror = (event) => {
+            if (statusText) statusText.textContent = "Could not recognize audio";
+            if (transcriptText) transcriptText.textContent = event.error === 'not-allowed' ? "Microphone access was denied. Please allow microphone permissions in your browser." : "Please try speaking closer to the microphone.";
+        };
+
+        recognitionInstance.start();
+    } catch (err) {
+        if (statusText) statusText.textContent = "Voice Assistant Error";
+        if (transcriptText) transcriptText.textContent = "Could not activate microphone. Please type your query.";
+    }
+}
+
+function closeVoiceAssistant() {
+    if (recognitionInstance) {
+        try { recognitionInstance.stop(); } catch (e) {}
+    }
+    const modal = document.getElementById('voiceModal');
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+}
+
+window.triggerVoiceAssistant = triggerVoiceAssistant;
+window.closeVoiceAssistant = closeVoiceAssistant;
+
+async function submitQuickApplyModal(event) {
+    if (event) event.preventDefault();
+
+    const submitBtn = document.getElementById('qaSubmitBtn');
+    const type = document.getElementById('qaInputType')?.value || 'job';
+    const id = document.getElementById('qaInputId')?.value || '0';
+    const name = document.getElementById('qaInputName')?.value || 'Opportunity';
+    const org = document.getElementById('qaInputOrg')?.value || '';
+
+    const originalText = submitBtn ? submitBtn.innerHTML : '';
+    if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+    }
+
+    const isAuthenticated = document.body.dataset.authenticated === 'true';
+
+    if (isAuthenticated) {
+        const token = getCsrfToken();
+        const formData = new FormData();
+        formData.append('opportunity_type', type);
+        formData.append('opportunity_id', id);
+        formData.append('opportunity_name', name);
+        formData.append('organization', org);
+        formData.append('is_ajax', '1');
+
+        try {
+            const response = await fetch('/applications/apply/', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': token,
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.redirected && response.url.includes('/login/')) {
+                closeQuickApplyModal();
+                window.location.href = `/login/?next=${encodeURIComponent(window.location.pathname)}`;
+                return;
+            }
+
+            const data = await response.json();
+            closeQuickApplyModal();
+
+            if (data.status === 'success' || data.status === 'already_applied') {
+                if (typeof window.celebrateApplication === 'function' && currentApplyBtn) {
+                    window.celebrateApplication(currentApplyBtn, name);
+                } else if (currentApplyBtn) {
+                    currentApplyBtn.className = 'btn-applied text-xs py-2 px-4';
+                    currentApplyBtn.innerHTML = '<i class="fas fa-check-circle text-emerald-600"></i> Already Applied ✓';
+                    currentApplyBtn.disabled = true;
+                }
+
+                showToast(
+                    `Application for "${name}" submitted successfully! 🎉`,
+                    'success',
+                    6000,
+                    '/applications/',
+                    'View in Tracker →'
+                );
+            } else {
+                showToast(data.message || 'Could not record application. Please try again.', 'error');
+            }
+        } catch (err) {
+            closeQuickApplyModal();
+            showToast('Network error while applying. Please try again.', 'error');
+        } finally {
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }
+        }
+    } else {
+        // Guest Application handling: Save to local tracker storage and confirm immediately
+        const guestName = document.getElementById('qaGuestName')?.value || 'Candidate';
+        const guestPhone = document.getElementById('qaGuestPhone')?.value || '';
+        const guestLocation = document.getElementById('qaGuestLocation')?.value || '';
+
+        try {
+            const guestApps = JSON.parse(localStorage.getItem('roc_guest_apps') || '[]');
+            guestApps.push({
+                type,
+                id,
+                name,
+                org,
+                applied_at: new Date().toISOString(),
+                guestName,
+                guestPhone,
+                guestLocation
+            });
+            localStorage.setItem('roc_guest_apps', JSON.stringify(guestApps));
+        } catch (e) {}
+
+        closeQuickApplyModal();
+
+        if (typeof window.celebrateApplication === 'function' && currentApplyBtn) {
+            window.celebrateApplication(currentApplyBtn, name);
+        } else if (currentApplyBtn) {
+            currentApplyBtn.className = 'btn-applied text-xs py-2 px-4';
+            currentApplyBtn.innerHTML = '<i class="fas fa-check-circle text-emerald-600"></i> Already Applied ✓';
+            currentApplyBtn.disabled = true;
+        }
+
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+        }
+
+        showToast(
+            `Quick Application recorded for ${guestName}! Verification team notified. 🎉`,
+            'success',
+            6000,
+            '/register/',
+            'Create Account to Track →'
+        );
+    }
+}
+
+// Unified Quick Apply trigger
+function quickApply(type, id, name, org, btn) {
+    openQuickApplyModal(type, id, name, org, btn);
+}
+
+// Quick Access Hub Logic
+let quickSearchDebounceTimer = null;
+
+function openQuickAccessModal() {
+    const modal = document.getElementById('quickAccessModal');
+    if (!modal) return;
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    const input = document.getElementById('quickAccessInput');
+    if (input) {
+        input.value = '';
+        setTimeout(() => input.focus(), 50);
+    }
+    const res = document.getElementById('quickSearchResults');
+    if (res) {
+        res.classList.add('hidden');
+        res.innerHTML = '';
+    }
+    document.body.classList.add('overflow-hidden');
+}
+
+function closeQuickAccessModal() {
+    const modal = document.getElementById('quickAccessModal');
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        document.body.classList.remove('overflow-hidden');
+    }
+}
+window.openQuickAccessModal = openQuickAccessModal;
+window.closeQuickAccessModal = closeQuickAccessModal;
+window.handleQuickAccessSearch = handleQuickAccessSearch;
+
+function handleQuickAccessSearch() {
+    const input = document.getElementById('quickAccessInput');
+    const res = document.getElementById('quickSearchResults');
+    if (!input || !res) return;
+
+    const q = input.value.trim();
+    if (!q) {
+        res.classList.add('hidden');
+        res.innerHTML = '';
+        return;
+    }
+
+    clearTimeout(quickSearchDebounceTimer);
+    quickSearchDebounceTimer = setTimeout(async () => {
+        try {
+            res.classList.remove('hidden');
+            res.innerHTML = '<div class="p-3 text-xs text-slate-500 text-center flex items-center justify-center gap-2"><i class="fas fa-spinner fa-spin text-amber-500"></i> Searching opportunities...</div>';
+
+            const resp = await fetch(`/api/quick-search/?q=${encodeURIComponent(q)}`, {
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            });
+            if (!resp.ok) throw new Error('Search failed');
+            const data = await resp.json();
+            const results = data.results || [];
+
+            if (results.length === 0) {
+                res.innerHTML = `<div class="p-4 text-xs text-slate-500 text-center">No matching opportunities found for "<span class="font-bold text-slate-800">${q}</span>". Try another keyword or browse categories below.</div>`;
+            } else {
+                res.innerHTML = results.map(r => `
+                    <div class="p-3 hover:bg-slate-50 flex items-center justify-between gap-3 transition rounded-xl">
+                        <a href="${r.detail_url}" onclick="closeQuickAccessModal()" class="flex-1 min-w-0 group cursor-pointer">
+                            <div class="flex items-center gap-1.5 mb-1">
+                                <span class="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-slate-100 text-slate-700">${r.type}</span>
+                                <span class="text-xs font-bold text-slate-900 group-hover:text-cyan-700 transition truncate block">${r.title}</span>
+                            </div>
+                            <div class="text-[11px] text-slate-500 truncate">${r.org} ${r.meta ? '• ' + r.meta : ''}</div>
+                        </a>
+                        <div class="flex items-center gap-2 shrink-0">
+                            <a href="${r.detail_url}" onclick="closeQuickAccessModal()" class="px-2.5 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-100 text-slate-700 text-[11px] font-bold transition flex items-center gap-1">
+                                <i class="fas fa-eye text-cyan-600"></i> View Details
+                            </a>
+                            <button type="button" onclick="closeQuickAccessModal(); quickApply('${r.applyType}', '${r.id}', '${r.title.replace(/'/g, "\\'")}', '${r.org.replace(/'/g, "\\'")}', this)" class="px-3 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-[11px] font-bold shadow-xs transition flex items-center gap-1 cursor-pointer">
+                                <i class="fas fa-paper-plane"></i> Quick Apply
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        } catch (e) {
+            res.innerHTML = '<div class="p-3 text-xs text-red-500 text-center">Search error. Please try again.</div>';
+        }
+    }, 200);
+}
+
+// Global Keyboard Shortcut: Ctrl+K or Cmd+K to open Quick Access, ESC to close
+document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) {
+        e.preventDefault();
+        const modal = document.getElementById('quickAccessModal');
+        if (modal && !modal.classList.contains('hidden')) {
+            closeQuickAccessModal();
+        } else {
+            openQuickAccessModal();
+        }
+    } else if (e.key === 'Escape') {
+        closeQuickAccessModal();
+        closeQuickApplyModal();
+        if (typeof closeVoiceAssistant === 'function') closeVoiceAssistant();
+    }
+});
+
+// 4. Universal Save / Wishlist Toggle
+async function toggleSaveOpportunity(type, id, btn) {
     const icon = btn.querySelector('i');
+    const isAuthenticated = document.body.dataset.authenticated === 'true';
+    if (!isAuthenticated) {
+        let guestSaved = JSON.parse(localStorage.getItem('roc_guest_saved') || '[]');
+        const key = `${type}_${id}`;
+        if (guestSaved.includes(key)) {
+            guestSaved = guestSaved.filter(k => k !== key);
+            btn.classList.remove('is-saved');
+            if (icon) {
+                icon.classList.remove('fa-solid', 'text-red-500');
+                icon.classList.add('fa-regular', 'text-slate-400');
+            }
+            showToast('Removed from your saved list.', 'info', 3000);
+        } else {
+            guestSaved.push(key);
+            btn.classList.add('is-saved');
+            if (icon) {
+                icon.classList.remove('fa-regular', 'text-slate-400');
+                icon.classList.add('fa-solid', 'text-red-500');
+            }
+            showToast('Saved to your Wishlist! (Sign up anytime to sync)', 'success', 4000, '/register/', 'Create Account →');
+        }
+        localStorage.setItem('roc_guest_saved', JSON.stringify(guestSaved));
+        return;
+    }
+
     const token = getCsrfToken();
 
     try {
@@ -203,40 +535,212 @@ async function toggleSaveOpportunity(type, id, btn) {
         showToast('Please sign in to save opportunities.', 'info');
     }
 }
+window.toggleSaveOpportunity = toggleSaveOpportunity;
 
-// 5. Global Multi-Language Translation System
-function googleTranslateElementInit() {
-    if (window.google && window.google.translate) {
-        new google.translate.TranslateElement({
-            pageLanguage: 'en',
-            includedLanguages: 'en,ta,hi,te,kn,ml',
-            autoDisplay: false
-        }, 'google_translate_element');
+// 5. Global Multi-Language Translation System & Instant Regional Dictionary
+const ROC_TRANSLATIONS = {
+    'en': {
+        'nav_home': 'Home',
+        'nav_jobs': 'Jobs',
+        'nav_scholarships': 'Scholarships',
+        'nav_schemes': 'Government Schemes',
+        'nav_skills': 'Skills',
+        'nav_business': 'Business',
+        'nav_partners': 'Partner Feeds',
+        'nav_about': 'About',
+        'btn_quick_apply': 'Quick Apply',
+        'btn_view_details': 'View Details',
+        'btn_details': 'Details',
+        'btn_applied': 'Already Applied ✓',
+        'btn_enroll': 'Enroll / Apply',
+        'btn_track': 'Track Idea',
+        'sdg_tag': 'Empowering Rural India with Verified Career & Livelihood Gateways',
+        'search_btn': 'Search',
+        'voice_search': 'Voice Search'
+    },
+    'ta': {
+        'nav_home': 'முகப்பு',
+        'nav_jobs': 'வேலைவாய்ப்புகள்',
+        'nav_scholarships': 'கல்வி உதவித்தொகை',
+        'nav_schemes': 'அரசு நலத்திட்டங்கள்',
+        'nav_skills': 'திறன் பயிற்சி',
+        'nav_business': 'தொழில் வாய்ப்புகள்',
+        'nav_partners': 'கூட்டாளர் இணைப்புகள்',
+        'nav_about': 'எங்களை பற்றி',
+        'btn_quick_apply': 'உடனடி விண்ணப்பம்',
+        'btn_view_details': 'முழு விவரங்கள்',
+        'btn_details': 'விவரங்கள்',
+        'btn_applied': 'விண்ணப்பிக்கப்பட்டது ✓',
+        'btn_enroll': 'விண்ணப்பிக்க / சேர்க',
+        'btn_track': 'திட்டத்தை தொடர்க',
+        'sdg_tag': 'கிராமப்புற இந்தியாவிற்கான சரிபார்க்கப்பட்ட வேலைவாய்ப்பு தளம்',
+        'search_btn': 'தேடுக',
+        'voice_search': 'குரல் தேடல்'
+    },
+    'hi': {
+        'nav_home': 'होम',
+        'nav_jobs': 'नौकरियां',
+        'nav_scholarships': 'छात्रवृत्तियां',
+        'nav_schemes': 'सरकारी योजनाएं',
+        'nav_skills': 'कौशल विकास',
+        'nav_business': 'व्यापार विचार',
+        'nav_partners': 'पार्टनर फीड्स',
+        'nav_about': 'हमारे बारे में',
+        'btn_quick_apply': 'त्वरित आवेदन',
+        'btn_view_details': 'विवरण देखें',
+        'btn_details': 'विवरण',
+        'btn_applied': 'पहले से लागू ✓',
+        'btn_enroll': 'नामांकन / आवेदन करें',
+        'btn_track': 'विचार ट्रैक करें',
+        'sdg_tag': 'सत्यापित करियर और आजीविका के अवसरों से ग्रामीण भारत को सशक्त बनाना',
+        'search_btn': 'खोजें',
+        'voice_search': 'आवाज़ से खोजें'
+    },
+    'te': {
+        'nav_home': 'హోమ్',
+        'nav_jobs': 'ఉద్యోగాలు',
+        'nav_scholarships': 'స్కాలర్‌షిప్‌లు',
+        'nav_schemes': 'ప్రభుత్వ పథకాలు',
+        'nav_skills': 'నైపుణ్యాభివృద్ధి',
+        'nav_business': 'వ్యాపార ఆలోచనలు',
+        'nav_partners': 'పార్టనర్ ఫీడ్స్',
+        'nav_about': 'మా గురించి',
+        'btn_quick_apply': 'త్వరిత దరఖాస్తు',
+        'btn_view_details': 'వివరాలు చూడండి',
+        'btn_details': 'వివరాలు',
+        'btn_applied': 'దరఖాస్తు చేశారు ✓',
+        'btn_enroll': 'దరఖాస్తు చేయండి',
+        'btn_track': 'ట్రాక్ చేయండి',
+        'sdg_tag': 'ధృవీకరించబడిన కెరీర్ గేట్‌వేలతో గ్రామీణ భారతదేశాన్ని శక్తివంతం చేయడం',
+        'search_btn': 'వెతకండి',
+        'voice_search': 'వాయిస్ శోధన'
+    },
+    'kn': {
+        'nav_home': 'ಮುಖಪುಟ',
+        'nav_jobs': 'ಉದ್ಯೋಗಗಳು',
+        'nav_scholarships': 'ವಿದ್ಯಾರ್ಥಿವೇತನಗಳು',
+        'nav_schemes': 'ಸರ್ಕಾರಿ ಯೋಜನೆಗಳು',
+        'nav_skills': 'ಕೌಶಲ್ಯ ತರಬೇತಿ',
+        'nav_business': 'ವ್ಯವಹಾರ ಯೋಜನೆಗಳು',
+        'nav_partners': 'ಪಾಲುದಾರ ಫೀಡ್ಸ್',
+        'nav_about': 'ನಮ್ಮ ಬಗ್ಗೆ',
+        'btn_quick_apply': 'ತ್ವರಿತ ಅರ್ಜಿ',
+        'btn_view_details': 'ವಿವರ ನೋಡಿ',
+        'btn_details': 'ವಿವರಗಳು',
+        'btn_applied': 'ಅರ್ಜಿ ಸಲ್ಲಿಸಲಾಗಿದೆ ✓',
+        'btn_enroll': 'ಅರ್ಜಿ ಸಲ್ಲಿಸಿ',
+        'btn_track': 'ಟ್ರ್ಯಾಕ್ ಮಾಡಿ',
+        'sdg_tag': 'ಗ್ರಾಮೀಣ ಭಾರತದ ಉದ್ಯೋಗ ಮತ್ತು ಜೀವನೋಪಾಯ ವೇದಿಕೆ',
+        'search_btn': 'ಹುಡುಕಿ',
+        'voice_search': 'ಧ್ವನಿ ಹುಡುಕಾಟ'
+    },
+    'ml': {
+        'nav_home': 'ഹോം',
+        'nav_jobs': 'തൊഴിലവസരങ്ങൾ',
+        'nav_scholarships': 'സ്കോളർഷിപ്പുകൾ',
+        'nav_schemes': 'സർക്കാർ പദ്ധതികൾ',
+        'nav_skills': 'നൈപുണ്യ വികസനം',
+        'nav_business': 'സംരംഭക അവസരങ്ങൾ',
+        'nav_partners': 'പാർട്ണർ ഫീഡുകൾ',
+        'nav_about': 'ഞങ്ങളെക്കുറിച്ച്',
+        'btn_quick_apply': 'വേഗത്തിൽ അപേക്ഷിക്കുക',
+        'btn_view_details': 'വിശദാംശങ്ങൾ കാണുക',
+        'btn_details': 'വിശദാംശങ്ങൾ',
+        'btn_applied': 'അപേക്ഷിച്ചു ✓',
+        'btn_enroll': 'അപേക്ഷിക്കുക',
+        'btn_track': 'ട്രാക്ക് ചെയ്യുക',
+        'sdg_tag': 'ഗ്രാമീണ ഭാരത ശാക്തീകരണ ഉപജീവന പോർട്ടൽ',
+        'search_btn': 'തിരയുക',
+        'voice_search': 'വോയ്‌സ് സെർച്ച്'
+    }
+};
+
+function applyInstantTranslation(langCode) {
+    const dict = ROC_TRANSLATIONS[langCode] || ROC_TRANSLATIONS['en'];
+
+    // 1. Desktop and Mobile Nav Links
+    const navMapping = [
+        { selector: 'a[href*="jobs"]', key: 'nav_jobs' },
+        { selector: 'a[href*="scholarships"]', key: 'nav_scholarships' },
+        { selector: 'a[href*="schemes"]', key: 'nav_schemes' },
+        { selector: 'a[href*="skills"]', key: 'nav_skills' },
+        { selector: 'a[href*="business"]', key: 'nav_business' },
+        { selector: 'a[href*="about"]', key: 'nav_about' }
+    ];
+
+    navMapping.forEach(({ selector, key }) => {
+        document.querySelectorAll(`nav ${selector}, #mobileMenu ${selector}`).forEach(el => {
+            if (el && dict[key] && !el.querySelector('i')) {
+                el.textContent = dict[key];
+            } else if (el && dict[key] && el.querySelector('i')) {
+                const icon = el.querySelector('i').outerHTML;
+                el.innerHTML = `${icon} ${dict[key]}`;
+            }
+        });
+    });
+
+    // 2. Buttons: Quick Apply, View Details, Details
+    document.querySelectorAll('button, a').forEach(btn => {
+        const text = btn.textContent.trim();
+        if (text.includes('Quick Apply') || text.includes('உடனடி விண்ணப்பம்') || text.includes('त्वरित आवेदन')) {
+            const icon = btn.querySelector('i');
+            const iconHtml = icon ? icon.outerHTML : '<i class="fas fa-paper-plane"></i>';
+            btn.innerHTML = `${iconHtml} ${dict['btn_quick_apply']}`;
+        } else if (text === 'View Details' || text === 'முழு விவரங்கள்' || text === 'विवरण देखें') {
+            btn.textContent = dict['btn_view_details'];
+        } else if (text === 'Details' || text === 'ವಿವರಗಳು' || text === 'వివరాలు' || text === 'വിശദാംശങ്ങൾ') {
+            btn.textContent = dict['btn_details'];
+        }
+    });
+
+    // 3. SDG Banner Tag
+    const sdgSpan = document.querySelector('header .max-w-7xl span.hidden.sm\\:inline');
+    if (sdgSpan && dict['sdg_tag']) {
+        sdgSpan.textContent = dict['sdg_tag'];
     }
 }
 
 function changeGlobalLanguage(langCode) {
-    // 1. Set cookie for Google Translate (googtrans=/en/ta etc.)
+    if (!langCode) return;
+
+    // 1. Set cookie for Google Translate across all domains and paths
     const cookieVal = `/en/${langCode}`;
     document.cookie = `googtrans=${cookieVal}; path=/;`;
-    document.cookie = `googtrans=${cookieVal}; domain=${window.location.hostname}; path=/;`;
+    if (window.location.hostname !== 'localhost' && !window.location.hostname.includes('127.0.0.1')) {
+        document.cookie = `googtrans=${cookieVal}; domain=.${window.location.hostname}; path=/;`;
+        document.cookie = `googtrans=${cookieVal}; domain=${window.location.hostname}; path=/;`;
+    }
     localStorage.setItem('roc_lang', langCode);
 
-    // 2. Update select dropdowns across navbar and mobile menu
+    // 2. Update select dropdowns across top utility bar and mobile menu
     document.querySelectorAll('.roc-lang-selector').forEach(sel => {
         sel.value = langCode;
     });
 
-    // 3. Trigger Google Translate internal select if loaded
-    const googleSelect = document.querySelector('.goog-te-combo');
-    if (googleSelect) {
-        googleSelect.value = langCode;
-        googleSelect.dispatchEvent(new Event('change'));
-    } else {
-        // If Google widget hasn't finished initial rendering yet, reload to let cookie take effect
-        window.location.reload();
+    // 3. Instant client-side UI translation (Zero-wait UI update!)
+    applyInstantTranslation(langCode);
+
+    // 4. Trigger Google Translate internal select if ready
+    try {
+        const googleSelect = document.querySelector('.goog-te-combo');
+        if (googleSelect) {
+            googleSelect.value = langCode;
+            googleSelect.dispatchEvent(new Event('change'));
+        }
+    } catch (e) {
+        console.warn('Google Translate combo hook:', e);
     }
 }
+
+// Auto-restore saved language on DOM load
+document.addEventListener('DOMContentLoaded', () => {
+    const savedLang = localStorage.getItem('roc_lang');
+    if (savedLang && savedLang !== 'en') {
+        setTimeout(() => {
+            changeGlobalLanguage(savedLang);
+        }, 150);
+    }
+});
 
 // 6. Mobile Slideout Menu Toggle
 function toggleMobileMenu() {
@@ -585,17 +1089,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 3. Attach save wishlist listeners
-    document.querySelectorAll('.save-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
+    // 3. Attach robust save wishlist event delegation
+    document.addEventListener('click', function(e) {
+        const btn = e.target.closest('.save-btn');
+        if (btn) {
             e.preventDefault();
             e.stopPropagation();
-            const type = this.dataset.type;
-            const id = this.dataset.id;
+            const type = btn.dataset.type;
+            const id = btn.dataset.id;
             if (type && id) {
-                toggleSaveOpportunity(type, id, this);
+                toggleSaveOpportunity(type, id, btn);
             }
-        });
+        }
     });
 
     // 4. Initialize 3D Card Tilt Engine
@@ -603,4 +1108,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 5. Initialize 3D WebGL Hero Globe if container is present
     init3DHeroGlobe();
+
+    // 6. Restore guest saved bookmarks if not logged in
+    if (document.body.dataset.authenticated !== 'true') {
+        try {
+            const guestSaved = JSON.parse(localStorage.getItem('roc_guest_saved') || '[]');
+            document.querySelectorAll('.save-btn').forEach(btn => {
+                const key = `${btn.dataset.type}_${btn.dataset.id}`;
+                if (guestSaved.includes(key)) {
+                    btn.classList.add('is-saved');
+                    const icon = btn.querySelector('i');
+                    if (icon) {
+                        icon.classList.remove('fa-regular', 'text-slate-400');
+                        icon.classList.add('fa-solid', 'text-red-500');
+                    }
+                }
+            });
+        } catch (e) {}
+    }
 });

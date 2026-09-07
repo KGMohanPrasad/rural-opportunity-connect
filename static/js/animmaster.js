@@ -41,6 +41,7 @@
     const PageTransitions = {
         bar: null,
         loaderOverlay: null,
+        pageOverlay: null,
 
         init() {
             this.bar = document.getElementById('pageTransitionBar');
@@ -51,6 +52,7 @@
             }
 
             this.loaderOverlay = document.getElementById('pageLoadingOverlay');
+            this.pageOverlay = document.getElementById('pageTransitionOverlay');
             this.finish();
 
             document.addEventListener('click', (e) => {
@@ -80,23 +82,32 @@
         },
 
         start() {
-            if (!this.bar || prefersReducedMotion) return;
-            this.bar.classList.add('active');
-            this.bar.style.width = '45%';
-            setTimeout(() => {
-                if (this.bar) this.bar.style.width = '85%';
-            }, 120);
+            if (prefersReducedMotion) return;
+            if (this.pageOverlay) {
+                this.pageOverlay.classList.add('active');
+            }
+            if (this.bar) {
+                this.bar.classList.add('active');
+                this.bar.style.width = '45%';
+                setTimeout(() => {
+                    if (this.bar) this.bar.style.width = '85%';
+                }, 120);
+            }
         },
 
         finish() {
-            if (!this.bar) return;
-            this.bar.style.width = '100%';
-            setTimeout(() => {
-                if (this.bar) {
-                    this.bar.classList.remove('active');
-                    this.bar.style.width = '0%';
-                }
-            }, 280);
+            if (this.pageOverlay) {
+                this.pageOverlay.classList.remove('active');
+            }
+            if (this.bar) {
+                this.bar.style.width = '100%';
+                setTimeout(() => {
+                    if (this.bar) {
+                        this.bar.classList.remove('active');
+                        this.bar.style.width = '0%';
+                    }
+                }, 280);
+            }
 
             if (this.loaderOverlay) {
                 this.loaderOverlay.classList.remove('active');
@@ -180,20 +191,53 @@
                 return;
             }
 
+            const reveal = (el, extraDelay = 0) => {
+                if (el.classList.contains('anim-in')) return;
+                const delay = parseFloat(el.dataset.animDelay || 0) * 1000 + extraDelay;
+                if (delay > 0) {
+                    setTimeout(() => el.classList.add('anim-in'), delay);
+                } else {
+                    el.classList.add('anim-in');
+                }
+            };
+
+            // Positive rootMargin so elements animate smoothly before user reaches them
             const observer = new IntersectionObserver((entries, obs) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        entry.target.classList.add('anim-in');
+                        reveal(entry.target);
                         obs.unobserve(entry.target);
                     }
                 });
             }, {
                 threshold: 0.05,
-                rootMargin: '0px 0px -20px 0px'
+                rootMargin: '0px 0px 100px 0px'
             });
 
             elements.forEach(el => observer.observe(el));
+
+            // Instant above-fold reveal without waiting for 2s external assets
+            const revealAboveFold = () => {
+                let aboveFoldIndex = 0;
+                elements.forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    if (rect.top < (window.innerHeight * 1.15) && rect.bottom > 0) {
+                        reveal(el, aboveFoldIndex * 60);
+                        aboveFoldIndex++;
+                    }
+                });
+            };
+
+            // Run immediately
+            requestAnimationFrame(revealAboveFold);
+            if (document.readyState === 'complete') {
+                setTimeout(revealAboveFold, 100);
+            } else {
+                window.addEventListener('load', revealAboveFold, { once: true });
+                setTimeout(revealAboveFold, 400);
+            }
         },
+
 
         initBackToTop() {
             if (!this.backToTopBtn) return;
@@ -263,15 +307,21 @@
         },
 
         initSpotlight() {
+            let hasMoved = false;
             window.addEventListener('mousemove', (e) => {
                 this.targetX = e.clientX;
                 this.targetY = e.clientY;
+                if (!hasMoved) {
+                    hasMoved = true;
+                    if (this.spotlight) this.spotlight.style.opacity = '1';
+                }
             }, { passive: true });
 
             const updateSpotlight = () => {
-                this.currentX += (this.targetX - this.currentX) * 0.16;
-                this.currentY += (this.targetY - this.currentY) * 0.16;
+                this.currentX += (this.targetX - this.currentX) * 0.12;
+                this.currentY += (this.targetY - this.currentY) * 0.12;
                 if (this.spotlight) {
+                    // Use translate so the radial gradient is centered on cursor
                     this.spotlight.style.left = `${this.currentX}px`;
                     this.spotlight.style.top = `${this.currentY}px`;
                 }
@@ -281,8 +331,15 @@
         },
 
         init3DTilt() {
-            const tiltCards = document.querySelectorAll('.tilt-card-3d, .roc-card, .kpi-card-glow, .hover-lift-3d');
-            tiltCards.forEach(card => {
+            // Use a Set to avoid duplicate listeners on elements with multiple matching classes
+            const tiltCardSet = new Set();
+            document.querySelectorAll('.tilt-card-3d, .kpi-card-glow').forEach(el => tiltCardSet.add(el));
+            // Also add .hover-lift-3d that aren't already .tilt-card-3d
+            document.querySelectorAll('.hover-lift-3d').forEach(el => {
+                if (!el.classList.contains('tilt-card-3d')) tiltCardSet.add(el);
+            });
+
+            tiltCardSet.forEach(card => {
                 card.addEventListener('mousemove', (e) => {
                     const rect = card.getBoundingClientRect();
                     const x = e.clientX - rect.left;
@@ -290,18 +347,29 @@
                     const centerX = rect.width / 2;
                     const centerY = rect.height / 2;
 
-                    // Noticeable 3D pitch and roll
-                    const rotateX = ((y - centerY) / centerY) * -9;
-                    const rotateY = ((x - centerX) / centerX) * 9;
+                    // Visible but elegant 3D tilt — 7deg for professional feel
+                    const rotateX = ((y - centerY) / centerY) * -7;
+                    const rotateY = ((x - centerX) / centerX) * 7;
 
-                    card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-8px) translateZ(12px)`;
+                    card.style.transition = 'transform 0.12s cubic-bezier(0.16, 1, 0.3, 1)';
+                    card.style.transform = `perspective(900px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-6px) translateZ(8px)`;
+
+                    // Update glare position for tilt-glare element
+                    card.style.setProperty('--mouse-x', `${x}px`);
+                    card.style.setProperty('--mouse-y', `${y}px`);
+                    const glare = card.querySelector('.tilt-glare');
+                    if (glare) glare.style.opacity = '1';
                 });
 
                 card.addEventListener('mouseleave', () => {
+                    card.style.transition = 'transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)';
                     card.style.transform = '';
+                    const glare = card.querySelector('.tilt-glare');
+                    if (glare) glare.style.opacity = '0';
                 });
             });
         },
+
 
         initSpecularGlare() {
             const glareCards = document.querySelectorAll('.card-specular-glare, .tilt-card-3d, .roc-card');
@@ -420,41 +488,30 @@
     };
 
     /* ==========================================================================
-       8. QUICK APPLY WORKFLOW
+       8. QUICK APPLY WORKFLOW CELEBRATION HELPER
        ========================================================================== */
     const QuickApplyFlow = {
         init() {
-            // Intercept global quickApply if defined in main.js
-            const originalQuickApply = window.quickApply;
-            window.quickApply = function (type, id, title, org, btn) {
+            // Provide global celebrateApplication hook for main.js Quick Apply Modal
+            window.celebrateApplication = function (btn, title) {
                 if (btn) {
+                    btn.innerHTML = `<i class="fas fa-check-circle mr-1.5 text-emerald-500"></i> Already Applied ✓`;
+                    btn.classList.remove('btn-primary');
+                    btn.classList.add('btn-applied');
                     btn.disabled = true;
-                    btn.innerHTML = `<span class="apply-loading-spinner"></span> Submitting...`;
-                }
-
-                if (typeof originalQuickApply === 'function') {
-                    originalQuickApply(type, id, title, org, btn);
-                }
-
-                setTimeout(() => {
-                    if (btn) {
-                        btn.innerHTML = `<i class="fas fa-check-circle mr-1.5"></i> Applied ✓`;
-                        btn.classList.remove('btn-primary');
-                        btn.classList.add('btn-applied-success');
+                    try {
                         const rect = btn.getBoundingClientRect();
-                        ParticleSystem.burst(rect.left + rect.width / 2, rect.top + rect.height / 2, 18);
-                    }
-                    Toast.show(`Application for "${title || 'Opportunity'}" submitted successfully!`, 'fa-paper-plane', '#00f2fe');
-
-                    // Update tracker count
-                    const badge = document.querySelector('.tracker-badge, #applicationCountBadge');
-                    if (badge) {
-                        const count = parseInt(badge.innerText.trim(), 10) || 0;
-                        badge.innerText = count + 1;
-                        badge.classList.add('animate-bounce');
-                        setTimeout(() => badge.classList.remove('animate-bounce'), 1200);
-                    }
-                }, 550);
+                        ParticleSystem.burst(rect.left + rect.width / 2, rect.top + rect.height / 2, 24);
+                    } catch (e) {}
+                }
+                // Update tracker badge count
+                const badge = document.querySelector('.tracker-badge, #applicationCountBadge');
+                if (badge) {
+                    const count = parseInt(badge.innerText.trim(), 10) || 0;
+                    badge.innerText = count + 1;
+                    badge.classList.add('animate-bounce');
+                    setTimeout(() => badge.classList.remove('animate-bounce'), 1200);
+                }
             };
         }
     };
@@ -603,14 +660,22 @@
             const rings = document.querySelectorAll('.circle-progress-bar');
             rings.forEach(ring => {
                 const percent = parseFloat(ring.dataset.percent || 0);
-                const radius = ring.r.baseVal.value;
-                const circumference = 2 * Math.PI * radius;
+                let circumference = 100;
+                if (ring.r && ring.r.baseVal) {
+                    circumference = 2 * Math.PI * ring.r.baseVal.value;
+                } else if (typeof ring.getTotalLength === 'function') {
+                    try {
+                        circumference = ring.getTotalLength();
+                    } catch (err) {
+                        circumference = 100;
+                    }
+                }
                 ring.style.strokeDasharray = `${circumference} ${circumference}`;
-                ring.style.strokeDashoffset = circumference;
+                ring.style.strokeDashoffset = `${circumference}`;
 
                 setTimeout(() => {
                     const offset = circumference - (percent / 100) * circumference;
-                    ring.style.strokeDashoffset = offset;
+                    ring.style.strokeDashoffset = `${offset}`;
                 }, 200);
             });
         }
@@ -621,7 +686,23 @@
        ========================================================================== */
     const NavIndicator = {
         init() {
-            const nav = document.querySelector('nav .hidden.lg\\:flex');
+            // Find the desktop nav links container — Tailwind's 'lg:flex' class
+            // contains a colon that needs careful querySelector handling.
+            // We use a more robust selector targeting the nav's direct child div.
+            let nav = null;
+            try {
+                // Try the escaped Tailwind class selector first
+                nav = document.querySelector('nav .hidden.lg\\:flex');
+            } catch (e) {}
+            if (!nav) {
+                // Fallback: find the div inside nav that contains .nav-link elements
+                const navEl = document.querySelector('nav');
+                if (navEl) {
+                    nav = navEl.querySelector('div.hidden') ||
+                          navEl.querySelector('[class*="lg:flex"]') ||
+                          navEl.querySelector('div:has(a.nav-link)');
+                }
+            }
             if (!nav) return;
 
             let pill = nav.querySelector('.nav-sliding-pill');
@@ -675,7 +756,7 @@
     /* ==========================================================================
        13. INITIALIZE ALL ENGINES ON DOM READY
        ========================================================================== */
-    document.addEventListener('DOMContentLoaded', () => {
+    const initAllEngines = () => {
         Toast.init();
         PageTransitions.init();
         ScrollAnimations.init();
@@ -688,7 +769,13 @@
         SvgAnimations.init();
         NavIndicator.init();
         TranslatorCrossfade.init();
-    });
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initAllEngines);
+    } else {
+        initAllEngines();
+    }
 
     window.Animmaster = {
         Toast,

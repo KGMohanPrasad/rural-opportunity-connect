@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.db.models import Q
 from .models import SkillProgram
 
@@ -35,6 +35,6 @@ def skill_list(request):
 
 def skill_detail(request, skill_id):
     """View skill details"""
-    skill = SkillProgram.objects.get(id=skill_id)
+    skill = get_object_or_404(SkillProgram, id=skill_id)
     context = {'skill': skill}
     return render(request, 'skill_detail.html', context)

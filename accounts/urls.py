@@ -16,4 +16,13 @@ urlpatterns = [
     path('about/', views.about_page, name='about'),
     path('partners/', views.partners_view, name='partners'),
     path('api/sync-partners/', views.sync_partners_api, name='sync_partners_api'),
+    path('api/quick-search/', views.quick_search_api, name='quick_search_api'),
+    # Direct & Convenience URL Aliases
+    path('tracker/', views.application_tracker, name='tracker'),
+    path('application-tracker/', views.application_tracker, name='application_tracker_alias'),
+    path('checklist/', views.document_checklist, name='checklist'),
+    path('document-checklist/', views.document_checklist, name='document_checklist_alias'),
+    path('saved/', views.saved_opportunities, name='saved_alias'),
+    path('wishlist/', views.saved_opportunities, name='wishlist_alias'),
+    path('profile/setup/', views.profile_setup, name='profile_setup_alias'),
 ]

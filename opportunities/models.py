@@ -29,6 +29,12 @@ class Job(models.Model):
     class Meta:
         ordering = ['-created_at']
 
+    @property
+    def skills_list(self):
+        if not self.required_skills:
+            return []
+        return [s.strip() for s in self.required_skills.split(',') if s.strip()]
+
     def __str__(self):
         return f"{self.title} - {self.organization}"
 

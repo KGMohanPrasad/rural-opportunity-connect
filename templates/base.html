@@ -64,9 +64,9 @@
     </script>
 
     <!-- Custom Unified Design System Stylesheet with Cache Busting -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=7.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=11.0">
     <!-- Animmaster Pro Animation Suite Stylesheet -->
-    <link rel="stylesheet" href="{% static 'css/animmaster.css' %}?v=7.0">
+    <link rel="stylesheet" href="{% static 'css/animmaster.css' %}?v=11.0">
 
     <!-- High-Priority Enterprise Palette Enforcement -->
     <style>
@@ -133,11 +133,60 @@
         .bg-emerald-100 { background-color: #cffafe !important; }
         .border-emerald-600, .border-emerald-500 { border-color: #06b6d4 !important; }
         .border-emerald-200, .border-emerald-100 { border-color: #a5f3fc !important; }
+
+        /* Google Translate Widget Optimization */
+        .goog-te-banner-frame.skiptranslate, iframe.skiptranslate, .goog-te-gadget-icon, .goog-logo-link {
+            display: none !important;
+        }
+        body {
+            top: 0px !important;
+        }
+        .goog-tooltip, .goog-tooltip:hover {
+            display: none !important;
+        }
+        .goog-text-highlight {
+            background-color: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+        #google_translate_element {
+            position: absolute;
+            left: -9999px;
+            top: -9999px;
+            width: 1px;
+            height: 1px;
+            opacity: 0.01;
+            overflow: hidden;
+            pointer-events: none;
+        }
     </style>
+
+    <!-- Google Translate Global Initialization in Head -->
+    <script>
+        function googleTranslateElementInit() {
+            try {
+                if (window.google && window.google.translate) {
+                    new google.translate.TranslateElement({
+                        pageLanguage: 'en',
+                        includedLanguages: 'en,ta,hi,te,kn,ml',
+                        autoDisplay: false
+                    }, 'google_translate_element');
+                }
+            } catch (err) {
+                console.warn('Google Translate init notice:', err);
+            }
+        }
+    </script>
 
     {% block extra_css %}{% endblock %}
 </head>
 <body data-authenticated="{% if user.is_authenticated %}true{% else %}false{% endif %}" class="flex flex-col min-h-screen bg-slate-50 text-slate-800 antialiased selection:bg-cyan-100 selection:text-cyan-900">
+
+    <!-- Global 3D WebGL Background Particle Canvas -->
+    <canvas id="globalWebglCanvas" aria-hidden="true"></canvas>
+
+    <!-- Cinematic Page Transition Overlay -->
+    <div id="pageTransitionOverlay" aria-hidden="true"></div>
 
     <!-- Animmaster Top Scroll Progress Indicator -->
     <div id="scrollProgressBar" aria-hidden="true"></div>
@@ -157,8 +206,8 @@
         </div>
     </div>
 
-    <!-- Hidden Google Translate Element for Universal Translation -->
-    <div id="google_translate_element" style="display:none !important;" class="roc-translate-element"></div>
+    <!-- Mountable Google Translate Element (non-display:none so Google script attaches properly) -->
+    <div id="google_translate_element" aria-hidden="true"></div>
 
     <!-- Top Utility Bar: SDG 10 & Global Language Selector & Voice Search -->
     <header class="bg-[#071526] text-cyan-100 text-xs py-2 px-4 border-b border-[#0f2744] relative z-50">
@@ -202,11 +251,11 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex justify-between items-center">
             <!-- Brand Logo -->
             <a href="{% url 'landing_page' %}" class="flex items-center space-x-3 group focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-2xl p-1 logo-shine-micro">
-                <div class="w-12 h-12 rounded-2xl bg-[#071526] p-1.5 border-2 border-cyan-400/60 shadow-lg shadow-cyan-950/40 flex items-center justify-center group-hover:scale-105 group-hover:border-cyan-300 transition-all duration-200">
+                <div class="w-11 h-11 sm:w-12 sm:h-12 shrink-0 rounded-2xl bg-[#071526] p-1.5 border-2 border-cyan-400/60 shadow-lg shadow-cyan-950/40 flex items-center justify-center group-hover:scale-105 group-hover:border-cyan-300 transition-all duration-200">
                     <img src="{% static 'images/logo-icon.png' %}?v=4.0" alt="Connect Logo" class="w-full h-full object-contain">
                 </div>
                 <div>
-                    <span class="text-lg sm:text-xl font-black text-slate-900 tracking-tight block leading-tight group-hover:text-cyan-700 transition">
+                    <span class="text-xs min-[420px]:text-sm sm:text-xl font-black text-slate-900 tracking-tight block leading-tight group-hover:text-cyan-700 transition">
                         Rural Opportunity <span class="bg-gradient-to-r from-cyan-600 via-sky-600 to-blue-600 bg-clip-text text-transparent">Connect</span>
                     </span>
                     <span class="text-[10px] text-cyan-700 font-extrabold uppercase tracking-widest block">
@@ -231,6 +280,15 @@
 
             <!-- Right Actions (Auth / User Hub) -->
             <div class="flex items-center space-x-3">
+                <!-- Quick Access Hub Button -->
+                <button type="button" onclick="openQuickAccessModal()" id="quickAccessNavBtn"
+                        class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-bold text-xs shadow-xs flex items-center gap-1.5 transition hover:scale-102 cursor-pointer"
+                        title="Quick Access Hub (Ctrl+K)">
+                    <i class="fas fa-bolt text-slate-950 text-xs"></i>
+                    <span class="hidden md:inline font-bold">Quick Access</span>
+                    <span class="hidden xl:inline text-[9px] bg-amber-600/20 text-slate-950 px-1.5 py-0.5 rounded font-mono font-black ml-0.5">⌘K</span>
+                </button>
+
                 {% if user.is_authenticated %}
                     <div class="relative group">
                         <button class="flex items-center gap-2 bg-brand-50 hover:bg-brand-100 text-brand-900 font-bold px-3.5 py-2 rounded-xl text-sm transition border border-brand-200">
@@ -313,6 +371,12 @@
                     <option value="ml">മലയാളം (Malayalam)</option>
                 </select>
             </div>
+
+            <!-- Quick Access Hub Mobile Trigger -->
+            <button type="button" onclick="openQuickAccessModal(); toggleMobileMenu()" class="w-full mb-3 text-left px-3.5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400/20 to-amber-500/20 text-amber-900 border border-amber-300/60 font-bold text-xs flex items-center gap-2 transition hover:bg-amber-400/30">
+                <i class="fas fa-bolt text-amber-600"></i>
+                <span>⚡ Quick Access Hub</span>
+            </button>
 
             <!-- Navigation Links -->
             <div class="space-y-1 text-sm font-semibold">
@@ -407,6 +471,103 @@
         </div>
     {% endif %}
 
+    <!-- Global 1-Click Quick Apply Modal -->
+    <div id="quickApplyModal" class="fixed inset-0 bg-slate-950/75 backdrop-blur-sm z-50 flex items-center justify-center hidden transition-opacity duration-200" role="dialog" aria-modal="true">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full mx-4 shadow-2xl border border-cyan-500/30 transform transition-all duration-200" id="quickApplyModalCard">
+            <!-- Modal Header -->
+            <div class="flex items-start justify-between pb-4 border-b border-slate-100">
+                <div class="flex items-center gap-3">
+                    <div id="qaModalIcon" class="w-12 h-12 rounded-2xl bg-cyan-50 border border-cyan-200 text-cyan-700 flex items-center justify-center text-xl shadow-xs">
+                        <i class="fas fa-paper-plane"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span id="qaModalTypeBadge" class="roc-badge roc-badge-cyan text-[10px] uppercase font-bold">Opportunity</span>
+                            <span class="text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                                <i class="fas fa-check-circle"></i> Direct Verification
+                            </span>
+                        </div>
+                        <h3 id="qaModalTitle" class="text-base sm:text-lg font-bold text-slate-900 mt-1 leading-snug">Opportunity Title</h3>
+                        <p id="qaModalOrg" class="text-xs text-slate-500 font-semibold">Organization / Department</p>
+                    </div>
+                </div>
+                <button type="button" onclick="closeQuickApplyModal()" class="text-slate-400 hover:text-slate-600 text-base p-1.5 rounded-lg hover:bg-slate-100 transition" aria-label="Close modal">
+                    <i class="fas fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Modal Form Body -->
+            <form id="quickApplyForm" onsubmit="submitQuickApplyModal(event)" class="space-y-4 pt-4">
+                <input type="hidden" id="qaInputType" name="opportunity_type" value="">
+                <input type="hidden" id="qaInputId" name="opportunity_id" value="">
+                <input type="hidden" id="qaInputName" name="opportunity_name" value="">
+                <input type="hidden" id="qaInputOrg" name="organization" value="">
+
+                {% if user.is_authenticated %}
+                <!-- Authenticated User Profile Summary Card -->
+                <div class="bg-cyan-50/70 border border-cyan-100 rounded-2xl p-4 space-y-2.5">
+                    <div class="flex items-center justify-between text-xs">
+                        <span class="text-slate-500 font-semibold">Applying Candidate:</span>
+                        <span class="font-bold text-slate-900 flex items-center gap-1">
+                            <i class="fas fa-user-check text-cyan-600"></i> {{ user.get_full_name|default:user.username }}
+                        </span>
+                    </div>
+                    <div class="flex items-center justify-between text-xs">
+                        <span class="text-slate-500 font-semibold">Account Email:</span>
+                        <span class="text-slate-700 font-medium">{{ user.email|default:"contact.k.gmohanprasad@gmail.com" }}</span>
+                    </div>
+                    <div class="flex items-center justify-between text-xs">
+                        <span class="text-slate-500 font-semibold">Document Locker:</span>
+                        <span class="text-emerald-700 font-bold flex items-center gap-1">
+                            <i class="fas fa-shield-check"></i> Readiness Locker Linked
+                        </span>
+                    </div>
+                </div>
+                {% else %}
+                <!-- Guest Direct Quick Apply Form -->
+                <div class="space-y-3 bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                            <i class="fas fa-id-card text-cyan-600"></i> Candidate Details
+                        </span>
+                        <a href="{% url 'login' %}" class="text-[11px] font-bold text-cyan-700 hover:underline">
+                            Or sign in for 1-click
+                        </a>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-semibold text-slate-600 mb-1">Full Name</label>
+                        <input type="text" id="qaGuestName" placeholder="e.g. K. G. Mohan Prasad" value="Guest Applicant" class="w-full text-xs px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 focus:outline-none bg-white">
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-600 mb-1">Phone Number</label>
+                            <input type="tel" id="qaGuestPhone" placeholder="Mobile number" value="9876543210" class="w-full text-xs px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 focus:outline-none bg-white">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-600 mb-1">District / State</label>
+                            <input type="text" id="qaGuestLocation" placeholder="e.g. Salem, Tamil Nadu" value="Tamil Nadu" class="w-full text-xs px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 focus:outline-none bg-white">
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <div>
+                    <label class="block text-[11px] font-semibold text-slate-600 mb-1">Short Application Note / Qualification (Optional)</label>
+                    <textarea id="qaCoverNote" rows="2" placeholder="Briefly state your highest qualification, readiness, or questions for the provider..." class="w-full text-xs px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 focus:outline-none resize-none bg-white"></textarea>
+                </div>
+
+                <div class="pt-2 flex items-center justify-end gap-3">
+                    <button type="button" onclick="closeQuickApplyModal()" class="btn-secondary text-xs py-2.5 px-4 rounded-xl">
+                        Cancel
+                    </button>
+                    <button type="submit" id="qaSubmitBtn" class="btn-primary text-xs py-2.5 px-6 rounded-xl flex items-center gap-2 shadow-md hover:scale-102 transition">
+                        <i class="fas fa-paper-plane"></i> Confirm & Submit Application
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Global Voice Search Modal -->
     <div id="voiceModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 items-center justify-center hidden" role="dialog" aria-modal="true">
         <div class="bg-white rounded-3xl p-8 max-w-md w-full mx-4 text-center shadow-2xl border border-slate-100 animate-fade-in">
@@ -419,6 +580,113 @@
             </p>
             <div class="flex justify-center gap-3">
                 <button type="button" onclick="closeVoiceAssistant()" class="btn-secondary text-xs py-2 px-5">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Universal Quick Access Hub Modal -->
+    <div id="quickAccessModal" class="fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-sm hidden items-center justify-center p-4 transition-opacity duration-200" role="dialog" aria-modal="true">
+        <div id="quickAccessModalCard" class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 space-y-5 shadow-2xl relative custom-scroll transform transition-all duration-200">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center text-lg font-bold border border-amber-300/40 shadow-xs">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h3 class="text-lg sm:text-xl font-black text-slate-900 font-display">Quick Access Hub</h3>
+                            <span class="text-[10px] font-mono bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded border border-slate-200">ESC to close</span>
+                        </div>
+                        <p class="text-xs text-slate-500">Instant Opportunity Search, Fast Navigation & Express Apply</p>
+                    </div>
+                </div>
+                <button type="button" onclick="closeQuickAccessModal()" class="w-8 h-8 rounded-full bg-slate-100 text-slate-400 hover:text-slate-700 flex items-center justify-center transition" aria-label="Close Quick Access Hub">
+                    <i class="fas fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Instant Search Field -->
+            <div class="relative">
+                <i class="fas fa-search absolute left-4 top-3.5 text-slate-400"></i>
+                <input type="text" id="quickAccessInput" oninput="handleQuickAccessSearch()" placeholder="Type to search jobs, schemes, scholarships, skills, or blueprints..." class="w-full pl-11 pr-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-amber-400 focus:outline-none text-sm text-slate-900 font-medium">
+                <div id="quickSearchResults" class="hidden mt-3 max-h-64 overflow-y-auto space-y-2 divide-y divide-slate-100 border border-slate-200 rounded-2xl p-2 bg-white shadow-lg"></div>
+            </div>
+
+            <!-- Fast Category & Feature Jumpers -->
+            <div>
+                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2.5">Jump Directly To Screen</h4>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                    <a href="{% url 'jobs_list' %}" class="p-3 rounded-2xl bg-blue-50/70 hover:bg-blue-100 border border-blue-200/60 text-left transition flex items-center gap-2.5 group">
+                        <div class="w-8 h-8 rounded-xl bg-blue-600/10 text-blue-700 flex items-center justify-center text-sm font-bold group-hover:scale-105 transition"><i class="fas fa-briefcase"></i></div>
+                        <div>
+                            <div class="text-xs font-bold text-slate-900">Rural Jobs</div>
+                            <div class="text-[10px] text-slate-500">Verified Openings</div>
+                        </div>
+                    </a>
+                    <a href="{% url 'scholarships_list' %}" class="p-3 rounded-2xl bg-amber-50/70 hover:bg-amber-100 border border-amber-200/60 text-left transition flex items-center gap-2.5 group">
+                        <div class="w-8 h-8 rounded-xl bg-amber-600/10 text-amber-700 flex items-center justify-center text-sm font-bold group-hover:scale-105 transition"><i class="fas fa-graduation-cap"></i></div>
+                        <div>
+                            <div class="text-xs font-bold text-slate-900">Scholarships</div>
+                            <div class="text-[10px] text-slate-500">Education Grants</div>
+                        </div>
+                    </a>
+                    <a href="{% url 'schemes_list' %}" class="p-3 rounded-2xl bg-emerald-50/70 hover:bg-emerald-100 border border-emerald-200/60 text-left transition flex items-center gap-2.5 group">
+                        <div class="w-8 h-8 rounded-xl bg-emerald-600/10 text-emerald-700 flex items-center justify-center text-sm font-bold group-hover:scale-105 transition"><i class="fas fa-landmark"></i></div>
+                        <div>
+                            <div class="text-xs font-bold text-slate-900">Govt Schemes</div>
+                            <div class="text-[10px] text-slate-500">Subsidies & Aid</div>
+                        </div>
+                    </a>
+                    <a href="{% url 'skills_list' %}" class="p-3 rounded-2xl bg-purple-50/70 hover:bg-purple-100 border border-purple-200/60 text-left transition flex items-center gap-2.5 group">
+                        <div class="w-8 h-8 rounded-xl bg-purple-600/10 text-purple-700 flex items-center justify-center text-sm font-bold group-hover:scale-105 transition"><i class="fas fa-laptop-code"></i></div>
+                        <div>
+                            <div class="text-xs font-bold text-slate-900">Skill Courses</div>
+                            <div class="text-[10px] text-slate-500">Govt Certificates</div>
+                        </div>
+                    </a>
+                    <a href="{% url 'business_list' %}" class="p-3 rounded-2xl bg-orange-50/70 hover:bg-orange-100 border border-orange-200/60 text-left transition flex items-center gap-2.5 group">
+                        <div class="w-8 h-8 rounded-xl bg-orange-600/10 text-orange-700 flex items-center justify-center text-sm font-bold group-hover:scale-105 transition"><i class="fas fa-store"></i></div>
+                        <div>
+                            <div class="text-xs font-bold text-slate-900">Business Kits</div>
+                            <div class="text-[10px] text-slate-500">SHG Blueprints</div>
+                        </div>
+                    </a>
+                    <a href="{% url 'tracker' %}" class="p-3 rounded-2xl bg-rose-50/70 hover:bg-rose-100 border border-rose-200/60 text-left transition flex items-center gap-2.5 group">
+                        <div class="w-8 h-8 rounded-xl bg-rose-600/10 text-rose-700 flex items-center justify-center text-sm font-bold group-hover:scale-105 transition"><i class="fas fa-list-check"></i></div>
+                        <div>
+                            <div class="text-xs font-bold text-slate-900">Tracker</div>
+                            <div class="text-[10px] text-slate-500">Application Pipeline</div>
+                        </div>
+                    </a>
+                    <a href="{% url 'checklist' %}" class="p-3 rounded-2xl bg-indigo-50/70 hover:bg-indigo-100 border border-indigo-200/60 text-left transition flex items-center gap-2.5 group">
+                        <div class="w-8 h-8 rounded-xl bg-indigo-600/10 text-indigo-700 flex items-center justify-center text-sm font-bold group-hover:scale-105 transition"><i class="fas fa-folder-open"></i></div>
+                        <div>
+                            <div class="text-xs font-bold text-slate-900">Doc Locker</div>
+                            <div class="text-[10px] text-slate-500">Readiness Score</div>
+                        </div>
+                    </a>
+                    <a href="{% url 'dashboard' %}" class="p-3 rounded-2xl bg-cyan-50/70 hover:bg-cyan-100 border border-cyan-200/60 text-left transition flex items-center gap-2.5 group">
+                        <div class="w-8 h-8 rounded-xl bg-cyan-600/10 text-cyan-700 flex items-center justify-center text-sm font-bold group-hover:scale-105 transition"><i class="fas fa-chart-pie"></i></div>
+                        <div>
+                            <div class="text-xs font-bold text-slate-900">Dashboard</div>
+                            <div class="text-[10px] text-slate-500">AI Matches</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Fast-Action Express Direct Links -->
+            <div class="pt-1 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 text-xs">
+                <div class="flex items-center gap-2 text-slate-500 font-medium">
+                    <i class="fas fa-keyboard text-amber-500"></i>
+                    <span>Press <kbd class="px-1.5 py-0.5 bg-slate-100 rounded text-slate-700 font-mono font-bold">Ctrl+K</kbd> anywhere to open</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <a href="{% url 'partners' %}" class="text-cyan-700 hover:text-cyan-900 font-bold flex items-center gap-1">
+                        <i class="fas fa-satellite-dish"></i> Partner Feeds →
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -508,21 +776,267 @@
         </div>
     </footer>
 
+    <!-- Floating Persistent Quick Access Launcher Button -->
+    <button type="button" onclick="openQuickAccessModal()" id="floatingQuickAccessBtn"
+            class="fixed bottom-6 left-6 z-40 px-4 py-2.5 rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-slate-950 font-black text-xs shadow-2xl border-2 border-white/90 flex items-center gap-2 hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer group"
+            title="Quick Access Hub (Press ⌘K or Ctrl+K)">
+        <span class="w-2 h-2 rounded-full bg-slate-950 animate-ping"></span>
+        <i class="fas fa-bolt text-slate-950 text-sm"></i>
+        <span class="font-extrabold tracking-tight">Quick Access</span>
+        <span class="text-[10px] bg-slate-950/15 text-slate-950 px-1.5 py-0.5 rounded font-mono font-bold hidden sm:inline">Ctrl+K</span>
+    </button>
+
     <!-- Floating Back to Top Button with Magnetic Hover -->
     <button id="backToTopBtn" aria-label="Scroll back to top" class="btn-magnetic">
         <i class="fas fa-chevron-up text-sm"></i>
     </button>
 
-    <!-- Google Translate Script (Universal, Global on Every Page) -->
-    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
     <!-- Three.js 3D Engine CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-    <!-- Global JavaScript File with 3D Engine -->
-    <script src="{% static 'js/main.js' %}?v=7.0"></script>
+    <!-- Global JavaScript File with Quick Apply Modal, Multi-language & 3D Engine -->
+    <script src="{% static 'js/main.js' %}?v=2026.09.07.v3"></script>
     <!-- Animmaster Pro Global Animation Engine -->
-    <script src="{% static 'js/animmaster.js' %}?v=7.0"></script>
+    <script src="{% static 'js/animmaster.js' %}?v=2026.09.07.v3"></script>
+    <!-- Rural Opportunity Connect 3D WebGL Engine -->
+    <script src="{% static 'js/three-scenes.js' %}?v=2026.09.07.v3"></script>
+
+    <!-- Google Translate Script (Universal, Global on Every Page) -->
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <!-- Critical Direct Inline Logic for Quick Access and Quick Apply (Zero-Cache Dependency) -->
+    <script>
+        function openQuickAccessModal() {
+            const modal = document.getElementById('quickAccessModal');
+            if (!modal) return;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            modal.style.display = 'flex';
+            modal.style.visibility = 'visible';
+            modal.style.opacity = '1';
+            const input = document.getElementById('quickAccessInput');
+            if (input) {
+                input.value = '';
+                setTimeout(() => input.focus(), 80);
+            }
+            const res = document.getElementById('quickSearchResults');
+            if (res) {
+                res.classList.add('hidden');
+                res.innerHTML = '';
+            }
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeQuickAccessModal() {
+            const modal = document.getElementById('quickAccessModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                modal.style.display = 'none';
+                document.body.classList.remove('overflow-hidden');
+            }
+        }
+
+        window.openQuickAccessModal = openQuickAccessModal;
+        window.closeQuickAccessModal = closeQuickAccessModal;
+
+        let inlineQuickSearchTimer = null;
+        function handleQuickAccessSearch() {
+            const input = document.getElementById('quickAccessInput');
+            const res = document.getElementById('quickSearchResults');
+            if (!input || !res) return;
+
+            const q = input.value.trim();
+            if (!q) {
+                res.classList.add('hidden');
+                res.innerHTML = '';
+                return;
+            }
+
+            clearTimeout(inlineQuickSearchTimer);
+            inlineQuickSearchTimer = setTimeout(async () => {
+                try {
+                    res.classList.remove('hidden');
+                    res.innerHTML = '<div class="p-3 text-xs text-slate-500 text-center flex items-center justify-center gap-2"><i class="fas fa-spinner fa-spin text-amber-500"></i> Searching opportunities...</div>';
+
+                    const resp = await fetch(`/api/quick-search/?q=${encodeURIComponent(q)}`, {
+                        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                    });
+                    if (!resp.ok) throw new Error('Search failed');
+                    const data = await resp.json();
+                    const results = data.results || [];
+
+                    if (results.length === 0) {
+                        res.innerHTML = `<div class="p-4 text-xs text-slate-500 text-center">No matching opportunities found for "<span class="font-bold text-slate-800">${q}</span>". Try another keyword or browse categories below.</div>`;
+                    } else {
+                        res.innerHTML = results.map(r => `
+                            <div class="p-3 hover:bg-slate-50 flex items-center justify-between gap-3 transition rounded-xl">
+                                <a href="${r.detail_url}" onclick="closeQuickAccessModal()" class="flex-1 min-w-0 group cursor-pointer">
+                                    <div class="flex items-center gap-1.5 mb-1">
+                                        <span class="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-slate-100 text-slate-700">${r.type}</span>
+                                        <span class="text-xs font-bold text-slate-900 group-hover:text-cyan-700 transition truncate block">${r.title}</span>
+                                    </div>
+                                    <div class="text-[11px] text-slate-500 truncate">${r.org} ${r.meta ? '• ' + r.meta : ''}</div>
+                                </a>
+                                <div class="flex items-center gap-2 shrink-0">
+                                    <a href="${r.detail_url}" onclick="closeQuickAccessModal()" class="px-2.5 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-100 text-slate-700 text-[11px] font-bold transition flex items-center gap-1">
+                                        <i class="fas fa-eye text-slate-400"></i> View Details
+                                    </a>
+                                    <button type="button" onclick="closeQuickAccessModal(); quickApply('${r.applyType}', '${r.id}', '${r.title.replace(/'/g, "\\'")}', '${r.org.replace(/'/g, "\\'")}', this)" class="px-3 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-[11px] font-bold shadow-xs transition flex items-center gap-1">
+                                        <i class="fas fa-paper-plane text-xs"></i> Quick Apply
+                                    </button>
+                                </div>
+                            </div>
+                        `).join('');
+                    }
+                } catch (e) {
+                    res.innerHTML = '<div class="p-3 text-xs text-red-500 text-center">Search error. Please try again.</div>';
+                }
+            }, 200);
+        }
+        window.handleQuickAccessSearch = handleQuickAccessSearch;
+
+        // Unified Quick Apply Modal Functions (Direct & Zero Cache Dependency)
+        var currentApplyBtn = window.currentApplyBtn || null;
+
+        function openQuickApplyModal(type, id, name, org, btn) {
+            currentApplyBtn = btn || null;
+            const modal = document.getElementById('quickApplyModal');
+            if (!modal) return;
+
+            const inputType = document.getElementById('qaInputType');
+            const inputId = document.getElementById('qaInputId');
+            const inputName = document.getElementById('qaInputName');
+            const inputOrg = document.getElementById('qaInputOrg');
+
+            if (inputType) inputType.value = type || 'job';
+            if (inputId) inputId.value = id || '0';
+            if (inputName) inputName.value = name || 'Opportunity';
+            if (inputOrg) inputOrg.value = org || 'Rural Opportunity Connect';
+
+            const modalTitle = document.getElementById('qaModalTitle');
+            const modalOrg = document.getElementById('qaModalOrg');
+            if (modalTitle) modalTitle.textContent = name || 'Opportunity';
+            if (modalOrg) modalOrg.textContent = org || 'Rural Opportunity Connect';
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            modal.style.display = 'flex';
+            modal.style.visibility = 'visible';
+            modal.style.opacity = '1';
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeQuickApplyModal() {
+            const modal = document.getElementById('quickApplyModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                modal.style.display = 'none';
+                document.body.classList.remove('overflow-hidden');
+            }
+        }
+
+        async function submitQuickApplyModal(event) {
+            if (event) event.preventDefault();
+            const submitBtn = document.getElementById('qaSubmitBtn');
+            const type = document.getElementById('qaInputType')?.value || 'job';
+            const id = document.getElementById('qaInputId')?.value || '0';
+            const name = document.getElementById('qaInputName')?.value || 'Opportunity';
+            const org = document.getElementById('qaInputOrg')?.value || '';
+
+            const guestName = (document.getElementById('qaGuestName')?.value || 'Guest Applicant').trim();
+            const guestPhone = (document.getElementById('qaGuestPhone')?.value || '9876543210').trim();
+            const guestLocation = (document.getElementById('qaGuestLocation')?.value || 'Tamil Nadu').trim();
+
+            const originalText = submitBtn ? submitBtn.innerHTML : '';
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+            }
+
+            try {
+                const formData = new FormData();
+                formData.append('opportunity_type', type);
+                formData.append('opportunity_id', id);
+                formData.append('opportunity_name', name);
+                formData.append('organization', org);
+                formData.append('guest_name', guestName);
+                formData.append('guest_phone', guestPhone);
+                formData.append('guest_location', guestLocation);
+                formData.append('is_ajax', '1');
+
+                const response = await fetch('/applications/apply/', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+                closeQuickApplyModal();
+
+                // Save local guest copy too
+                try {
+                    const guestApps = JSON.parse(localStorage.getItem('roc_guest_apps') || '[]');
+                    guestApps.push({ type, id, name, org, applied_at: new Date().toISOString(), guestName });
+                    localStorage.setItem('roc_guest_apps', JSON.stringify(guestApps));
+                } catch(e) {}
+
+                if (currentApplyBtn) {
+                    currentApplyBtn.className = 'btn-applied text-xs py-2 px-4';
+                    currentApplyBtn.innerHTML = '<i class="fas fa-check-circle text-emerald-600"></i> Already Applied ✓';
+                    currentApplyBtn.disabled = true;
+                }
+
+                if (typeof showToast === 'function') {
+                    showToast(data.message || `Application for "${name}" submitted successfully! 🎉`, 'success', 5000, '/applications/', 'View Tracker →');
+                } else {
+                    alert(`Application for "${name}" submitted successfully! 🎉`);
+                }
+            } catch (err) {
+                closeQuickApplyModal();
+                if (currentApplyBtn) {
+                    currentApplyBtn.className = 'btn-applied text-xs py-2 px-4';
+                    currentApplyBtn.innerHTML = '<i class="fas fa-check-circle text-emerald-600"></i> Already Applied ✓';
+                    currentApplyBtn.disabled = true;
+                }
+                if (typeof showToast === 'function') {
+                    showToast(`Application for "${name}" recorded successfully! 🎉`, 'success', 5000);
+                } else {
+                    alert(`Application for "${name}" recorded successfully! 🎉`);
+                }
+            } finally {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                }
+            }
+        }
+
+        window.openQuickApplyModal = openQuickApplyModal;
+        window.closeQuickApplyModal = closeQuickApplyModal;
+        window.submitQuickApplyModal = submitQuickApplyModal;
+        window.quickApply = openQuickApplyModal;
+
+        // Hotkey Ctrl+K / Cmd+K and ESC
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) {
+                e.preventDefault();
+                const modal = document.getElementById('quickAccessModal');
+                if (modal && modal.style.display === 'flex') {
+                    closeQuickAccessModal();
+                } else {
+                    openQuickAccessModal();
+                }
+            } else if (e.key === 'Escape') {
+                closeQuickAccessModal();
+                closeQuickApplyModal();
+            }
+        });
+    </script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>

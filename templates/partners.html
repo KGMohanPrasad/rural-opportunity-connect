@@ -26,8 +26,10 @@
                 </p>
             </div>
 
-            <!-- Live Status & Sync Trigger Box -->
-            <div class="bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/20 text-center min-w-[220px] shadow-2xl space-y-3 hover-lift-3d card-specular-glare">
+            <!-- Live Status & Sync Trigger Box & 3D Emblem -->
+            <div class="flex items-center gap-4">
+                <canvas class="header-3d-canvas w-24 h-20 hidden md:block" aria-hidden="true"></canvas>
+                <div class="bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/20 text-center min-w-[220px] shadow-2xl space-y-3 hover-lift-3d card-specular-glare">
                 <div class="flex items-center justify-center gap-2 text-xs font-bold text-cyan-300">
                     <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse"></span>
                     <span>Live Network Sync Active</span>
@@ -121,24 +123,18 @@
                     </a>
                     {% endif %}
                     <div class="flex items-center gap-2">
-                        {% if user.is_authenticated %}
-                            {% if sc_key in user_applied_keys %}
-                                <button class="btn-applied text-[11px] py-1.5 px-3" disabled>
-                                    <i class="fas fa-check-circle text-emerald-600"></i> Applied ✓
-                                </button>
-                            {% else %}
-                                <button onclick="quickApply('scholarship', '{{ sc.id }}', '{{ sc.name|escapejs }}', '{{ sc.provider|escapejs }}', this)"
-                                        class="btn-primary text-[11px] py-1.5 px-3">
-                                    Quick Apply
-                                </button>
-                            {% endif %}
+                        {% if user.is_authenticated and sc_key in user_applied_keys %}
+                            <button class="btn-applied text-[11px] py-1.5 px-3" disabled>
+                                <i class="fas fa-check-circle text-emerald-600"></i> Applied ✓
+                            </button>
                         {% else %}
-                            <a href="{% url 'login' %}?next={{ request.path }}" class="btn-primary text-[11px] py-1.5 px-3">
+                            <button onclick="quickApply('scholarship', '{{ sc.id }}', '{{ sc.name|escapejs }}', '{{ sc.provider|escapejs }}', this)"
+                                    class="btn-primary text-[11px] py-1.5 px-3 cursor-pointer">
                                 Quick Apply
-                            </a>
+                            </button>
                         {% endif %}
-                        <a href="{% url 'scholarship_detail' sc.id %}" class="btn-secondary text-[11px] py-1.5 px-3">
-                            Details
+                        <a href="{% url 'scholarship_detail' sc.id %}" class="btn-secondary text-[11px] py-1.5 px-3 flex items-center gap-1 font-bold">
+                            <i class="fas fa-eye text-cyan-700"></i> View Details
                         </a>
                     </div>
                 </div>
@@ -189,24 +185,18 @@
                     </a>
                     {% endif %}
                     <div class="flex items-center gap-2">
-                        {% if user.is_authenticated %}
-                            {% if scm_key in user_applied_keys %}
-                                <button class="btn-applied text-[11px] py-1.5 px-3" disabled>
-                                    <i class="fas fa-check-circle text-emerald-600"></i> Enrolled ✓
-                                </button>
-                            {% else %}
-                                <button onclick="quickApply('scheme', '{{ sc.id }}', '{{ sc.name|escapejs }}', '{{ sc.department|escapejs }}', this)"
-                                        class="btn-primary text-[11px] py-1.5 px-3">
-                                    Enroll / Track
-                                </button>
-                            {% endif %}
+                        {% if user.is_authenticated and scm_key in user_applied_keys %}
+                            <button class="btn-applied text-[11px] py-1.5 px-3" disabled>
+                                <i class="fas fa-check-circle text-emerald-600"></i> Enrolled ✓
+                            </button>
                         {% else %}
-                            <a href="{% url 'login' %}?next={{ request.path }}" class="btn-primary text-[11px] py-1.5 px-3">
+                            <button onclick="quickApply('scheme', '{{ sc.id }}', '{{ sc.name|escapejs }}', '{{ sc.department|escapejs }}', this)"
+                                    class="btn-primary text-[11px] py-1.5 px-3 cursor-pointer">
                                 Enroll / Track
-                            </a>
+                            </button>
                         {% endif %}
-                        <a href="{% url 'scheme_detail' sc.id %}" class="btn-secondary text-[11px] py-1.5 px-3">
-                            Details
+                        <a href="{% url 'scheme_detail' sc.id %}" class="btn-secondary text-[11px] py-1.5 px-3 flex items-center gap-1 font-bold">
+                            <i class="fas fa-eye text-cyan-700"></i> View Details
                         </a>
                     </div>
                 </div>

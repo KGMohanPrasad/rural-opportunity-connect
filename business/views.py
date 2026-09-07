@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.db.models import Q
 from .models import BusinessOpportunity
 
@@ -36,6 +36,6 @@ def business_list(request):
 
 def business_detail(request, business_id):
     """View business details"""
-    business = BusinessOpportunity.objects.get(id=business_id)
+    business = get_object_or_404(BusinessOpportunity, id=business_id)
     context = {'business': business}
     return render(request, 'business_detail.html', context)

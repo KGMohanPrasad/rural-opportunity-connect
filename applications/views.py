@@ -1,8 +1,8 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
+from django.shortcuts import redirect, render
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_protect
+from django.contrib import messages
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User
 from accounts.models import UserProfile
 from opportunities.models import Job
 from scholarships.models import Scholarship
@@ -11,16 +11,28 @@ from skills.models import SkillProgram
 from business.models import BusinessOpportunity
 from .models import Application
 
-@login_required(login_url='login')
-@csrf_protect
+@csrf_exempt
 def apply_opportunity(request):
     """
-    Direct Quick Apply submission for the authenticated user.
-    No personal info form is required.
-    Prevents duplicates and records the application in the tracker.
+    Direct Quick Apply submission for both authenticated and guest candidates.
+    Records application in database and prevents duplicates.
     """
     if request.method == 'POST':
-        profile, _ = UserProfile.objects.get_or_create(user=request.user)
+        if request.user.is_authenticated:
+            profile, _ = UserProfile.objects.get_or_create(user=request.user)
+        else:
+            guest_name = (request.POST.get('guest_name') or 'Guest Applicant').strip()
+            first_name = guest_name.split()[0] if guest_name else 'Guest'
+            last_name = ' '.join(guest_name.split()[1:]) if len(guest_name.split()) > 1 else 'Applicant'
+            guest_user, _ = User.objects.get_or_create(
+                username='guest_candidate',
+                defaults={
+                    'first_name': first_name,
+                    'last_name': last_name,
+                    'email': 'guest@ruralopportunity.org'
+                }
+            )
+            profile, _ = UserProfile.objects.get_or_create(user=guest_user)
         opp_type = request.POST.get('opportunity_type') or 'job'
         try:
             opp_id = int(request.POST.get('opportunity_id') or 0)
@@ -91,8 +103,11 @@ def apply_opportunity(request):
                     'application_id': app.id,
                     'opportunity_name': app.opportunity_name
                 })
+            if request.user.is_authenticated:
+                messages.info(request, f'You have already applied for "{app.opportunity_name}".')
+                return redirect('applications')
             messages.info(request, f'You have already applied for "{app.opportunity_name}".')
-            return redirect('applications')
+            return redirect(request.META.get('HTTP_REFERER', 'jobs_list'))
 
         if is_ajax:
             return JsonResponse({
@@ -103,7 +118,10 @@ def apply_opportunity(request):
                 'opportunity_name': opp_name
             })
 
+        if request.user.is_authenticated:
+            messages.success(request, f'Application for "{opp_name}" submitted successfully! 🎉')
+            return redirect('applications')
         messages.success(request, f'Application for "{opp_name}" submitted successfully! 🎉')
-        return redirect('applications')
+        return redirect(request.META.get('HTTP_REFERER', 'jobs_list'))
 
     return JsonResponse({'status': 'error', 'message': 'Invalid request method. POST required.'}, status=400)
