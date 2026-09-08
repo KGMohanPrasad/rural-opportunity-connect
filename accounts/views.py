@@ -46,56 +46,113 @@ def landing_page(request):
 @ensure_csrf_cookie
 @csrf_protect
 def register(request):
-    """User registration view"""
+    """User registration view with full validation, preserved inputs, and error feedback"""
+    if request.user.is_authenticated:
+        return redirect('dashboard')
+
     if request.method == 'POST':
         username = request.POST.get('username', '').strip()
         email = request.POST.get('email', '').strip()
         password = request.POST.get('password', '')
+        confirm_password = request.POST.get('confirm_password', '')
         first_name = request.POST.get('first_name', '').strip()
         last_name = request.POST.get('last_name', '').strip()
 
-        if User.objects.filter(username=username).exists():
-            return render(request, 'register.html', {'error': 'Username already exists'})
-        
-        if User.objects.filter(email=email).exists():
-            return render(request, 'register.html', {'error': 'Email already registered'})
+        form_data = {
+            'username': username,
+            'email': email,
+            'first_name': first_name,
+            'last_name': last_name,
+        }
 
-        user = User.objects.create_user(
-            username=username,
-            email=email,
-            password=password,
-            first_name=first_name,
-            last_name=last_name
-        )
+        if not username:
+            return render(request, 'register.html', {**form_data, 'error': 'Please enter a username.'})
         
-        # Create user profile
-        UserProfile.objects.create(user=user)
-        DocumentChecklist.objects.create(user=UserProfile.objects.get(user=user))
+        if not email:
+            return render(request, 'register.html', {**form_data, 'error': 'Please enter your email address.'})
+
+        if not password:
+            return render(request, 'register.html', {**form_data, 'error': 'Please enter a password.'})
+
+        if len(password) < 6:
+            return render(request, 'register.html', {**form_data, 'error': 'Password must be at least 6 characters long.'})
+
+        if confirm_password and password != confirm_password:
+            return render(request, 'register.html', {**form_data, 'error': 'Passwords do not match. Please re-enter your password.'})
+
+        if User.objects.filter(username__iexact=username).exists():
+            return render(request, 'register.html', {**form_data, 'error': f'Username "{username}" is already taken. Please choose another username.'})
         
-        login(request, user)
-        return redirect('profile_setup')
+        if email and User.objects.filter(email__iexact=email).exists():
+            return render(request, 'register.html', {**form_data, 'error': f'An account with email "{email}" already exists. Please sign in instead.'})
+
+        try:
+            user = User.objects.create_user(
+                username=username,
+                email=email,
+                password=password,
+                first_name=first_name,
+                last_name=last_name
+            )
+            
+            # Create user profile and document checklist safely
+            profile, _ = UserProfile.objects.get_or_create(user=user)
+            DocumentChecklist.objects.get_or_create(user=profile)
+            
+            login(request, user)
+            return redirect('profile_setup')
+        except Exception as exc:
+            return render(request, 'register.html', {**form_data, 'error': f'Registration failed: {str(exc)}'})
     
     return render(request, 'register.html')
 
 @ensure_csrf_cookie
 @csrf_protect
 def login_view(request):
-    """User login view with preserved next redirect"""
+    """User login view with preserved next redirect & support for username or email"""
     next_url = request.POST.get('next') or request.GET.get('next') or ''
 
+    if request.user.is_authenticated:
+        if next_url and next_url.startswith('/') and not next_url.startswith('/login') and not next_url.startswith('/logout'):
+            return redirect(next_url)
+        return redirect('dashboard')
+
     if request.method == 'POST':
-        username = request.POST.get('username', '').strip()
+        login_input = request.POST.get('username', '').strip()
         password = request.POST.get('password', '')
         
-        user = authenticate(request, username=username, password=password)
+        if not login_input or not password:
+            return render(request, 'login.html', {
+                'error': 'Please enter both your username/email and password.',
+                'username': login_input,
+                'next_url': next_url
+            })
+
+        # Support login by username OR by email (case-insensitive)
+        auth_username = login_input
+        if '@' in login_input:
+            matched_user = User.objects.filter(email__iexact=login_input).first()
+            if matched_user:
+                auth_username = matched_user.username
+        else:
+            matched_user = User.objects.filter(username__iexact=login_input).first()
+            if matched_user:
+                auth_username = matched_user.username
+
+        user = authenticate(request, username=auth_username, password=password)
         if user is not None:
             login(request, user)
+            # Ensure profile and document checklist exist
+            profile, _ = UserProfile.objects.get_or_create(user=user)
+            DocumentChecklist.objects.get_or_create(user=profile)
+
             if next_url and next_url.startswith('/') and not next_url.startswith('/login') and not next_url.startswith('/logout'):
                 return redirect(next_url)
             return redirect('dashboard')
         else:
             return render(request, 'login.html', {
-                'error': 'Invalid username or password. Please try again.',
+                'error': 'Invalid username/email or password. Please verify your credentials and try again.',
+                'username': login_input,
                 'next_url': next_url
             })
     
@@ -112,15 +169,16 @@ def profile_setup(request):
     profile, _ = UserProfile.objects.get_or_create(user=request.user)
     
     if request.method == 'POST':
-        profile.age = request.POST.get('age')
-        profile.location = request.POST.get('location')
-        profile.education = request.POST.get('education')
-        profile.course = request.POST.get('course')
-        profile.skills = request.POST.get('skills')
-        profile.experience = request.POST.get('experience')
-        profile.annual_income = request.POST.get('annual_income')
-        profile.interests = request.POST.get('interests')
-        profile.preferred_opportunity = request.POST.get('preferred_opportunity')
+        age_val = request.POST.get('age', '').strip()
+        profile.age = int(age_val) if age_val and age_val.isdigit() else None
+        profile.location = request.POST.get('location', '').strip()
+        profile.education = request.POST.get('education', '').strip()
+        profile.course = request.POST.get('course', '').strip()
+        profile.skills = request.POST.get('skills', '').strip()
+        profile.experience = request.POST.get('experience', '').strip()
+        profile.annual_income = request.POST.get('annual_income', '').strip()
+        profile.interests = request.POST.get('interests', '').strip()
+        profile.preferred_opportunity = request.POST.get('preferred_opportunity', '').strip()
         profile.save()
         
         return redirect('dashboard')

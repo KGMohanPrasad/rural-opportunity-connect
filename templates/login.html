@@ -11,7 +11,7 @@
 
     <div class="max-w-md w-full bg-white/95 backdrop-blur-xl rounded-3xl p-8 sm:p-10 shadow-2xl border border-cyan-500/30 relative z-10 modal-spring-enter hover-lift-3d card-specular-glare">
         <!-- Logo & Header -->
-        <div class="text-center mb-8">
+        <div class="text-center mb-6">
             <div class="w-16 h-16 bg-[#071526] border-2 border-cyan-400/50 rounded-2xl p-1.5 flex items-center justify-center mx-auto mb-4 shadow-xl shadow-cyan-950/50 hover-lift-3d">
                 <img src="{% static 'images/logo-icon.png' %}?v=4.0" alt="Connect Logo" class="w-full h-full object-contain">
             </div>
@@ -23,18 +23,31 @@
             </p>
         </div>
 
-        <form method="POST" action="{% url 'login' %}{% if next_url %}?next={{ next_url|urlencode }}{% endif %}" class="space-y-5">
+        <!-- High-Visibility Error Feedback Alert Box -->
+        {% if error %}
+        <div class="mb-5 p-4 rounded-2xl bg-rose-50 border border-rose-300 text-rose-900 text-xs flex items-start gap-3 shadow-sm animate-shake">
+            <i class="fas fa-circle-exclamation text-rose-600 text-base shrink-0 mt-0.5"></i>
+            <div class="flex-1">
+                <p class="font-bold text-rose-800">Login Issue</p>
+                <p class="font-medium text-rose-700 mt-0.5 leading-relaxed">{{ error }}</p>
+            </div>
+        </div>
+        {% endif %}
+
+        <form method="POST" action="{% url 'login' %}{% if next_url %}?next={{ next_url|urlencode }}{% endif %}" class="space-y-4">
             {% csrf_token %}
             {% if next_url %}
                 <input type="hidden" name="next" value="{{ next_url }}">
             {% endif %}
 
-            <!-- Username -->
+            <!-- Username or Email -->
             <div>
-                <label class="form-label" for="username">Username</label>
+                <label class="form-label font-bold text-xs text-slate-700" for="username">Username or Email Address</label>
                 <div class="relative">
                     <input type="text" id="username" name="username" required
-                           placeholder="Enter your username"
+                           value="{{ username|default:'' }}"
+                           placeholder="Enter username or email (e.g. mohan or user@example.com)"
+                           autocomplete="username"
                            class="form-input pl-10 text-sm focus:ring-2 focus:ring-cyan-500 transition-all">
                     <i class="fas fa-user absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
                 </div>
@@ -43,24 +56,30 @@
             <!-- Password -->
             <div>
                 <div class="flex items-center justify-between mb-1">
-                    <label class="form-label mb-0" for="password">Password</label>
+                    <label class="form-label font-bold text-xs text-slate-700 mb-0" for="password">Password</label>
                 </div>
                 <div class="relative">
                     <input type="password" id="password" name="password" required
                            placeholder="Enter your password"
-                           class="form-input pl-10 text-sm focus:ring-2 focus:ring-cyan-500 transition-all">
+                           autocomplete="current-password"
+                           class="form-input pl-10 pr-10 text-sm focus:ring-2 focus:ring-cyan-500 transition-all">
                     <i class="fas fa-lock absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    <button type="button" onclick="togglePasswordVisibility('password', this)"
+                            aria-label="Toggle password visibility"
+                            class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 transition">
+                        <i class="far fa-eye text-sm"></i>
+                    </button>
                 </div>
             </div>
 
             <!-- Submit Button -->
-            <button type="submit" class="btn-primary btn-magnetic btn-sheen btn-glow-pulse w-full py-3 text-sm font-bold shadow-lg shadow-brand-950/20 spring-press">
+            <button type="submit" class="btn-primary btn-magnetic btn-sheen btn-glow-pulse w-full py-3 text-sm font-bold shadow-lg shadow-brand-950/20 spring-press mt-2">
                 <i class="fas fa-arrow-right-to-bracket"></i> Sign In to Account
             </button>
         </form>
 
         <!-- Divider & Register Link -->
-        <div class="mt-8 pt-6 border-t border-slate-100 text-center">
+        <div class="mt-6 pt-5 border-t border-slate-100 text-center">
             <p class="text-xs text-slate-500">
                 Don't have an opportunity profile yet?
                 <a href="{% url 'register' %}" class="text-brand-800 hover:text-brand-950 font-bold ml-1">
@@ -70,4 +89,20 @@
         </div>
     </div>
 </div>
+
+<script>
+function togglePasswordVisibility(fieldId, btn) {
+    const input = document.getElementById(fieldId);
+    const icon = btn.querySelector('i');
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+    } else {
+        input.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+    }
+}
+</script>
 {% endblock %}

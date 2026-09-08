@@ -98,7 +98,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database Configuration (MySQL 8.0 with automated SQLite fallback)
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
 
-USE_MYSQL = os.environ.get('USE_MYSQL', 'True').lower() in ('true', '1', 'yes')
+USE_MYSQL = os.environ.get('USE_MYSQL', 'False').lower() in ('true', '1', 'yes')
 
 db_name = os.environ.get('DB_NAME', 'rural_opportunity_connect')
 db_user = os.environ.get('DB_USER', 'root')
