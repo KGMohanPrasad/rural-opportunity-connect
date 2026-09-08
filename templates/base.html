@@ -64,9 +64,14 @@
     </script>
 
     <!-- Custom Unified Design System Stylesheet with Cache Busting -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=11.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=2026.09.08.v5">
     <!-- Animmaster Pro Animation Suite Stylesheet -->
-    <link rel="stylesheet" href="{% static 'css/animmaster.css' %}?v=11.0">
+    <link rel="stylesheet" href="{% static 'css/animmaster.css' %}?v=2026.09.08.v5">
+    <!-- Cinematic Animations & 3D Interactive Systems -->
+    <link rel="stylesheet" href="{% static 'css/glow-cursor.css' %}?v=2026.09.08.v5">
+    <link rel="stylesheet" href="{% static 'css/3d-effects.css' %}?v=2026.09.08.v5">
+    <link rel="stylesheet" href="{% static 'css/page-transitions.css' %}?v=2026.09.08.v5">
+    <link rel="stylesheet" href="{% static 'css/animations.css' %}?v=2026.09.08.v5">
 
     <!-- High-Priority Enterprise Palette Enforcement -->
     <style>
@@ -76,6 +81,10 @@
             --primary-darker: #071526 !important;
             --secondary: #06B6D4 !important;
             --accent: #00F2FE !important;
+        }
+        html, body {
+            overflow-x: hidden !important;
+            max-width: 100vw !important;
         }
         body {
             background-color: #f8fafc !important;
@@ -185,13 +194,13 @@
     <!-- Global 3D WebGL Background Particle Canvas -->
     <canvas id="globalWebglCanvas" aria-hidden="true"></canvas>
 
-    <!-- Cinematic Page Transition Overlay -->
+    <!-- Cinematic Page Transition Overlays -->
+    <div id="cinematicTransitionBar" aria-hidden="true"></div>
+    <div id="cinematicTransitionOverlay" aria-hidden="true"></div>
     <div id="pageTransitionOverlay" aria-hidden="true"></div>
 
     <!-- Animmaster Top Scroll Progress Indicator -->
     <div id="scrollProgressBar" aria-hidden="true"></div>
-
-    <!-- Animmaster Top Page Transition Loader -->
     <div id="pageTransitionBar" aria-hidden="true"></div>
 
     <!-- Animmaster Ambient Cursor Spotlight Follower -->
@@ -280,26 +289,21 @@
 
             <!-- Right Actions (Auth / User Hub) -->
             <div class="flex items-center space-x-3">
-                <!-- Quick Access Hub Button -->
-                <button type="button" onclick="openQuickAccessModal()" id="quickAccessNavBtn"
-                        class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-bold text-xs shadow-xs flex items-center gap-1.5 transition hover:scale-102 cursor-pointer"
-                        title="Quick Access Hub (Ctrl+K)">
-                    <i class="fas fa-bolt text-slate-950 text-xs"></i>
-                    <span class="hidden md:inline font-bold">Quick Access</span>
-                    <span class="hidden xl:inline text-[9px] bg-amber-600/20 text-slate-950 px-1.5 py-0.5 rounded font-mono font-black ml-0.5">⌘K</span>
-                </button>
+
 
                 {% if user.is_authenticated %}
-                    <div class="relative group">
-                        <button class="flex items-center gap-2 bg-brand-50 hover:bg-brand-100 text-brand-900 font-bold px-3.5 py-2 rounded-xl text-sm transition border border-brand-200">
+                    <div class="relative group" id="userDropdownContainer">
+                        <button type="button" id="userDropdownBtn" onclick="toggleUserDropdown(event)"
+                                class="flex items-center gap-2 bg-brand-50 hover:bg-brand-100 text-brand-900 font-bold px-3.5 py-2 rounded-xl text-sm transition border border-brand-200 cursor-pointer">
                             <span class="w-7 h-7 rounded-lg bg-brand-800 text-white flex items-center justify-center text-xs font-bold shadow-xs">
                                 {{ user.first_name|first|default:user.username|first|upper }}
                             </span>
                             <span class="max-w-[120px] truncate hidden sm:inline">{{ user.first_name|default:user.username }}</span>
-                            <i class="fas fa-chevron-down text-[10px] text-slate-400 group-hover:rotate-180 transition-transform duration-200"></i>
+                            <i id="userDropdownChevron" class="fas fa-chevron-down text-[10px] text-slate-400 group-hover:rotate-180 transition-transform duration-200"></i>
                         </button>
                         <!-- User Dropdown Menu -->
-                        <div class="absolute right-0 mt-1 w-56 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 hidden group-hover:block z-50 animate-fade-in">
+                        <div id="userDropdownMenu"
+                             class="absolute right-0 mt-1 w-56 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 hidden group-hover:block z-50 animate-fade-in">
                             <div class="px-4 py-2 border-b border-slate-100">
                                 <p class="text-xs text-slate-400 font-medium">Signed in as</p>
                                 <p class="text-sm font-bold text-slate-900 truncate">{{ user.username }}</p>
@@ -353,7 +357,7 @@
                     </div>
                     <span class="font-extrabold text-slate-900 text-sm">Rural Opportunity <span class="bg-gradient-to-r from-cyan-600 via-sky-600 to-blue-600 bg-clip-text text-transparent">Connect</span></span>
                 </div>
-                <button onclick="toggleMobileMenu()" class="w-8 h-8 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center">
+                <button type="button" onclick="toggleMobileMenu()" class="w-8 h-8 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center">
                     <i class="fas fa-times text-sm"></i>
                 </button>
             </div>
@@ -372,11 +376,7 @@
                 </select>
             </div>
 
-            <!-- Quick Access Hub Mobile Trigger -->
-            <button type="button" onclick="openQuickAccessModal(); toggleMobileMenu()" class="w-full mb-3 text-left px-3.5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400/20 to-amber-500/20 text-amber-900 border border-amber-300/60 font-bold text-xs flex items-center gap-2 transition hover:bg-amber-400/30">
-                <i class="fas fa-bolt text-amber-600"></i>
-                <span>⚡ Quick Access Hub</span>
-            </button>
+
 
             <!-- Navigation Links -->
             <div class="space-y-1 text-sm font-semibold">
@@ -463,7 +463,7 @@
                         {% endif %}
                         <span class="text-xs sm:text-sm font-semibold leading-relaxed">{{ message }}</span>
                     </div>
-                    <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-slate-600 text-sm p-1">
+                    <button type="button" onclick="this.parentElement.remove()" class="text-slate-400 hover:text-slate-600 text-sm p-1">
                         <i class="fas fa-xmark"></i>
                     </button>
                 </div>
@@ -776,30 +776,20 @@
         </div>
     </footer>
 
-    <!-- Floating Persistent Quick Access Launcher Button -->
-    <button type="button" onclick="openQuickAccessModal()" id="floatingQuickAccessBtn"
-            class="fixed bottom-6 left-6 z-40 px-4 py-2.5 rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-slate-950 font-black text-xs shadow-2xl border-2 border-white/90 flex items-center gap-2 hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer group"
-            title="Quick Access Hub (Press ⌘K or Ctrl+K)">
-        <span class="w-2 h-2 rounded-full bg-slate-950 animate-ping"></span>
-        <i class="fas fa-bolt text-slate-950 text-sm"></i>
-        <span class="font-extrabold tracking-tight">Quick Access</span>
-        <span class="text-[10px] bg-slate-950/15 text-slate-950 px-1.5 py-0.5 rounded font-mono font-bold hidden sm:inline">Ctrl+K</span>
-    </button>
-
     <!-- Floating Back to Top Button with Magnetic Hover -->
-    <button id="backToTopBtn" aria-label="Scroll back to top" class="btn-magnetic">
+    <button type="button" id="backToTopBtn" aria-label="Scroll back to top" class="btn-magnetic">
         <i class="fas fa-chevron-up text-sm"></i>
     </button>
 
-    <!-- Three.js 3D Engine CDN -->
+    <!-- Core JavaScript Libraries & Dynamic Modules with Strict Cache-Busting -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
-    <!-- Global JavaScript File with Quick Apply Modal, Multi-language & 3D Engine -->
-    <script src="{% static 'js/main.js' %}?v=2026.09.07.v3"></script>
-    <!-- Animmaster Pro Global Animation Engine -->
-    <script src="{% static 'js/animmaster.js' %}?v=2026.09.07.v3"></script>
-    <!-- Rural Opportunity Connect 3D WebGL Engine -->
-    <script src="{% static 'js/three-scenes.js' %}?v=2026.09.07.v3"></script>
+    <script src="{% static 'js/main.js' %}?v=2026.09.08.v5"></script>
+    <script src="{% static 'js/animmaster.js' %}?v=2026.09.08.v5"></script>
+    <script src="{% static 'js/glow-cursor.js' %}?v=2026.09.08.v5"></script>
+    <script src="{% static 'js/page-transitions.js' %}?v=2026.09.08.v5"></script>
+    <script src="{% static 'js/interactions.js' %}?v=2026.09.08.v5"></script>
+    <script src="{% static 'js/animations.js' %}?v=2026.09.08.v5"></script>
+    <script src="{% static 'js/three-scenes.js' %}?v=2026.09.08.v5"></script>
 
     <!-- Google Translate Script (Universal, Global on Every Page) -->
     <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
@@ -896,9 +886,255 @@
         }
         window.handleQuickAccessSearch = handleQuickAccessSearch;
 
-        // Unified Quick Apply Modal Functions (Direct & Zero Cache Dependency)
+        // User Profile Dropdown Click Toggle
+        function toggleUserDropdown(e) {
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            const menu = document.getElementById('userDropdownMenu');
+            const chevron = document.getElementById('userDropdownChevron');
+            if (menu) {
+                const isHidden = menu.classList.contains('hidden');
+                if (isHidden) {
+                    menu.classList.remove('hidden');
+                    menu.style.display = 'block';
+                    if (chevron) chevron.classList.add('rotate-180');
+                } else {
+                    menu.classList.add('hidden');
+                    menu.style.display = '';
+                    if (chevron) chevron.classList.remove('rotate-180');
+                }
+            }
+        }
+        window.toggleUserDropdown = toggleUserDropdown;
+
+        document.addEventListener('click', (e) => {
+            const container = document.getElementById('userDropdownContainer');
+            const menu = document.getElementById('userDropdownMenu');
+            const chevron = document.getElementById('userDropdownChevron');
+            if (container && menu && !container.contains(e.target)) {
+                menu.classList.add('hidden');
+                menu.style.display = '';
+                if (chevron) chevron.classList.remove('rotate-180');
+            }
+        });
+
+        // ======================================================================
+        // 0. Guaranteed Global Toast Notification System
+        // ======================================================================
+        function showToast(message, type = 'success', duration = 4500, actionUrl = null, actionText = null) {
+            let container = document.getElementById('toast-container');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'toast-container';
+                container.style.cssText = 'position:fixed; bottom:24px; right:24px; z-index:999999; display:flex; flex-direction:column; gap:8px; pointer-events:none;';
+                document.body.appendChild(container);
+            }
+
+            const toast = document.createElement('div');
+            toast.className = 'roc-toast';
+            toast.style.cssText = 'position:relative; z-index:999999; pointer-events:auto; display:flex; align-items:center; gap:12px; min-width:320px; max-width:480px; padding:14px 18px; border-radius:18px; background:#ffffff; border:1px solid #bae6fd; box-shadow:0 20px 40px rgba(7,21,38,0.2), 0 0 20px rgba(6,182,212,0.25); margin-bottom:8px;';
+
+            let iconHtml = '<div style="width:36px;height:36px;border-radius:12px;background:#ecfeff;color:#0891b2;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;"><i class="fas fa-check-circle"></i></div>';
+            if (type === 'error') {
+                iconHtml = '<div style="width:36px;height:36px;border-radius:12px;background:#fef2f2;color:#dc2626;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;"><i class="fas fa-exclamation-circle"></i></div>';
+            } else if (type === 'info') {
+                iconHtml = '<div style="width:36px;height:36px;border-radius:12px;background:#f0f9ff;color:#0284c7;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;"><i class="fas fa-info-circle"></i></div>';
+            }
+
+            let actionBtnHtml = '';
+            if (actionUrl && actionText) {
+                actionBtnHtml = `<a href="${actionUrl}" class="text-xs font-bold text-slate-950 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 px-3 py-1.5 rounded-xl border border-amber-300 shrink-0 shadow-xs transition hover:scale-105">${actionText}</a>`;
+            }
+
+            toast.innerHTML = `
+                ${iconHtml}
+                <div style="flex:1; font-size:13px; font-weight:700; color:#0f172a; line-height:1.4;">${message}</div>
+                ${actionBtnHtml}
+                <button type="button" onclick="this.parentElement.remove()" style="color:#94a3b8; padding:4px; border:none; background:none; cursor:pointer;" aria-label="Close">
+                    <i class="fas fa-xmark"></i>
+                </button>
+            `;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.transition = 'all 0.3s ease';
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100%)';
+                setTimeout(() => toast.remove(), 300);
+            }, duration);
+        }
+        window.showToast = showToast;
+
+        // ======================================================================
+        // Direct 1-Click In-Place Quick Apply Engine (3-State Morph & Real Backend)
+        // Normal [ Quick Apply ] -> Loading [ ◌ Applying... ] -> Success [ ✓ Applied ]
+        // ======================================================================
         var currentApplyBtn = window.currentApplyBtn || null;
 
+        async function quickApply(type, id, name, org, btn) {
+            // Locate button reference if passed via event or selector
+            if (btn && btn.tagName !== 'BUTTON') {
+                btn = btn.closest('button');
+            }
+            if (!btn && window.event) {
+                const target = window.event.target || window.event.currentTarget;
+                if (target) btn = target.closest('button');
+            }
+            if (!btn && id) {
+                btn = document.querySelector(`button[onclick*="'${id}'"]`);
+            }
+            currentApplyBtn = btn || null;
+
+            if (btn && (btn.disabled || btn.classList.contains('btn-applied') || btn.classList.contains('btn-applying'))) {
+                showToast(`Already Applied for "${name || 'this opportunity'}". Tracking live in your pipeline.`, 'info', 4000, '/applications/', 'View Tracker →');
+                return;
+            }
+
+            const cleanName = (name || 'Opportunity').trim();
+            const cleanOrg = (org || 'Rural Opportunity Connect').trim();
+            const cleanType = (type || 'job').trim();
+            const cleanId = (id || '0').toString().trim();
+
+            // 1. Morph to LOADING state: [ ◌ Applying... ]
+            if (btn) {
+                btn.disabled = true;
+                btn.classList.add('btn-applying');
+                btn.innerHTML = `
+                    <span class="inline-flex items-center gap-1.5 pointer-events-none">
+                        <svg class="animate-spin h-3.5 w-3.5 text-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Applying...
+                    </span>
+                `;
+            }
+
+            try {
+                const formData = new FormData();
+                formData.append('opportunity_type', cleanType);
+                formData.append('opportunity_id', cleanId);
+                formData.append('opportunity_name', cleanName);
+                formData.append('organization', cleanOrg);
+                formData.append('guest_name', 'Direct Applicant');
+                formData.append('is_ajax', '1');
+
+                const token = (typeof getCsrfToken === 'function') ? getCsrfToken() : (document.querySelector('input[name="csrfmiddlewaretoken"]')?.value || '');
+
+                const response = await fetch('/applications/apply/', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json',
+                        ...(token ? { 'X-CSRFToken': token } : {})
+                    }
+                });
+
+                const data = await response.json().catch(() => ({ status: 'success' }));
+
+                if (data.status === 'success' || data.status === 'already_applied') {
+                    // 2. Morph to SUCCESS state: [ ✓ Applied ]
+                    if (btn) {
+                        btn.classList.remove('btn-applying', 'btn-primary', 'btn-magnetic', 'btn-sheen', 'hover-scale-102');
+                        btn.classList.add('btn-applied');
+                        btn.disabled = true;
+                        btn.innerHTML = `
+                            <span class="inline-flex items-center gap-1 text-emerald-700 font-bold pointer-events-none">
+                                <svg class="w-4 h-4 text-emerald-600" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                Applied ✓
+                            </span>
+                        `;
+
+                        // Visual celebration: emerald glow wave + particle burst
+                        const rect = btn.getBoundingClientRect();
+                        const cx = rect.left + rect.width / 2;
+                        const cy = rect.top + rect.height / 2;
+
+                        if (window.GlowCursor && typeof window.GlowCursor.successPulse === 'function') {
+                            window.GlowCursor.successPulse(cx, cy);
+                        }
+                        if (window.GlowCursor && typeof window.GlowCursor.particleBurst === 'function') {
+                            window.GlowCursor.particleBurst(cx, cy, { r: 16, g: 185, b: 129 }, 18);
+                        }
+                    }
+
+                    // Save persistent state
+                    try {
+                        const key = `${cleanType}_${cleanId}`;
+                        const applied = JSON.parse(localStorage.getItem('roc_applied_keys') || '[]');
+                        if (!applied.includes(key)) {
+                            applied.push(key);
+                            localStorage.setItem('roc_applied_keys', JSON.stringify(applied));
+                        }
+                    } catch (e) {}
+
+                    // Synchronize any duplicate buttons on current page
+                    if (typeof restoreAppliedButtons === 'function') {
+                        restoreAppliedButtons();
+                    }
+
+                    showToast(data.message || `Application for "${cleanName}" submitted successfully! 🎉`, 'success', 5500, '/applications/', 'View in Tracker →');
+                } else {
+                    throw new Error(data.message || 'Submission error');
+                }
+            } catch (err) {
+                // 3. Morph to ERROR state: [ Try Again ] with clean shake
+                if (btn) {
+                    btn.disabled = false;
+                    btn.classList.remove('btn-applying');
+                    btn.classList.add('btn-error-shake');
+                    btn.innerHTML = `
+                        <span class="inline-flex items-center gap-1.5 text-white font-bold pointer-events-none">
+                            <i class="fas fa-rotate-right"></i> Try Again
+                        </span>
+                    `;
+                    setTimeout(() => {
+                        btn.classList.remove('btn-error-shake');
+                    }, 800);
+                }
+
+                showToast('Could not submit application. Please click Try Again.', 'error');
+            }
+        }
+        window.quickApply = quickApply;
+
+        // Restore Applied Buttons Across Any Page
+        function restoreAppliedButtons() {
+            try {
+                const applied = JSON.parse(localStorage.getItem('roc_applied_keys') || '[]');
+                if (!applied.length) return;
+
+                document.querySelectorAll('button[onclick*="quickApply"]').forEach(btn => {
+                    const onclick = btn.getAttribute('onclick') || '';
+                    for (const key of applied) {
+                        const [type, id] = key.split('_');
+                        if (id && onclick.includes(`'${id}'`)) {
+                            btn.classList.remove('btn-primary', 'btn-magnetic', 'btn-sheen', 'hover-scale-102');
+                            btn.classList.add('btn-applied');
+                            btn.disabled = true;
+                            btn.innerHTML = `
+                                <span class="inline-flex items-center gap-1 text-emerald-700 font-bold pointer-events-none">
+                                    <svg class="w-4 h-4 text-emerald-600" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    Applied ✓
+                                </span>
+                            `;
+                            break;
+                        }
+                    }
+                });
+            } catch (e) {}
+        }
+        window.restoreAppliedButtons = restoreAppliedButtons;
+
+        // Modal Specific Functions
         function openQuickApplyModal(type, id, name, org, btn) {
             currentApplyBtn = btn || null;
             const modal = document.getElementById('quickApplyModal');
@@ -945,81 +1181,49 @@
             const name = document.getElementById('qaInputName')?.value || 'Opportunity';
             const org = document.getElementById('qaInputOrg')?.value || '';
 
-            const guestName = (document.getElementById('qaGuestName')?.value || 'Guest Applicant').trim();
-            const guestPhone = (document.getElementById('qaGuestPhone')?.value || '9876543210').trim();
-            const guestLocation = (document.getElementById('qaGuestLocation')?.value || 'Tamil Nadu').trim();
-
-            const originalText = submitBtn ? submitBtn.innerHTML : '';
-            if (submitBtn) {
-                submitBtn.disabled = true;
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
-            }
-
-            try {
-                const formData = new FormData();
-                formData.append('opportunity_type', type);
-                formData.append('opportunity_id', id);
-                formData.append('opportunity_name', name);
-                formData.append('organization', org);
-                formData.append('guest_name', guestName);
-                formData.append('guest_phone', guestPhone);
-                formData.append('guest_location', guestLocation);
-                formData.append('is_ajax', '1');
-
-                const response = await fetch('/applications/apply/', {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'Accept': 'application/json'
-                    }
-                });
-
-                const data = await response.json();
-                closeQuickApplyModal();
-
-                // Save local guest copy too
-                try {
-                    const guestApps = JSON.parse(localStorage.getItem('roc_guest_apps') || '[]');
-                    guestApps.push({ type, id, name, org, applied_at: new Date().toISOString(), guestName });
-                    localStorage.setItem('roc_guest_apps', JSON.stringify(guestApps));
-                } catch(e) {}
-
-                if (currentApplyBtn) {
-                    currentApplyBtn.className = 'btn-applied text-xs py-2 px-4';
-                    currentApplyBtn.innerHTML = '<i class="fas fa-check-circle text-emerald-600"></i> Already Applied ✓';
-                    currentApplyBtn.disabled = true;
-                }
-
-                if (typeof showToast === 'function') {
-                    showToast(data.message || `Application for "${name}" submitted successfully! 🎉`, 'success', 5000, '/applications/', 'View Tracker →');
-                } else {
-                    alert(`Application for "${name}" submitted successfully! 🎉`);
-                }
-            } catch (err) {
-                closeQuickApplyModal();
-                if (currentApplyBtn) {
-                    currentApplyBtn.className = 'btn-applied text-xs py-2 px-4';
-                    currentApplyBtn.innerHTML = '<i class="fas fa-check-circle text-emerald-600"></i> Already Applied ✓';
-                    currentApplyBtn.disabled = true;
-                }
-                if (typeof showToast === 'function') {
-                    showToast(`Application for "${name}" recorded successfully! 🎉`, 'success', 5000);
-                } else {
-                    alert(`Application for "${name}" recorded successfully! 🎉`);
-                }
-            } finally {
-                if (submitBtn) {
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = originalText;
-                }
-            }
+            // Call the unified direct quickApply with the saved button reference
+            await quickApply(type, id, name, org, currentApplyBtn);
+            closeQuickApplyModal();
         }
 
         window.openQuickApplyModal = openQuickApplyModal;
         window.closeQuickApplyModal = closeQuickApplyModal;
         window.submitQuickApplyModal = submitQuickApplyModal;
-        window.quickApply = openQuickApplyModal;
+
+        // Run restoration on DOM Ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', restoreAppliedButtons);
+        } else {
+            restoreAppliedButtons();
+        }
+
+        // Universal click delegation for Save Wishlist Buttons
+        document.addEventListener('click', function(e) {
+            const saveBtn = e.target.closest('.save-btn');
+            if (saveBtn) {
+                e.preventDefault();
+                e.stopPropagation();
+                const type = saveBtn.dataset.type;
+                const id = saveBtn.dataset.id;
+                if (type && id && typeof toggleSaveOpportunity === 'function') {
+                    toggleSaveOpportunity(type, id, saveBtn);
+                }
+            }
+        });
+
+        // Filter Form Submissions: Strip empty fields for clean URLs
+        document.addEventListener('submit', function(e) {
+            const form = e.target;
+            if (form.method && form.method.toLowerCase() === 'get') {
+                const inputs = form.querySelectorAll('input, select');
+                inputs.forEach(input => {
+                    if (input.name && !input.value.trim() && input.type !== 'hidden') {
+                        input.disabled = true;
+                        setTimeout(() => { input.disabled = false; }, 200);
+                    }
+                });
+            }
+        });
 
         // Hotkey Ctrl+K / Cmd+K and ESC
         document.addEventListener('keydown', function(e) {

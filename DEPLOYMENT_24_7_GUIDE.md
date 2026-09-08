@@ -21,7 +21,7 @@ Render offers a generous free tier for Python web services with automated SSL (H
 
 1. Open PowerShell / Command Prompt inside the Django project folder:
    ```powershell
-   cd "d:\Downloads\design proto\design proto\Design thinking\rural_opportunity_connect"
+   cd "c:\Users\mirut\Downloads\design proto mir\design proto\design proto\Design thinking\rural_opportunity_connect"
    ```
 
 2. Initialize git and commit your files:
@@ -106,8 +106,8 @@ If you need a live link **right now** to show your professor, client, or team wi
 
 ### Option A: Netlify Drop (No Terminal, No Git — 30 Seconds!)
 1. Open your browser and go to [https://app.netlify.com/drop](https://app.netlify.com/drop).
-2. Open File Explorer to `d:\Downloads\design proto`.
-3. Drag and drop the folder containing `index.html` directly into the Netlify Drop box in your browser.
+2. Open File Explorer to `c:\Users\mirut\Downloads\design proto mir\design proto`.
+3. Drag and drop the folder containing `index.html` (or the `Rural_Opportunity_Connect_Live_Web_Prototype.zip` archive) directly into the Netlify Drop box in your browser.
 4. Netlify will instantly generate a live HTTPS URL (e.g. `https://rural-opportunity-connect.netlify.app`).
 5. **Uptime**: 100% live 24/7 forever on global edge CDN.
 

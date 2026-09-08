@@ -29,12 +29,13 @@
                 <input type="hidden" name="next" value="{{ next_url }}">
             {% endif %}
 
-            <!-- Username -->
+            <!-- Username / Email -->
             <div>
-                <label class="form-label" for="username">Username</label>
+                <label class="form-label" for="username">Username or Email Address</label>
                 <div class="relative">
                     <input type="text" id="username" name="username" required
-                           placeholder="Enter your username"
+                           value="{{ entered_username|default:'' }}"
+                           placeholder="Enter your username or email"
                            class="form-input pl-10 text-sm focus:ring-2 focus:ring-cyan-500 transition-all">
                     <i class="fas fa-user absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
                 </div>
@@ -50,6 +51,24 @@
                            placeholder="Enter your password"
                            class="form-input pl-10 text-sm focus:ring-2 focus:ring-cyan-500 transition-all">
                     <i class="fas fa-lock absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                </div>
+            </div>
+
+            <!-- Quick 1-Click Demo Testing Accounts -->
+            <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-2xl space-y-2">
+                <div class="flex items-center justify-between text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                    <span>⚡ 1-Click Test Sign-In</span>
+                    <span class="text-emerald-600 font-mono">No Typing Required</span>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <button type="button" onclick="fillAndSubmitDemo('ramesh_kumar', 'demo123')"
+                            class="px-2.5 py-2 rounded-xl bg-cyan-50 hover:bg-cyan-100 text-cyan-900 border border-cyan-200 text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer shadow-xs">
+                        <i class="fas fa-user-graduate text-cyan-600"></i> Candidate (Ramesh)
+                    </button>
+                    <button type="button" onclick="fillAndSubmitDemo('admin', 'admin123')"
+                            class="px-2.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-900 border border-slate-300 text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer shadow-xs">
+                        <i class="fas fa-shield-halved text-slate-600"></i> Admin (ROC)
+                    </button>
                 </div>
             </div>
 
@@ -70,4 +89,17 @@
         </div>
     </div>
 </div>
+
+<script>
+function fillAndSubmitDemo(u, p) {
+    const userField = document.getElementById('username');
+    const passField = document.getElementById('password');
+    if (userField && passField) {
+        userField.value = u;
+        passField.value = p;
+        const form = userField.closest('form');
+        if (form) form.submit();
+    }
+}
+</script>
 {% endblock %}

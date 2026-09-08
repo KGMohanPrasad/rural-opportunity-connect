@@ -294,8 +294,6 @@
         currentY: 0,
 
         init() {
-            if (prefersReducedMotion || isTouchDevice) return;
-
             this.spotlight = document.getElementById('cursorSpotlight');
             if (this.spotlight) {
                 this.initSpotlight();

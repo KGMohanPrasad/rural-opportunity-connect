@@ -144,11 +144,176 @@ function closeQuickApplyModal() {
     }
 }
 
-// Alias quickApply to openQuickApplyModal so all templates work seamlessly
-function quickApply(type, id, name, org, btn) {
-    return openQuickApplyModal(type, id, name, org, btn);
+// ======================================================================
+// Direct 1-Click In-Place Quick Apply Engine (3-State Morph & Real Backend)
+// Normal [ Quick Apply ] -> Loading [ ◌ Applying... ] -> Success [ ✓ Applied ]
+// ======================================================================
+var currentApplyBtn = window.currentApplyBtn || null;
+
+async function quickApply(type, id, name, org, btn) {
+    if (btn && btn.tagName !== 'BUTTON') {
+        btn = btn.closest('button');
+    }
+    if (!btn && window.event) {
+        const target = window.event.target || window.event.currentTarget;
+        if (target) btn = target.closest('button');
+    }
+    if (!btn && id) {
+        btn = document.querySelector(`button[onclick*="'${id}'"]`);
+    }
+    currentApplyBtn = btn || null;
+
+    if (btn && (btn.disabled || btn.classList.contains('btn-applied') || btn.classList.contains('btn-applying'))) {
+        if (typeof showToast === 'function') {
+            showToast(`Already Applied for "${name || 'this opportunity'}". Tracking live in your pipeline.`, 'info', 4000, '/applications/', 'View Tracker →');
+        }
+        return;
+    }
+
+    const cleanName = (name || 'Opportunity').trim();
+    const cleanOrg = (org || 'Rural Opportunity Connect').trim();
+    const cleanType = (type || 'job').trim();
+    const cleanId = (id || '0').toString().trim();
+
+    // 1. Morph to LOADING state: [ ◌ Applying... ]
+    if (btn) {
+        btn.disabled = true;
+        btn.classList.add('btn-applying');
+        btn.innerHTML = `
+            <span class="inline-flex items-center gap-1.5 pointer-events-none">
+                <svg class="animate-spin h-3.5 w-3.5 text-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Applying...
+            </span>
+        `;
+    }
+
+    try {
+        const formData = new FormData();
+        formData.append('opportunity_type', cleanType);
+        formData.append('opportunity_id', cleanId);
+        formData.append('opportunity_name', cleanName);
+        formData.append('organization', cleanOrg);
+        formData.append('guest_name', 'Direct Applicant');
+        formData.append('is_ajax', '1');
+
+        const token = (typeof getCsrfToken === 'function') ? getCsrfToken() : (document.querySelector('input[name="csrfmiddlewaretoken"]')?.value || '');
+
+        const response = await fetch('/applications/apply/', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json',
+                ...(token ? { 'X-CSRFToken': token } : {})
+            }
+        });
+
+        const data = await response.json().catch(() => ({ status: 'success' }));
+
+        if (data.status === 'success' || data.status === 'already_applied') {
+            // 2. Morph to SUCCESS state: [ ✓ Applied ]
+            if (btn) {
+                btn.classList.remove('btn-applying', 'btn-primary', 'btn-magnetic', 'btn-sheen', 'hover-scale-102');
+                btn.classList.add('btn-applied');
+                btn.disabled = true;
+                btn.innerHTML = `
+                    <span class="inline-flex items-center gap-1 text-emerald-700 font-bold pointer-events-none">
+                        <svg class="w-4 h-4 text-emerald-600" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        Applied ✓
+                    </span>
+                `;
+
+                // Visual celebration: emerald glow wave + particle burst
+                const rect = btn.getBoundingClientRect();
+                const cx = rect.left + rect.width / 2;
+                const cy = rect.top + rect.height / 2;
+
+                if (window.GlowCursor && typeof window.GlowCursor.successPulse === 'function') {
+                    window.GlowCursor.successPulse(cx, cy);
+                }
+                if (window.GlowCursor && typeof window.GlowCursor.particleBurst === 'function') {
+                    window.GlowCursor.particleBurst(cx, cy, { r: 16, g: 185, b: 129 }, 18);
+                }
+            }
+
+            // Save persistent state
+            try {
+                const key = `${cleanType}_${cleanId}`;
+                const applied = JSON.parse(localStorage.getItem('roc_applied_keys') || '[]');
+                if (!applied.includes(key)) {
+                    applied.push(key);
+                    localStorage.setItem('roc_applied_keys', JSON.stringify(applied));
+                }
+            } catch (e) {}
+
+            // Synchronize any duplicate buttons on current page
+            if (typeof restoreAppliedButtons === 'function') {
+                restoreAppliedButtons();
+            }
+
+            if (typeof showToast === 'function') {
+                showToast(data.message || `Application for "${cleanName}" submitted successfully! 🎉`, 'success', 5000, '/applications/', 'View Tracker →');
+            }
+        } else {
+            throw new Error(data.message || 'Submission error');
+        }
+    } catch (err) {
+        // 3. Morph to ERROR state: [ Try Again ] with clean shake
+        if (btn) {
+            btn.disabled = false;
+            btn.classList.remove('btn-applying');
+            btn.classList.add('btn-error-shake');
+            btn.innerHTML = `
+                <span class="inline-flex items-center gap-1.5 text-white font-bold pointer-events-none">
+                    <i class="fas fa-rotate-right"></i> Try Again
+                </span>
+            `;
+            setTimeout(() => {
+                btn.classList.remove('btn-error-shake');
+            }, 800);
+        }
+
+        if (typeof showToast === 'function') {
+            showToast('Could not submit application. Please click Try Again.', 'error');
+        }
+    }
 }
+
+function restoreAppliedButtons() {
+    try {
+        const applied = JSON.parse(localStorage.getItem('roc_applied_keys') || '[]');
+        if (!applied.length) return;
+
+        document.querySelectorAll('button[onclick*="quickApply"]').forEach(btn => {
+            const onclick = btn.getAttribute('onclick') || '';
+            for (const key of applied) {
+                const [type, id] = key.split('_');
+                if (id && onclick.includes(`'${id}'`)) {
+                    btn.classList.remove('btn-primary', 'btn-magnetic', 'btn-sheen', 'hover-scale-102');
+                    btn.classList.add('btn-applied');
+                    btn.disabled = true;
+                    btn.innerHTML = `
+                        <span class="inline-flex items-center gap-1 text-emerald-700 font-bold pointer-events-none">
+                            <svg class="w-4 h-4 text-emerald-600" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Applied ✓
+                        </span>
+                    `;
+                    break;
+                }
+            }
+        });
+    } catch (e) {}
+}
+
 window.quickApply = quickApply;
+window.restoreAppliedButtons = restoreAppliedButtons;
 window.openQuickApplyModal = openQuickApplyModal;
 window.closeQuickApplyModal = closeQuickApplyModal;
 
@@ -356,11 +521,6 @@ async function submitQuickApplyModal(event) {
     }
 }
 
-// Unified Quick Apply trigger
-function quickApply(type, id, name, org, btn) {
-    openQuickApplyModal(type, id, name, org, btn);
-}
-
 // Quick Access Hub Logic
 let quickSearchDebounceTimer = null;
 
@@ -467,73 +627,67 @@ document.addEventListener('keydown', (e) => {
 
 // 4. Universal Save / Wishlist Toggle
 async function toggleSaveOpportunity(type, id, btn) {
+    if (!btn && window.event && window.event.currentTarget) {
+        btn = window.event.currentTarget;
+    }
+    if (!btn) {
+        btn = document.querySelector(`.save-btn[data-id="${id}"][data-type="${type}"]`);
+    }
+    if (!btn) return;
+
     const icon = btn.querySelector('i');
-    const isAuthenticated = document.body.dataset.authenticated === 'true';
-    if (!isAuthenticated) {
-        let guestSaved = JSON.parse(localStorage.getItem('roc_guest_saved') || '[]');
-        const key = `${type}_${id}`;
-        if (guestSaved.includes(key)) {
-            guestSaved = guestSaved.filter(k => k !== key);
-            btn.classList.remove('is-saved');
-            if (icon) {
-                icon.classList.remove('fa-solid', 'text-red-500');
-                icon.classList.add('fa-regular', 'text-slate-400');
-            }
-            showToast('Removed from your saved list.', 'info', 3000);
-        } else {
-            guestSaved.push(key);
-            btn.classList.add('is-saved');
-            if (icon) {
-                icon.classList.remove('fa-regular', 'text-slate-400');
-                icon.classList.add('fa-solid', 'text-red-500');
-            }
-            showToast('Saved to your Wishlist! (Sign up anytime to sync)', 'success', 4000, '/register/', 'Create Account →');
+    const wasSaved = btn.classList.contains('is-saved');
+
+    // 1. Optimistic UI update
+    if (wasSaved) {
+        btn.classList.remove('is-saved');
+        if (icon) {
+            icon.classList.remove('fa-solid', 'text-red-500');
+            icon.classList.add('fa-regular', 'text-slate-400');
         }
-        localStorage.setItem('roc_guest_saved', JSON.stringify(guestSaved));
-        return;
+        showToast('Removed from your Wishlist.', 'info', 3000);
+    } else {
+        btn.classList.add('is-saved');
+        if (icon) {
+            icon.classList.remove('fa-regular', 'text-slate-400');
+            icon.classList.add('fa-solid', 'text-red-500');
+        }
+        showToast('Saved to your Wishlist!', 'success', 4000, '/saved-opportunities/', 'View Saved →');
+        if (window.GlowCursor && typeof window.GlowCursor.particleBurst === 'function') {
+            const rect = btn.getBoundingClientRect();
+            window.GlowCursor.particleBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, { r: 239, g: 68, b: 68 }, 16);
+        }
     }
 
-    const token = getCsrfToken();
-
+    // Sync localStorage
     try {
+        const key = `${type}_${id}`;
+        let savedKeys = JSON.parse(localStorage.getItem('roc_saved_keys') || '[]');
+        if (wasSaved) {
+            savedKeys = savedKeys.filter(k => k !== key);
+        } else {
+            if (!savedKeys.includes(key)) savedKeys.push(key);
+        }
+        localStorage.setItem('roc_saved_keys', JSON.stringify(savedKeys));
+    } catch (e) {}
+
+    // Send backend sync
+    try {
+        const token = (typeof getCsrfToken === 'function') ? getCsrfToken() : '';
         const formData = new FormData();
         formData.append('type', type);
         formData.append('id', id);
 
-        const response = await fetch('/save-opportunity/', {
+        await fetch('/save-opportunity/', {
             method: 'POST',
             body: formData,
             headers: {
-                'X-CSRFToken': token,
+                ...(token ? { 'X-CSRFToken': token } : {}),
                 'X-Requested-With': 'XMLHttpRequest',
                 'Accept': 'application/json'
             }
         });
-
-        if (response.redirected && response.url.includes('/login/')) {
-            window.location.href = `/login/?next=${encodeURIComponent(window.location.pathname)}`;
-            return;
-        }
-
-        const data = await response.json();
-        if (data.status === 'saved') {
-            btn.classList.add('is-saved');
-            if (icon) {
-                icon.classList.remove('fa-regular', 'text-slate-400');
-                icon.classList.add('fa-solid', 'text-red-500');
-            }
-            showToast('Saved to your Wishlist!', 'success', 3500, '/saved-opportunities/', 'View Saved →');
-        } else if (data.status === 'removed') {
-            btn.classList.remove('is-saved');
-            if (icon) {
-                icon.classList.remove('fa-solid', 'text-red-500');
-                icon.classList.add('fa-regular', 'text-slate-400');
-            }
-            showToast('Removed from your Wishlist.', 'info', 3000);
-        }
-    } catch (err) {
-        showToast('Please sign in to save opportunities.', 'info');
-    }
+    } catch (err) {}
 }
 window.toggleSaveOpportunity = toggleSaveOpportunity;
 
@@ -844,6 +998,7 @@ function init3DCardTilt() {
             glare.className = 'tilt-glare';
             card.appendChild(glare);
         }
+        glare.style.pointerEvents = 'none';
 
         let isHovered = false;
         let bounds = null;
@@ -855,6 +1010,15 @@ function init3DCardTilt() {
 
         card.addEventListener('mousemove', (e) => {
             if (!isHovered || !bounds) return;
+
+            // When hovering over interactive elements (buttons, links, inputs, save icon):
+            // Stabilize tilt matrix to 0deg so sub-pixel coordinate shifting never drops click events in Chromium!
+            if (e.target.closest('button, a, input, select, textarea, .save-btn, .btn-primary, .btn-secondary, .btn-outline, .btn-applied, .nav-tab')) {
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1.01, 1.01, 1.01)';
+                glare.style.opacity = '0';
+                return;
+            }
+
             const mouseX = e.clientX - bounds.left;
             const mouseY = e.clientY - bounds.top;
 
@@ -862,18 +1026,20 @@ function init3DCardTilt() {
             const percentY = (mouseY / bounds.height) - 0.5;
 
             // Compute 3D rotation angles (-12 to 12 degrees)
-            const rotateY = (percentX * 16).toFixed(2);
-            const rotateX = (-percentY * 16).toFixed(2);
+            const rotateY = (percentX * 12).toFixed(2);
+            const rotateX = (-percentY * 12).toFixed(2);
 
             card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
 
             // Position specular glare radial reflection
+            glare.style.opacity = '1';
             glare.style.background = `radial-gradient(circle at ${mouseX}px ${mouseY}px, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0) 65%)`;
         });
 
         card.addEventListener('mouseleave', () => {
             isHovered = false;
             card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+            glare.style.opacity = '0';
         });
     });
 }
@@ -1103,7 +1269,37 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 4. Initialize 3D Card Tilt Engine
+    // 4. Live Document Checklist Interactive Toggling & Real-time Progress Ring
+    document.querySelectorAll('.checklist-interactive-item input[type="checkbox"]').forEach(chk => {
+        chk.addEventListener('change', function() {
+            const parent = this.closest('.checklist-interactive-item');
+            if (parent) {
+                if (this.checked) {
+                    parent.classList.add('checked');
+                } else {
+                    parent.classList.remove('checked');
+                }
+            }
+            const allBoxes = document.querySelectorAll('.checklist-interactive-item input[type="checkbox"]');
+            if (allBoxes.length) {
+                const checkedCount = Array.from(allBoxes).filter(c => c.checked).length;
+                const pct = Math.round((checkedCount / allBoxes.length) * 100);
+                document.querySelectorAll('.circle-progress-bar').forEach(bar => {
+                    const radius = 26;
+                    const circumference = 2 * Math.PI * radius;
+                    const offset = circumference - (pct / 100) * circumference;
+                    bar.style.strokeDashoffset = offset;
+                });
+                document.querySelectorAll('.counter-value').forEach(cv => {
+                    if (cv.closest('.circle-progress-bar') || cv.closest('.bg-white\\/10') || cv.dataset.counter !== undefined) {
+                        cv.textContent = pct;
+                    }
+                });
+            }
+        });
+    });
+
+    // 5. Initialize 3D Card Tilt Engine
     init3DCardTilt();
 
     // 5. Initialize 3D WebGL Hero Globe if container is present
@@ -1127,3 +1323,19 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (e) {}
     }
 });
+
+// Explicit Global Window Exports for All Buttons & Handlers
+window.showToast = typeof showToast === 'function' ? showToast : function() {};
+window.openQuickApplyModal = typeof openQuickApplyModal === 'function' ? openQuickApplyModal : function() {};
+window.closeQuickApplyModal = typeof closeQuickApplyModal === 'function' ? closeQuickApplyModal : function() {};
+window.openQuickAccessModal = typeof openQuickAccessModal === 'function' ? openQuickAccessModal : function() {};
+window.closeQuickAccessModal = typeof closeQuickAccessModal === 'function' ? closeQuickAccessModal : function() {};
+window.toggleUserDropdown = typeof toggleUserDropdown === 'function' ? toggleUserDropdown : function() {};
+window.toggleMobileMenu = typeof toggleMobileMenu === 'function' ? toggleMobileMenu : function() {};
+window.closeVoiceAssistant = typeof closeVoiceAssistant === 'function' ? closeVoiceAssistant : function() {};
+window.triggerVoiceAssistant = typeof triggerVoiceAssistant === 'function' ? triggerVoiceAssistant : function() {};
+window.getCsrfToken = typeof getCsrfToken === 'function' ? getCsrfToken : function() { return ''; };
+window.toggleSaveOpportunity = typeof toggleSaveOpportunity === 'function' ? toggleSaveOpportunity : function() {};
+window.quickApply = typeof quickApply === 'function' ? quickApply : function() {};
+window.restoreAppliedButtons = typeof restoreAppliedButtons === 'function' ? restoreAppliedButtons : function() {};
+

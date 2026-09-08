@@ -34,7 +34,7 @@
         isPaused: false,
 
         init() {
-            if (!window.THREE || prefersReducedMotion) return;
+            if (!window.THREE) return;
 
             const canvas = document.getElementById('globalWebglCanvas');
             if (!canvas) return;
@@ -173,33 +173,33 @@
         clock: null,
         tooltipEl: null,
 
-        // 5 Core Opportunity Sectors
+        // 6 Core Opportunity Sectors
         sectors: [
             {
                 id: 'jobs',
-                title: 'Rural Jobs',
+                title: 'Jobs',
                 count: '35+ Live',
                 desc: 'Local, semi-urban & remote verified livelihoods',
                 url: '/jobs/',
                 color: 0x0284c7, // Tech Blue
                 glowColor: 0x38bdf8,
                 radius: 110,
-                angle: (0 * Math.PI * 2) / 5,
-                y: 28,
-                speed: 0.008,
+                angle: (0 * Math.PI * 2) / 6,
+                y: 26,
+                speed: 0.007,
                 icon: '💼'
             },
             {
                 id: 'scholarships',
-                title: 'Higher Scholarships',
+                title: 'Scholarships',
                 count: '25+ Grants',
                 desc: 'Post-matric tuition waivers & CSR funding',
                 url: '/scholarships/',
                 color: 0xa855f7, // Purple
                 glowColor: 0xd8b4fe,
                 radius: 125,
-                angle: (1 * Math.PI * 2) / 5,
-                y: -22,
+                angle: (1 * Math.PI * 2) / 6,
+                y: -20,
                 speed: 0.006,
                 icon: '🎓'
             },
@@ -212,38 +212,52 @@
                 color: 0x06b6d4, // Cyan
                 glowColor: 0x67e8f9,
                 radius: 105,
-                angle: (2 * Math.PI * 2) / 5,
-                y: 36,
-                speed: 0.009,
+                angle: (2 * Math.PI * 2) / 6,
+                y: 32,
+                speed: 0.008,
                 icon: '🏛️'
             },
             {
                 id: 'skills',
-                title: 'Skill Programs',
+                title: 'Skills',
                 count: '20+ Courses',
                 desc: 'Certified technical, digital & vocational courses',
                 url: '/skills/',
                 color: 0x38bdf8, // Sky Blue
                 glowColor: 0xbae6fd,
                 radius: 130,
-                angle: (3 * Math.PI * 2) / 5,
+                angle: (3 * Math.PI * 2) / 6,
                 y: -14,
-                speed: 0.007,
+                speed: 0.0065,
                 icon: '💻'
             },
             {
                 id: 'business',
-                title: 'Micro-Enterprises',
+                title: 'Business',
                 count: '15+ Blueprints',
                 desc: 'Village business models & PMEGP subsidies',
                 url: '/business/',
                 color: 0x00f2fe, // Neon Cyan
                 glowColor: 0xa5f3fc,
                 radius: 115,
-                angle: (4 * Math.PI * 2) / 5,
+                angle: (4 * Math.PI * 2) / 6,
                 y: 8,
-                speed: 0.008,
+                speed: 0.0075,
                 icon: '🚀'
+            },
+            {
+                id: 'education',
+                title: 'Education',
+                count: '30+ Grants',
+                desc: 'Vocational institutes, polytechnics & rural academies',
+                url: '/scholarships/',
+                color: 0xa78bfa, // Soft Purple
+                glowColor: 0xc4b5fd,
+                radius: 120,
+                angle: (5 * Math.PI * 2) / 6,
+                y: -24,
+                speed: 0.007,
+                icon: '📚'
             }
         ],
 
@@ -281,14 +295,14 @@
             this.clock = new THREE.Clock();
 
             // Lighting
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
             this.scene.add(ambientLight);
 
-            const dirLight = new THREE.DirectionalLight(0x00f2fe, 1.2);
+            const dirLight = new THREE.DirectionalLight(0x00f2fe, 1.4);
             dirLight.position.set(120, 150, 180);
             this.scene.add(dirLight);
 
-            const pointLight = new THREE.PointLight(0x06b6d4, 2.5, 400);
+            const pointLight = new THREE.PointLight(0x06b6d4, 3.0, 400);
             pointLight.position.set(0, 0, 0);
             this.scene.add(pointLight);
 
@@ -300,48 +314,66 @@
             this.buildOrbitalRings();
             this.buildSectorNodesAndBeziers();
             this.buildConstellationDust();
+            this.buildDataArcs();
+            this.buildFloatingLabels();
 
             this.bindEvents();
             this.animate();
         },
 
-        // 1. Central Opportunity Core
+        // 1. Central 3D Rotating Globe & Opportunity Core
         buildOpportunityCore() {
-            // Outer Wireframe Polyhedron
-            const coreGeo = new THREE.IcosahedronGeometry(42, 1);
-            const coreMat = new THREE.MeshStandardMaterial({
+            // Globe Container
+            this.globeGroup = new THREE.Group();
+            this.networkGroup.add(this.globeGroup);
+
+            // Wireframe Globe Sphere with Latitude/Longitude Grid
+            const globeGeo = new THREE.SphereGeometry(38, 28, 20);
+            const globeMat = new THREE.MeshBasicMaterial({
                 color: 0x06b6d4,
                 wireframe: true,
                 transparent: true,
-                opacity: 0.45,
+                opacity: 0.32
+            });
+            this.globeMesh = new THREE.Mesh(globeGeo, globeMat);
+            this.globeGroup.add(this.globeMesh);
+
+            // Core 3D Outer Polyhedron Wireframe
+            const coreGeo = new THREE.IcosahedronGeometry(44, 1);
+            const coreMat = new THREE.MeshStandardMaterial({
+                color: 0x38bdf8,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.38,
                 emissive: 0x0284c7,
-                emissiveIntensity: 0.3
+                emissiveIntensity: 0.4
             });
             this.coreMesh = new THREE.Mesh(coreGeo, coreMat);
-            this.networkGroup.add(this.coreMesh);
+            this.globeGroup.add(this.coreMesh);
 
-            // Inner Pulsating Core Sphere
+            // Inner Glowing Energy Core
             const innerGeo = new THREE.SphereGeometry(22, 32, 32);
             const innerMat = new THREE.MeshStandardMaterial({
                 color: 0x00f2fe,
                 emissive: 0x06b6d4,
-                emissiveIntensity: 0.8,
+                emissiveIntensity: 0.85,
                 roughness: 0.2,
                 metalness: 0.8,
                 transparent: true,
                 opacity: 0.85
             });
             this.coreGlowMesh = new THREE.Mesh(innerGeo, innerMat);
-            this.networkGroup.add(this.coreGlowMesh);
+            this.globeGroup.add(this.coreGlowMesh);
 
-            // Central Pulsing Aura Sprite
+            // Atmospheric Glow Sprite
             const auraCanvas = document.createElement('canvas');
             auraCanvas.width = 128;
             auraCanvas.height = 128;
             const ctx = auraCanvas.getContext('2d');
             const grad = ctx.createRadialGradient(64, 64, 0, 64, 64, 64);
-            grad.addColorStop(0, 'rgba(0, 242, 254, 0.85)');
-            grad.addColorStop(0.4, 'rgba(6, 182, 212, 0.35)');
+            grad.addColorStop(0, 'rgba(103, 232, 249, 0.85)');
+            grad.addColorStop(0.35, 'rgba(6, 182, 212, 0.35)');
+            grad.addColorStop(0.7, 'rgba(167, 139, 250, 0.15)');
             grad.addColorStop(1, 'rgba(7, 21, 38, 0)');
             ctx.fillStyle = grad;
             ctx.fillRect(0, 0, 128, 128);
@@ -351,11 +383,11 @@
                 map: auraTexture,
                 transparent: true,
                 blending: THREE.AdditiveBlending,
-                opacity: 0.75
+                opacity: 0.8
             });
             const auraSprite = new THREE.Sprite(auraMat);
-            auraSprite.scale.set(110, 110, 1);
-            this.networkGroup.add(auraSprite);
+            auraSprite.scale.set(120, 120, 1);
+            this.globeGroup.add(auraSprite);
         },
 
         // 2. Holographic Orbital Rings
@@ -363,7 +395,7 @@
             const ringConfigs = [
                 { r: 72, tiltX: 0.45, tiltY: 0.2, color: 0x00f2fe, opacity: 0.3 },
                 { r: 96, tiltX: -0.55, tiltY: 0.4, color: 0x38bdf8, opacity: 0.22 },
-                { r: 128, tiltX: 0.2, tiltY: -0.6, color: 0x0284c7, opacity: 0.18 }
+                { r: 128, tiltX: 0.2, tiltY: -0.6, color: 0xa78bfa, opacity: 0.2 }
             ];
 
             ringConfigs.forEach(cfg => {
@@ -382,10 +414,9 @@
             });
         },
 
-        // 3. Five Luminous Sector Nodes & Connected Beziers
+        // 3. Six Luminous Sector Nodes & Connected Beziers
         buildSectorNodesAndBeziers() {
             this.sectors.forEach((sec, idx) => {
-                // Group for Node + Glow + Beacon
                 const nodeGroup = new THREE.Group();
 
                 // Core Sphere
@@ -393,7 +424,7 @@
                 const sphereMat = new THREE.MeshStandardMaterial({
                     color: sec.color,
                     emissive: sec.glowColor,
-                    emissiveIntensity: 0.75,
+                    emissiveIntensity: 0.8,
                     roughness: 0.2,
                     metalness: 0.6
                 });
@@ -401,7 +432,7 @@
                 sphereMesh.userData = { sector: sec, isNode: true };
                 nodeGroup.add(sphereMesh);
 
-                // Halo Wireframe Ring around each node
+                // Halo Wireframe Ring
                 const haloGeo = new THREE.TorusGeometry(11, 0.6, 12, 32);
                 const haloMat = new THREE.MeshBasicMaterial({
                     color: sec.glowColor,
@@ -412,14 +443,12 @@
                 haloMesh.rotation.x = Math.PI / 3;
                 nodeGroup.add(haloMesh);
 
-                // Initial positioning
                 const x = Math.cos(sec.angle) * sec.radius;
                 const z = Math.sin(sec.angle) * sec.radius;
                 nodeGroup.position.set(x, sec.y, z);
-
                 this.networkGroup.add(nodeGroup);
 
-                // Connecting Line / Dynamic Bezier from (0,0,0) to node
+                // Bezier Connection from center (0,0,0) to node
                 const curve = new THREE.QuadraticBezierCurve3(
                     new THREE.Vector3(0, 0, 0),
                     new THREE.Vector3(x * 0.5, sec.y + 16, z * 0.5),
@@ -438,7 +467,7 @@
                 this.networkGroup.add(lineMesh);
 
                 // Traveling Light Pulse on line
-                const pulseGeo = new THREE.SphereGeometry(2.0, 12, 12);
+                const pulseGeo = new THREE.SphereGeometry(2.2, 12, 12);
                 const pulseMat = new THREE.MeshBasicMaterial({
                     color: 0xffffff,
                     transparent: true,
@@ -463,6 +492,69 @@
                 });
             });
         },
+
+        // 4. Data Arcs Leaping Across 3D Globe Surface
+        buildDataArcs() {
+            this.dataArcs = [];
+            const arcPairs = [
+                { startLat: 0.2, startLon: 0.3, endLat: 0.8, endLon: 1.5, color: 0x00f2fe },
+                { startLat: -0.4, startLon: 1.2, endLat: 0.3, endLon: 2.7, color: 0xa78bfa },
+                { startLat: 0.6, startLon: 2.1, endLat: -0.5, endLon: 3.8, color: 0x38bdf8 },
+                { startLat: -0.2, startLon: 4.0, endLat: 0.4, endLon: 5.2, color: 0x67e8f9 }
+            ];
+
+            const globeR = 38;
+            arcPairs.forEach(pair => {
+                const p1 = new THREE.Vector3(
+                    globeR * Math.cos(pair.startLat) * Math.sin(pair.startLon),
+                    globeR * Math.sin(pair.startLat),
+                    globeR * Math.cos(pair.startLat) * Math.cos(pair.startLon)
+                );
+                const p2 = new THREE.Vector3(
+                    globeR * Math.cos(pair.endLat) * Math.sin(pair.endLon),
+                    globeR * Math.sin(pair.endLat),
+                    globeR * Math.cos(pair.endLat) * Math.cos(pair.endLon)
+                );
+
+                const mid = p1.clone().add(p2).multiplyScalar(0.5).normalize().multiplyScalar(globeR * 1.35);
+                const curve = new THREE.QuadraticBezierCurve3(p1, mid, p2);
+                const points = curve.getPoints(24);
+
+                const arcGeo = new THREE.BufferGeometry().setFromPoints(points);
+                const arcMat = new THREE.LineBasicMaterial({
+                    color: pair.color,
+                    transparent: true,
+                    opacity: 0.5
+                });
+                const arcMesh = new THREE.Line(arcGeo, arcMat);
+                this.globeGroup.add(arcMesh);
+
+                const beaconGeo = new THREE.SphereGeometry(1.6, 8, 8);
+                const beaconMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+                const beaconMesh = new THREE.Mesh(beaconGeo, beaconMat);
+                this.globeGroup.add(beaconMesh);
+
+                this.dataArcs.push({ curve, beacon: beaconMesh, progress: Math.random() });
+            });
+        },
+
+        // 5. Floating 3D Sector Labels
+        buildFloatingLabels() {
+            this.floatingLabels = [];
+            this.sectors.forEach((sec, idx) => {
+                const label = document.createElement('a');
+                label.href = sec.url;
+                label.className = 'floating-3d-node-label';
+                label.setAttribute('aria-label', `Navigate to ${sec.title}`);
+                label.innerHTML = `
+                    <span class="node-indicator" style="background:#${sec.glowColor.toString(16)}"></span>
+                    <span>${sec.icon} ${sec.title}</span>
+                `;
+                this.container.appendChild(label);
+                this.floatingLabels.push({ el: label, sector: sec, nodeIndex: idx });
+            });
+        },
+
 
         // 4. Ambient Constellation Dust Particles
         buildConstellationDust() {
@@ -664,12 +756,25 @@
             this.cameraCurrentZ += (this.cameraTargetZ - this.cameraCurrentZ) * 0.06;
             this.camera.position.z = this.cameraCurrentZ;
 
-            // 2. Animate Core Pulsing
+            // 2. Animate Core & 3D Globe Pulsing
             const pulseScale = 1 + Math.sin(time * 2.2) * 0.06;
             if (this.coreGlowMesh) this.coreGlowMesh.scale.set(pulseScale, pulseScale, pulseScale);
             if (this.coreMesh) {
                 this.coreMesh.rotation.y += 0.006;
                 this.coreMesh.rotation.z += 0.004;
+            }
+            if (this.globeMesh) {
+                this.globeMesh.rotation.y += 0.004;
+                this.globeMesh.rotation.x += 0.001;
+            }
+
+            // Animate Data Arcs Across Globe
+            if (this.dataArcs && this.dataArcs.length) {
+                this.dataArcs.forEach(arc => {
+                    arc.progress = (arc.progress + 0.012) % 1;
+                    const pt = arc.curve.getPoint(arc.progress);
+                    arc.beacon.position.copy(pt);
+                });
             }
 
             // 3. Animate Orbital Rings
@@ -700,6 +805,32 @@
                 node.pulse.position.copy(pulsePos);
             });
 
+            // 5. Project 3D Node Positions to 2D Container for Floating Labels
+            if (this.floatingLabels && this.floatingLabels.length && this.container) {
+                const w = this.container.clientWidth;
+                const h = this.container.clientHeight;
+                const tempVec = new THREE.Vector3();
+
+                this.floatingLabels.forEach(fl => {
+                    const node = this.nodeMeshes[fl.nodeIndex];
+                    if (node && node.group) {
+                        node.group.getWorldPosition(tempVec);
+                        tempVec.project(this.camera);
+
+                        if (tempVec.z > 1.0) {
+                            fl.el.style.opacity = '0';
+                        } else {
+                            const px = (tempVec.x * 0.5 + 0.5) * w;
+                            const py = (-(tempVec.y * 0.5) + 0.5) * h;
+                            fl.el.style.left = `${px}px`;
+                            fl.el.style.top = `${py - 22}px`;
+                            const depthOpacity = Math.max(0.35, Math.min(1.0, (1.2 - tempVec.z)));
+                            fl.el.style.opacity = `${depthOpacity}`;
+                        }
+                    }
+                });
+            }
+
             this.renderer.render(this.scene, this.camera);
         }
     };
@@ -711,7 +842,7 @@
         instances: [],
 
         init() {
-            if (!window.THREE || prefersReducedMotion) return;
+            if (!window.THREE) return;
 
             const canvases = document.querySelectorAll('.category-3d-canvas');
             if (!canvases.length) return;
@@ -1001,7 +1132,7 @@
        ========================================================================== */
     const Header3DCanvases = {
         init() {
-            if (!window.THREE || prefersReducedMotion) return;
+            if (!window.THREE) return;
 
             const headerCanvases = document.querySelectorAll('.header-3d-canvas');
             if (!headerCanvases.length) return;

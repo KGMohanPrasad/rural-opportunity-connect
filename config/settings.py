@@ -38,8 +38,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-s%y0@&!mx%8#*&9-_(5-f
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True').lower() in ('true', '1', 'yes')
 
-allowed_hosts_raw = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1,testserver,*')
-ALLOWED_HOSTS = [h.strip() for h in allowed_hosts_raw.split(',') if h.strip()]
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -222,6 +221,8 @@ default_csrf_trusted = [
     'https://*.railway.app',
     'https://*.pythonanywhere.com',
     'https://*.vercel.app',
+    'https://*.trycloudflare.com',
+    'https://*.localtunnel.me',
 ]
 if csrf_trusted_env:
     default_csrf_trusted.extend([o.strip() for o in csrf_trusted_env.split(',') if o.strip()])

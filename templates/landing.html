@@ -36,21 +36,17 @@
                     Find verified rural jobs, higher education scholarships, government welfare schemes, certified skill programs, and micro-enterprise blueprints — all in one accessible, multilingual platform.
                 </p>
 
-                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4 pt-2 hero-enter-actions">
-                    <button type="button" onclick="openQuickAccessModal()" id="heroQuickAccessBtn"
-                            class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-extrabold text-sm shadow-xl shadow-amber-500/20 hover:scale-102 transition flex items-center justify-center gap-2 cursor-pointer">
-                        <i class="fas fa-bolt text-slate-950"></i> Quick Access Hub
-                    </button>
-                    <a href="{% url 'jobs_list' %}" class="btn-primary btn-magnetic btn-shimmer-sweep btn-glow-pulse w-full sm:w-auto text-sm sm:text-base py-3.5 px-6 shadow-lg shadow-cyan-950/40 text-center">
-                        <i class="fas fa-compass mr-1.5 btn-icon-nudge"></i> Explore Opportunities
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2 hero-enter-actions">
+                    <a href="{% url 'jobs_list' %}" class="btn-primary btn-magnetic btn-shimmer-sweep btn-glow-pulse w-full sm:w-auto text-sm sm:text-base font-bold py-3.5 px-7 shadow-lg shadow-cyan-950/40 text-center rounded-xl flex items-center justify-center gap-2">
+                        <i class="fas fa-compass btn-icon-nudge"></i> Explore Opportunities
                     </a>
                     {% if user.is_authenticated %}
-                        <a href="{% url 'dashboard' %}" class="btn-secondary btn-magnetic w-full sm:w-auto text-sm sm:text-base py-3.5 px-6 text-center">
-                            <i class="fas fa-chart-pie mr-1.5"></i> Dashboard
+                        <a href="{% url 'dashboard' %}" class="btn-secondary btn-magnetic w-full sm:w-auto text-sm sm:text-base font-bold py-3.5 px-7 text-center rounded-xl flex items-center justify-center gap-2">
+                            <i class="fas fa-chart-pie"></i> Dashboard
                         </a>
                     {% else %}
-                        <a href="{% url 'register' %}" class="btn-secondary btn-magnetic w-full sm:w-auto text-sm sm:text-base py-3.5 px-6 text-center">
-                            <i class="fas fa-user-plus mr-1.5"></i> Register
+                        <a href="{% url 'register' %}" class="btn-secondary btn-magnetic w-full sm:w-auto text-sm sm:text-base font-bold py-3.5 px-7 text-center rounded-xl flex items-center justify-center gap-2">
+                            <i class="fas fa-user-plus"></i> Register
                         </a>
                     {% endif %}
                 </div>
@@ -125,7 +121,7 @@
                                     <a href="{% url 'job_detail' featured_job.id %}" class="px-2.5 py-1 text-[11px] font-bold rounded-lg border border-slate-300 hover:bg-slate-100 text-slate-700 transition flex items-center gap-1">
                                         <i class="fas fa-eye text-cyan-700"></i> View Details
                                     </a>
-                                    <button onclick="quickApply('job', '{{ featured_job.id }}', '{{ featured_job.title|escapejs }}', '{{ featured_job.organization|escapejs }}', this)" class="px-2.5 py-1 text-[11px] font-bold rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white transition flex items-center gap-1 shadow-xs cursor-pointer">
+                                    <button type="button" onclick="quickApply('job', '{{ featured_job.id }}', '{{ featured_job.title|escapejs }}', '{{ featured_job.organization|escapejs }}', this)" class="px-2.5 py-1 text-[11px] font-bold rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white transition flex items-center gap-1 shadow-xs cursor-pointer">
                                         <i class="fas fa-paper-plane"></i> Quick Apply
                                     </button>
                                 </div>
@@ -148,7 +144,7 @@
                                     <a href="{% url 'scholarship_detail' featured_scholarship.id %}" class="px-2.5 py-1 text-[11px] font-bold rounded-lg border border-slate-300 hover:bg-slate-100 text-slate-700 transition flex items-center gap-1">
                                         <i class="fas fa-eye text-cyan-700"></i> View Details
                                     </a>
-                                    <button onclick="quickApply('scholarship', '{{ featured_scholarship.id }}', '{{ featured_scholarship.name|escapejs }}', '{{ featured_scholarship.provider|escapejs }}', this)" class="px-2.5 py-1 text-[11px] font-bold rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white transition flex items-center gap-1 shadow-xs cursor-pointer">
+                                    <button type="button" onclick="quickApply('scholarship', '{{ featured_scholarship.id }}', '{{ featured_scholarship.name|escapejs }}', '{{ featured_scholarship.provider|escapejs }}', this)" class="px-2.5 py-1 text-[11px] font-bold rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white transition flex items-center gap-1 shadow-xs cursor-pointer">
                                         <i class="fas fa-paper-plane"></i> Quick Apply
                                     </button>
                                 </div>
@@ -171,7 +167,7 @@
                                     <a href="{% url 'scheme_detail' featured_scheme.id %}" class="px-2.5 py-1 text-[11px] font-bold rounded-lg border border-slate-300 hover:bg-slate-100 text-slate-700 transition flex items-center gap-1">
                                         <i class="fas fa-eye text-cyan-700"></i> View Details
                                     </a>
-                                    <button onclick="quickApply('scheme', '{{ featured_scheme.id }}', '{{ featured_scheme.name|escapejs }}', '{{ featured_scheme.department|escapejs }}', this)" class="px-2.5 py-1 text-[11px] font-bold rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white transition flex items-center gap-1 shadow-xs cursor-pointer">
+                                    <button type="button" onclick="quickApply('scheme', '{{ featured_scheme.id }}', '{{ featured_scheme.name|escapejs }}', '{{ featured_scheme.department|escapejs }}', this)" class="px-2.5 py-1 text-[11px] font-bold rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white transition flex items-center gap-1 shadow-xs cursor-pointer">
                                         <i class="fas fa-paper-plane"></i> Enroll / Apply
                                     </button>
                                 </div>
@@ -233,6 +229,8 @@
         </div>
     </div>
 </section>
+
+
 
 <!-- 3. Explore Opportunity Categories (Interactive 3D WebGL Emblems) -->
 <section class="max-w-7xl mx-auto px-4 sm:px-6 py-20">
@@ -362,10 +360,10 @@
             </p>
         </div>
         <div class="flex items-center gap-3">
-            <button id="carouselPrevBtn" aria-label="Previous opportunity" class="carousel-nav-btn">
+            <button type="button" id="carouselPrevBtn" aria-label="Previous opportunity" class="carousel-nav-btn">
                 <i class="fas fa-chevron-left text-sm"></i>
             </button>
-            <button id="carouselNextBtn" aria-label="Next opportunity" class="carousel-nav-btn">
+            <button type="button" id="carouselNextBtn" aria-label="Next opportunity" class="carousel-nav-btn">
                 <i class="fas fa-chevron-right text-sm"></i>
             </button>
         </div>

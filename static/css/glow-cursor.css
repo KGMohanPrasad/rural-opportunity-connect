@@ -1,0 +1,99 @@
+/* ==========================================================================
+   Rural Opportunity Connect — Glow Cursor & Energy Light Trail
+   Inspired by React Bits GlowCursor WebGL/OGL interactive light trail
+   Cyan (#67E8F9) to Purple (#A78BFA) with dynamic bloom, idle fade & reactions
+   ========================================================================== */
+
+#glowCursorCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    z-index: 99990;
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
+}
+
+/* Custom Cursor Accent Pulse (for subtle interactive feedback) */
+.cursor-click-ripple {
+    position: fixed;
+    pointer-events: none;
+    z-index: 99991;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    border: 2px solid rgba(103, 232, 249, 0.85);
+    box-shadow: 0 0 16px rgba(103, 232, 249, 0.6), inset 0 0 12px rgba(167, 139, 250, 0.4);
+    animation: cursorRippleExpand 0.55s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+}
+
+@keyframes cursorRippleExpand {
+    0% {
+        width: 10px;
+        height: 10px;
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0.2);
+    }
+    50% {
+        opacity: 0.85;
+    }
+    100% {
+        width: 80px;
+        height: 80px;
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1.6);
+    }
+}
+
+/* Cursor Quick Apply Success Pulse */
+.cursor-apply-pulse {
+    position: fixed;
+    pointer-events: none;
+    z-index: 99991;
+    border-radius: 50%;
+    border: 2.5px solid rgba(16, 185, 129, 0.9);
+    box-shadow: 0 0 24px rgba(16, 185, 129, 0.8), 0 0 40px rgba(6, 182, 212, 0.6);
+    animation: cursorApplySuccess 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes cursorApplySuccess {
+    0% {
+        width: 12px;
+        height: 12px;
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0.3);
+    }
+    100% {
+        width: 140px;
+        height: 140px;
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(2);
+    }
+}
+
+/* Cursor Bookmark Sparkle Particle */
+.cursor-spark-particle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 99992;
+    border-radius: 50%;
+    will-change: transform, opacity;
+}
+
+/* Interactive Cursor Reactive Classes */
+body.glow-cursor-active [data-cursor-target],
+body.glow-cursor-active a,
+body.glow-cursor-active button,
+body.glow-cursor-active .roc-card,
+body.glow-cursor-active .tilt-card-3d {
+    /* Retain natural cursor behavior while glowing trail complements it */
+    cursor: pointer;
+}
+
+/* Ensure glow cursor canvas is always active and unblocked */
+#glowCursorCanvas {
+    display: block !important;
+}

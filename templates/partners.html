@@ -37,7 +37,7 @@
                 <div class="text-3xl font-black text-white counter-value" data-counter="{{ total_external_count }}">{{ total_external_count }}</div>
                 <p class="text-[11px] text-cyan-200 uppercase font-semibold">Synced Partner Opportunities</p>
 
-                <button onclick="triggerPartnerSync(this)" class="btn-primary text-xs w-full py-2.5 shadow-md btn-sheen spring-press">
+                <button type="button" onclick="triggerPartnerSync(this)" class="btn-primary text-xs w-full py-2.5 shadow-md btn-sheen spring-press">
                     <i class="fas fa-rotate mr-1"></i> Sync Fresh Feeds
                 </button>
             </div>
@@ -124,11 +124,11 @@
                     {% endif %}
                     <div class="flex items-center gap-2">
                         {% if user.is_authenticated and sc_key in user_applied_keys %}
-                            <button class="btn-applied text-[11px] py-1.5 px-3" disabled>
+                            <button type="button" class="btn-applied text-[11px] py-1.5 px-3" disabled>
                                 <i class="fas fa-check-circle text-emerald-600"></i> Applied ✓
                             </button>
                         {% else %}
-                            <button onclick="quickApply('scholarship', '{{ sc.id }}', '{{ sc.name|escapejs }}', '{{ sc.provider|escapejs }}', this)"
+                            <button type="button" onclick="quickApply('scholarship', '{{ sc.id }}', '{{ sc.name|escapejs }}', '{{ sc.provider|escapejs }}', this)"
                                     class="btn-primary text-[11px] py-1.5 px-3 cursor-pointer">
                                 Quick Apply
                             </button>
@@ -186,11 +186,11 @@
                     {% endif %}
                     <div class="flex items-center gap-2">
                         {% if user.is_authenticated and scm_key in user_applied_keys %}
-                            <button class="btn-applied text-[11px] py-1.5 px-3" disabled>
+                            <button type="button" class="btn-applied text-[11px] py-1.5 px-3" disabled>
                                 <i class="fas fa-check-circle text-emerald-600"></i> Enrolled ✓
                             </button>
                         {% else %}
-                            <button onclick="quickApply('scheme', '{{ sc.id }}', '{{ sc.name|escapejs }}', '{{ sc.department|escapejs }}', this)"
+                            <button type="button" onclick="quickApply('scheme', '{{ sc.id }}', '{{ sc.name|escapejs }}', '{{ sc.department|escapejs }}', this)"
                                     class="btn-primary text-[11px] py-1.5 px-3 cursor-pointer">
                                 Enroll / Track
                             </button>

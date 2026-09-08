@@ -122,32 +122,32 @@
 
                 <div class="flex items-center gap-2">
                     {% if item_key in user_applied_keys %}
-                        <button class="btn-applied text-xs py-2 px-4" disabled>
+                        <button type="button" class="btn-applied text-xs py-2 px-4" disabled>
                             <i class="fas fa-check-circle text-emerald-600"></i> Applied ✓
                         </button>
                     {% else %}
                         {% if item.type == 'job' %}
-                            <button onclick="quickApply('job', '{{ item.obj.id }}', '{{ item.obj.title|escapejs }}', '{{ item.obj.organization|escapejs }}', this)"
+                            <button type="button" onclick="quickApply('job', '{{ item.obj.id }}', '{{ item.obj.title|escapejs }}', '{{ item.obj.organization|escapejs }}', this)"
                                     class="btn-primary text-xs py-2 px-4 btn-sheen spring-press">
                                 <i class="fas fa-paper-plane"></i> Quick Apply
                             </button>
                         {% elif item.type == 'scholarship' %}
-                            <button onclick="quickApply('scholarship', '{{ item.obj.id }}', '{{ item.obj.name|escapejs }}', '{{ item.obj.provider|escapejs }}', this)"
+                            <button type="button" onclick="quickApply('scholarship', '{{ item.obj.id }}', '{{ item.obj.name|escapejs }}', '{{ item.obj.provider|escapejs }}', this)"
                                     class="btn-primary text-xs py-2 px-4 btn-sheen spring-press">
                                 <i class="fas fa-paper-plane"></i> Quick Apply
                             </button>
                         {% elif item.type == 'scheme' %}
-                            <button onclick="quickApply('scheme', '{{ item.obj.id }}', '{{ item.obj.name|escapejs }}', '{{ item.obj.department|escapejs }}', this)"
+                            <button type="button" onclick="quickApply('scheme', '{{ item.obj.id }}', '{{ item.obj.name|escapejs }}', '{{ item.obj.department|escapejs }}', this)"
                                     class="btn-primary text-xs py-2 px-4 btn-sheen spring-press">
                                 <i class="fas fa-paper-plane"></i> Enroll
                             </button>
                         {% elif item.type == 'skill' %}
-                            <button onclick="quickApply('skill', '{{ item.obj.id }}', '{{ item.obj.name|escapejs }}', '{{ item.obj.provider|escapejs }}', this)"
+                            <button type="button" onclick="quickApply('skill', '{{ item.obj.id }}', '{{ item.obj.name|escapejs }}', '{{ item.obj.provider|escapejs }}', this)"
                                     class="btn-primary text-xs py-2 px-4 btn-sheen spring-press">
                                 <i class="fas fa-paper-plane"></i> Enroll
                             </button>
                         {% elif item.type == 'business' %}
-                            <button onclick="quickApply('business', '{{ item.obj.id }}', '{{ item.obj.name|escapejs }}', 'Micro-Enterprise Track', this)"
+                            <button type="button" onclick="quickApply('business', '{{ item.obj.id }}', '{{ item.obj.name|escapejs }}', 'Micro-Enterprise Track', this)"
                                     class="btn-primary text-xs py-2 px-4 btn-sheen spring-press">
                                 <i class="fas fa-paper-plane"></i> Track Idea
                             </button>
@@ -167,7 +167,7 @@
                     {% endif %}
 
                     <!-- Remove Bookmark Button with Smooth Fade Out Animation -->
-                    <button onclick="toggleSaveOpportunity('{{ item.type }}', '{{ item.id }}', this); const card = this.closest('.roc-card'); card.style.transition='all 0.35s ease'; card.style.opacity='0'; card.style.transform='scale(0.92) translateY(-10px)'; setTimeout(() => card.remove(), 350);"
+                    <button type="button" onclick="toggleSaveOpportunity('{{ item.type }}', '{{ item.id }}', this); const card = this.closest('.roc-card'); card.style.transition='all 0.35s ease'; card.style.opacity='0'; card.style.transform='scale(0.92) translateY(-10px)'; setTimeout(() => card.remove(), 350);"
                             class="w-8 h-8 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 flex items-center justify-center text-xs transition spring-press"
                             title="Remove from saved wishlist">
                         <i class="fas fa-trash-can"></i>

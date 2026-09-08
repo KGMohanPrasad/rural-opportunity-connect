@@ -37,6 +37,32 @@
         </div>
     </div>
 
+    {% if is_guest %}
+    <!-- Guest Applicant Sync Callout -->
+    <div class="p-4 bg-gradient-to-r from-[#071526] via-[#0c2340] to-slate-900 border border-cyan-500/40 rounded-2xl text-white flex flex-col sm:flex-row items-center justify-between gap-3 shadow-lg" data-anim="fade-up">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-300 flex items-center justify-center shrink-0 border border-cyan-400/30 text-lg">
+                <i class="fas fa-id-badge"></i>
+            </div>
+            <div>
+                <p class="text-xs font-bold text-white flex items-center gap-1.5">
+                    <span>Active Guest Applicant Pipeline</span>
+                    <span class="roc-badge roc-badge-emerald text-[9px] uppercase tracking-wider font-bold">Live Tracking</span>
+                </p>
+                <p class="text-[11px] text-cyan-200/80 mt-0.5">Your 1-click Quick Apply submissions are stored and monitored live. Create a free profile anytime to sync across all devices.</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+            <a href="{% url 'register' %}" class="btn-primary text-xs py-2 px-3.5 rounded-xl shadow-xs flex items-center gap-1">
+                <i class="fas fa-user-plus"></i> Save Permanently
+            </a>
+            <a href="{% url 'login' %}" class="btn-secondary text-xs py-2 px-3.5 rounded-xl">
+                Sign In
+            </a>
+        </div>
+    </div>
+    {% endif %}
+
     <!-- 5 Pipeline Stage Counter Cards with Animated Rollups -->
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4" data-anim="fade-up">
         <!-- Total -->
@@ -102,7 +128,7 @@
                             {% else %}roc-badge-slate{% endif %} text-xs px-3.5 py-1.5 font-bold">
                             {{ app.get_status_display }}
                         </span>
-                        <button onclick="window.print()" class="btn-outline text-xs py-1.5 px-3" title="Print application receipt">
+                        <button type="button" onclick="window.print()" class="btn-outline text-xs py-1.5 px-3" title="Print application receipt">
                             <i class="fas fa-print"></i>
                         </button>
                     </div>
@@ -112,7 +138,7 @@
                 <div class="py-4 relative">
                     <!-- Connected 3D Beam Background -->
                     <div class="absolute top-8 left-12 right-12 h-1 bg-slate-200 rounded-full z-0 hidden sm:block">
-                        <div class="h-full bg-gradient-to-r from-cyan-500 via-blue-600 to-emerald-500 rounded-full"
+                        <div class="h-full bg-gradient-to-r from-cyan-500 via-blue-600 to-emerald-500 rounded-full timeline-energy-connector"
                              style="width: {% if app.status == 'selected' or app.status == 'rejected' %}100%{% elif app.status == 'shortlisted' %}66%{% elif app.status == 'under_review' %}33%{% else %}10%{% endif %};"></div>
                     </div>
                     <div class="grid grid-cols-4 gap-2 text-center relative z-10">

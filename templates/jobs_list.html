@@ -155,7 +155,7 @@
                                 </div>
 
                                 <div class="flex items-center gap-2 self-start depth-layer-2">
-                                    <button class="save-btn heart-pop {% if job_key in user_saved_keys %}is-saved{% endif %}"
+                                    <button type="button" class="save-btn heart-pop {% if job_key in user_saved_keys %}is-saved{% endif %}"
                                             data-type="job" data-id="{{ job.id }}" title="Save to wishlist">
                                         <i class="{% if job_key in user_saved_keys %}fa-solid fa-heart text-red-500{% else %}fa-regular fa-heart text-slate-400{% endif %}"></i>
                                     </button>
@@ -218,7 +218,7 @@
                                 {% endif %}
 
                                 {% if user.is_authenticated and job_key in user_applied_keys %}
-                                    <button class="btn-applied text-xs py-2 px-4 flex-1 sm:flex-initial" disabled>
+                                    <button type="button" class="btn-applied text-xs py-2 px-4 flex-1 sm:flex-initial" disabled>
                                         <i class="fas fa-check-circle text-emerald-600"></i> Already Applied ✓
                                     </button>
                                 {% else %}

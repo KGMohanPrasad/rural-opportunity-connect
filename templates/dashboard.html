@@ -31,6 +31,8 @@
         </div>
     </div>
 
+
+
     <!-- 4 KPI Performance Cards with 3D Tilt & Rollup Counters -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 perspective-viewport" data-anim="fade-up">
         <!-- 1. Profile Strength with 3D Circular Progress Ring -->
@@ -156,11 +158,11 @@
                         <i class="fas fa-eye text-cyan-700"></i> View Details
                     </a>
                     {% if job_key in user_applied_keys %}
-                        <button class="btn-applied text-xs py-1.5 px-3" disabled>
+                        <button type="button" class="btn-applied text-xs py-1.5 px-3" disabled>
                             <i class="fas fa-check-circle text-emerald-600"></i> Applied ✓
                         </button>
                     {% else %}
-                        <button onclick="quickApply('job', '{{ job.id }}', '{{ job.title|escapejs }}', '{{ job.organization|escapejs }}', this)"
+                        <button type="button" onclick="quickApply('job', '{{ job.id }}', '{{ job.title|escapejs }}', '{{ job.organization|escapejs }}', this)"
                                 class="btn-primary text-xs py-1.5 px-3 shadow-xs">
                             <i class="fas fa-paper-plane"></i> Quick Apply
                         </button>
@@ -198,11 +200,11 @@
                         <i class="fas fa-eye text-cyan-700"></i> View Details
                     </a>
                     {% if sc_key in user_applied_keys %}
-                        <button class="btn-applied text-xs py-1.5 px-3" disabled>
+                        <button type="button" class="btn-applied text-xs py-1.5 px-3" disabled>
                             <i class="fas fa-check-circle text-emerald-600"></i> Applied ✓
                         </button>
                     {% else %}
-                        <button onclick="quickApply('scholarship', '{{ sc.id }}', '{{ sc.name|escapejs }}', '{{ sc.provider|escapejs }}', this)"
+                        <button type="button" onclick="quickApply('scholarship', '{{ sc.id }}', '{{ sc.name|escapejs }}', '{{ sc.provider|escapejs }}', this)"
                                 class="btn-primary text-xs py-1.5 px-3 shadow-xs">
                             <i class="fas fa-paper-plane"></i> Quick Apply
                         </button>
@@ -240,11 +242,11 @@
                         <i class="fas fa-eye text-cyan-700"></i> View Details
                     </a>
                     {% if scm_key in user_applied_keys %}
-                        <button class="btn-applied text-xs py-1.5 px-3" disabled>
+                        <button type="button" class="btn-applied text-xs py-1.5 px-3" disabled>
                             <i class="fas fa-check-circle text-emerald-600"></i> Enrolled ✓
                         </button>
                     {% else %}
-                        <button onclick="quickApply('scheme', '{{ scm.id }}', '{{ scm.name|escapejs }}', '{{ scm.department|escapejs }}', this)"
+                        <button type="button" onclick="quickApply('scheme', '{{ scm.id }}', '{{ scm.name|escapejs }}', '{{ scm.department|escapejs }}', this)"
                                 class="btn-primary text-xs py-1.5 px-3 shadow-xs">
                             <i class="fas fa-paper-plane"></i> Quick Enroll
                         </button>
@@ -282,11 +284,11 @@
                         <i class="fas fa-eye text-cyan-700"></i> View Details
                     </a>
                     {% if skl_key in user_applied_keys %}
-                        <button class="btn-applied text-xs py-1.5 px-3" disabled>
+                        <button type="button" class="btn-applied text-xs py-1.5 px-3" disabled>
                             <i class="fas fa-check-circle text-emerald-600"></i> Enrolled ✓
                         </button>
                     {% else %}
-                        <button onclick="quickApply('skill', '{{ skl.id }}', '{{ skl.name|escapejs }}', '{{ skl.provider|escapejs }}', this)"
+                        <button type="button" onclick="quickApply('skill', '{{ skl.id }}', '{{ skl.name|escapejs }}', '{{ skl.provider|escapejs }}', this)"
                                 class="btn-primary text-xs py-1.5 px-3 shadow-xs">
                             <i class="fas fa-paper-plane"></i> Quick Enroll
                         </button>
@@ -324,11 +326,11 @@
                         <i class="fas fa-eye text-cyan-700"></i> View Details
                     </a>
                     {% if biz_key in user_applied_keys %}
-                        <button class="btn-applied text-xs py-1.5 px-3" disabled>
+                        <button type="button" class="btn-applied text-xs py-1.5 px-3" disabled>
                             <i class="fas fa-check-circle text-emerald-600"></i> Tracking ✓
                         </button>
                     {% else %}
-                        <button onclick="quickApply('business', '{{ biz.id }}', '{{ biz.name|escapejs }}', 'Micro-Enterprise Track', this)"
+                        <button type="button" onclick="quickApply('business', '{{ biz.id }}', '{{ biz.name|escapejs }}', 'Micro-Enterprise Track', this)"
                                 class="btn-primary text-xs py-1.5 px-3 shadow-xs">
                             <i class="fas fa-paper-plane"></i> Track Idea
                         </button>

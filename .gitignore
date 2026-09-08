@@ -24,3 +24,9 @@ media/cache/
 Thumbs.db
 .vscode/
 .idea/
+
+# Scratch & Temporary
+yesterday_*
+scratch_*
+*.backup
+
