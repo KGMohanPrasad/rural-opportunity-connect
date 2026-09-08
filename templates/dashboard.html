@@ -73,7 +73,7 @@
                         <i class="fas fa-list-check"></i>
                     </span>
                 </div>
-                <div class="text-3xl font-extrabold text-blue-600 mb-2 depth-layer-2 counter-value" data-counter="{{ applications_count }}">{{ applications_count }}</div>
+                <div id="dashboardAppCounter" class="text-3xl font-extrabold text-blue-600 mb-2 depth-layer-2 counter-value" data-counter="{{ applications_count }}">{{ applications_count }}</div>
                 <p class="text-xs text-slate-500">Submitted & tracked opportunities</p>
             </div>
             <a href="{% url 'applications' %}" class="depth-layer-2 text-xs font-bold text-blue-600 hover:text-blue-800 pt-2 flex items-center gap-1">
@@ -160,7 +160,7 @@
                             <i class="fas fa-check-circle text-emerald-600"></i> Applied ✓
                         </button>
                     {% else %}
-                        <button onclick="quickApply('job', '{{ job.id }}', '{{ job.title|escapejs }}', '{{ job.organization|escapejs }}', this)"
+                        <button type="button" onclick="quickApply('job', '{{ job.id }}', '{{ job.title|escapejs }}', '{{ job.organization|escapejs }}', this)"
                                 class="btn-primary text-xs py-1.5 px-3 shadow-xs">
                             <i class="fas fa-paper-plane"></i> Quick Apply
                         </button>
@@ -202,7 +202,7 @@
                             <i class="fas fa-check-circle text-emerald-600"></i> Applied ✓
                         </button>
                     {% else %}
-                        <button onclick="quickApply('scholarship', '{{ sc.id }}', '{{ sc.name|escapejs }}', '{{ sc.provider|escapejs }}', this)"
+                        <button type="button" onclick="quickApply('scholarship', '{{ sc.id }}', '{{ sc.name|escapejs }}', '{{ sc.provider|escapejs }}', this)"
                                 class="btn-primary text-xs py-1.5 px-3 shadow-xs">
                             <i class="fas fa-paper-plane"></i> Quick Apply
                         </button>
@@ -244,7 +244,7 @@
                             <i class="fas fa-check-circle text-emerald-600"></i> Enrolled ✓
                         </button>
                     {% else %}
-                        <button onclick="quickApply('scheme', '{{ scm.id }}', '{{ scm.name|escapejs }}', '{{ scm.department|escapejs }}', this)"
+                        <button type="button" onclick="quickApply('scheme', '{{ scm.id }}', '{{ scm.name|escapejs }}', '{{ scm.department|escapejs }}', this)"
                                 class="btn-primary text-xs py-1.5 px-3 shadow-xs">
                             <i class="fas fa-paper-plane"></i> Quick Enroll
                         </button>
@@ -286,7 +286,7 @@
                             <i class="fas fa-check-circle text-emerald-600"></i> Enrolled ✓
                         </button>
                     {% else %}
-                        <button onclick="quickApply('skill', '{{ skl.id }}', '{{ skl.name|escapejs }}', '{{ skl.provider|escapejs }}', this)"
+                        <button type="button" onclick="quickApply('skill', '{{ skl.id }}', '{{ skl.name|escapejs }}', '{{ skl.provider|escapejs }}', this)"
                                 class="btn-primary text-xs py-1.5 px-3 shadow-xs">
                             <i class="fas fa-paper-plane"></i> Quick Enroll
                         </button>
@@ -328,7 +328,7 @@
                             <i class="fas fa-check-circle text-emerald-600"></i> Tracking ✓
                         </button>
                     {% else %}
-                        <button onclick="quickApply('business', '{{ biz.id }}', '{{ biz.name|escapejs }}', 'Micro-Enterprise Track', this)"
+                        <button type="button" onclick="quickApply('business', '{{ biz.id }}', '{{ biz.name|escapejs }}', 'Micro-Enterprise Track', this)"
                                 class="btn-primary text-xs py-1.5 px-3 shadow-xs">
                             <i class="fas fa-paper-plane"></i> Track Idea
                         </button>

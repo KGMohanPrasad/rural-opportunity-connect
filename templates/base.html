@@ -280,14 +280,6 @@
 
             <!-- Right Actions (Auth / User Hub) -->
             <div class="flex items-center space-x-3">
-                <!-- Quick Access Hub Button -->
-                <button type="button" onclick="openQuickAccessModal()" id="quickAccessNavBtn"
-                        class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-bold text-xs shadow-xs flex items-center gap-1.5 transition hover:scale-102 cursor-pointer"
-                        title="Quick Access Hub (Ctrl+K)">
-                    <i class="fas fa-bolt text-slate-950 text-xs"></i>
-                    <span class="hidden md:inline font-bold">Quick Access</span>
-                    <span class="hidden xl:inline text-[9px] bg-amber-600/20 text-slate-950 px-1.5 py-0.5 rounded font-mono font-black ml-0.5">⌘K</span>
-                </button>
 
                 {% if user.is_authenticated %}
                     <div class="relative group">
@@ -371,12 +363,6 @@
                     <option value="ml">മലയാളം (Malayalam)</option>
                 </select>
             </div>
-
-            <!-- Quick Access Hub Mobile Trigger -->
-            <button type="button" onclick="openQuickAccessModal(); toggleMobileMenu()" class="w-full mb-3 text-left px-3.5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400/20 to-amber-500/20 text-amber-900 border border-amber-300/60 font-bold text-xs flex items-center gap-2 transition hover:bg-amber-400/30">
-                <i class="fas fa-bolt text-amber-600"></i>
-                <span>⚡ Quick Access Hub</span>
-            </button>
 
             <!-- Navigation Links -->
             <div class="space-y-1 text-sm font-semibold">
@@ -776,16 +762,6 @@
         </div>
     </footer>
 
-    <!-- Floating Persistent Quick Access Launcher Button -->
-    <button type="button" onclick="openQuickAccessModal()" id="floatingQuickAccessBtn"
-            class="fixed bottom-6 left-6 z-40 px-4 py-2.5 rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-slate-950 font-black text-xs shadow-2xl border-2 border-white/90 flex items-center gap-2 hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer group"
-            title="Quick Access Hub (Press ⌘K or Ctrl+K)">
-        <span class="w-2 h-2 rounded-full bg-slate-950 animate-ping"></span>
-        <i class="fas fa-bolt text-slate-950 text-sm"></i>
-        <span class="font-extrabold tracking-tight">Quick Access</span>
-        <span class="text-[10px] bg-slate-950/15 text-slate-950 px-1.5 py-0.5 rounded font-mono font-bold hidden sm:inline">Ctrl+K</span>
-    </button>
-
     <!-- Floating Back to Top Button with Magnetic Hover -->
     <button id="backToTopBtn" aria-label="Scroll back to top" class="btn-magnetic">
         <i class="fas fa-chevron-up text-sm"></i>
@@ -975,6 +951,10 @@
                     }
                 });
 
+                if (!response.ok) {
+                    throw new Error(`HTTP error ${response.status}`);
+                }
+
                 const data = await response.json();
                 closeQuickApplyModal();
 
@@ -986,27 +966,31 @@
                 } catch(e) {}
 
                 if (currentApplyBtn) {
-                    currentApplyBtn.className = 'btn-applied text-xs py-2 px-4';
-                    currentApplyBtn.innerHTML = '<i class="fas fa-check-circle text-emerald-600"></i> Already Applied ✓';
+                    currentApplyBtn.className = 'btn-applied text-xs py-1.5 px-3';
+                    currentApplyBtn.innerHTML = '<i class="fas fa-check-circle text-emerald-600"></i> Applied ✓';
                     currentApplyBtn.disabled = true;
                 }
 
+                // Increment Active Applications counter on dashboard in real time
+                const dashAppCounter = document.getElementById('dashboardAppCounter');
+                if (dashAppCounter && !data.already_applied) {
+                    let curVal = parseInt(dashAppCounter.textContent) || 0;
+                    dashAppCounter.textContent = curVal + 1;
+                }
+
+                const msg = data.message || `Application for "${name}" submitted successfully! 🎉`;
                 if (typeof showToast === 'function') {
-                    showToast(data.message || `Application for "${name}" submitted successfully! 🎉`, 'success', 5000, '/applications/', 'View Tracker →');
+                    showToast(msg, 'success', 5000, '/applications/', 'View Tracker →');
                 } else {
-                    alert(`Application for "${name}" submitted successfully! 🎉`);
+                    alert(msg);
                 }
             } catch (err) {
+                console.error('Quick Apply error:', err);
                 closeQuickApplyModal();
-                if (currentApplyBtn) {
-                    currentApplyBtn.className = 'btn-applied text-xs py-2 px-4';
-                    currentApplyBtn.innerHTML = '<i class="fas fa-check-circle text-emerald-600"></i> Already Applied ✓';
-                    currentApplyBtn.disabled = true;
-                }
                 if (typeof showToast === 'function') {
-                    showToast(`Application for "${name}" recorded successfully! 🎉`, 'success', 5000);
+                    showToast(`Error submitting application. Please try again.`, 'error', 5000);
                 } else {
-                    alert(`Application for "${name}" recorded successfully! 🎉`);
+                    alert(`Error submitting application. Please try again.`);
                 }
             } finally {
                 if (submitBtn) {

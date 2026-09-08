@@ -54,7 +54,7 @@
   "model": "auth.user",
   "fields": {
     "password": "pbkdf2_sha256$600000$vgxUI3hfuCveG1HDYqB0vK$AiihkpOyjcbdZwFT5Pqs99O2gco5FxXDgnitv+7vk5Y=",
-    "last_login": "2026-09-02T14:21:07.832Z",
+    "last_login": "2026-09-08T07:01:49.237Z",
     "is_superuser": false,
     "username": "mohan",
     "first_name": "Mohan",
@@ -204,6 +204,22 @@
 },
 {
   "model": "sessions.session",
+  "pk": "4905xxy2qcfz4aiitvavp15l0k3wvfbe",
+  "fields": {
+    "session_data": ".eJxVjMsOwiAQAP9lz4awUl49eu83kIUFqRqalPZk_HfTpAe9zkzmDYH2rYa95zXMDCMMcPllkdIzt0Pwg9p9EWlp2zpHcSTitF1MC-fX7Wz_BpV6hREiKspDckUWbzzqrFHKwsa7VMijddFJ5YxJyC6pqKNkysqiQVs08xU-X-P8N9w:1x3pm4:ctD9johddcabW_hLqyPp03YBxJtJK34i8DmsLI4zCGU",
+    "expire_date": "2026-09-22T06:57:44.315Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "628bbxmqx1rmvz7wgd23dpf5rjhgzl5f",
+  "fields": {
+    "session_data": ".eJxVjMsOwiAQAP9lz4awUl49eu83kIUFqRqalPZk_HfTpAe9zkzmDYH2rYa95zXMDCMMcPllkdIzt0Pwg9p9EWlp2zpHcSTitF1MC-fX7Wz_BpV6hREiKspDckUWbzzqrFHKwsa7VMijddFJ5YxJyC6pqKNkysqiQVs08xU-X-P8N9w:1x3pmO:L0Hq4NE1WI2c_gssEO5CMVyt5oWRdkVxr7mhuoNOgjM",
+    "expire_date": "2026-09-22T06:58:04.208Z"
+  }
+},
+{
+  "model": "sessions.session",
   "pk": "a0n2k70fuxhxxh89utvdgr86f8e32fi2",
   "fields": {
     "session_data": ".eJxVjEEOwiAQAP-yZ0MWhS306N03kIUFqRqalPZk_Ltp0oNeZybzhsDbWsPW8xImgRE0wukXRk7P3HYjD273WaW5rcsU1Z6ow3Z1myW_rkf7N6jcK4wQdaHCvpBIKmgkWmG0QxJm55CIotPGc-GcL5oFs_GMtgiRT2c9OPh8AUMmOSM:1x3o9T:4en9_eNy-JEu21pu32zQ7g_hZyDBaekUgrT7lmZ-iw0",
@@ -232,6 +248,14 @@
   "fields": {
     "session_data": ".eJxVjDkOwjAQAP-yNbJ8rp2U9LzBWl84gGwpTirE31GkFNDOjOYNnvat-n3k1S8JZhBw-WWB4jO3Q6QHtXtnsbdtXQI7EnbawW495df1bP8GlUaFGRQiSk5ZSiuEyRYLOjPFSWG0MZCwWiNx44p1oShH2nLtsCSXeCo6SPh8AbY0Nyc:1x1egb:ft7Ri7Loq9OMbDb4jXqlfxK-0wzKeszlKsm2fuDbZ4I",
     "expire_date": "2026-09-16T06:43:05.690Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "fcb98om9pe90dae7hlm44gr16kihh7ww",
+  "fields": {
+    "session_data": ".eJxVjMsOwiAQAP9lz4awUl49eu83kIUFqRqalPZk_HfTpAe9zkzmDYH2rYa95zXMDCMMcPllkdIzt0Pwg9p9EWlp2zpHcSTitF1MC-fX7Wz_BpV6hREiKspDckUWbzzqrFHKwsa7VMijddFJ5YxJyC6pqKNkysqiQVs08xU-X-P8N9w:1x3pmE:iG6f9HvYRsQLXARcSEVxzqGya8FJyE8BTtZVaN_feuc",
+    "expire_date": "2026-09-22T06:57:54.931Z"
   }
 },
 {
@@ -312,6 +336,14 @@
   "fields": {
     "session_data": ".eJxVjMsOgjAQAP9lz6bpUvqAo3e_odl2txY1kFA4Gf_dkHDQ68xk3hBp32rcm6xxYhhhgMsvS5SfMh-CHzTfF5WXeVunpI5Enbap28Lyup7t36BSqzBCKXpwbBhdll6oY9NjJpTiU-iwBBtyMcb7rgRkDGITJdF6QC3WZnbw-QICHjhm:1x3o9J:Mn1-mMmlyOrZ_YCNRzJTCoeHJ6NCJ59MA8hYDAbDnfQ",
     "expire_date": "2026-09-22T05:13:37.835Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "qofsk77x5syr1alyvon5fkvi7ditkiwy",
+  "fields": {
+    "session_data": ".eJxVjMsOwiAQAP9lz4awUl49eu83kIUFqRqalPZk_HfTpAe9zkzmDYH2rYa95zXMDCMMcPllkdIzt0Pwg9p9EWlp2zpHcSTitF1MC-fX7Wz_BpV6hREiKspDckUWbzzqrFHKwsa7VMijddFJ5YxJyC6pqKNkysqiQVs08xU-X-P8N9w:1x3pq1:f5CEiAN25R37HOiXmY4YMjmrQeOjuSzdZq9ENk0bvig",
+    "expire_date": "2026-09-22T07:01:49.244Z"
   }
 },
 {
@@ -1908,34 +1940,6 @@
 },
 {
   "model": "applications.application",
-  "pk": 7,
-  "fields": {
-    "user": 2,
-    "opportunity_type": "skill",
-    "opportunity_id": 8,
-    "opportunity_name": "Food Processing",
-    "organization": "Ministry of Food Processing",
-    "status": "applied",
-    "applied_date": "2026-09-02T04:20:53.743Z",
-    "updated_date": "2026-09-02T04:20:53.743Z"
-  }
-},
-{
-  "model": "applications.application",
-  "pk": 8,
-  "fields": {
-    "user": 2,
-    "opportunity_type": "scholarship",
-    "opportunity_id": 4,
-    "opportunity_name": "Post Matric Scholarship for OBC Students",
-    "organization": "Department of Social Justice",
-    "status": "applied",
-    "applied_date": "2026-09-02T05:38:42.432Z",
-    "updated_date": "2026-09-02T05:38:42.433Z"
-  }
-},
-{
-  "model": "applications.application",
   "pk": 9,
   "fields": {
     "user": 3,
@@ -1946,34 +1950,6 @@
     "status": "applied",
     "applied_date": "2026-09-02T06:43:05.843Z",
     "updated_date": "2026-09-02T06:43:05.843Z"
-  }
-},
-{
-  "model": "applications.application",
-  "pk": 10,
-  "fields": {
-    "user": 2,
-    "opportunity_type": "business",
-    "opportunity_id": 8,
-    "opportunity_name": "Online Tutoring and Education",
-    "organization": "Self-employment opportunity",
-    "status": "applied",
-    "applied_date": "2026-09-02T06:44:07.978Z",
-    "updated_date": "2026-09-02T06:44:07.978Z"
-  }
-},
-{
-  "model": "applications.application",
-  "pk": 11,
-  "fields": {
-    "user": 2,
-    "opportunity_type": "job",
-    "opportunity_id": 10,
-    "opportunity_name": "Office Assistant",
-    "organization": "Corporate Solutions Ltd",
-    "status": "applied",
-    "applied_date": "2026-09-02T06:44:48.907Z",
-    "updated_date": "2026-09-02T06:44:48.907Z"
   }
 },
 {
@@ -2034,48 +2010,6 @@
 },
 {
   "model": "applications.application",
-  "pk": 16,
-  "fields": {
-    "user": 4,
-    "opportunity_type": "job",
-    "opportunity_id": 10,
-    "opportunity_name": "Office Assistant",
-    "organization": "Corporate Solutions Ltd",
-    "status": "applied",
-    "applied_date": "2026-09-02T10:03:50.834Z",
-    "updated_date": "2026-09-02T10:03:50.834Z"
-  }
-},
-{
-  "model": "applications.application",
-  "pk": 17,
-  "fields": {
-    "user": 4,
-    "opportunity_type": "job",
-    "opportunity_id": 9,
-    "opportunity_name": "Call Center Executive",
-    "organization": "Customer Care Solutions",
-    "status": "applied",
-    "applied_date": "2026-09-02T10:14:07.062Z",
-    "updated_date": "2026-09-02T10:14:07.062Z"
-  }
-},
-{
-  "model": "applications.application",
-  "pk": 18,
-  "fields": {
-    "user": 4,
-    "opportunity_type": "job",
-    "opportunity_id": 9,
-    "opportunity_name": "Call Center Executive",
-    "organization": "Customer Care Solutions",
-    "status": "applied",
-    "applied_date": "2026-09-02T10:14:14.816Z",
-    "updated_date": "2026-09-02T10:14:14.816Z"
-  }
-},
-{
-  "model": "applications.application",
   "pk": 19,
   "fields": {
     "user": 4,
@@ -2086,20 +2020,6 @@
     "status": "applied",
     "applied_date": "2026-09-02T10:14:54.061Z",
     "updated_date": "2026-09-02T10:14:54.062Z"
-  }
-},
-{
-  "model": "applications.application",
-  "pk": 20,
-  "fields": {
-    "user": 4,
-    "opportunity_type": "scholarship",
-    "opportunity_id": 4,
-    "opportunity_name": "Post Matric Scholarship for OBC Students",
-    "organization": "Department of Social Justice",
-    "status": "applied",
-    "applied_date": "2026-09-02T10:20:43.930Z",
-    "updated_date": "2026-09-02T10:20:43.930Z"
   }
 },
 {
@@ -2184,6 +2104,34 @@
     "status": "applied",
     "applied_date": "2026-09-07T09:44:23.769Z",
     "updated_date": "2026-09-07T09:44:23.769Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 28,
+  "fields": {
+    "user": 4,
+    "opportunity_type": "job",
+    "opportunity_id": 1,
+    "opportunity_name": "Rural Logistics & Delivery Executive",
+    "organization": "Gramin Delivery Logistics Ltd",
+    "status": "applied",
+    "applied_date": "2026-09-08T06:57:44.509Z",
+    "updated_date": "2026-09-08T06:57:44.509Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 30,
+  "fields": {
+    "user": 4,
+    "opportunity_type": "job",
+    "opportunity_id": 2,
+    "opportunity_name": "Agro-Drone Mapping & Spraying Associate",
+    "organization": "Kisan Drone Technologies",
+    "status": "applied",
+    "applied_date": "2026-09-08T07:01:52.653Z",
+    "updated_date": "2026-09-08T07:01:52.653Z"
   }
 },
 {

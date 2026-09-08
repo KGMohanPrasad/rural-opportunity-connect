@@ -76,17 +76,26 @@ def apply_opportunity(request):
         if not opp_name:
             opp_name = f"Opportunity #{opp_id}"
 
-        # Check if already applied or create new
-        app, created = Application.objects.get_or_create(
+        # Safely check if already applied or create new
+        existing_app = Application.objects.filter(
             user=profile,
             opportunity_type=opp_type,
-            opportunity_id=opp_id,
-            defaults={
-                'opportunity_name': opp_name,
-                'organization': org,
-                'status': 'applied'
-            }
-        )
+            opportunity_id=opp_id
+        ).first()
+
+        if existing_app:
+            app = existing_app
+            created = False
+        else:
+            app = Application.objects.create(
+                user=profile,
+                opportunity_type=opp_type,
+                opportunity_id=opp_id,
+                opportunity_name=opp_name,
+                organization=org,
+                status='applied'
+            )
+            created = True
 
         is_ajax = (
             request.headers.get('x-requested-with') == 'XMLHttpRequest' or
