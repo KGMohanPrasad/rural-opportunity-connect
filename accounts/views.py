@@ -13,7 +13,7 @@ from skills.models import SkillProgram
 from business.models import BusinessOpportunity
 import requests
 
-from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
+from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect, csrf_exempt
 from django.db.models import Q
 
 @ensure_csrf_cookie
@@ -46,114 +46,104 @@ def landing_page(request):
 @ensure_csrf_cookie
 @csrf_protect
 def register(request):
-    """User registration view with full validation, preserved inputs, and error feedback"""
-    if request.user.is_authenticated:
-        return redirect('dashboard')
-
+    """User registration view"""
     if request.method == 'POST':
         username = request.POST.get('username', '').strip()
         email = request.POST.get('email', '').strip()
         password = request.POST.get('password', '')
-        confirm_password = request.POST.get('confirm_password', '')
         first_name = request.POST.get('first_name', '').strip()
         last_name = request.POST.get('last_name', '').strip()
 
-        form_data = {
-            'username': username,
-            'email': email,
-            'first_name': first_name,
-            'last_name': last_name,
-        }
-
-        if not username:
-            return render(request, 'register.html', {**form_data, 'error': 'Please enter a username.'})
+        if User.objects.filter(username=username).exists():
+            return render(request, 'register.html', {'error': 'Username already exists'})
         
-        if not email:
-            return render(request, 'register.html', {**form_data, 'error': 'Please enter your email address.'})
+        if User.objects.filter(email=email).exists():
+            return render(request, 'register.html', {'error': 'Email already registered'})
 
-        if not password:
-            return render(request, 'register.html', {**form_data, 'error': 'Please enter a password.'})
-
-        if len(password) < 6:
-            return render(request, 'register.html', {**form_data, 'error': 'Password must be at least 6 characters long.'})
-
-        if confirm_password and password != confirm_password:
-            return render(request, 'register.html', {**form_data, 'error': 'Passwords do not match. Please re-enter your password.'})
-
-        if User.objects.filter(username__iexact=username).exists():
-            return render(request, 'register.html', {**form_data, 'error': f'Username "{username}" is already taken. Please choose another username.'})
+        user = User.objects.create_user(
+            username=username,
+            email=email,
+            password=password,
+            first_name=first_name,
+            last_name=last_name
+        )
         
-        if email and User.objects.filter(email__iexact=email).exists():
-            return render(request, 'register.html', {**form_data, 'error': f'An account with email "{email}" already exists. Please sign in instead.'})
-
+        # Create user profile
+        user_profile = UserProfile.objects.create(user=user)
+        DocumentChecklist.objects.create(user=user_profile)
+        
+        # Migrate any guest applications or wishlist items to this newly registered user
         try:
-            user = User.objects.create_user(
-                username=username,
-                email=email,
-                password=password,
-                first_name=first_name,
-                last_name=last_name
-            )
-            
-            # Create user profile and document checklist safely
-            profile, _ = UserProfile.objects.get_or_create(user=user)
-            DocumentChecklist.objects.get_or_create(user=profile)
-            
-            login(request, user)
-            return redirect('profile_setup')
-        except Exception as exc:
-            return render(request, 'register.html', {**form_data, 'error': f'Registration failed: {str(exc)}'})
+            guest_user = User.objects.filter(username='guest_candidate').first()
+            if guest_user and guest_user.id != user.id:
+                guest_profile = UserProfile.objects.filter(user=guest_user).first()
+                if guest_profile:
+                    for guest_app in Application.objects.filter(user=guest_profile):
+                        if not Application.objects.filter(user=user_profile, opportunity_type=guest_app.opportunity_type, opportunity_id=guest_app.opportunity_id).exists():
+                            guest_app.user = user_profile
+                            guest_app.save()
+                    for guest_saved in SavedOpportunity.objects.filter(user=guest_profile):
+                        if not SavedOpportunity.objects.filter(user=user_profile, opportunity_type=guest_saved.opportunity_type, opportunity_id=guest_saved.opportunity_id).exists():
+                            guest_saved.user = user_profile
+                            guest_saved.save()
+        except Exception:
+            pass
+
+        login(request, user)
+        return redirect('profile_setup')
     
     return render(request, 'register.html')
 
 @ensure_csrf_cookie
 @csrf_protect
 def login_view(request):
-    """User login view with preserved next redirect & support for username or email"""
+    """User login view with username or email authentication and guest migration"""
     next_url = request.POST.get('next') or request.GET.get('next') or ''
-
-    if request.user.is_authenticated:
-        if next_url and next_url.startswith('/') and not next_url.startswith('/login') and not next_url.startswith('/logout'):
-            return redirect(next_url)
-        return redirect('dashboard')
 
     if request.method == 'POST':
         login_input = request.POST.get('username', '').strip()
         password = request.POST.get('password', '')
         
-        if not login_input or not password:
-            return render(request, 'login.html', {
-                'error': 'Please enter both your username/email and password.',
-                'username': login_input,
-                'next_url': next_url
-            })
-
-        # Support login by username OR by email (case-insensitive)
-        auth_username = login_input
-        if '@' in login_input:
-            matched_user = User.objects.filter(email__iexact=login_input).first()
-            if matched_user:
-                auth_username = matched_user.username
-        else:
-            matched_user = User.objects.filter(username__iexact=login_input).first()
-            if matched_user:
-                auth_username = matched_user.username
-
-        user = authenticate(request, username=auth_username, password=password)
+        # 1. Try direct username auth
+        user = authenticate(request, username=login_input, password=password)
+        
+        # 2. If not found, check if login_input is an email
+        if user is None:
+            user_by_email = User.objects.filter(email__iexact=login_input).first()
+            if user_by_email:
+                user = authenticate(request, username=user_by_email.username, password=password)
+        
         if user is not None:
             login(request, user)
-            # Ensure profile and document checklist exist
-            profile, _ = UserProfile.objects.get_or_create(user=user)
-            DocumentChecklist.objects.get_or_create(user=profile)
+            
+            # Migrate any guest applications or wishlist items to this user's profile
+            try:
+                guest_user = User.objects.filter(username='guest_candidate').first()
+                if guest_user and guest_user.id != user.id:
+                    guest_profile = UserProfile.objects.filter(user=guest_user).first()
+                    user_profile, _ = UserProfile.objects.get_or_create(user=user)
+                    if guest_profile:
+                        # Migrate guest applications
+                        for guest_app in Application.objects.filter(user=guest_profile):
+                            if not Application.objects.filter(user=user_profile, opportunity_type=guest_app.opportunity_type, opportunity_id=guest_app.opportunity_id).exists():
+                                guest_app.user = user_profile
+                                guest_app.save()
+                        # Migrate guest wishlist items
+                        for guest_saved in SavedOpportunity.objects.filter(user=guest_profile):
+                            if not SavedOpportunity.objects.filter(user=user_profile, opportunity_type=guest_saved.opportunity_type, opportunity_id=guest_saved.opportunity_id).exists():
+                                guest_saved.user = user_profile
+                                guest_saved.save()
+            except Exception:
+                pass
 
             if next_url and next_url.startswith('/') and not next_url.startswith('/login') and not next_url.startswith('/logout'):
                 return redirect(next_url)
             return redirect('dashboard')
         else:
             return render(request, 'login.html', {
-                'error': 'Invalid username/email or password. Please verify your credentials and try again.',
-                'username': login_input,
-                'next_url': next_url
+                'error': 'Invalid username or password. Please try again.',
+                'next_url': next_url,
+                'entered_username': login_input
             })
     
     return render(request, 'login.html', {'next_url': next_url})
@@ -169,16 +159,15 @@ def profile_setup(request):
     profile, _ = UserProfile.objects.get_or_create(user=request.user)
     
     if request.method == 'POST':
-        age_val = request.POST.get('age', '').strip()
-        profile.age = int(age_val) if age_val and age_val.isdigit() else None
-        profile.location = request.POST.get('location', '').strip()
-        profile.education = request.POST.get('education', '').strip()
-        profile.course = request.POST.get('course', '').strip()
-        profile.skills = request.POST.get('skills', '').strip()
-        profile.experience = request.POST.get('experience', '').strip()
-        profile.annual_income = request.POST.get('annual_income', '').strip()
-        profile.interests = request.POST.get('interests', '').strip()
-        profile.preferred_opportunity = request.POST.get('preferred_opportunity', '').strip()
+        profile.age = request.POST.get('age')
+        profile.location = request.POST.get('location')
+        profile.education = request.POST.get('education')
+        profile.course = request.POST.get('course')
+        profile.skills = request.POST.get('skills')
+        profile.experience = request.POST.get('experience')
+        profile.annual_income = request.POST.get('annual_income')
+        profile.interests = request.POST.get('interests')
+        profile.preferred_opportunity = request.POST.get('preferred_opportunity')
         profile.save()
         
         return redirect('dashboard')
@@ -244,10 +233,25 @@ def profile_view(request):
     }
     return render(request, 'profile.html', context)
 
-@login_required(login_url='login')
+def get_active_profile(request):
+    """Helper to get UserProfile for authenticated user or guest candidate session"""
+    if request.user.is_authenticated:
+        profile, _ = UserProfile.objects.get_or_create(user=request.user)
+        return profile, False
+    guest_user, _ = User.objects.get_or_create(
+        username='guest_candidate',
+        defaults={
+            'first_name': 'Guest',
+            'last_name': 'Candidate',
+            'email': 'guest@ruralopportunity.org'
+        }
+    )
+    profile, _ = UserProfile.objects.get_or_create(user=guest_user)
+    return profile, True
+
 def saved_opportunities(request):
-    """View saved wishlist opportunities with sector filtering"""
-    profile, _ = UserProfile.objects.get_or_create(user=request.user)
+    """View saved wishlist opportunities with sector filtering for users and guests"""
+    profile, is_guest = get_active_profile(request)
     active_type = request.GET.get('type', 'all').strip().lower()
     
     all_saved = SavedOpportunity.objects.filter(user=profile).order_by('-saved_at')
@@ -295,13 +299,13 @@ def saved_opportunities(request):
         'opportunities': opportunities,
         'total_count': total_count,
         'active_type': active_type,
+        'is_guest': is_guest,
     }
     return render(request, 'saved_opportunities.html', context)
 
-@login_required(login_url='login')
 def application_tracker(request):
-    """Track user application pipeline with stage-wise metric counters"""
-    profile, _ = UserProfile.objects.get_or_create(user=request.user)
+    """Track user and guest application pipeline with stage-wise metric counters"""
+    profile, is_guest = get_active_profile(request)
     applications = Application.objects.filter(user=profile).order_by('-applied_date')
     
     total_applications = applications.count()
@@ -317,13 +321,13 @@ def application_tracker(request):
         'shortlisted_count': shortlisted_count,
         'selected_count': selected_count,
         'rejected_count': rejected_count,
+        'is_guest': is_guest,
     }
     return render(request, 'application_tracker.html', context)
 
-@login_required(login_url='login')
 def document_checklist(request):
-    """Digital document readiness checklist with verification score"""
-    profile, _ = UserProfile.objects.get_or_create(user=request.user)
+    """Digital document readiness checklist with verification score for users and guests"""
+    profile, is_guest = get_active_profile(request)
     checklist, _ = DocumentChecklist.objects.get_or_create(user=profile)
     
     if request.method == 'POST':
@@ -348,14 +352,15 @@ def document_checklist(request):
         'documents_ready': ready_count,
         'total_documents': 8,
         'percentage': percentage,
+        'is_guest': is_guest,
     }
     return render(request, 'document_checklist.html', context)
 
-@login_required(login_url='login')
+@csrf_exempt
 @require_http_methods(['POST'])
 def save_opportunity(request):
-    """Save/unsave an opportunity bookmark"""
-    profile, _ = UserProfile.objects.get_or_create(user=request.user)
+    """Save/unsave an opportunity bookmark for authenticated or guest users"""
+    profile, is_guest = get_active_profile(request)
     opp_type = request.POST.get('type')
     opp_id = request.POST.get('id')
     
@@ -366,14 +371,14 @@ def save_opportunity(request):
             opportunity_id=opp_id
         )
         saved.delete()
-        return JsonResponse({'status': 'removed'})
+        return JsonResponse({'status': 'removed', 'is_saved': False})
     except SavedOpportunity.DoesNotExist:
         SavedOpportunity.objects.create(
             user=profile,
             opportunity_type=opp_type,
             opportunity_id=opp_id
         )
-        return JsonResponse({'status': 'saved'})
+        return JsonResponse({'status': 'saved', 'is_saved': True})
 
 def get_recommendations(profile):
     """Get personalized recommendations from RecommendationService"""

@@ -31,6 +31,8 @@
         </div>
     </div>
 
+
+
     <!-- 4 KPI Performance Cards with 3D Tilt & Rollup Counters -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 perspective-viewport" data-anim="fade-up">
         <!-- 1. Profile Strength with 3D Circular Progress Ring -->
@@ -73,7 +75,7 @@
                         <i class="fas fa-list-check"></i>
                     </span>
                 </div>
-                <div id="dashboardAppCounter" class="text-3xl font-extrabold text-blue-600 mb-2 depth-layer-2 counter-value" data-counter="{{ applications_count }}">{{ applications_count }}</div>
+                <div class="text-3xl font-extrabold text-blue-600 mb-2 depth-layer-2 counter-value" data-counter="{{ applications_count }}">{{ applications_count }}</div>
                 <p class="text-xs text-slate-500">Submitted & tracked opportunities</p>
             </div>
             <a href="{% url 'applications' %}" class="depth-layer-2 text-xs font-bold text-blue-600 hover:text-blue-800 pt-2 flex items-center gap-1">
@@ -156,7 +158,7 @@
                         <i class="fas fa-eye text-cyan-700"></i> View Details
                     </a>
                     {% if job_key in user_applied_keys %}
-                        <button class="btn-applied text-xs py-1.5 px-3" disabled>
+                        <button type="button" class="btn-applied text-xs py-1.5 px-3" disabled>
                             <i class="fas fa-check-circle text-emerald-600"></i> Applied ✓
                         </button>
                     {% else %}
@@ -198,7 +200,7 @@
                         <i class="fas fa-eye text-cyan-700"></i> View Details
                     </a>
                     {% if sc_key in user_applied_keys %}
-                        <button class="btn-applied text-xs py-1.5 px-3" disabled>
+                        <button type="button" class="btn-applied text-xs py-1.5 px-3" disabled>
                             <i class="fas fa-check-circle text-emerald-600"></i> Applied ✓
                         </button>
                     {% else %}
@@ -240,7 +242,7 @@
                         <i class="fas fa-eye text-cyan-700"></i> View Details
                     </a>
                     {% if scm_key in user_applied_keys %}
-                        <button class="btn-applied text-xs py-1.5 px-3" disabled>
+                        <button type="button" class="btn-applied text-xs py-1.5 px-3" disabled>
                             <i class="fas fa-check-circle text-emerald-600"></i> Enrolled ✓
                         </button>
                     {% else %}
@@ -282,7 +284,7 @@
                         <i class="fas fa-eye text-cyan-700"></i> View Details
                     </a>
                     {% if skl_key in user_applied_keys %}
-                        <button class="btn-applied text-xs py-1.5 px-3" disabled>
+                        <button type="button" class="btn-applied text-xs py-1.5 px-3" disabled>
                             <i class="fas fa-check-circle text-emerald-600"></i> Enrolled ✓
                         </button>
                     {% else %}
@@ -324,7 +326,7 @@
                         <i class="fas fa-eye text-cyan-700"></i> View Details
                     </a>
                     {% if biz_key in user_applied_keys %}
-                        <button class="btn-applied text-xs py-1.5 px-3" disabled>
+                        <button type="button" class="btn-applied text-xs py-1.5 px-3" disabled>
                             <i class="fas fa-check-circle text-emerald-600"></i> Tracking ✓
                         </button>
                     {% else %}

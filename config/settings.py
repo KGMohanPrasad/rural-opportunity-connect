@@ -38,8 +38,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-s%y0@&!mx%8#*&9-_(5-f
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True').lower() in ('true', '1', 'yes')
 
-allowed_hosts_raw = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1,testserver,*')
-ALLOWED_HOSTS = [h.strip() for h in allowed_hosts_raw.split(',') if h.strip()]
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -98,7 +97,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database Configuration (MySQL 8.0 with automated SQLite fallback)
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
 
-USE_MYSQL = os.environ.get('USE_MYSQL', 'False').lower() in ('true', '1', 'yes')
+USE_MYSQL = os.environ.get('USE_MYSQL', 'True').lower() in ('true', '1', 'yes')
 
 db_name = os.environ.get('DB_NAME', 'rural_opportunity_connect')
 db_user = os.environ.get('DB_USER', 'root')
@@ -222,6 +221,8 @@ default_csrf_trusted = [
     'https://*.railway.app',
     'https://*.pythonanywhere.com',
     'https://*.vercel.app',
+    'https://*.trycloudflare.com',
+    'https://*.localtunnel.me',
 ]
 if csrf_trusted_env:
     default_csrf_trusted.extend([o.strip() for o in csrf_trusted_env.split(',') if o.strip()])
