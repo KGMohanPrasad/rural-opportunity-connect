@@ -2,8 +2,8 @@
 {
   "model": "auth.user",
   "fields": {
-    "password": "pbkdf2_sha256$600000$HVTlAdBQn524svjjrfod4r$fq6M0m7biIwKRgTVTKf1pfJlz4q9xjoULdhqVAj2YKI=",
-    "last_login": "2026-09-04T15:33:42.487Z",
+    "password": "pbkdf2_sha256$600000$EUWrrtc3bRrFLtWowXKnS7$GzXg6WM7z7LMwEfVF2UV0028zMKZzG2HchLtxX66JfE=",
+    "last_login": "2026-09-09T06:46:26.293Z",
     "is_superuser": true,
     "username": "admin",
     "first_name": "",
@@ -53,8 +53,8 @@
 {
   "model": "auth.user",
   "fields": {
-    "password": "pbkdf2_sha256$600000$vgxUI3hfuCveG1HDYqB0vK$AiihkpOyjcbdZwFT5Pqs99O2gco5FxXDgnitv+7vk5Y=",
-    "last_login": "2026-09-08T07:01:49.237Z",
+    "password": "pbkdf2_sha256$1500000$EjmR3cxRgxPqB3DMmk2QF3$wFphxZ7g9jv4I/C0jsM+J0yUtBjFX91oYRjPYdELB2c=",
+    "last_login": "2026-09-02T14:21:07.832Z",
     "is_superuser": false,
     "username": "mohan",
     "first_name": "Mohan",
@@ -138,16 +138,16 @@
 {
   "model": "auth.user",
   "fields": {
-    "password": "pbkdf2_sha256$600000$7kqnqTE6kUCr6ZHKEW0Hwi$v8TJV87dZHKg8mcJkzXOYoRccQHt1JvoQLi3p5wqlyw=",
-    "last_login": "2026-09-08T05:13:47.699Z",
+    "password": "pbkdf2_sha256$600000$view6U6dhOWynJXNDuCHFz$horZ9jOSFZ/cy0QweDyuLSozqIX5NwhXDkI6KyQgg40=",
+    "last_login": "2026-09-07T16:06:17.005Z",
     "is_superuser": false,
-    "username": "test_reg_2026",
-    "first_name": "Test",
-    "last_name": "User",
-    "email": "test2026@example.com",
+    "username": "bsdjhhhbjf",
+    "first_name": "samd",
+    "last_name": "dddd",
+    "email": "bhkjnknjh@gmail.com",
     "is_staff": false,
     "is_active": true,
-    "date_joined": "2026-09-08T05:13:47.479Z",
+    "date_joined": "2026-09-07T16:06:16.459Z",
     "groups": [],
     "user_permissions": []
   }
@@ -155,35 +155,26 @@
 {
   "model": "auth.user",
   "fields": {
-    "password": "pbkdf2_sha256$600000$GVjVcIwR4pYrCOVqITOjBw$DcWHa7Ee+A1U04JVjxHeNG5HHk0AeRpnH1wgbi4qA+g=",
-    "last_login": "2026-09-08T05:17:34.135Z",
+    "password": "pbkdf2_sha256$600000$uzt04IssXmzoCA1m681yKb$obTCDtbCbL/8P8FFna91i/6OWyhNFWKihxZvoXD34hc=",
+    "last_login": "2026-09-08T13:25:28.075Z",
     "is_superuser": false,
-    "username": "demo_user",
+    "username": "ramesh_kumar",
     "first_name": "Ramesh",
     "last_name": "Kumar",
-    "email": "demo@ruralopportunity.org",
+    "email": "ramesh@ruralopportunity.org",
     "is_staff": false,
     "is_active": true,
-    "date_joined": "2026-09-08T05:17:01.757Z",
+    "date_joined": "2026-09-07T16:19:00.824Z",
     "groups": [],
     "user_permissions": []
   }
 },
 {
-  "model": "auth.user",
+  "model": "sessions.session",
+  "pk": "02jmqztxjtn440fuqe4z1ve9523tl9kf",
   "fields": {
-    "password": "pbkdf2_sha256$600000$sFEQW7aG8JXj0YQFrfe0jy$O8fHcQGA80mb7peRDSOcRJvFE6nyLq8Tg2WIeJJ/PZg=",
-    "last_login": "2026-09-08T05:17:33.416Z",
-    "is_superuser": false,
-    "username": "unique_test_user",
-    "first_name": "Aakash",
-    "last_name": "Sharma",
-    "email": "aakash@example.com",
-    "is_staff": false,
-    "is_active": true,
-    "date_joined": "2026-09-08T05:17:33.059Z",
-    "groups": [],
-    "user_permissions": []
+    "session_data": "eyJhcHBsaWVkX2tleXMiOlsic2Nob2xhcnNoaXBfMjkiXX0:1x4CR3:2-4ckBXou0E-nhIiF39ra75K_cczuP1JPEvbGumH0oQ",
+    "expire_date": "2026-09-23T07:09:33.460Z"
   }
 },
 {
@@ -196,34 +187,10 @@
 },
 {
   "model": "sessions.session",
-  "pk": "1rhrvf6m5k0yg3oyhdrhrswir9nnbe4d",
+  "pk": "18g8nydzjl7zipcklhkl9q69qluslfwb",
   "fields": {
-    "session_data": ".eJxVjDEOgzAMAP_iuYqIC3HC2J03ICd2GtoKJAJT1b9XSAztene6N4y8b2Xcq67jJNCDRbj8wsjpqfNh5MHzfTFpmbd1iuZIzGmrGRbR1-1s_waFa4EeUMR24lp_JWXKSULqAmJorLbkXcvKAYmIrcsYs0WlLnqv0Xl21BB8vgIGN8I:1x3oCo:jIkLoy_iPG8WJRTuVrO9_rjvZvTNzh4IgmAN09TiRfQ",
-    "expire_date": "2026-09-22T05:17:14.736Z"
-  }
-},
-{
-  "model": "sessions.session",
-  "pk": "4905xxy2qcfz4aiitvavp15l0k3wvfbe",
-  "fields": {
-    "session_data": ".eJxVjMsOwiAQAP9lz4awUl49eu83kIUFqRqalPZk_HfTpAe9zkzmDYH2rYa95zXMDCMMcPllkdIzt0Pwg9p9EWlp2zpHcSTitF1MC-fX7Wz_BpV6hREiKspDckUWbzzqrFHKwsa7VMijddFJ5YxJyC6pqKNkysqiQVs08xU-X-P8N9w:1x3pm4:ctD9johddcabW_hLqyPp03YBxJtJK34i8DmsLI4zCGU",
-    "expire_date": "2026-09-22T06:57:44.315Z"
-  }
-},
-{
-  "model": "sessions.session",
-  "pk": "628bbxmqx1rmvz7wgd23dpf5rjhgzl5f",
-  "fields": {
-    "session_data": ".eJxVjMsOwiAQAP9lz4awUl49eu83kIUFqRqalPZk_HfTpAe9zkzmDYH2rYa95zXMDCMMcPllkdIzt0Pwg9p9EWlp2zpHcSTitF1MC-fX7Wz_BpV6hREiKspDckUWbzzqrFHKwsa7VMijddFJ5YxJyC6pqKNkysqiQVs08xU-X-P8N9w:1x3pmO:L0Hq4NE1WI2c_gssEO5CMVyt5oWRdkVxr7mhuoNOgjM",
-    "expire_date": "2026-09-22T06:58:04.208Z"
-  }
-},
-{
-  "model": "sessions.session",
-  "pk": "a0n2k70fuxhxxh89utvdgr86f8e32fi2",
-  "fields": {
-    "session_data": ".eJxVjEEOwiAQAP-yZ0MWhS306N03kIUFqRqalPZk_Ltp0oNeZybzhsDbWsPW8xImgRE0wukXRk7P3HYjD273WaW5rcsU1Z6ow3Z1myW_rkf7N6jcK4wQdaHCvpBIKmgkWmG0QxJm55CIotPGc-GcL5oFs_GMtgiRT2c9OPh8AUMmOSM:1x3o9T:4en9_eNy-JEu21pu32zQ7g_hZyDBaekUgrT7lmZ-iw0",
-    "expire_date": "2026-09-22T05:13:47.704Z"
+    "session_data": ".eJxVjEEOwiAQRe_C2pBhoC24dN8zNMMwlaqBpLQr491Nky50-997_60m2rc87U3WaUnqqoy6_G6R-CnlAOlB5V4117KtS9SHok_a9FiTvG6n-3eQqeWjth4JnDVEAxF4z6ZjREtd383B84wUHDgOYqw4kyhF6JFFYIDBAqrPF9coN3w:1x3wpS:yhX58A0vI1tmVubcTTUd0-_UlRM3ZcMvfmnwIsrx3I0",
+    "expire_date": "2026-09-22T14:29:42.955Z"
   }
 },
 {
@@ -252,10 +219,10 @@
 },
 {
   "model": "sessions.session",
-  "pk": "fcb98om9pe90dae7hlm44gr16kihh7ww",
+  "pk": "f2pe48gy0sk4mokvmcqrqznqob1v8z9e",
   "fields": {
-    "session_data": ".eJxVjMsOwiAQAP9lz4awUl49eu83kIUFqRqalPZk_HfTpAe9zkzmDYH2rYa95zXMDCMMcPllkdIzt0Pwg9p9EWlp2zpHcSTitF1MC-fX7Wz_BpV6hREiKspDckUWbzzqrFHKwsa7VMijddFJ5YxJyC6pqKNkysqiQVs08xU-X-P8N9w:1x3pmE:iG6f9HvYRsQLXARcSEVxzqGya8FJyE8BTtZVaN_feuc",
-    "expire_date": "2026-09-22T06:57:54.931Z"
+    "session_data": ".eJxVjMsOwiAQAP9lz4ZAKY_26N1vIAu7SNVAUtqT8d9Nkx70OjOZNwTctxL2zmtYCGZQEi6_MGJ6cj0MPbDem0itbusSxZGI03Zxa8Sv69n-DQr2AjOMI3oaDWerBs2UBy2JNBq2rJM1UqokrTNxyk5J9orUNLiM2ZFnjN7D5wsF-jg0:1x3vpI:lVLL60JAj3GAEtmqOaJ5b0clhMnrV4m-57cHRxjAKOQ",
+    "expire_date": "2026-09-22T13:25:28.118Z"
   }
 },
 {
@@ -280,6 +247,14 @@
   "fields": {
     "session_data": ".eJxVjDkOwjAQAP-yNbJ8rp2U9LzBWl84gGwpTirE31GkFNDOjOYNnvat-n3k1S8JZhBw-WWB4jO3Q6QHtXtnsbdtXQI7EnbawW495df1bP8GlUaFGRQiSk5ZSiuEyRYLOjPFSWG0MZCwWiNx44p1oShH2nLtsCSXeCo6SPh8AbY0Nyc:1x1efx:VJ6M5zkkrePJyfQX_rZcFW3nyk3ZWewYsjs-p8W_WWc",
     "expire_date": "2026-09-16T06:42:25.702Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "jdz9ufvxbpuirztvjvles4rsjjgme7rl",
+  "fields": {
+    "session_data": "eyJhcHBsaWVkX2tleXMiOlsic2NoZW1lXzM0Il19:1x4CRd:S5F6RTBT4-C6UpiXuWq0O-hEWk8frdnrxWifAggSKWs",
+    "expire_date": "2026-09-23T07:10:09.196Z"
   }
 },
 {
@@ -332,18 +307,10 @@
 },
 {
   "model": "sessions.session",
-  "pk": "ougphymhovprzzswyn4c127qi0m4ejxo",
+  "pk": "obzems5bn4x2pkk02zhxk0sktukgqupi",
   "fields": {
-    "session_data": ".eJxVjMsOgjAQAP9lz6bpUvqAo3e_odl2txY1kFA4Gf_dkHDQ68xk3hBp32rcm6xxYhhhgMsvS5SfMh-CHzTfF5WXeVunpI5Enbap28Lyup7t36BSqzBCKXpwbBhdll6oY9NjJpTiU-iwBBtyMcb7rgRkDGITJdF6QC3WZnbw-QICHjhm:1x3o9J:Mn1-mMmlyOrZ_YCNRzJTCoeHJ6NCJ59MA8hYDAbDnfQ",
-    "expire_date": "2026-09-22T05:13:37.835Z"
-  }
-},
-{
-  "model": "sessions.session",
-  "pk": "qofsk77x5syr1alyvon5fkvi7ditkiwy",
-  "fields": {
-    "session_data": ".eJxVjMsOwiAQAP9lz4awUl49eu83kIUFqRqalPZk_HfTpAe9zkzmDYH2rYa95zXMDCMMcPllkdIzt0Pwg9p9EWlp2zpHcSTitF1MC-fX7Wz_BpV6hREiKspDckUWbzzqrFHKwsa7VMijddFJ5YxJyC6pqKNkysqiQVs08xU-X-P8N9w:1x3pq1:f5CEiAN25R37HOiXmY4YMjmrQeOjuSzdZq9ENk0bvig",
-    "expire_date": "2026-09-22T07:01:49.244Z"
+    "session_data": ".eJxVjEEOwiAQRe_C2pBhoC24dN8zNMMwlaqBpLQr491Nky50-997_60m2rc87U3WaUnqqoy6_G6R-CnlAOlB5V4117KtS9SHok_a9FiTvG6n-3eQqeWjth4JnDVEAxF4z6ZjREtd383B84wUHDgOYqw4kyhF6JFFYIDBAqrPF9coN3w:1x4C4g:_oss_7Jm5wvYmthh9h8PSmAmPSse6oEiaEf0pW6cNHA",
+    "expire_date": "2026-09-23T06:46:26.324Z"
   }
 },
 {
@@ -504,62 +471,42 @@
 },
 {
   "model": "accounts.userprofile",
+  "pk": 8,
+  "fields": {
+    "user": [
+      "bsdjhhhbjf"
+    ],
+    "age": null,
+    "location": "",
+    "education": "",
+    "course": "",
+    "skills": "",
+    "experience": "",
+    "annual_income": "",
+    "interests": "",
+    "preferred_opportunity": "",
+    "created_at": "2026-09-07T16:06:16.959Z",
+    "updated_at": "2026-09-07T16:06:16.959Z"
+  }
+},
+{
+  "model": "accounts.userprofile",
   "pk": 9,
   "fields": {
     "user": [
-      "test_reg_2026"
+      "ramesh_kumar"
     ],
     "age": null,
-    "location": "",
-    "education": "",
+    "location": "Salem, Tamil Nadu",
+    "education": "Graduate",
     "course": "",
-    "skills": "",
+    "skills": "Computer Operator, Agriculture",
     "experience": "",
     "annual_income": "",
     "interests": "",
     "preferred_opportunity": "",
-    "created_at": "2026-09-08T05:13:47.681Z",
-    "updated_at": "2026-09-08T05:13:47.681Z"
-  }
-},
-{
-  "model": "accounts.userprofile",
-  "pk": 10,
-  "fields": {
-    "user": [
-      "demo_user"
-    ],
-    "age": null,
-    "location": "",
-    "education": "",
-    "course": "",
-    "skills": "",
-    "experience": "",
-    "annual_income": "",
-    "interests": "",
-    "preferred_opportunity": "",
-    "created_at": "2026-09-08T05:17:02.008Z",
-    "updated_at": "2026-09-08T05:17:02.008Z"
-  }
-},
-{
-  "model": "accounts.userprofile",
-  "pk": 12,
-  "fields": {
-    "user": [
-      "unique_test_user"
-    ],
-    "age": null,
-    "location": "",
-    "education": "",
-    "course": "",
-    "skills": "",
-    "experience": "",
-    "annual_income": "",
-    "interests": "",
-    "preferred_opportunity": "",
-    "created_at": "2026-09-08T05:17:33.392Z",
-    "updated_at": "2026-09-08T05:17:33.393Z"
+    "created_at": "2026-09-07T16:19:17.130Z",
+    "updated_at": "2026-09-07T16:19:17.130Z"
   }
 },
 {
@@ -867,8 +814,18 @@
   }
 },
 {
+  "model": "opportunities.savedopportunity",
+  "pk": 3,
+  "fields": {
+    "user": 8,
+    "opportunity_type": "job",
+    "opportunity_id": 14,
+    "saved_at": "2026-09-07T16:14:15.885Z"
+  }
+},
+{
   "model": "scholarships.scholarship",
-  "pk": 38,
+  "pk": 26,
   "fields": {
     "name": "National Means-cum-Merit Scholarship Scheme (NMMSS)",
     "provider": "Department of School Education & Literacy, Ministry of Education, GoI",
@@ -884,13 +841,13 @@
     "source_portal": "National Scholarship Portal (NSP)",
     "source_url": "https://scholarships.gov.in/",
     "is_external": false,
-    "created_at": "2026-09-08T04:53:27.000Z",
-    "updated_at": "2026-09-08T04:53:27.000Z"
+    "created_at": "2026-09-07T09:58:12.299Z",
+    "updated_at": "2026-09-07T09:58:12.299Z"
   }
 },
 {
   "model": "scholarships.scholarship",
-  "pk": 39,
+  "pk": 27,
   "fields": {
     "name": "PM Young Achievers Scholarship Award Scheme (PM-YASASVI)",
     "provider": "Ministry of Social Justice and Empowerment, Government of India",
@@ -906,13 +863,13 @@
     "source_portal": "National Scholarship Portal (NSP)",
     "source_url": "https://scholarships.gov.in/",
     "is_external": false,
-    "created_at": "2026-09-08T04:53:27.003Z",
-    "updated_at": "2026-09-08T04:53:27.003Z"
+    "created_at": "2026-09-07T09:58:12.302Z",
+    "updated_at": "2026-09-07T09:58:12.302Z"
   }
 },
 {
   "model": "scholarships.scholarship",
-  "pk": 40,
+  "pk": 28,
   "fields": {
     "name": "Central Sector Scheme of Scholarships for College & University Students (CSSS)",
     "provider": "Department of Higher Education, Ministry of Education, GoI",
@@ -928,13 +885,13 @@
     "source_portal": "National Scholarship Portal (NSP)",
     "source_url": "https://scholarships.gov.in/",
     "is_external": false,
-    "created_at": "2026-09-08T04:53:27.007Z",
-    "updated_at": "2026-09-08T04:53:27.007Z"
+    "created_at": "2026-09-07T09:58:12.306Z",
+    "updated_at": "2026-09-07T09:58:12.306Z"
   }
 },
 {
   "model": "scholarships.scholarship",
-  "pk": 41,
+  "pk": 29,
   "fields": {
     "name": "Post-Matric Scholarship Scheme for SC & ST Students",
     "provider": "Ministry of Social Justice & Empowerment & Ministry of Tribal Affairs, GoI",
@@ -950,13 +907,13 @@
     "source_portal": "National Scholarship Portal (NSP)",
     "source_url": "https://scholarships.gov.in/",
     "is_external": false,
-    "created_at": "2026-09-08T04:53:27.011Z",
-    "updated_at": "2026-09-08T04:53:27.011Z"
+    "created_at": "2026-09-07T09:58:12.309Z",
+    "updated_at": "2026-09-07T09:58:12.309Z"
   }
 },
 {
   "model": "scholarships.scholarship",
-  "pk": 42,
+  "pk": 30,
   "fields": {
     "name": "AICTE Pragati Scholarship Scheme for Girl Students",
     "provider": "All India Council for Technical Education (AICTE), Ministry of Education",
@@ -972,13 +929,13 @@
     "source_portal": "National Scholarship Portal (NSP)",
     "source_url": "https://scholarships.gov.in/",
     "is_external": false,
-    "created_at": "2026-09-08T04:53:27.015Z",
-    "updated_at": "2026-09-08T04:53:27.015Z"
+    "created_at": "2026-09-07T09:58:12.313Z",
+    "updated_at": "2026-09-07T09:58:12.313Z"
   }
 },
 {
   "model": "scholarships.scholarship",
-  "pk": 43,
+  "pk": 31,
   "fields": {
     "name": "HDFC Bank Parivartan's Educational Crisis Support Scholarship (ECSS)",
     "provider": "HDFC Bank CSR Foundation / Buddy4Study",
@@ -994,13 +951,13 @@
     "source_portal": "Buddy4Study",
     "source_url": "https://www.buddy4study.com/page/hdfc-bank-parivartans-ecss-programme",
     "is_external": false,
-    "created_at": "2026-09-08T04:53:27.019Z",
-    "updated_at": "2026-09-08T04:53:27.019Z"
+    "created_at": "2026-09-07T09:58:12.317Z",
+    "updated_at": "2026-09-07T09:58:12.317Z"
   }
 },
 {
   "model": "scholarships.scholarship",
-  "pk": 44,
+  "pk": 32,
   "fields": {
     "name": "Reliance Foundation Undergraduate Scholarship",
     "provider": "Reliance Foundation",
@@ -1016,13 +973,13 @@
     "source_portal": "Reliance Foundation Scholarships",
     "source_url": "https://www.scholarships.reliancefoundation.org/",
     "is_external": false,
-    "created_at": "2026-09-08T04:53:27.023Z",
-    "updated_at": "2026-09-08T04:53:27.023Z"
+    "created_at": "2026-09-07T09:58:12.320Z",
+    "updated_at": "2026-09-07T09:58:12.320Z"
   }
 },
 {
   "model": "scholarships.scholarship",
-  "pk": 45,
+  "pk": 33,
   "fields": {
     "name": "Santoor Women's Scholarship",
     "provider": "Wipro Cares & Azim Premji Foundation",
@@ -1038,13 +995,13 @@
     "source_portal": "Buddy4Study",
     "source_url": "https://www.buddy4study.com/page/santoor-scholarship-programme",
     "is_external": false,
-    "created_at": "2026-09-08T04:53:27.028Z",
-    "updated_at": "2026-09-08T04:53:27.028Z"
+    "created_at": "2026-09-07T09:58:12.324Z",
+    "updated_at": "2026-09-07T09:58:12.324Z"
   }
 },
 {
   "model": "scholarships.scholarship",
-  "pk": 46,
+  "pk": 34,
   "fields": {
     "name": "Kotak Kanya Scholarship",
     "provider": "Kotak Education Foundation",
@@ -1060,13 +1017,13 @@
     "source_portal": "Buddy4Study",
     "source_url": "https://www.buddy4study.com/page/kotak-kanya-scholarship",
     "is_external": false,
-    "created_at": "2026-09-08T04:53:27.032Z",
-    "updated_at": "2026-09-08T04:53:27.032Z"
+    "created_at": "2026-09-07T09:58:12.327Z",
+    "updated_at": "2026-09-07T09:58:12.327Z"
   }
 },
 {
   "model": "scholarships.scholarship",
-  "pk": 47,
+  "pk": 35,
   "fields": {
     "name": "SBI Asha Scholarship Programme",
     "provider": "SBI Foundation (CSR arm of State Bank of India)",
@@ -1082,13 +1039,13 @@
     "source_portal": "Buddy4Study",
     "source_url": "https://www.buddy4study.com/page/sbi-asha-scholarship-program",
     "is_external": false,
-    "created_at": "2026-09-08T04:53:27.035Z",
-    "updated_at": "2026-09-08T04:53:27.035Z"
+    "created_at": "2026-09-07T09:58:12.332Z",
+    "updated_at": "2026-09-07T09:58:12.332Z"
   }
 },
 {
   "model": "scholarships.scholarship",
-  "pk": 48,
+  "pk": 36,
   "fields": {
     "name": "Keep India Smiling Foundational Scholarship Programme",
     "provider": "Colgate-Palmolive (India) Limited",
@@ -1104,13 +1061,13 @@
     "source_portal": "Buddy4Study",
     "source_url": "https://www.buddy4study.com/page/colgate-keep-india-smiling-scholarship",
     "is_external": false,
-    "created_at": "2026-09-08T04:53:27.040Z",
-    "updated_at": "2026-09-08T04:53:27.040Z"
+    "created_at": "2026-09-07T09:58:12.335Z",
+    "updated_at": "2026-09-07T09:58:12.335Z"
   }
 },
 {
   "model": "scholarships.scholarship",
-  "pk": 49,
+  "pk": 37,
   "fields": {
     "name": "Vidyasaarathi Rural Youth Higher Education Scholarship",
     "provider": "Protean eGov Technologies / Vidyasaarathi Portal",
@@ -1126,13 +1083,13 @@
     "source_portal": "Vidyasaarathi Portal",
     "source_url": "https://www.vidyasaarathi.co.in/",
     "is_external": false,
-    "created_at": "2026-09-08T04:53:27.044Z",
-    "updated_at": "2026-09-08T04:53:27.044Z"
+    "created_at": "2026-09-07T09:58:12.338Z",
+    "updated_at": "2026-09-07T09:58:12.338Z"
   }
 },
 {
   "model": "government_schemes.governmentscheme",
-  "pk": 35,
+  "pk": 23,
   "fields": {
     "name": "PM Surya Ghar: Muft Bijli Yojana",
     "department": "Ministry of New and Renewable Energy (MNRE)",
@@ -1147,13 +1104,13 @@
     "source_portal": "myScheme.gov.in",
     "source_url": "https://www.myscheme.gov.in/schemes/pmsgmby",
     "is_external": false,
-    "created_at": "2026-09-08T04:53:26.946Z",
-    "updated_at": "2026-09-08T04:53:26.946Z"
+    "created_at": "2026-09-07T09:58:12.249Z",
+    "updated_at": "2026-09-07T09:58:12.249Z"
   }
 },
 {
   "model": "government_schemes.governmentscheme",
-  "pk": 36,
+  "pk": 24,
   "fields": {
     "name": "PM Vishwakarma Scheme",
     "department": "Ministry of Micro, Small and Medium Enterprises (MSME)",
@@ -1168,13 +1125,13 @@
     "source_portal": "myScheme.gov.in",
     "source_url": "https://www.myscheme.gov.in/schemes/pm-vishwakarma",
     "is_external": false,
-    "created_at": "2026-09-08T04:53:26.952Z",
-    "updated_at": "2026-09-08T04:53:26.952Z"
+    "created_at": "2026-09-07T09:58:12.253Z",
+    "updated_at": "2026-09-07T09:58:12.253Z"
   }
 },
 {
   "model": "government_schemes.governmentscheme",
-  "pk": 37,
+  "pk": 25,
   "fields": {
     "name": "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)",
     "department": "Ministry of Agriculture & Farmers Welfare",
@@ -1189,13 +1146,13 @@
     "source_portal": "myScheme.gov.in",
     "source_url": "https://www.myscheme.gov.in/schemes/pm-kisan",
     "is_external": false,
-    "created_at": "2026-09-08T04:53:26.957Z",
-    "updated_at": "2026-09-08T04:53:26.957Z"
+    "created_at": "2026-09-07T09:58:12.258Z",
+    "updated_at": "2026-09-07T09:58:12.258Z"
   }
 },
 {
   "model": "government_schemes.governmentscheme",
-  "pk": 38,
+  "pk": 26,
   "fields": {
     "name": "Prime Minister's Employment Generation Programme (PMEGP)",
     "department": "Ministry of MSME / Khadi and Village Industries Commission (KVIC)",
@@ -1210,13 +1167,13 @@
     "source_portal": "myScheme.gov.in",
     "source_url": "https://www.myscheme.gov.in/schemes/pmegp",
     "is_external": false,
-    "created_at": "2026-09-08T04:53:26.961Z",
-    "updated_at": "2026-09-08T04:53:26.961Z"
+    "created_at": "2026-09-07T09:58:12.262Z",
+    "updated_at": "2026-09-07T09:58:12.262Z"
   }
 },
 {
   "model": "government_schemes.governmentscheme",
-  "pk": 39,
+  "pk": 27,
   "fields": {
     "name": "Pradhan Mantri Awas Yojana - Gramin (PMAY-G)",
     "department": "Ministry of Rural Development",
@@ -1231,13 +1188,13 @@
     "source_portal": "myScheme.gov.in",
     "source_url": "https://www.myscheme.gov.in/schemes/pmay-g",
     "is_external": false,
-    "created_at": "2026-09-08T04:53:26.965Z",
-    "updated_at": "2026-09-08T04:53:26.965Z"
+    "created_at": "2026-09-07T09:58:12.267Z",
+    "updated_at": "2026-09-07T09:58:12.267Z"
   }
 },
 {
   "model": "government_schemes.governmentscheme",
-  "pk": 40,
+  "pk": 28,
   "fields": {
     "name": "Pradhan Mantri Fasal Bima Yojana (PMFBY)",
     "department": "Ministry of Agriculture & Farmers Welfare",
@@ -1252,13 +1209,13 @@
     "source_portal": "myScheme.gov.in",
     "source_url": "https://www.myscheme.gov.in/schemes/pmfby",
     "is_external": false,
-    "created_at": "2026-09-08T04:53:26.969Z",
-    "updated_at": "2026-09-08T04:53:26.969Z"
+    "created_at": "2026-09-07T09:58:12.270Z",
+    "updated_at": "2026-09-07T09:58:12.270Z"
   }
 },
 {
   "model": "government_schemes.governmentscheme",
-  "pk": 41,
+  "pk": 29,
   "fields": {
     "name": "Ayushman Bharat - PM Jan Arogya Yojana (AB-PMJAY)",
     "department": "National Health Authority, Ministry of Health & Family Welfare",
@@ -1273,13 +1230,13 @@
     "source_portal": "myScheme.gov.in",
     "source_url": "https://www.myscheme.gov.in/schemes/ab-pmjay",
     "is_external": false,
-    "created_at": "2026-09-08T04:53:26.973Z",
-    "updated_at": "2026-09-08T04:53:26.973Z"
+    "created_at": "2026-09-07T09:58:12.274Z",
+    "updated_at": "2026-09-07T09:58:12.274Z"
   }
 },
 {
   "model": "government_schemes.governmentscheme",
-  "pk": 42,
+  "pk": 30,
   "fields": {
     "name": "Mahatma Gandhi NREGA (MGNREGS)",
     "department": "Ministry of Rural Development",
@@ -1294,13 +1251,13 @@
     "source_portal": "myScheme.gov.in",
     "source_url": "https://www.myscheme.gov.in/schemes/mgnrega",
     "is_external": false,
-    "created_at": "2026-09-08T04:53:26.977Z",
-    "updated_at": "2026-09-08T04:53:26.977Z"
+    "created_at": "2026-09-07T09:58:12.277Z",
+    "updated_at": "2026-09-07T09:58:12.277Z"
   }
 },
 {
   "model": "government_schemes.governmentscheme",
-  "pk": 43,
+  "pk": 31,
   "fields": {
     "name": "Lakhpati Didi Initiative (DAY-NRLM)",
     "department": "Ministry of Rural Development",
@@ -1315,13 +1272,13 @@
     "source_portal": "myScheme.gov.in",
     "source_url": "https://www.myscheme.gov.in/schemes/lakhpatididi",
     "is_external": false,
-    "created_at": "2026-09-08T04:53:26.981Z",
-    "updated_at": "2026-09-08T04:53:26.981Z"
+    "created_at": "2026-09-07T09:58:12.281Z",
+    "updated_at": "2026-09-07T09:58:12.281Z"
   }
 },
 {
   "model": "government_schemes.governmentscheme",
-  "pk": 44,
+  "pk": 32,
   "fields": {
     "name": "Pradhan Mantri Mudra Yojana (PMMY)",
     "department": "Department of Financial Services, Ministry of Finance",
@@ -1336,13 +1293,13 @@
     "source_portal": "myScheme.gov.in",
     "source_url": "https://www.myscheme.gov.in/schemes/pmmy",
     "is_external": false,
-    "created_at": "2026-09-08T04:53:26.984Z",
-    "updated_at": "2026-09-08T04:53:26.984Z"
+    "created_at": "2026-09-07T09:58:12.285Z",
+    "updated_at": "2026-09-07T09:58:12.285Z"
   }
 },
 {
   "model": "government_schemes.governmentscheme",
-  "pk": 45,
+  "pk": 33,
   "fields": {
     "name": "Pradhan Mantri Matsya Sampada Yojana (PMMSY)",
     "department": "Department of Fisheries, Ministry of Fisheries, Animal Husbandry & Dairying",
@@ -1357,13 +1314,13 @@
     "source_portal": "myScheme.gov.in",
     "source_url": "https://www.myscheme.gov.in/schemes/pmmsy",
     "is_external": false,
-    "created_at": "2026-09-08T04:53:26.988Z",
-    "updated_at": "2026-09-08T04:53:26.988Z"
+    "created_at": "2026-09-07T09:58:12.288Z",
+    "updated_at": "2026-09-07T09:58:12.288Z"
   }
 },
 {
   "model": "government_schemes.governmentscheme",
-  "pk": 46,
+  "pk": 34,
   "fields": {
     "name": "Kisan Credit Card (KCC) Scheme",
     "department": "Ministry of Agriculture & Farmers Welfare / RBI / NABARD",
@@ -1378,8 +1335,8 @@
     "source_portal": "myScheme.gov.in",
     "source_url": "https://www.myscheme.gov.in/schemes/kcc",
     "is_external": false,
-    "created_at": "2026-09-08T04:53:26.992Z",
-    "updated_at": "2026-09-08T04:53:26.992Z"
+    "created_at": "2026-09-07T09:58:12.292Z",
+    "updated_at": "2026-09-07T09:58:12.292Z"
   }
 },
 {
@@ -1864,6 +1821,9 @@
     "opportunity_name": "Office Assistant",
     "organization": "Corporate Solutions Ltd",
     "status": "applied",
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
     "applied_date": "2026-09-02T03:51:10.649Z",
     "updated_date": "2026-09-02T03:51:10.649Z"
   }
@@ -1878,6 +1838,9 @@
     "opportunity_name": "Post Matric Scholarship for OBC Students",
     "organization": "Department of Social Justice",
     "status": "applied",
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
     "applied_date": "2026-09-02T03:56:22.476Z",
     "updated_date": "2026-09-02T03:56:22.476Z"
   }
@@ -1892,6 +1855,9 @@
     "opportunity_name": "Food Processing",
     "organization": "Ministry of Food Processing",
     "status": "applied",
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
     "applied_date": "2026-09-02T04:04:59.780Z",
     "updated_date": "2026-09-02T04:04:59.781Z"
   }
@@ -1906,6 +1872,9 @@
     "opportunity_name": "Online Tutoring and Education",
     "organization": "Self-employment opportunity",
     "status": "applied",
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
     "applied_date": "2026-09-02T04:09:37.733Z",
     "updated_date": "2026-09-02T04:09:37.733Z"
   }
@@ -1920,6 +1889,9 @@
     "opportunity_name": "Dairy Farming",
     "organization": "Self-employment opportunity",
     "status": "applied",
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
     "applied_date": "2026-09-02T04:14:36.680Z",
     "updated_date": "2026-09-02T04:14:36.680Z"
   }
@@ -1934,8 +1906,45 @@
     "opportunity_name": "Poultry Farming",
     "organization": "Self-employment opportunity",
     "status": "applied",
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
     "applied_date": "2026-09-02T04:19:59.447Z",
     "updated_date": "2026-09-02T04:19:59.447Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 7,
+  "fields": {
+    "user": 2,
+    "opportunity_type": "skill",
+    "opportunity_id": 8,
+    "opportunity_name": "Food Processing",
+    "organization": "Ministry of Food Processing",
+    "status": "applied",
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
+    "applied_date": "2026-09-02T04:20:53.743Z",
+    "updated_date": "2026-09-02T04:20:53.743Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 8,
+  "fields": {
+    "user": 2,
+    "opportunity_type": "scholarship",
+    "opportunity_id": 4,
+    "opportunity_name": "Post Matric Scholarship for OBC Students",
+    "organization": "Department of Social Justice",
+    "status": "applied",
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
+    "applied_date": "2026-09-02T05:38:42.432Z",
+    "updated_date": "2026-09-02T05:38:42.433Z"
   }
 },
 {
@@ -1948,8 +1957,45 @@
     "opportunity_name": "Junior Agronomist",
     "organization": "Rural Tech Agro",
     "status": "applied",
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
     "applied_date": "2026-09-02T06:43:05.843Z",
     "updated_date": "2026-09-02T06:43:05.843Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 10,
+  "fields": {
+    "user": 2,
+    "opportunity_type": "business",
+    "opportunity_id": 8,
+    "opportunity_name": "Online Tutoring and Education",
+    "organization": "Self-employment opportunity",
+    "status": "applied",
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
+    "applied_date": "2026-09-02T06:44:07.978Z",
+    "updated_date": "2026-09-02T06:44:07.978Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 11,
+  "fields": {
+    "user": 2,
+    "opportunity_type": "job",
+    "opportunity_id": 10,
+    "opportunity_name": "Office Assistant",
+    "organization": "Corporate Solutions Ltd",
+    "status": "applied",
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
+    "applied_date": "2026-09-02T06:44:48.907Z",
+    "updated_date": "2026-09-02T06:44:48.907Z"
   }
 },
 {
@@ -1962,6 +2008,9 @@
     "opportunity_name": "Pradhan Mantri Mudra Yojana",
     "organization": "Ministry of Finance",
     "status": "applied",
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
     "applied_date": "2026-09-02T07:39:18.026Z",
     "updated_date": "2026-09-02T07:39:18.026Z"
   }
@@ -1976,6 +2025,9 @@
     "opportunity_name": "Office Assistant",
     "organization": "Corporate Solutions Ltd",
     "status": "applied",
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
     "applied_date": "2026-09-02T10:01:17.861Z",
     "updated_date": "2026-09-02T10:01:17.861Z"
   }
@@ -1990,6 +2042,9 @@
     "opportunity_name": "Call Center Executive",
     "organization": "Customer Care Solutions",
     "status": "applied",
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
     "applied_date": "2026-09-02T10:01:29.608Z",
     "updated_date": "2026-09-02T10:01:29.608Z"
   }
@@ -2004,8 +2059,62 @@
     "opportunity_name": "National Scholarship Portal",
     "organization": "Ministry of Education",
     "status": "applied",
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
     "applied_date": "2026-09-02T10:02:22.568Z",
     "updated_date": "2026-09-02T10:02:22.568Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 16,
+  "fields": {
+    "user": 4,
+    "opportunity_type": "job",
+    "opportunity_id": 10,
+    "opportunity_name": "Office Assistant",
+    "organization": "Corporate Solutions Ltd",
+    "status": "applied",
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
+    "applied_date": "2026-09-02T10:03:50.834Z",
+    "updated_date": "2026-09-02T10:03:50.834Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 17,
+  "fields": {
+    "user": 4,
+    "opportunity_type": "job",
+    "opportunity_id": 9,
+    "opportunity_name": "Call Center Executive",
+    "organization": "Customer Care Solutions",
+    "status": "applied",
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
+    "applied_date": "2026-09-02T10:14:07.062Z",
+    "updated_date": "2026-09-02T10:14:07.062Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 18,
+  "fields": {
+    "user": 4,
+    "opportunity_type": "job",
+    "opportunity_id": 9,
+    "opportunity_name": "Call Center Executive",
+    "organization": "Customer Care Solutions",
+    "status": "applied",
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
+    "applied_date": "2026-09-02T10:14:14.816Z",
+    "updated_date": "2026-09-02T10:14:14.816Z"
   }
 },
 {
@@ -2018,8 +2127,28 @@
     "opportunity_name": "Post Matric Scholarship for OBC Students",
     "organization": "Department of Social Justice",
     "status": "applied",
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
     "applied_date": "2026-09-02T10:14:54.061Z",
     "updated_date": "2026-09-02T10:14:54.062Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 20,
+  "fields": {
+    "user": 4,
+    "opportunity_type": "scholarship",
+    "opportunity_id": 4,
+    "opportunity_name": "Post Matric Scholarship for OBC Students",
+    "organization": "Department of Social Justice",
+    "status": "applied",
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
+    "applied_date": "2026-09-02T10:20:43.930Z",
+    "updated_date": "2026-09-02T10:20:43.930Z"
   }
 },
 {
@@ -2032,6 +2161,9 @@
     "opportunity_name": "Central Sector Scholarship for Girls",
     "organization": "Ministry of Education",
     "status": "applied",
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
     "applied_date": "2026-09-02T10:28:54.970Z",
     "updated_date": "2026-09-02T10:29:44.249Z"
   }
@@ -2046,6 +2178,9 @@
     "opportunity_name": "Post-Matric Scholarship for SC/ST/OBC Students",
     "organization": "Ministry of Social Justice & Empowerment (NSP)",
     "status": "applied",
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
     "applied_date": "2026-09-02T14:29:23.438Z",
     "updated_date": "2026-09-02T14:29:23.438Z"
   }
@@ -2060,6 +2195,9 @@
     "opportunity_name": "Pradhan Mantri Matsya Sampada Yojana (PMMSY)",
     "organization": "Department of Fisheries",
     "status": "applied",
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
     "applied_date": "2026-09-02T14:30:15.006Z",
     "updated_date": "2026-09-02T14:30:15.006Z"
   }
@@ -2068,70 +2206,289 @@
   "model": "applications.application",
   "pk": 25,
   "fields": {
-    "user": 7,
+    "user": 9,
     "opportunity_type": "scholarship",
     "opportunity_id": 14,
     "opportunity_name": "National Means-cum-Merit Scholarship Scheme (NMMSS)",
     "organization": "Department of School Education & Literacy, Ministry of Education, GoI",
     "status": "applied",
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
     "applied_date": "2026-09-07T09:38:55.696Z",
-    "updated_date": "2026-09-07T09:38:55.696Z"
+    "updated_date": "2026-09-07T16:26:16.398Z"
   }
 },
 {
   "model": "applications.application",
   "pk": 26,
   "fields": {
-    "user": 7,
+    "user": 9,
     "opportunity_type": "job",
     "opportunity_id": 14,
     "opportunity_name": "Rural Logistics & Delivery Executive",
     "organization": "India Post Payments & Gramin Logistics",
     "status": "applied",
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
     "applied_date": "2026-09-07T09:43:33.545Z",
-    "updated_date": "2026-09-07T09:43:33.545Z"
+    "updated_date": "2026-09-07T16:26:16.391Z"
   }
 },
 {
   "model": "applications.application",
   "pk": 27,
   "fields": {
-    "user": 7,
+    "user": 9,
     "opportunity_type": "scheme",
     "opportunity_id": 11,
     "opportunity_name": "PM Surya Ghar: Muft Bijli Yojana",
     "organization": "Ministry of New and Renewable Energy (MNRE)",
     "status": "applied",
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
     "applied_date": "2026-09-07T09:44:23.769Z",
-    "updated_date": "2026-09-07T09:44:23.769Z"
+    "updated_date": "2026-09-07T16:26:16.385Z"
   }
 },
 {
   "model": "applications.application",
   "pk": 28,
   "fields": {
-    "user": 4,
+    "user": 9,
     "opportunity_type": "job",
-    "opportunity_id": 1,
-    "opportunity_name": "Rural Logistics & Delivery Executive",
-    "organization": "Gramin Delivery Logistics Ltd",
+    "opportunity_id": 0,
+    "opportunity_name": "Opportunity",
+    "organization": "",
     "status": "applied",
-    "applied_date": "2026-09-08T06:57:44.509Z",
-    "updated_date": "2026-09-08T06:57:44.509Z"
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
+    "applied_date": "2026-09-07T14:56:52.984Z",
+    "updated_date": "2026-09-07T16:26:16.374Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 29,
+  "fields": {
+    "user": 3,
+    "opportunity_type": "job",
+    "opportunity_id": 14,
+    "opportunity_name": "Rural Logistics & Delivery Executive",
+    "organization": "India Post Payments & Gramin Logistics",
+    "status": "applied",
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
+    "applied_date": "2026-09-07T15:18:42.839Z",
+    "updated_date": "2026-09-07T15:18:42.839Z"
   }
 },
 {
   "model": "applications.application",
   "pk": 30,
   "fields": {
-    "user": 4,
-    "opportunity_type": "job",
-    "opportunity_id": 2,
-    "opportunity_name": "Agro-Drone Mapping & Spraying Associate",
-    "organization": "Kisan Drone Technologies",
+    "user": 3,
+    "opportunity_type": "scholarship",
+    "opportunity_id": 29,
+    "opportunity_name": "Post-Matric Scholarship Scheme for SC & ST Students",
+    "organization": "Ministry of Social Justice & Empowerment & Ministry of Tribal Affairs, GoI",
     "status": "applied",
-    "applied_date": "2026-09-08T07:01:52.653Z",
-    "updated_date": "2026-09-08T07:01:52.653Z"
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
+    "applied_date": "2026-09-07T15:35:46.157Z",
+    "updated_date": "2026-09-07T15:35:46.157Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 31,
+  "fields": {
+    "user": 3,
+    "opportunity_type": "scheme",
+    "opportunity_id": 34,
+    "opportunity_name": "Kisan Credit Card (KCC) Scheme",
+    "organization": "Ministry of Agriculture & Farmers Welfare / RBI / NABARD",
+    "status": "applied",
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
+    "applied_date": "2026-09-07T15:36:04.692Z",
+    "updated_date": "2026-09-07T15:36:04.692Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 32,
+  "fields": {
+    "user": 3,
+    "opportunity_type": "skill",
+    "opportunity_id": 12,
+    "opportunity_name": "Digital Saksharta for Rural Women Entrepreneurs",
+    "organization": "National Digital Literacy Mission",
+    "status": "applied",
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
+    "applied_date": "2026-09-07T15:37:02.256Z",
+    "updated_date": "2026-09-07T15:37:02.256Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 33,
+  "fields": {
+    "user": 3,
+    "opportunity_type": "business",
+    "opportunity_id": 11,
+    "opportunity_name": "Cold-Pressed Groundnut & Sesame Oil Expeller",
+    "organization": "Micro-Enterprise Track",
+    "status": "applied",
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
+    "applied_date": "2026-09-07T15:37:29.720Z",
+    "updated_date": "2026-09-07T15:37:29.720Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 34,
+  "fields": {
+    "user": 3,
+    "opportunity_type": "job",
+    "opportunity_id": 13,
+    "opportunity_name": "Agro-Drone Mapping & Spraying Associate",
+    "organization": "Kisan Drone Kendra (NCS Agri-Tech)",
+    "status": "applied",
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
+    "applied_date": "2026-09-07T15:39:58.132Z",
+    "updated_date": "2026-09-07T15:39:58.132Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 35,
+  "fields": {
+    "user": 9,
+    "opportunity_type": "job",
+    "opportunity_id": 1,
+    "opportunity_name": "Data Entry Operator",
+    "organization": "ABC Tech Solutions",
+    "status": "applied",
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
+    "applied_date": "2026-09-07T15:58:35.323Z",
+    "updated_date": "2026-09-07T16:26:16.368Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 36,
+  "fields": {
+    "user": 9,
+    "opportunity_type": "scholarship",
+    "opportunity_id": 26,
+    "opportunity_name": "National Means-cum-Merit Scholarship Scheme (NMMSS)",
+    "organization": "Department of School Education & Literacy, Ministry of Education, GoI",
+    "status": "applied",
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
+    "applied_date": "2026-09-07T16:04:53.836Z",
+    "updated_date": "2026-09-07T16:26:16.358Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 37,
+  "fields": {
+    "user": 8,
+    "opportunity_type": "scheme",
+    "opportunity_id": 23,
+    "opportunity_name": "PM Surya Ghar: Muft Bijli Yojana",
+    "organization": "Ministry of New and Renewable Energy (MNRE)",
+    "status": "applied",
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
+    "applied_date": "2026-09-07T16:25:43.008Z",
+    "updated_date": "2026-09-07T16:25:43.008Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 38,
+  "fields": {
+    "user": 9,
+    "opportunity_type": "job",
+    "opportunity_id": 13,
+    "opportunity_name": "Agro-Drone Mapping & Spraying Associate",
+    "organization": "Kisan Drone Kendra (NCS Agri-Tech)",
+    "status": "applied",
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
+    "applied_date": "2026-09-07T16:30:48.745Z",
+    "updated_date": "2026-09-07T16:30:48.745Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 39,
+  "fields": {
+    "user": 9,
+    "opportunity_type": "scholarship",
+    "opportunity_id": 36,
+    "opportunity_name": "Keep India Smiling Foundational Scholarship Programme",
+    "organization": "Colgate-Palmolive (India) Limited",
+    "status": "applied",
+    "applicant_phone": "",
+    "applicant_location": "",
+    "cover_note": "",
+    "applied_date": "2026-09-07T16:48:34.848Z",
+    "updated_date": "2026-09-07T16:48:34.848Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 40,
+  "fields": {
+    "user": 7,
+    "opportunity_type": "scholarship",
+    "opportunity_id": 29,
+    "opportunity_name": "Post-Matric Scholarship Scheme for SC & ST Students",
+    "organization": "Ministry of Social Justice & Empowerment & Ministry of Tribal Affairs, GoI",
+    "status": "applied",
+    "applicant_phone": "9842109876",
+    "applicant_location": "Tiruchirappalli, Tamil Nadu",
+    "cover_note": "First-generation rural college applicant for B.Sc Agriculture",
+    "applied_date": "2026-09-09T07:09:33.447Z",
+    "updated_date": "2026-09-09T07:09:33.447Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 41,
+  "fields": {
+    "user": 7,
+    "opportunity_type": "scheme",
+    "opportunity_id": 34,
+    "opportunity_name": "Kisan Credit Card (KCC) Scheme",
+    "organization": "Ministry of Agriculture & Farmers Welfare",
+    "status": "applied",
+    "applicant_phone": "9840012345",
+    "applicant_location": "Thanjavur, Tamil Nadu",
+    "cover_note": "Farmer holding 2.5 acres dryland requiring crop credit",
+    "applied_date": "2026-09-09T07:10:09.187Z",
+    "updated_date": "2026-09-09T07:10:09.187Z"
   }
 },
 {
@@ -2232,50 +2589,34 @@
 },
 {
   "model": "applications.documentchecklist",
+  "pk": 7,
+  "fields": {
+    "user": 8,
+    "aadhaar": false,
+    "marksheet": false,
+    "income_certificate": false,
+    "community_certificate": false,
+    "bank_details": false,
+    "residence_certificate": false,
+    "passport": false,
+    "pan_card": false,
+    "updated_at": "2026-09-07T16:06:16.979Z"
+  }
+},
+{
+  "model": "applications.documentchecklist",
   "pk": 8,
   "fields": {
     "user": 9,
-    "aadhaar": false,
-    "marksheet": false,
-    "income_certificate": false,
-    "community_certificate": false,
-    "bank_details": false,
+    "aadhaar": true,
+    "marksheet": true,
+    "income_certificate": true,
+    "community_certificate": true,
+    "bank_details": true,
     "residence_certificate": false,
     "passport": false,
     "pan_card": false,
-    "updated_at": "2026-09-08T05:13:47.689Z"
-  }
-},
-{
-  "model": "applications.documentchecklist",
-  "pk": 9,
-  "fields": {
-    "user": 10,
-    "aadhaar": false,
-    "marksheet": false,
-    "income_certificate": false,
-    "community_certificate": false,
-    "bank_details": false,
-    "residence_certificate": false,
-    "passport": false,
-    "pan_card": false,
-    "updated_at": "2026-09-08T05:17:02.020Z"
-  }
-},
-{
-  "model": "applications.documentchecklist",
-  "pk": 11,
-  "fields": {
-    "user": 12,
-    "aadhaar": false,
-    "marksheet": false,
-    "income_certificate": false,
-    "community_certificate": false,
-    "bank_details": false,
-    "residence_certificate": false,
-    "passport": false,
-    "pan_card": false,
-    "updated_at": "2026-09-08T05:17:33.401Z"
+    "updated_at": "2026-09-07T16:19:17.137Z"
   }
 }
 ]

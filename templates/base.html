@@ -64,9 +64,14 @@
     </script>
 
     <!-- Custom Unified Design System Stylesheet with Cache Busting -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=11.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=2026.09.08.v5">
     <!-- Animmaster Pro Animation Suite Stylesheet -->
-    <link rel="stylesheet" href="{% static 'css/animmaster.css' %}?v=11.0">
+    <link rel="stylesheet" href="{% static 'css/animmaster.css' %}?v=2026.09.08.v5">
+    <!-- Cinematic Animations & 3D Interactive Systems -->
+    <link rel="stylesheet" href="{% static 'css/glow-cursor.css' %}?v=2026.09.08.v5">
+    <link rel="stylesheet" href="{% static 'css/3d-effects.css' %}?v=2026.09.08.v5">
+    <link rel="stylesheet" href="{% static 'css/page-transitions.css' %}?v=2026.09.08.v5">
+    <link rel="stylesheet" href="{% static 'css/animations.css' %}?v=2026.09.08.v5">
 
     <!-- High-Priority Enterprise Palette Enforcement -->
     <style>
@@ -76,6 +81,10 @@
             --primary-darker: #071526 !important;
             --secondary: #06B6D4 !important;
             --accent: #00F2FE !important;
+        }
+        html, body {
+            overflow-x: hidden !important;
+            max-width: 100vw !important;
         }
         body {
             background-color: #f8fafc !important;
@@ -185,13 +194,13 @@
     <!-- Global 3D WebGL Background Particle Canvas -->
     <canvas id="globalWebglCanvas" aria-hidden="true"></canvas>
 
-    <!-- Cinematic Page Transition Overlay -->
+    <!-- Cinematic Page Transition Overlays -->
+    <div id="cinematicTransitionBar" aria-hidden="true"></div>
+    <div id="cinematicTransitionOverlay" aria-hidden="true"></div>
     <div id="pageTransitionOverlay" aria-hidden="true"></div>
 
     <!-- Animmaster Top Scroll Progress Indicator -->
     <div id="scrollProgressBar" aria-hidden="true"></div>
-
-    <!-- Animmaster Top Page Transition Loader -->
     <div id="pageTransitionBar" aria-hidden="true"></div>
 
     <!-- Animmaster Ambient Cursor Spotlight Follower -->
@@ -281,17 +290,20 @@
             <!-- Right Actions (Auth / User Hub) -->
             <div class="flex items-center space-x-3">
 
+
                 {% if user.is_authenticated %}
-                    <div class="relative group">
-                        <button class="flex items-center gap-2 bg-brand-50 hover:bg-brand-100 text-brand-900 font-bold px-3.5 py-2 rounded-xl text-sm transition border border-brand-200">
+                    <div class="relative group" id="userDropdownContainer">
+                        <button type="button" id="userDropdownBtn" onclick="toggleUserDropdown(event)"
+                                class="flex items-center gap-2 bg-brand-50 hover:bg-brand-100 text-brand-900 font-bold px-3.5 py-2 rounded-xl text-sm transition border border-brand-200 cursor-pointer">
                             <span class="w-7 h-7 rounded-lg bg-brand-800 text-white flex items-center justify-center text-xs font-bold shadow-xs">
                                 {{ user.first_name|first|default:user.username|first|upper }}
                             </span>
                             <span class="max-w-[120px] truncate hidden sm:inline">{{ user.first_name|default:user.username }}</span>
-                            <i class="fas fa-chevron-down text-[10px] text-slate-400 group-hover:rotate-180 transition-transform duration-200"></i>
+                            <i id="userDropdownChevron" class="fas fa-chevron-down text-[10px] text-slate-400 group-hover:rotate-180 transition-transform duration-200"></i>
                         </button>
                         <!-- User Dropdown Menu -->
-                        <div class="absolute right-0 mt-1 w-56 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 hidden group-hover:block z-50 animate-fade-in">
+                        <div id="userDropdownMenu"
+                             class="absolute right-0 mt-1 w-56 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 hidden group-hover:block z-50 animate-fade-in">
                             <div class="px-4 py-2 border-b border-slate-100">
                                 <p class="text-xs text-slate-400 font-medium">Signed in as</p>
                                 <p class="text-sm font-bold text-slate-900 truncate">{{ user.username }}</p>
@@ -345,7 +357,7 @@
                     </div>
                     <span class="font-extrabold text-slate-900 text-sm">Rural Opportunity <span class="bg-gradient-to-r from-cyan-600 via-sky-600 to-blue-600 bg-clip-text text-transparent">Connect</span></span>
                 </div>
-                <button onclick="toggleMobileMenu()" class="w-8 h-8 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center">
+                <button type="button" onclick="toggleMobileMenu()" class="w-8 h-8 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center">
                     <i class="fas fa-times text-sm"></i>
                 </button>
             </div>
@@ -363,6 +375,8 @@
                     <option value="ml">മലയാളം (Malayalam)</option>
                 </select>
             </div>
+
+
 
             <!-- Navigation Links -->
             <div class="space-y-1 text-sm font-semibold">
@@ -449,7 +463,7 @@
                         {% endif %}
                         <span class="text-xs sm:text-sm font-semibold leading-relaxed">{{ message }}</span>
                     </div>
-                    <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-slate-600 text-sm p-1">
+                    <button type="button" onclick="this.parentElement.remove()" class="text-slate-400 hover:text-slate-600 text-sm p-1">
                         <i class="fas fa-xmark"></i>
                     </button>
                 </div>
@@ -459,7 +473,7 @@
 
     <!-- Global 1-Click Quick Apply Modal -->
     <div id="quickApplyModal" class="fixed inset-0 bg-slate-950/75 backdrop-blur-sm z-50 flex items-center justify-center hidden transition-opacity duration-200" role="dialog" aria-modal="true">
-        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full mx-4 shadow-2xl border border-cyan-500/30 transform transition-all duration-200" id="quickApplyModalCard">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full mx-4 shadow-2xl border border-cyan-500/30 transform transition-all duration-200 max-h-[90vh] overflow-y-auto" id="quickApplyModalCard">
             <!-- Modal Header -->
             <div class="flex items-start justify-between pb-4 border-b border-slate-100">
                 <div class="flex items-center gap-3">
@@ -469,7 +483,7 @@
                     <div>
                         <div class="flex items-center gap-2">
                             <span id="qaModalTypeBadge" class="roc-badge roc-badge-cyan text-[10px] uppercase font-bold">Opportunity</span>
-                            <span class="text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                            <span id="qaModalModeBadge" class="text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
                                 <i class="fas fa-check-circle"></i> Direct Verification
                             </span>
                         </div>
@@ -477,13 +491,24 @@
                         <p id="qaModalOrg" class="text-xs text-slate-500 font-semibold">Organization / Department</p>
                     </div>
                 </div>
-                <button type="button" onclick="closeQuickApplyModal()" class="text-slate-400 hover:text-slate-600 text-base p-1.5 rounded-lg hover:bg-slate-100 transition" aria-label="Close modal">
+                <button type="button" onclick="closeQuickApplyModal()" class="text-slate-400 hover:text-slate-600 text-base p-1.5 rounded-lg hover:bg-slate-100 transition cursor-pointer" aria-label="Close modal">
                     <i class="fas fa-xmark"></i>
                 </button>
             </div>
 
-            <!-- Modal Form Body -->
-            <form id="quickApplyForm" onsubmit="submitQuickApplyModal(event)" class="space-y-4 pt-4">
+            <!-- Error Banner (Real error reporting) -->
+            <div id="qaErrorAlert" class="hidden my-3 p-3 bg-red-50 border border-red-200 rounded-2xl text-xs text-red-700 flex items-start gap-2">
+                <i class="fas fa-circle-exclamation mt-0.5 text-red-500"></i>
+                <span id="qaErrorMessage" class="flex-1 font-medium"></span>
+            </div>
+
+            <!-- Opportunity Highlights Box -->
+            <div id="qaHighlightsBox" class="my-4 bg-slate-50/80 border border-slate-200/80 rounded-2xl p-3.5 text-xs grid grid-cols-2 gap-2">
+                <!-- Dynamically populated via JS -->
+            </div>
+
+            <!-- FLOW 1: INTERNAL APPLICATION FORM -->
+            <form id="quickApplyForm" onsubmit="submitQuickApplyModal(event)" class="space-y-4 pt-1">
                 <input type="hidden" id="qaInputType" name="opportunity_type" value="">
                 <input type="hidden" id="qaInputId" name="opportunity_id" value="">
                 <input type="hidden" id="qaInputName" name="opportunity_name" value="">
@@ -495,15 +520,19 @@
                     <div class="flex items-center justify-between text-xs">
                         <span class="text-slate-500 font-semibold">Applying Candidate:</span>
                         <span class="font-bold text-slate-900 flex items-center gap-1">
-                            <i class="fas fa-user-check text-cyan-600"></i> {{ user.get_full_name|default:user.username }}
+                            <i class="fas fa-user-check text-cyan-600"></i> <span id="qaAuthFullName">{{ user.get_full_name|default:user.username }}</span>
                         </span>
                     </div>
                     <div class="flex items-center justify-between text-xs">
                         <span class="text-slate-500 font-semibold">Account Email:</span>
-                        <span class="text-slate-700 font-medium">{{ user.email|default:"contact.k.gmohanprasad@gmail.com" }}</span>
+                        <span class="text-slate-700 font-medium" id="qaAuthEmail">{{ user.email|default:"Registered Candidate" }}</span>
                     </div>
                     <div class="flex items-center justify-between text-xs">
-                        <span class="text-slate-500 font-semibold">Document Locker:</span>
+                        <span class="text-slate-500 font-semibold">Profile Location:</span>
+                        <span class="text-slate-700 font-medium" id="qaAuthLocation">{{ user.profile.location|default:"Verified" }}</span>
+                    </div>
+                    <div class="flex items-center justify-between text-xs">
+                        <span class="text-slate-500 font-semibold">Document Readiness:</span>
                         <span class="text-emerald-700 font-bold flex items-center gap-1">
                             <i class="fas fa-shield-check"></i> Readiness Locker Linked
                         </span>
@@ -521,36 +550,113 @@
                         </a>
                     </div>
                     <div>
-                        <label class="block text-[11px] font-semibold text-slate-600 mb-1">Full Name</label>
-                        <input type="text" id="qaGuestName" placeholder="e.g. K. G. Mohan Prasad" value="Guest Applicant" class="w-full text-xs px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 focus:outline-none bg-white">
+                        <label class="block text-[11px] font-semibold text-slate-600 mb-1">Full Name <span class="text-red-500">*</span></label>
+                        <input type="text" id="qaGuestName" placeholder="e.g. Ramesh Kumar" required class="w-full text-xs px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 focus:outline-none bg-white">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-semibold text-slate-600 mb-1">Email Address <span class="text-red-500">*</span></label>
+                        <input type="email" id="qaGuestEmail" placeholder="e.g. ramesh@example.com" required class="w-full text-xs px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 focus:outline-none bg-white">
                     </div>
                     <div class="grid grid-cols-2 gap-2">
                         <div>
-                            <label class="block text-[11px] font-semibold text-slate-600 mb-1">Phone Number</label>
-                            <input type="tel" id="qaGuestPhone" placeholder="Mobile number" value="9876543210" class="w-full text-xs px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 focus:outline-none bg-white">
+                            <label class="block text-[11px] font-semibold text-slate-600 mb-1">Phone Number <span class="text-red-500">*</span></label>
+                            <input type="tel" id="qaGuestPhone" placeholder="10-digit mobile" required class="w-full text-xs px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 focus:outline-none bg-white">
                         </div>
                         <div>
-                            <label class="block text-[11px] font-semibold text-slate-600 mb-1">District / State</label>
-                            <input type="text" id="qaGuestLocation" placeholder="e.g. Salem, Tamil Nadu" value="Tamil Nadu" class="w-full text-xs px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 focus:outline-none bg-white">
+                            <label class="block text-[11px] font-semibold text-slate-600 mb-1">District / State <span class="text-red-500">*</span></label>
+                            <input type="text" id="qaGuestLocation" placeholder="e.g. Salem, Tamil Nadu" required class="w-full text-xs px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 focus:outline-none bg-white">
                         </div>
                     </div>
                 </div>
                 {% endif %}
 
                 <div>
-                    <label class="block text-[11px] font-semibold text-slate-600 mb-1">Short Application Note / Qualification (Optional)</label>
-                    <textarea id="qaCoverNote" rows="2" placeholder="Briefly state your highest qualification, readiness, or questions for the provider..." class="w-full text-xs px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 focus:outline-none resize-none bg-white"></textarea>
+                    <label class="block text-[11px] font-semibold text-slate-600 mb-1">Application Note / Highest Qualification (Optional)</label>
+                    <textarea id="qaCoverNote" rows="2" placeholder="Briefly state your highest qualification, readiness, or notes for the recruiter..." class="w-full text-xs px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 focus:outline-none resize-none bg-white"></textarea>
                 </div>
 
                 <div class="pt-2 flex items-center justify-end gap-3">
-                    <button type="button" onclick="closeQuickApplyModal()" class="btn-secondary text-xs py-2.5 px-4 rounded-xl">
+                    <button type="button" onclick="closeQuickApplyModal()" class="btn-secondary text-xs py-2.5 px-4 rounded-xl cursor-pointer">
                         Cancel
                     </button>
-                    <button type="submit" id="qaSubmitBtn" class="btn-primary text-xs py-2.5 px-6 rounded-xl flex items-center gap-2 shadow-md hover:scale-102 transition">
+                    <button type="submit" id="qaSubmitBtn" class="btn-primary text-xs py-2.5 px-6 rounded-xl flex items-center gap-2 shadow-md hover:scale-102 transition cursor-pointer">
                         <i class="fas fa-paper-plane"></i> Confirm & Submit Application
                     </button>
                 </div>
             </form>
+
+            <!-- FLOW 2: EXTERNAL OFFICIAL PORTAL GUIDANCE -->
+            <div id="qaFlowExternal" class="hidden space-y-4 pt-1">
+                <div class="bg-blue-50/80 border border-blue-200 rounded-2xl p-4 space-y-2">
+                    <div class="flex items-center gap-2 text-blue-900 font-bold text-xs">
+                        <i class="fas fa-shield-halved text-blue-600 text-sm"></i>
+                        <span>Application handled by official portal</span>
+                    </div>
+                    <p class="text-xs text-blue-800/90 leading-relaxed">
+                        This opportunity is officially hosted and processed on the verified <strong id="qaExternalPortalName" class="font-bold">Official Portal</strong> website.
+                    </p>
+                    <p class="text-[11px] text-blue-700/80">
+                        Click below to proceed directly to the authentic application page on the portal. No duplicate registration is required.
+                    </p>
+                </div>
+
+                <div class="pt-2 flex items-center justify-end gap-3">
+                    <button type="button" onclick="closeQuickApplyModal()" class="btn-secondary text-xs py-2.5 px-4 rounded-xl cursor-pointer">
+                        Close
+                    </button>
+                    <a id="qaExternalUrlBtn" href="#" target="_blank" rel="noopener noreferrer" onclick="closeQuickApplyModal()"
+                       class="btn-primary text-xs py-2.5 px-6 rounded-xl flex items-center gap-2 shadow-md hover:scale-102 transition bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white cursor-pointer font-bold">
+                        <span>Continue to Official Application</span>
+                        <i class="fas fa-arrow-up-right-from-square text-[11px]"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- ALREADY APPLIED VIEW -->
+            <div id="qaFlowAlreadyApplied" class="hidden space-y-4 pt-1 text-center py-4">
+                <div class="w-14 h-14 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl mx-auto shadow-xs border border-emerald-200">
+                    <i class="fas fa-check-double"></i>
+                </div>
+                <div>
+                    <h4 class="text-base font-bold text-slate-900">You have already applied! ✓</h4>
+                    <p id="qaAlreadyAppliedMsg" class="text-xs text-slate-500 mt-1 max-w-sm mx-auto">
+                        Your application is active and monitored live in your pipeline.
+                    </p>
+                </div>
+                <div class="pt-3 flex items-center justify-center gap-3">
+                    <button type="button" onclick="closeQuickApplyModal()" class="btn-secondary text-xs py-2.5 px-4 rounded-xl cursor-pointer">
+                        Close
+                    </button>
+                    <a href="{% url 'applications' %}" class="btn-primary text-xs py-2.5 px-5 rounded-xl flex items-center gap-1.5 cursor-pointer">
+                        <i class="fas fa-list-check"></i> View in Tracker
+                    </a>
+                </div>
+            </div>
+
+            <!-- SUCCESS STATE VIEW (Post-submission) -->
+            <div id="qaFlowSuccess" class="hidden space-y-4 pt-1 text-center py-4">
+                <div class="w-14 h-14 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl mx-auto shadow-xs border border-emerald-200">
+                    <i class="fas fa-circle-check"></i>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold text-slate-900">Application Submitted Successfully ✓</h4>
+                    <p class="text-xs text-slate-600 mt-1">
+                        Your application for <strong id="qaSuccessOppName" class="text-slate-900"></strong> has been recorded in the database.
+                    </p>
+                    <div class="mt-2 inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 rounded-lg text-xs font-mono text-slate-700">
+                        <span>Ref:</span>
+                        <strong id="qaSuccessRef">ROC-00000</strong>
+                    </div>
+                </div>
+                <div class="pt-3 flex items-center justify-center gap-3">
+                    <button type="button" onclick="closeQuickApplyModal()" class="btn-secondary text-xs py-2.5 px-4 rounded-xl cursor-pointer">
+                        Close
+                    </button>
+                    <a href="{% url 'applications' %}" class="btn-primary text-xs py-2.5 px-5 rounded-xl flex items-center gap-1.5 cursor-pointer">
+                        <i class="fas fa-list-check"></i> View Application Tracker
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -763,19 +869,19 @@
     </footer>
 
     <!-- Floating Back to Top Button with Magnetic Hover -->
-    <button id="backToTopBtn" aria-label="Scroll back to top" class="btn-magnetic">
+    <button type="button" id="backToTopBtn" aria-label="Scroll back to top" class="btn-magnetic">
         <i class="fas fa-chevron-up text-sm"></i>
     </button>
 
-    <!-- Three.js 3D Engine CDN -->
+    <!-- Core JavaScript Libraries & Dynamic Modules with Strict Cache-Busting -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
-    <!-- Global JavaScript File with Quick Apply Modal, Multi-language & 3D Engine -->
-    <script src="{% static 'js/main.js' %}?v=2026.09.07.v3"></script>
-    <!-- Animmaster Pro Global Animation Engine -->
-    <script src="{% static 'js/animmaster.js' %}?v=2026.09.07.v3"></script>
-    <!-- Rural Opportunity Connect 3D WebGL Engine -->
-    <script src="{% static 'js/three-scenes.js' %}?v=2026.09.07.v3"></script>
+    <script src="{% static 'js/main.js' %}?v=2026.09.08.v5"></script>
+    <script src="{% static 'js/animmaster.js' %}?v=2026.09.08.v5"></script>
+    <script src="{% static 'js/glow-cursor.js' %}?v=2026.09.08.v5"></script>
+    <script src="{% static 'js/page-transitions.js' %}?v=2026.09.08.v5"></script>
+    <script src="{% static 'js/interactions.js' %}?v=2026.09.08.v5"></script>
+    <script src="{% static 'js/animations.js' %}?v=2026.09.08.v5"></script>
+    <script src="{% static 'js/three-scenes.js' %}?v=2026.09.08.v5"></script>
 
     <!-- Google Translate Script (Universal, Global on Every Page) -->
     <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
@@ -872,14 +978,169 @@
         }
         window.handleQuickAccessSearch = handleQuickAccessSearch;
 
-        // Unified Quick Apply Modal Functions (Direct & Zero Cache Dependency)
+        // User Profile Dropdown Click Toggle
+        function toggleUserDropdown(e) {
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            const menu = document.getElementById('userDropdownMenu');
+            const chevron = document.getElementById('userDropdownChevron');
+            if (menu) {
+                const isHidden = menu.classList.contains('hidden');
+                if (isHidden) {
+                    menu.classList.remove('hidden');
+                    menu.style.display = 'block';
+                    if (chevron) chevron.classList.add('rotate-180');
+                } else {
+                    menu.classList.add('hidden');
+                    menu.style.display = '';
+                    if (chevron) chevron.classList.remove('rotate-180');
+                }
+            }
+        }
+        window.toggleUserDropdown = toggleUserDropdown;
+
+        document.addEventListener('click', (e) => {
+            const container = document.getElementById('userDropdownContainer');
+            const menu = document.getElementById('userDropdownMenu');
+            const chevron = document.getElementById('userDropdownChevron');
+            if (container && menu && !container.contains(e.target)) {
+                menu.classList.add('hidden');
+                menu.style.display = '';
+                if (chevron) chevron.classList.remove('rotate-180');
+            }
+        });
+
+        // ======================================================================
+        // 0. Guaranteed Global Toast Notification System
+        // ======================================================================
+        function showToast(message, type = 'success', duration = 4500, actionUrl = null, actionText = null) {
+            let container = document.getElementById('toast-container');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'toast-container';
+                container.style.cssText = 'position:fixed; bottom:24px; right:24px; z-index:999999; display:flex; flex-direction:column; gap:8px; pointer-events:none;';
+                document.body.appendChild(container);
+            }
+
+            const toast = document.createElement('div');
+            toast.className = 'roc-toast';
+            toast.style.cssText = 'position:relative; z-index:999999; pointer-events:auto; display:flex; align-items:center; gap:12px; min-width:320px; max-width:480px; padding:14px 18px; border-radius:18px; background:#ffffff; border:1px solid #bae6fd; box-shadow:0 20px 40px rgba(7,21,38,0.2), 0 0 20px rgba(6,182,212,0.25); margin-bottom:8px;';
+
+            let iconHtml = '<div style="width:36px;height:36px;border-radius:12px;background:#ecfeff;color:#0891b2;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;"><i class="fas fa-check-circle"></i></div>';
+            if (type === 'error') {
+                iconHtml = '<div style="width:36px;height:36px;border-radius:12px;background:#fef2f2;color:#dc2626;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;"><i class="fas fa-exclamation-circle"></i></div>';
+            } else if (type === 'info') {
+                iconHtml = '<div style="width:36px;height:36px;border-radius:12px;background:#f0f9ff;color:#0284c7;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;"><i class="fas fa-info-circle"></i></div>';
+            }
+
+            let actionBtnHtml = '';
+            if (actionUrl && actionText) {
+                actionBtnHtml = `<a href="${actionUrl}" class="text-xs font-bold text-slate-950 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 px-3 py-1.5 rounded-xl border border-amber-300 shrink-0 shadow-xs transition hover:scale-105">${actionText}</a>`;
+            }
+
+            toast.innerHTML = `
+                ${iconHtml}
+                <div style="flex:1; font-size:13px; font-weight:700; color:#0f172a; line-height:1.4;">${message}</div>
+                ${actionBtnHtml}
+                <button type="button" onclick="this.parentElement.remove()" style="color:#94a3b8; padding:4px; border:none; background:none; cursor:pointer;" aria-label="Close">
+                    <i class="fas fa-xmark"></i>
+                </button>
+            `;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.transition = 'all 0.3s ease';
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100%)';
+                setTimeout(() => toast.remove(), 300);
+            }, duration);
+        }
+        window.showToast = showToast;
+
+        // ======================================================================
+        // Direct 1-Click In-Place Quick Apply Engine (3-State Morph & Real Backend)
+        // Normal [ Quick Apply ] -> Loading [ ◌ Applying... ] -> Success [ ✓ Applied ]
+        // ======================================================================
         var currentApplyBtn = window.currentApplyBtn || null;
 
-        function openQuickApplyModal(type, id, name, org, btn) {
+        // Unified Quick Apply Entry Point for all cards across every page
+        function quickApply(type, id, name, org, btn) {
+            // Locate button element if passed as event target or selector
+            if (btn && btn.tagName !== 'BUTTON') {
+                btn = btn.closest('button');
+            }
+            if (!btn && window.event) {
+                const target = window.event.target || window.event.currentTarget;
+                if (target) btn = target.closest('button');
+            }
+            if (!btn && id) {
+                btn = document.querySelector(`button[onclick*="'${id}'"]`);
+            }
+            currentApplyBtn = btn || null;
+
+            if (btn && (btn.disabled || btn.classList.contains('btn-applied'))) {
+                showToast(`Already Applied for "${name || 'this opportunity'}". Tracking live in your pipeline.`, 'info', 4000, '/applications/', 'View Tracker →');
+                return;
+            }
+
+            // Immediately launch the comprehensive Quick Apply Modal for this specific opportunity
+            openQuickApplyModal(type, id, name, org, btn);
+        }
+        window.quickApply = quickApply;
+
+        function markButtonAsApplied(btn) {
+            if (!btn) return;
+            btn.classList.remove('btn-primary', 'btn-magnetic', 'btn-sheen', 'hover-scale-102', 'btn-applying', 'cursor-pointer');
+            btn.classList.add('btn-applied');
+            btn.disabled = true;
+            btn.innerHTML = `
+                <span class="inline-flex items-center gap-1 text-emerald-700 font-bold pointer-events-none">
+                    <svg class="w-4 h-4 text-emerald-600 inline" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                    </svg>
+                    Applied ✓
+                </span>
+            `;
+        }
+        window.markButtonAsApplied = markButtonAsApplied;
+
+        function updateActiveApplicationsCounter(count) {
+            document.querySelectorAll('.counter-value').forEach(el => {
+                const parent = el.closest('.tilt-card-3d') || el.parentElement;
+                if (parent && parent.textContent.includes('Active Applications')) {
+                    el.textContent = count;
+                    el.setAttribute('data-counter', count);
+                }
+            });
+        }
+        window.updateActiveApplicationsCounter = updateActiveApplicationsCounter;
+
+        // Modal Specific Functions
+        async function openQuickApplyModal(type, id, name, org, btn) {
             currentApplyBtn = btn || null;
             const modal = document.getElementById('quickApplyModal');
             if (!modal) return;
 
+            // Reset modal visibility and view containers
+            const form = document.getElementById('quickApplyForm');
+            const flowExternal = document.getElementById('qaFlowExternal');
+            const flowAlreadyApplied = document.getElementById('qaFlowAlreadyApplied');
+            const flowSuccess = document.getElementById('qaFlowSuccess');
+            const errorAlert = document.getElementById('qaErrorAlert');
+            const highlightsBox = document.getElementById('qaHighlightsBox');
+
+            if (errorAlert) errorAlert.classList.add('hidden');
+            if (flowSuccess) flowSuccess.classList.add('hidden');
+            if (flowAlreadyApplied) flowAlreadyApplied.classList.add('hidden');
+            if (flowExternal) flowExternal.classList.add('hidden');
+            if (form) {
+                form.classList.remove('hidden');
+            }
+
+            // Populate initial hidden fields
             const inputType = document.getElementById('qaInputType');
             const inputId = document.getElementById('qaInputId');
             const inputName = document.getElementById('qaInputName');
@@ -892,16 +1153,167 @@
 
             const modalTitle = document.getElementById('qaModalTitle');
             const modalOrg = document.getElementById('qaModalOrg');
+            const typeBadge = document.getElementById('qaModalTypeBadge');
+            const modeBadge = document.getElementById('qaModalModeBadge');
+            const typeIcon = document.getElementById('qaModalIcon');
+
             if (modalTitle) modalTitle.textContent = name || 'Opportunity';
             if (modalOrg) modalOrg.textContent = org || 'Rural Opportunity Connect';
 
+            // Type icons & labels
+            let typeLabel = 'Opportunity';
+            let iconHtml = '<i class="fas fa-briefcase"></i>';
+            if (type === 'job') {
+                typeLabel = '💼 Rural Job';
+                iconHtml = '<i class="fas fa-briefcase"></i>';
+            } else if (type === 'scholarship') {
+                typeLabel = '🎓 Scholarship Grant';
+                iconHtml = '<i class="fas fa-graduation-cap"></i>';
+            } else if (type === 'scheme') {
+                typeLabel = '🏛️ Govt Welfare';
+                iconHtml = '<i class="fas fa-building-columns"></i>';
+            } else if (type === 'skill') {
+                typeLabel = '💻 Skill Program';
+                iconHtml = '<i class="fas fa-laptop-code"></i>';
+            } else if (type === 'business') {
+                typeLabel = '🚀 Micro-Enterprise';
+                iconHtml = '<i class="fas fa-store"></i>';
+            }
+            if (typeBadge) typeBadge.textContent = typeLabel;
+            if (typeIcon) typeIcon.innerHTML = iconHtml;
+
+            // Loading highlights skeleton
+            if (highlightsBox) {
+                highlightsBox.innerHTML = `
+                    <div class="col-span-2 flex items-center justify-center py-2 text-slate-400 gap-2">
+                        <svg class="animate-spin h-4 w-4 text-cyan-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <span class="text-xs">Loading verified opportunity details...</span>
+                    </div>
+                `;
+            }
+
+            // Display modal
             modal.classList.remove('hidden');
             modal.classList.add('flex');
             modal.style.display = 'flex';
             modal.style.visibility = 'visible';
             modal.style.opacity = '1';
             document.body.classList.add('overflow-hidden');
+
+            // Reset submit button state
+            const submitBtn = document.getElementById('qaSubmitBtn');
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `<i class="fas fa-paper-plane"></i> Confirm & Submit Application`;
+            }
+
+            // Fetch live metadata from backend
+            try {
+                const response = await fetch(`/applications/details/?type=${encodeURIComponent(type || 'job')}&id=${encodeURIComponent(id || '0')}`, {
+                    headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }
+                });
+                const data = await response.json();
+
+                if (data.status === 'success') {
+                    // Update header with exact DB info
+                    if (modalTitle) modalTitle.textContent = data.title || name;
+                    if (modalOrg) modalOrg.textContent = data.organization || org;
+                    if (inputName) inputName.value = data.title || name;
+                    if (inputOrg) inputOrg.value = data.organization || org;
+
+                    // Render Highlights
+                    if (highlightsBox && data.highlights) {
+                        let hHtml = '';
+                        for (const [key, val] of Object.entries(data.highlights)) {
+                            if (val) {
+                                hHtml += `
+                                    <div class="bg-white/80 p-2 rounded-xl border border-slate-100 shadow-2xs">
+                                        <span class="text-[10px] text-slate-400 font-semibold block uppercase tracking-wider">${key}</span>
+                                        <span class="font-bold text-slate-800 text-[11px] block mt-0.5">${val}</span>
+                                    </div>
+                                `;
+                            }
+                        }
+                        highlightsBox.innerHTML = hHtml || '<div class="col-span-2 text-slate-400 text-xs text-center">Verified Opportunity Details</div>';
+                    }
+
+                    // CHECK 1: Already Applied?
+                    if (data.already_applied) {
+                        if (modeBadge) {
+                            modeBadge.className = 'text-[10px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200';
+                            modeBadge.innerHTML = '<i class="fas fa-check-double"></i> Already Applied';
+                        }
+                        if (form) form.classList.add('hidden');
+                        if (flowExternal) flowExternal.classList.add('hidden');
+                        if (flowAlreadyApplied) {
+                            flowAlreadyApplied.classList.remove('hidden');
+                            const msg = document.getElementById('qaAlreadyAppliedMsg');
+                            if (msg) {
+                                msg.textContent = `You have already applied for "${data.title}" on ${data.applied_date || 'our platform'}.`;
+                            }
+                        }
+                        // Synchronize button to applied
+                        if (currentApplyBtn) {
+                            markButtonAsApplied(currentApplyBtn);
+                        }
+                        return;
+                    }
+
+                    // CHECK 2: Flow 2 - External Opportunity?
+                    if (data.is_external) {
+                        if (modeBadge) {
+                            modeBadge.className = 'text-[10px] text-blue-700 font-bold bg-blue-50 px-2 py-0.5 rounded-full border border-blue-200';
+                            modeBadge.innerHTML = '<i class="fas fa-arrow-up-right-from-square"></i> Official Portal Application';
+                        }
+                        if (form) form.classList.add('hidden');
+                        if (flowAlreadyApplied) flowAlreadyApplied.classList.add('hidden');
+                        if (flowExternal) {
+                            flowExternal.classList.remove('hidden');
+                            const portalNameEl = document.getElementById('qaExternalPortalName');
+                            const urlBtn = document.getElementById('qaExternalUrlBtn');
+                            if (portalNameEl) portalNameEl.textContent = data.source_portal || 'Official Portal';
+                            if (urlBtn) {
+                                if (data.source_url && data.source_url !== '#' && data.source_url.startsWith('http')) {
+                                    urlBtn.href = data.source_url;
+                                    urlBtn.classList.remove('opacity-50', 'pointer-events-none');
+                                    urlBtn.innerHTML = `<span>Continue to Official Application</span> <i class="fas fa-arrow-up-right-from-square text-[11px]"></i>`;
+                                } else {
+                                    urlBtn.href = '#';
+                                    urlBtn.classList.add('opacity-50', 'pointer-events-none');
+                                    urlBtn.innerHTML = `<span>Official Link Updating Soon</span>`;
+                                }
+                            }
+                        }
+                        return;
+                    }
+
+                    // CHECK 3: Flow 1 - Internal Application Form
+                    if (modeBadge) {
+                        modeBadge.className = 'text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200';
+                        modeBadge.innerHTML = '<i class="fas fa-check-circle"></i> Direct Verification';
+                    }
+                    if (flowExternal) flowExternal.classList.add('hidden');
+                    if (flowAlreadyApplied) flowAlreadyApplied.classList.add('hidden');
+                    if (form) form.classList.remove('hidden');
+
+                    // If user is authenticated, prefill details from profile
+                    if (data.user_info && data.user_info.is_authenticated) {
+                        const nameSpan = document.getElementById('qaAuthFullName');
+                        const emailSpan = document.getElementById('qaAuthEmail');
+                        const locSpan = document.getElementById('qaAuthLocation');
+                        if (nameSpan && data.user_info.full_name) nameSpan.textContent = data.user_info.full_name;
+                        if (emailSpan && data.user_info.email) emailSpan.textContent = data.user_info.email;
+                        if (locSpan && data.user_info.location) locSpan.textContent = data.user_info.location;
+                    }
+                }
+            } catch (e) {
+                console.warn('[QuickApply] Failed to fetch live opportunity metadata, falling back to local info', e);
+            }
         }
+        window.openQuickApplyModal = openQuickApplyModal;
 
         function closeQuickApplyModal() {
             const modal = document.getElementById('quickApplyModal');
@@ -912,23 +1324,54 @@
                 document.body.classList.remove('overflow-hidden');
             }
         }
+        window.closeQuickApplyModal = closeQuickApplyModal;
 
         async function submitQuickApplyModal(event) {
             if (event) event.preventDefault();
+
             const submitBtn = document.getElementById('qaSubmitBtn');
+            const errorAlert = document.getElementById('qaErrorAlert');
+            const errorMsg = document.getElementById('qaErrorMessage');
+            if (errorAlert) errorAlert.classList.add('hidden');
+
             const type = document.getElementById('qaInputType')?.value || 'job';
             const id = document.getElementById('qaInputId')?.value || '0';
             const name = document.getElementById('qaInputName')?.value || 'Opportunity';
             const org = document.getElementById('qaInputOrg')?.value || '';
 
-            const guestName = (document.getElementById('qaGuestName')?.value || 'Guest Applicant').trim();
-            const guestPhone = (document.getElementById('qaGuestPhone')?.value || '9876543210').trim();
-            const guestLocation = (document.getElementById('qaGuestLocation')?.value || 'Tamil Nadu').trim();
+            // Extract guest or authenticated applicant details
+            let applicantName = '';
+            let applicantEmail = '';
+            let applicantPhone = '';
+            let applicantLocation = '';
+            const coverNote = document.getElementById('qaCoverNote')?.value || '';
 
-            const originalText = submitBtn ? submitBtn.innerHTML : '';
+            const guestNameInput = document.getElementById('qaGuestName');
+            if (guestNameInput) {
+                applicantName = guestNameInput.value.trim();
+                applicantEmail = document.getElementById('qaGuestEmail')?.value.trim() || '';
+                applicantPhone = document.getElementById('qaGuestPhone')?.value.trim() || '';
+                applicantLocation = document.getElementById('qaGuestLocation')?.value.trim() || '';
+
+                if (!applicantName || !applicantEmail || !applicantPhone || !applicantLocation) {
+                    if (errorAlert && errorMsg) {
+                        errorMsg.textContent = 'Please fill in all required candidate details before submitting.';
+                        errorAlert.classList.remove('hidden');
+                    }
+                    return;
+                }
+            }
+
+            // Disable submit button & show loading spinner
             if (submitBtn) {
                 submitBtn.disabled = true;
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+                submitBtn.innerHTML = `
+                    <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span>Submitting Application...</span>
+                `;
             }
 
             try {
@@ -937,73 +1380,165 @@
                 formData.append('opportunity_id', id);
                 formData.append('opportunity_name', name);
                 formData.append('organization', org);
-                formData.append('guest_name', guestName);
-                formData.append('guest_phone', guestPhone);
-                formData.append('guest_location', guestLocation);
+                formData.append('applicant_name', applicantName);
+                formData.append('applicant_email', applicantEmail);
+                formData.append('applicant_phone', applicantPhone);
+                formData.append('applicant_location', applicantLocation);
+                formData.append('cover_note', coverNote);
                 formData.append('is_ajax', '1');
+
+                const token = (typeof getCsrfToken === 'function') ? getCsrfToken() : (document.querySelector('input[name="csrfmiddlewaretoken"]')?.value || '');
 
                 const response = await fetch('/applications/apply/', {
                     method: 'POST',
                     body: formData,
                     headers: {
                         'X-Requested-With': 'XMLHttpRequest',
-                        'Accept': 'application/json'
+                        'Accept': 'application/json',
+                        ...(token ? { 'X-CSRFToken': token } : {})
                     }
                 });
 
-                if (!response.ok) {
-                    throw new Error(`HTTP error ${response.status}`);
-                }
+                const data = await response.json().catch(() => ({ status: 'error', message: 'Invalid response from server.' }));
 
-                const data = await response.json();
-                closeQuickApplyModal();
+                if (data.status === 'success') {
+                    // Show success view inside modal
+                    const form = document.getElementById('quickApplyForm');
+                    const flowSuccess = document.getElementById('qaFlowSuccess');
+                    if (form) form.classList.add('hidden');
+                    if (flowSuccess) {
+                        flowSuccess.classList.remove('hidden');
+                        const successOppName = document.getElementById('qaSuccessOppName');
+                        const successRef = document.getElementById('qaSuccessRef');
+                        if (successOppName) successOppName.textContent = data.opportunity_name || name;
+                        if (successRef) successRef.textContent = `ROC-${String(data.application_id || 1).padStart(5, '0')}`;
+                    }
 
-                // Save local guest copy too
-                try {
-                    const guestApps = JSON.parse(localStorage.getItem('roc_guest_apps') || '[]');
-                    guestApps.push({ type, id, name, org, applied_at: new Date().toISOString(), guestName });
-                    localStorage.setItem('roc_guest_apps', JSON.stringify(guestApps));
-                } catch(e) {}
+                    // Morph card button to Applied
+                    if (currentApplyBtn) {
+                        markButtonAsApplied(currentApplyBtn);
+                    }
 
-                if (currentApplyBtn) {
-                    currentApplyBtn.className = 'btn-applied text-xs py-1.5 px-3';
-                    currentApplyBtn.innerHTML = '<i class="fas fa-check-circle text-emerald-600"></i> Applied ✓';
-                    currentApplyBtn.disabled = true;
-                }
+                    // Save to local applied cache
+                    try {
+                        const key = `${type}_${id}`;
+                        const applied = JSON.parse(localStorage.getItem('roc_applied_keys') || '[]');
+                        if (!applied.includes(key)) {
+                            applied.push(key);
+                            localStorage.setItem('roc_applied_keys', JSON.stringify(applied));
+                        }
+                    } catch (e) {}
 
-                // Increment Active Applications counter on dashboard in real time
-                const dashAppCounter = document.getElementById('dashboardAppCounter');
-                if (dashAppCounter && !data.already_applied) {
-                    let curVal = parseInt(dashAppCounter.textContent) || 0;
-                    dashAppCounter.textContent = curVal + 1;
-                }
+                    // Synchronize duplicate buttons
+                    if (typeof restoreAppliedButtons === 'function') {
+                        restoreAppliedButtons();
+                    }
 
-                const msg = data.message || `Application for "${name}" submitted successfully! 🎉`;
-                if (typeof showToast === 'function') {
-                    showToast(msg, 'success', 5000, '/applications/', 'View Tracker →');
+                    // Update Dashboard active applications counter accurately from database
+                    if (data.active_applications_count !== undefined) {
+                        updateActiveApplicationsCounter(data.active_applications_count);
+                    }
+
+                    // Celebration particles
+                    if (window.GlowCursor && typeof window.GlowCursor.particleBurst === 'function') {
+                        const rect = (currentApplyBtn || document.getElementById('quickApplyModalCard')).getBoundingClientRect();
+                        window.GlowCursor.particleBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, { r: 16, g: 185, b: 129 }, 24);
+                    }
+
+                    showToast(`Application for "${name}" submitted successfully! 🎉`, 'success', 5000, '/applications/', 'View in Tracker →');
+                } else if (data.status === 'already_applied') {
+                    const form = document.getElementById('quickApplyForm');
+                    const flowAlreadyApplied = document.getElementById('qaFlowAlreadyApplied');
+                    if (form) form.classList.add('hidden');
+                    if (flowAlreadyApplied) {
+                        flowAlreadyApplied.classList.remove('hidden');
+                        const msg = document.getElementById('qaAlreadyAppliedMsg');
+                        if (msg) msg.textContent = data.message || `You have already applied for "${name}".`;
+                    }
+                    if (currentApplyBtn) {
+                        markButtonAsApplied(currentApplyBtn);
+                    }
+                    if (data.active_applications_count !== undefined) {
+                        updateActiveApplicationsCounter(data.active_applications_count);
+                    }
                 } else {
-                    alert(msg);
+                    // Show real error clearly
+                    if (errorAlert && errorMsg) {
+                        errorMsg.textContent = data.message || 'Could not submit application. Please try again.';
+                        errorAlert.classList.remove('hidden');
+                    }
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = `<i class="fas fa-rotate-right"></i> Try Again`;
+                    }
                 }
             } catch (err) {
-                console.error('Quick Apply error:', err);
-                closeQuickApplyModal();
-                if (typeof showToast === 'function') {
-                    showToast(`Error submitting application. Please try again.`, 'error', 5000);
-                } else {
-                    alert(`Error submitting application. Please try again.`);
+                if (errorAlert && errorMsg) {
+                    errorMsg.textContent = 'Network or server error while submitting. Please check your connection and try again.';
+                    errorAlert.classList.remove('hidden');
                 }
-            } finally {
                 if (submitBtn) {
                     submitBtn.disabled = false;
-                    submitBtn.innerHTML = originalText;
+                    submitBtn.innerHTML = `<i class="fas fa-rotate-right"></i> Try Again`;
                 }
             }
         }
-
-        window.openQuickApplyModal = openQuickApplyModal;
-        window.closeQuickApplyModal = closeQuickApplyModal;
         window.submitQuickApplyModal = submitQuickApplyModal;
-        window.quickApply = openQuickApplyModal;
+
+        // Restore Applied Buttons Across Any Page
+        function restoreAppliedButtons() {
+            try {
+                const applied = JSON.parse(localStorage.getItem('roc_applied_keys') || '[]');
+                if (!applied.length) return;
+
+                document.querySelectorAll('button[onclick*="quickApply"]').forEach(btn => {
+                    const onclick = btn.getAttribute('onclick') || '';
+                    for (const key of applied) {
+                        const [type, id] = key.split('_');
+                        if (id && onclick.includes(`'${type}'`) && onclick.includes(`'${id}'`)) {
+                            markButtonAsApplied(btn);
+                            break;
+                        }
+                    }
+                });
+            } catch (e) {}
+        }
+        window.restoreAppliedButtons = restoreAppliedButtons;
+
+        // Run restoration on DOM Ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', restoreAppliedButtons);
+        } else {
+            restoreAppliedButtons();
+        }
+
+        // Universal click delegation for Save Wishlist Buttons
+        document.addEventListener('click', function(e) {
+            const saveBtn = e.target.closest('.save-btn');
+            if (saveBtn) {
+                e.preventDefault();
+                e.stopPropagation();
+                const type = saveBtn.dataset.type;
+                const id = saveBtn.dataset.id;
+                if (type && id && typeof toggleSaveOpportunity === 'function') {
+                    toggleSaveOpportunity(type, id, saveBtn);
+                }
+            }
+        });
+
+        // Filter Form Submissions: Strip empty fields for clean URLs
+        document.addEventListener('submit', function(e) {
+            const form = e.target;
+            if (form.method && form.method.toLowerCase() === 'get') {
+                const inputs = form.querySelectorAll('input, select');
+                inputs.forEach(input => {
+                    if (input.name && !input.value.trim() && input.type !== 'hidden') {
+                        input.disabled = true;
+                        setTimeout(() => { input.disabled = false; }, 200);
+                    }
+                });
+            }
+        });
 
         // Hotkey Ctrl+K / Cmd+K and ESC
         document.addEventListener('keydown', function(e) {
