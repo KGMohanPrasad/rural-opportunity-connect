@@ -29,4 +29,7 @@ Thumbs.db
 yesterday_*
 scratch_*
 *.backup
+test_*.py
+inspect_qa.py
+START_WEBSITE.bat
 

@@ -16,10 +16,10 @@
         <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
         <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div class="space-y-3">
-                <div class="inline-flex items-center gap-2 bg-cyan-500/20 text-cyan-300 border border-cyan-400/30 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider backdrop-blur-xs hero-badge-pulse">
+                <div class="inline-flex items-center gap-2 bg-rose-500/20 text-rose-300 border border-rose-400/30 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">
                     <i class="fas fa-store text-cyan-400"></i> Micro-Enterprise & Startup Incubator
                 </div>
-                <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight kinetic-headline">
+                <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
                     Low-Investment Rural Business Opportunities
                 </h1>
                 <p class="text-xs sm:text-sm text-slate-300 max-w-2xl font-normal leading-relaxed">
@@ -27,9 +27,8 @@
                 </p>
             </div>
             <div class="flex items-center gap-4 shrink-0">
-                <canvas class="header-3d-canvas w-28 h-24 hidden sm:block" aria-hidden="true"></canvas>
                 <div class="bg-white/10 backdrop-blur-md px-6 py-3.5 rounded-2xl border border-cyan-500/30 text-center shadow-lg">
-                    <span class="text-2xl sm:text-3xl font-black text-cyan-300 block counter-value" data-counter="{{ business_ideas|length }}">{{ business_ideas|length }}</span>
+                    <span class="text-2xl sm:text-3xl font-black text-cyan-300 block">{{ business_ideas|length }}</span>
                     <span class="text-[10px] text-cyan-100 uppercase tracking-wider font-bold">Ideas Active</span>
                 </div>
             </div>
@@ -195,7 +194,7 @@
                                 {% else %}
                                     <button type="button" onclick="quickApply('business', '{{ biz.id }}', '{{ biz.name|escapejs }}', 'Micro-Enterprise Track', this)"
                                             class="btn-primary text-xs py-2 px-4 flex-1 sm:flex-initial shadow-xs cursor-pointer">
-                                        <i class="fas fa-paper-plane"></i> Track Idea
+                                        <i class="fas fa-paper-plane"></i> Quick Apply
                                     </button>
                                 {% endif %}
 

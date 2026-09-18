@@ -72,217 +72,42 @@ function showToast(message, type = 'success', duration = 4000, actionUrl = null,
     }, duration);
 }
 
-// 3. Global 1-Click Quick Apply Modal System
+// 3. Global 1-Click Quick Apply Modal System (Delegated to Base Unified Engine)
 var currentApplyBtn = window.currentApplyBtn || null;
 
 function openQuickApplyModal(type, id, name, org, btn) {
     currentApplyBtn = btn || null;
-
-    const modal = document.getElementById('quickApplyModal');
-    const modalTitle = document.getElementById('qaModalTitle');
-    const modalOrg = document.getElementById('qaModalOrg');
-    const typeBadge = document.getElementById('qaModalTypeBadge');
-    const typeIcon = document.getElementById('qaModalIcon');
-
-    const inputType = document.getElementById('qaInputType');
-    const inputId = document.getElementById('qaInputId');
-    const inputName = document.getElementById('qaInputName');
-    const inputOrg = document.getElementById('qaInputOrg');
-
-    if (inputType) inputType.value = type || 'job';
-    if (inputId) inputId.value = id || '0';
-    if (inputName) inputName.value = name || 'Verified Opportunity';
-    if (inputOrg) inputOrg.value = org || 'Rural Opportunity Connect';
-
-    if (modalTitle) modalTitle.textContent = name || 'Verified Opportunity';
-    if (modalOrg) modalOrg.textContent = org || 'Rural Opportunity Connect';
-
-    // Type styling and icons
-    let badgeText = 'Opportunity';
-    let iconClass = 'fas fa-briefcase';
-    if (type === 'job') {
-        badgeText = '💼 Rural Job';
-        iconClass = 'fas fa-briefcase';
-    } else if (type === 'scholarship') {
-        badgeText = '🎓 Scholarship Grant';
-        iconClass = 'fas fa-graduation-cap';
-    } else if (type === 'scheme') {
-        badgeText = '🏛️ Govt Welfare';
-        iconClass = 'fas fa-building-columns';
-    } else if (type === 'skill') {
-        badgeText = '💻 Skill Program';
-        iconClass = 'fas fa-laptop-code';
-    } else if (type === 'business') {
-        badgeText = '🚀 Business Idea';
-        iconClass = 'fas fa-store';
-    }
-
-    if (typeBadge) typeBadge.textContent = badgeText;
-    if (typeIcon) typeIcon.innerHTML = `<i class="${iconClass}"></i>`;
-
-    if (modal) {
-        modal.classList.remove('hidden');
-        requestAnimationFrame(() => {
-            modal.classList.remove('opacity-0');
-            const card = document.getElementById('quickApplyModalCard');
-            if (card) card.classList.remove('scale-95');
-        });
-        document.body.classList.add('overflow-hidden');
+    if (typeof window.__qaOpen === 'function' && window.__qaOpen !== openQuickApplyModal) {
+        return window.__qaOpen(type, id, name, org, btn);
     }
 }
 
 function closeQuickApplyModal() {
+    if (typeof window.__qaClose === 'function' && window.__qaClose !== closeQuickApplyModal) {
+        return window.__qaClose();
+    }
     const modal = document.getElementById('quickApplyModal');
-    const card = document.getElementById('quickApplyModalCard');
     if (modal) {
-        if (card) card.classList.add('scale-95');
-        modal.classList.add('opacity-0');
-        setTimeout(() => {
-            modal.classList.add('hidden');
-            document.body.classList.remove('overflow-hidden');
-        }, 200);
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        modal.style.display = 'none';
+        modal.style.visibility = 'hidden';
+        document.body.classList.remove('overflow-hidden');
     }
 }
 
-// ======================================================================
-// Direct 1-Click In-Place Quick Apply Engine (3-State Morph & Real Backend)
-// Normal [ Quick Apply ] -> Loading [ ◌ Applying... ] -> Success [ ✓ Applied ]
-// ======================================================================
-var currentApplyBtn = window.currentApplyBtn || null;
-
-async function quickApply(type, id, name, org, btn) {
-    if (btn && btn.tagName !== 'BUTTON') {
-        btn = btn.closest('button');
+function quickApply(type, id, name, org, btn) {
+    if (typeof window.__qaApply === 'function' && window.__qaApply !== quickApply) {
+        return window.__qaApply(type, id, name, org, btn);
     }
-    if (!btn && window.event) {
-        const target = window.event.target || window.event.currentTarget;
-        if (target) btn = target.closest('button');
+    if (typeof window.__qaOpen === 'function') {
+        return window.__qaOpen(type, id, name, org, btn);
     }
-    if (!btn && id) {
-        btn = document.querySelector(`button[onclick*="'${id}'"]`);
-    }
-    currentApplyBtn = btn || null;
-
-    if (btn && (btn.disabled || btn.classList.contains('btn-applied') || btn.classList.contains('btn-applying'))) {
-        if (typeof showToast === 'function') {
-            showToast(`Already Applied for "${name || 'this opportunity'}". Tracking live in your pipeline.`, 'info', 4000, '/applications/', 'View Tracker →');
-        }
-        return;
-    }
-
-    const cleanName = (name || 'Opportunity').trim();
-    const cleanOrg = (org || 'Rural Opportunity Connect').trim();
-    const cleanType = (type || 'job').trim();
-    const cleanId = (id || '0').toString().trim();
-
-    // 1. Morph to LOADING state: [ ◌ Applying... ]
-    if (btn) {
-        btn.disabled = true;
-        btn.classList.add('btn-applying');
-        btn.innerHTML = `
-            <span class="inline-flex items-center gap-1.5 pointer-events-none">
-                <svg class="animate-spin h-3.5 w-3.5 text-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                Applying...
-            </span>
-        `;
-    }
-
-    try {
-        const formData = new FormData();
-        formData.append('opportunity_type', cleanType);
-        formData.append('opportunity_id', cleanId);
-        formData.append('opportunity_name', cleanName);
-        formData.append('organization', cleanOrg);
-        formData.append('guest_name', 'Direct Applicant');
-        formData.append('is_ajax', '1');
-
-        const token = (typeof getCsrfToken === 'function') ? getCsrfToken() : (document.querySelector('input[name="csrfmiddlewaretoken"]')?.value || '');
-
-        const response = await fetch('/applications/apply/', {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'Accept': 'application/json',
-                ...(token ? { 'X-CSRFToken': token } : {})
-            }
-        });
-
-        const data = await response.json().catch(() => ({ status: 'success' }));
-
-        if (data.status === 'success' || data.status === 'already_applied') {
-            // 2. Morph to SUCCESS state: [ ✓ Applied ]
-            if (btn) {
-                btn.classList.remove('btn-applying', 'btn-primary', 'btn-magnetic', 'btn-sheen', 'hover-scale-102');
-                btn.classList.add('btn-applied');
-                btn.disabled = true;
-                btn.innerHTML = `
-                    <span class="inline-flex items-center gap-1 text-emerald-700 font-bold pointer-events-none">
-                        <svg class="w-4 h-4 text-emerald-600" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                        </svg>
-                        Applied ✓
-                    </span>
-                `;
-
-                // Visual celebration: emerald glow wave + particle burst
-                const rect = btn.getBoundingClientRect();
-                const cx = rect.left + rect.width / 2;
-                const cy = rect.top + rect.height / 2;
-
-                if (window.GlowCursor && typeof window.GlowCursor.successPulse === 'function') {
-                    window.GlowCursor.successPulse(cx, cy);
-                }
-                if (window.GlowCursor && typeof window.GlowCursor.particleBurst === 'function') {
-                    window.GlowCursor.particleBurst(cx, cy, { r: 16, g: 185, b: 129 }, 18);
-                }
-            }
-
-            // Save persistent state
-            try {
-                const key = `${cleanType}_${cleanId}`;
-                const applied = JSON.parse(localStorage.getItem('roc_applied_keys') || '[]');
-                if (!applied.includes(key)) {
-                    applied.push(key);
-                    localStorage.setItem('roc_applied_keys', JSON.stringify(applied));
-                }
-            } catch (e) {}
-
-            // Synchronize any duplicate buttons on current page
-            if (typeof restoreAppliedButtons === 'function') {
-                restoreAppliedButtons();
-            }
-
-            if (typeof showToast === 'function') {
-                showToast(data.message || `Application for "${cleanName}" submitted successfully! 🎉`, 'success', 5000, '/applications/', 'View Tracker →');
-            }
-        } else {
-            throw new Error(data.message || 'Submission error');
-        }
-    } catch (err) {
-        // 3. Morph to ERROR state: [ Try Again ] with clean shake
-        if (btn) {
-            btn.disabled = false;
-            btn.classList.remove('btn-applying');
-            btn.classList.add('btn-error-shake');
-            btn.innerHTML = `
-                <span class="inline-flex items-center gap-1.5 text-white font-bold pointer-events-none">
-                    <i class="fas fa-rotate-right"></i> Try Again
-                </span>
-            `;
-            setTimeout(() => {
-                btn.classList.remove('btn-error-shake');
-            }, 800);
-        }
-
-        if (typeof showToast === 'function') {
-            showToast('Could not submit application. Please click Try Again.', 'error');
-        }
+    if (typeof window.openQuickApplyModal === 'function' && window.openQuickApplyModal !== openQuickApplyModal) {
+        return window.openQuickApplyModal(type, id, name, org, btn);
     }
 }
+
 
 function restoreAppliedButtons() {
     try {
@@ -402,124 +227,12 @@ window.triggerVoiceAssistant = triggerVoiceAssistant;
 window.closeVoiceAssistant = closeVoiceAssistant;
 
 async function submitQuickApplyModal(event) {
-    if (event) event.preventDefault();
-
-    const submitBtn = document.getElementById('qaSubmitBtn');
-    const type = document.getElementById('qaInputType')?.value || 'job';
-    const id = document.getElementById('qaInputId')?.value || '0';
-    const name = document.getElementById('qaInputName')?.value || 'Opportunity';
-    const org = document.getElementById('qaInputOrg')?.value || '';
-
-    const originalText = submitBtn ? submitBtn.innerHTML : '';
-    if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
-    }
-
-    const isAuthenticated = document.body.dataset.authenticated === 'true';
-
-    if (isAuthenticated) {
-        const token = getCsrfToken();
-        const formData = new FormData();
-        formData.append('opportunity_type', type);
-        formData.append('opportunity_id', id);
-        formData.append('opportunity_name', name);
-        formData.append('organization', org);
-        formData.append('is_ajax', '1');
-
-        try {
-            const response = await fetch('/applications/apply/', {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-CSRFToken': token,
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'Accept': 'application/json'
-                }
-            });
-
-            if (response.redirected && response.url.includes('/login/')) {
-                closeQuickApplyModal();
-                window.location.href = `/login/?next=${encodeURIComponent(window.location.pathname)}`;
-                return;
-            }
-
-            const data = await response.json();
-            closeQuickApplyModal();
-
-            if (data.status === 'success' || data.status === 'already_applied') {
-                if (typeof window.celebrateApplication === 'function' && currentApplyBtn) {
-                    window.celebrateApplication(currentApplyBtn, name);
-                } else if (currentApplyBtn) {
-                    currentApplyBtn.className = 'btn-applied text-xs py-2 px-4';
-                    currentApplyBtn.innerHTML = '<i class="fas fa-check-circle text-emerald-600"></i> Already Applied ✓';
-                    currentApplyBtn.disabled = true;
-                }
-
-                showToast(
-                    `Application for "${name}" submitted successfully! 🎉`,
-                    'success',
-                    6000,
-                    '/applications/',
-                    'View in Tracker →'
-                );
-            } else {
-                showToast(data.message || 'Could not record application. Please try again.', 'error');
-            }
-        } catch (err) {
-            closeQuickApplyModal();
-            showToast('Network error while applying. Please try again.', 'error');
-        } finally {
-            if (submitBtn) {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalText;
-            }
-        }
-    } else {
-        // Guest Application handling: Save to local tracker storage and confirm immediately
-        const guestName = document.getElementById('qaGuestName')?.value || 'Candidate';
-        const guestPhone = document.getElementById('qaGuestPhone')?.value || '';
-        const guestLocation = document.getElementById('qaGuestLocation')?.value || '';
-
-        try {
-            const guestApps = JSON.parse(localStorage.getItem('roc_guest_apps') || '[]');
-            guestApps.push({
-                type,
-                id,
-                name,
-                org,
-                applied_at: new Date().toISOString(),
-                guestName,
-                guestPhone,
-                guestLocation
-            });
-            localStorage.setItem('roc_guest_apps', JSON.stringify(guestApps));
-        } catch (e) {}
-
-        closeQuickApplyModal();
-
-        if (typeof window.celebrateApplication === 'function' && currentApplyBtn) {
-            window.celebrateApplication(currentApplyBtn, name);
-        } else if (currentApplyBtn) {
-            currentApplyBtn.className = 'btn-applied text-xs py-2 px-4';
-            currentApplyBtn.innerHTML = '<i class="fas fa-check-circle text-emerald-600"></i> Already Applied ✓';
-            currentApplyBtn.disabled = true;
-        }
-
-        if (submitBtn) {
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = originalText;
-        }
-
-        showToast(
-            `Quick Application recorded for ${guestName}! Verification team notified. 🎉`,
-            'success',
-            6000,
-            '/register/',
-            'Create Account to Track →'
-        );
+    if (window.__qaSubmit) {
+        return window.__qaSubmit(event);
     }
 }
+window.submitQuickApplyModal = submitQuickApplyModal;
+
 
 // Quick Access Hub Logic
 let quickSearchDebounceTimer = null;
@@ -984,258 +697,14 @@ function closeVoiceAssistant() {
 }
 
 // ==============================================================================
-// 9. 3D SPATIAL ENGINE: Perspective Card Tilt & Specular Glare
+// 9. ZERO-ANIMATION STABILIZER: 3D Spatial Effects Disabled
 // ==============================================================================
 function init3DCardTilt() {
-    const cards = document.querySelectorAll('.tilt-card-3d');
-    if (!cards.length) return;
-
-    cards.forEach(card => {
-        // Ensure specular glare element exists
-        let glare = card.querySelector('.tilt-glare');
-        if (!glare) {
-            glare = document.createElement('div');
-            glare.className = 'tilt-glare';
-            card.appendChild(glare);
-        }
-        glare.style.pointerEvents = 'none';
-
-        let isHovered = false;
-        let bounds = null;
-
-        card.addEventListener('mouseenter', () => {
-            isHovered = true;
-            bounds = card.getBoundingClientRect();
-        });
-
-        card.addEventListener('mousemove', (e) => {
-            if (!isHovered || !bounds) return;
-
-            // When hovering over interactive elements (buttons, links, inputs, save icon):
-            // Stabilize tilt matrix to 0deg so sub-pixel coordinate shifting never drops click events in Chromium!
-            if (e.target.closest('button, a, input, select, textarea, .save-btn, .btn-primary, .btn-secondary, .btn-outline, .btn-applied, .nav-tab')) {
-                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1.01, 1.01, 1.01)';
-                glare.style.opacity = '0';
-                return;
-            }
-
-            const mouseX = e.clientX - bounds.left;
-            const mouseY = e.clientY - bounds.top;
-
-            const percentX = (mouseX / bounds.width) - 0.5;
-            const percentY = (mouseY / bounds.height) - 0.5;
-
-            // Compute 3D rotation angles (-12 to 12 degrees)
-            const rotateY = (percentX * 12).toFixed(2);
-            const rotateX = (-percentY * 12).toFixed(2);
-
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-
-            // Position specular glare radial reflection
-            glare.style.opacity = '1';
-            glare.style.background = `radial-gradient(circle at ${mouseX}px ${mouseY}px, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0) 65%)`;
-        });
-
-        card.addEventListener('mouseleave', () => {
-            isHovered = false;
-            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
-            glare.style.opacity = '0';
-        });
-    });
+    // Disabled in zero-animation mode
 }
 
-// ==============================================================================
-// 10. 3D WEBGL HERO CANVAS: Opportunity Network Globe (Three.js)
-// ==============================================================================
 function init3DHeroGlobe() {
-    const container = document.getElementById('hero3dCanvasContainer');
-    if (!container || !window.THREE) return;
-
-    let renderer;
-    try {
-        renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: "high-performance" });
-    } catch (e) {
-        console.log("WebGL not active for 3D Hero:", e);
-        return;
-    }
-
-    const width = container.clientWidth || 500;
-    const height = container.clientHeight || 480;
-
-    renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.domElement.style.position = 'absolute';
-    renderer.domElement.style.inset = '0';
-    renderer.domElement.style.width = '100%';
-    renderer.domElement.style.height = '100%';
-    renderer.domElement.style.zIndex = '1';
-    
-    // Insert behind overlay badges
-    container.insertBefore(renderer.domElement, container.firstChild);
-
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-    camera.position.z = 240;
-
-    // Opportunity Globe Master Group
-    const globeGroup = new THREE.Group();
-    scene.add(globeGroup);
-
-    // 1. Core Cyan / Tech Blue Wireframe Sphere
-    const sphereGeo = new THREE.IcosahedronGeometry(72, 2);
-    const sphereMat = new THREE.MeshBasicMaterial({
-        color: 0x06b6d4, // Vibrant Cyan
-        wireframe: true,
-        transparent: true,
-        opacity: 0.32
-    });
-    const sphereMesh = new THREE.Mesh(sphereGeo, sphereMat);
-    globeGroup.add(sphereMesh);
-
-    // 2. High-Tech Particle Constellations (Cyan & Deep Tech Blue)
-    const particleCount = 280;
-    const particlePositions = new Float32Array(particleCount * 3);
-    const particleColors = new Float32Array(particleCount * 3);
-
-    for (let i = 0; i < particleCount; i++) {
-        const phi = Math.acos(-1 + (2 * i) / particleCount);
-        const theta = Math.sqrt(particleCount * Math.PI) * phi;
-        const radius = 72 + (Math.random() * 4 - 2);
-
-        particlePositions[i * 3] = radius * Math.cos(theta) * Math.sin(phi);
-        particlePositions[i * 3 + 1] = radius * Math.sin(theta) * Math.sin(phi);
-        particlePositions[i * 3 + 2] = radius * Math.cos(phi);
-
-        if (i % 3 === 0) {
-            particleColors[i * 3] = 0.0; particleColors[i * 3 + 1] = 0.95; particleColors[i * 3 + 2] = 1.0; // Neon Cyan
-        } else if (i % 3 === 1) {
-            particleColors[i * 3] = 0.01; particleColors[i * 3 + 1] = 0.52; particleColors[i * 3 + 2] = 0.78; // Tech Blue
-        } else {
-            particleColors[i * 3] = 0.22; particleColors[i * 3 + 1] = 0.74; particleColors[i * 3 + 2] = 0.97; // Sky Blue
-        }
-    }
-
-    const particleGeo = new THREE.BufferGeometry();
-    particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
-    particleGeo.setAttribute('color', new THREE.BufferAttribute(particleColors, 3));
-
-    const particleMat = new THREE.PointsMaterial({
-        size: 3.4,
-        vertexColors: true,
-        transparent: true,
-        opacity: 0.90
-    });
-    const particles = new THREE.Points(particleGeo, particleMat);
-    globeGroup.add(particles);
-
-    // 3. Five Luminous Orbiting Sector Nodes
-    const sectors = [
-        { color: 0x0284c7, radius: 102, speed: 0.015, yOff: 15 },  // Jobs (Tech Blue)
-        { color: 0xa855f7, radius: 114, speed: 0.012, yOff: -20 }, // Scholarships (Purple)
-        { color: 0x06b6d4, radius: 92, speed: 0.018, yOff: 28 },   // Schemes (Cyan)
-        { color: 0x38bdf8, radius: 122, speed: 0.010, yOff: -10 }, // Skills (Sky Blue)
-        { color: 0x00f2fe, radius: 108, speed: 0.014, yOff: 5 },   // Business (Bright Cyan)
-    ];
-
-    const nodeMeshes = [];
-    sectors.forEach((sec, idx) => {
-        // Orbit ring
-        const ringGeo = new THREE.RingGeometry(sec.radius - 0.6, sec.radius + 0.6, 64);
-        const ringMat = new THREE.MeshBasicMaterial({
-            color: sec.color,
-            side: THREE.DoubleSide,
-            transparent: true,
-            opacity: 0.25
-        });
-        const ring = new THREE.Mesh(ringGeo, ringMat);
-        ring.rotation.x = Math.PI / 2 + (idx * 0.25 - 0.5);
-        ring.rotation.y = (idx * 0.2);
-        globeGroup.add(ring);
-
-        // Node sphere
-        const nodeGeo = new THREE.SphereGeometry(4.2, 16, 16);
-        const nodeMat = new THREE.MeshBasicMaterial({ color: sec.color });
-        const nodeMesh = new THREE.Mesh(nodeGeo, nodeMat);
-        globeGroup.add(nodeMesh);
-
-        nodeMeshes.push({
-            mesh: nodeMesh,
-            radius: sec.radius,
-            speed: sec.speed,
-            yOff: sec.yOff,
-            angle: (idx * (Math.PI * 2 / sectors.length))
-        });
-    });
-
-    // 4. Mouse Interactive Parallax & Touch Dragging
-    let mouseX = 0, mouseY = 0;
-    let targetX = 0, targetY = 0;
-    let isDragging = false;
-    let prevPointerX = 0, prevPointerY = 0;
-
-    container.addEventListener('mousemove', (e) => {
-        const rect = container.getBoundingClientRect();
-        mouseX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
-        mouseY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
-        targetX = mouseX * 0.35;
-        targetY = mouseY * 0.35;
-    });
-
-    container.addEventListener('pointerdown', (e) => {
-        isDragging = true;
-        prevPointerX = e.clientX;
-        prevPointerY = e.clientY;
-    });
-
-    window.addEventListener('pointermove', (e) => {
-        if (!isDragging) return;
-        const deltaX = e.clientX - prevPointerX;
-        const deltaY = e.clientY - prevPointerY;
-        globeGroup.rotation.y += deltaX * 0.008;
-        globeGroup.rotation.x += deltaY * 0.008;
-        prevPointerX = e.clientX;
-        prevPointerY = e.clientY;
-    });
-
-    window.addEventListener('pointerup', () => { isDragging = false; });
-
-    // 5. Animation Loop
-    let clock = new THREE.Clock();
-
-    function animate() {
-        requestAnimationFrame(animate);
-
-        const time = clock.getElapsedTime();
-
-        if (!isDragging) {
-            globeGroup.rotation.y += 0.005;
-            globeGroup.rotation.x += (targetY - globeGroup.rotation.x) * 0.05;
-        }
-
-        // Animate orbiting sector nodes
-        nodeMeshes.forEach(node => {
-            node.angle += node.speed;
-            node.mesh.position.x = Math.cos(node.angle) * node.radius;
-            node.mesh.position.z = Math.sin(node.angle) * node.radius;
-            node.mesh.position.y = Math.sin(time * 2 + node.angle) * 8 + node.yOff;
-        });
-
-        // Pulse particles
-        const scale = 1 + Math.sin(time * 1.5) * 0.02;
-        particles.scale.set(scale, scale, scale);
-
-        renderer.render(scene, camera);
-    }
-    animate();
-
-    // 6. Responsive Resize
-    window.addEventListener('resize', () => {
-        const newW = container.clientWidth;
-        const newH = container.clientHeight || 480;
-        camera.aspect = newW / newH;
-        camera.updateProjectionMatrix();
-        renderer.setSize(newW, newH);
-    });
+    // Disabled in zero-animation mode
 }
 
 // 11. Auto Initialize on Page Ready

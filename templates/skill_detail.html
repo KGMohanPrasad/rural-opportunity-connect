@@ -27,17 +27,16 @@
                     </span>
                 </div>
                 <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
-                    <span class="shiny-text">{{ skill.name }}</span>
+                    {{ skill.name }}
                 </h1>
                 <p class="text-cyan-200 font-medium text-sm sm:text-base flex items-center gap-2">
                     <i class="fas fa-chalkboard-user text-cyan-400"></i> {{ skill.provider }}
                 </p>
             </div>
 
-            <!-- Header Quick Actions & 3D Emblem -->
+            <!-- Header Quick Actions -->
             <div class="flex items-center gap-4 self-start md:self-center">
-                <canvas class="header-3d-canvas w-24 h-20 hidden md:block" aria-hidden="true"></canvas>
-                <button type="button" class="save-btn heart-pop spring-press {% if skl_key in user_saved_keys %}is-saved bg-white text-red-500{% else %}bg-white/10 hover:bg-white/20 border-white/20 text-white{% endif %}"
+                <button type="button" class="save-btn {% if skl_key in user_saved_keys %}is-saved bg-white text-red-500{% else %}bg-white/10 hover:bg-white/20 border-white/20 text-white{% endif %}"
                         data-type="skill" data-id="{{ skill.id }}" title="Save to wishlist">
                     <i class="{% if skl_key in user_saved_keys %}fa-solid fa-heart text-red-500{% else %}fa-regular fa-heart text-white{% endif %}"></i>
                 </button>
@@ -143,7 +142,7 @@
                     {% else %}
                         <button type="button" onclick="quickApply('skill', '{{ skill.id }}', '{{ skill.name|escapejs }}', '{{ skill.provider|escapejs }}', this)"
                                 class="btn-primary w-full text-xs py-3 shadow-md btn-sheen spring-press cursor-pointer">
-                            <i class="fas fa-paper-plane"></i> Quick Enroll in ROC
+                            <i class="fas fa-paper-plane"></i> Quick Apply / Track in ROC
                         </button>
                     {% endif %}
 

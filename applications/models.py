@@ -25,6 +25,9 @@ class Application(models.Model):
     opportunity_name = models.CharField(max_length=200)
     organization = models.CharField(max_length=200)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='applied')
+    applicant_phone = models.CharField(max_length=25, blank=True, default='')
+    applicant_location = models.CharField(max_length=100, blank=True, default='')
+    cover_note = models.TextField(blank=True, default='')
     applied_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 

@@ -15,29 +15,28 @@
     <div class="roc-card p-8 md:p-12 bg-gradient-to-r from-slate-950 via-[#071526] to-[#0c2340] text-white rounded-3xl shadow-xl relative overflow-hidden border border-cyan-500/20" data-anim="fade-up">
         <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-8">
             <div class="space-y-4 max-w-2xl">
-                <div class="hero-badge-pulse inline-flex items-center gap-2 bg-cyan-500/20 border border-cyan-400/30 text-cyan-300 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">
+                <div class="inline-flex items-center gap-2 bg-cyan-500/20 border border-cyan-400/30 text-cyan-300 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">
                     <i class="fas fa-satellite-dish text-cyan-400"></i> Unified Opportunity Aggregator
                 </div>
-                <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight kinetic-headline">
-                    Connected Networks & <span class="shiny-text">Live Partner Feeds</span>
+                <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
+                    Connected Networks & Live Partner Feeds
                 </h1>
                 <p class="text-sm sm:text-base text-slate-300 leading-relaxed font-normal">
                     Rural Opportunity Connect integrates directly with India's largest verified education, employment, and government welfare platforms including <strong>Buddy4Study</strong>, <strong>National Scholarship Portal</strong>, <strong>myScheme.gov.in</strong>, <strong>Skill India</strong>, and <strong>NCS</strong>.
                 </p>
             </div>
 
-            <!-- Live Status & Sync Trigger Box & 3D Emblem -->
+            <!-- Live Status & Sync Trigger Box -->
             <div class="flex items-center gap-4">
-                <canvas class="header-3d-canvas w-24 h-20 hidden md:block" aria-hidden="true"></canvas>
-                <div class="bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/20 text-center min-w-[220px] shadow-2xl space-y-3 hover-lift-3d card-specular-glare">
+                <div class="bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/20 text-center min-w-[220px] shadow-2xl space-y-3">
                 <div class="flex items-center justify-center gap-2 text-xs font-bold text-cyan-300">
-                    <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
                     <span>Live Network Sync Active</span>
                 </div>
                 <div class="text-3xl font-black text-white counter-value" data-counter="{{ total_external_count }}">{{ total_external_count }}</div>
                 <p class="text-[11px] text-cyan-200 uppercase font-semibold">Synced Partner Opportunities</p>
 
-                <button type="button" onclick="triggerPartnerSync(this)" class="btn-primary text-xs w-full py-2.5 shadow-md btn-sheen spring-press">
+                <button type="button" onclick="triggerPartnerSync(this)" class="btn-primary text-xs w-full py-2.5 shadow-md">
                     <i class="fas fa-rotate mr-1"></i> Sync Fresh Feeds
                 </button>
             </div>
