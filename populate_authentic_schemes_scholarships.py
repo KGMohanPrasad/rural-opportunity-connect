@@ -409,4 +409,12 @@ def populate_scholarships():
 if __name__ == '__main__':
     populate_schemes()
     populate_scholarships()
+    try:
+        from services.external_integrations import ExternalIntegrationsService
+        print("Synchronizing all official partner feeds (myScheme, PM-KISAN, NSP, TNeGA, MSME, etc.)...")
+        sync_res = ExternalIntegrationsService.sync_all()
+        print(f"Successfully synchronized {sync_res['total_synced']} external partner opportunities.")
+    except Exception as e:
+        print(f"External partner sync notice: {e}")
     print("ALL DONE SUCCESSFULLY!")
+

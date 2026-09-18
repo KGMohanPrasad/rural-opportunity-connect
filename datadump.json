@@ -1,3 +1,4 @@
+[ROC Database Notice] MySQL connection on localhost:3306 not ready ((1045, "Access denied for user 'root'@'localhost' (using password: NO)")). Using SQLite safely.
 [
 {
   "model": "auth.user",
@@ -211,6 +212,14 @@
 },
 {
   "model": "sessions.session",
+  "pk": "dwbdsrf94hyvbao5ty2l7fjkl7rnrad8",
+  "fields": {
+    "session_data": "eyJhcHBsaWVkX2tleXMiOlsiam9iXzE0Iiwic2Nob2xhcnNoaXBfMjkiLCJzY2hlbWVfMzQiLCJza2lsbF8xMiIsImJ1c2luZXNzXzExIl19:1x78zV:RnhCgr-bsH25jX_e6yYZyL9zshUmyQJ7CdFhulsxEoc",
+    "expire_date": "2026-10-01T10:05:17.002Z"
+  }
+},
+{
+  "model": "sessions.session",
   "pk": "e4s9yiuhoufcxjfux7b5twj1i95vq49v",
   "fields": {
     "session_data": ".eJxVjDkOwjAQAP-yNbJ8rp2U9LzBWl84gGwpTirE31GkFNDOjOYNnvat-n3k1S8JZhBw-WWB4jO3Q6QHtXtnsbdtXQI7EnbawW495df1bP8GlUaFGRQiSk5ZSiuEyRYLOjPFSWG0MZCwWiNx44p1oShH2nLtsCSXeCo6SPh8AbY0Nyc:1x1egb:ft7Ri7Loq9OMbDb4jXqlfxK-0wzKeszlKsm2fuDbZ4I",
@@ -247,6 +256,14 @@
   "fields": {
     "session_data": ".eJxVjDkOwjAQAP-yNbJ8rp2U9LzBWl84gGwpTirE31GkFNDOjOYNnvat-n3k1S8JZhBw-WWB4jO3Q6QHtXtnsbdtXQI7EnbawW495df1bP8GlUaFGRQiSk5ZSiuEyRYLOjPFSWG0MZCwWiNx44p1oShH2nLtsCSXeCo6SPh8AbY0Nyc:1x1efx:VJ6M5zkkrePJyfQX_rZcFW3nyk3ZWewYsjs-p8W_WWc",
     "expire_date": "2026-09-16T06:42:25.702Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "j1m4fup6sccst3oius294a3h6lekc4i5",
+  "fields": {
+    "session_data": "eyJhcHBsaWVkX2tleXMiOlsiam9iXzE0Iiwic2Nob2xhcnNoaXBfMjkiXX0:1x78xN:mT9r10UTg_LPem4IXh2-PVVtNM__hvZFur0gUEN9pmo",
+    "expire_date": "2026-10-01T10:03:05.763Z"
   }
 },
 {
@@ -311,6 +328,22 @@
   "fields": {
     "session_data": ".eJxVjEEOwiAQRe_C2pBhoC24dN8zNMMwlaqBpLQr491Nky50-997_60m2rc87U3WaUnqqoy6_G6R-CnlAOlB5V4117KtS9SHok_a9FiTvG6n-3eQqeWjth4JnDVEAxF4z6ZjREtd383B84wUHDgOYqw4kyhF6JFFYIDBAqrPF9coN3w:1x4C4g:_oss_7Jm5wvYmthh9h8PSmAmPSse6oEiaEf0pW6cNHA",
     "expire_date": "2026-09-23T06:46:26.324Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "opukcj6jlr76j2gljnkbzmhfu7kkjfnt",
+  "fields": {
+    "session_data": ".eJyrVkosKMjJTE2Jz06tLFayilbKyk-KNzRQ0gEzLJV0lIqTM_JzEouKMzIL4o3MIAKpuanxxsYgdnZmTk68hZKOUlJpcWZeanExmAM2BKHUyFgpthYAcrYiqQ:1x77yo:uONZSrAZFRsjHBnXp66FXxoJS5prtt4tA8A3r6z6v84",
+    "expire_date": "2026-10-01T09:00:30.177Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "tyn7um0ms573i7cftq6jf2evqsm9m10f",
+  "fields": {
+    "session_data": "eyJhcHBsaWVkX2tleXMiOlsiam9iXzE0Il19:1x78kz:B6_m0vVi0h5fLUXs7lDUGcZ8Xm5CJGnbzTUleTD1YO8",
+    "expire_date": "2026-10-01T09:50:17.190Z"
   }
 },
 {
@@ -732,12 +765,12 @@
     "job_type": "full_time",
     "required_skills": "Computer Literacy, Customer Service, Typing, Local Language",
     "experience_required": "Fresher to 1 year",
-    "deadline": "2026-10-17",
+    "deadline": "2026-11-02",
     "source_portal": "National Career Service",
     "source_url": "https://www.ncs.gov.in/",
     "is_external": true,
     "created_at": "2026-09-02T10:38:37.528Z",
-    "updated_at": "2026-09-02T14:23:17.011Z"
+    "updated_at": "2026-09-18T05:47:59.014Z"
   }
 },
 {
@@ -753,12 +786,12 @@
     "job_type": "full_time",
     "required_skills": "Basic Accounts, Smartphone Handling, Micro-ATM Operations",
     "experience_required": "10th / 12th Pass",
-    "deadline": "2026-10-12",
+    "deadline": "2026-10-28",
     "source_portal": "National Career Service",
     "source_url": "https://www.ncs.gov.in/",
     "is_external": true,
     "created_at": "2026-09-02T10:38:37.535Z",
-    "updated_at": "2026-09-02T14:23:17.018Z"
+    "updated_at": "2026-09-18T05:47:59.022Z"
   }
 },
 {
@@ -774,12 +807,12 @@
     "job_type": "contract",
     "required_skills": "Drone Operation Basics, Field Navigation, Agriculture Knowledge",
     "experience_required": "DGCA Drone License or Agri Diploma",
-    "deadline": "2026-10-22",
+    "deadline": "2026-11-07",
     "source_portal": "National Career Service",
     "source_url": "https://www.ncs.gov.in/",
     "is_external": true,
     "created_at": "2026-09-02T10:38:37.541Z",
-    "updated_at": "2026-09-02T14:23:17.024Z"
+    "updated_at": "2026-09-18T05:47:59.030Z"
   }
 },
 {
@@ -795,12 +828,12 @@
     "job_type": "full_time",
     "required_skills": "Two Wheeler Driving, Route Familiarity, Basic Smartphone Usage",
     "experience_required": "Valid Driving License",
-    "deadline": "2026-10-02",
+    "deadline": "2026-10-18",
     "source_portal": "National Career Service",
     "source_url": "https://www.ncs.gov.in/",
     "is_external": true,
     "created_at": "2026-09-02T10:38:37.548Z",
-    "updated_at": "2026-09-02T14:23:17.030Z"
+    "updated_at": "2026-09-18T05:47:59.038Z"
   }
 },
 {
@@ -825,7 +858,7 @@
 },
 {
   "model": "scholarships.scholarship",
-  "pk": 26,
+  "pk": 45,
   "fields": {
     "name": "National Means-cum-Merit Scholarship Scheme (NMMSS)",
     "provider": "Department of School Education & Literacy, Ministry of Education, GoI",
@@ -841,13 +874,13 @@
     "source_portal": "National Scholarship Portal (NSP)",
     "source_url": "https://scholarships.gov.in/",
     "is_external": false,
-    "created_at": "2026-09-07T09:58:12.299Z",
-    "updated_at": "2026-09-07T09:58:12.299Z"
+    "created_at": "2026-09-18T05:47:58.735Z",
+    "updated_at": "2026-09-18T05:47:58.735Z"
   }
 },
 {
   "model": "scholarships.scholarship",
-  "pk": 27,
+  "pk": 46,
   "fields": {
     "name": "PM Young Achievers Scholarship Award Scheme (PM-YASASVI)",
     "provider": "Ministry of Social Justice and Empowerment, Government of India",
@@ -863,13 +896,13 @@
     "source_portal": "National Scholarship Portal (NSP)",
     "source_url": "https://scholarships.gov.in/",
     "is_external": false,
-    "created_at": "2026-09-07T09:58:12.302Z",
-    "updated_at": "2026-09-07T09:58:12.302Z"
+    "created_at": "2026-09-18T05:47:58.744Z",
+    "updated_at": "2026-09-18T05:47:58.744Z"
   }
 },
 {
   "model": "scholarships.scholarship",
-  "pk": 28,
+  "pk": 47,
   "fields": {
     "name": "Central Sector Scheme of Scholarships for College & University Students (CSSS)",
     "provider": "Department of Higher Education, Ministry of Education, GoI",
@@ -885,13 +918,13 @@
     "source_portal": "National Scholarship Portal (NSP)",
     "source_url": "https://scholarships.gov.in/",
     "is_external": false,
-    "created_at": "2026-09-07T09:58:12.306Z",
-    "updated_at": "2026-09-07T09:58:12.306Z"
+    "created_at": "2026-09-18T05:47:58.752Z",
+    "updated_at": "2026-09-18T05:47:58.752Z"
   }
 },
 {
   "model": "scholarships.scholarship",
-  "pk": 29,
+  "pk": 48,
   "fields": {
     "name": "Post-Matric Scholarship Scheme for SC & ST Students",
     "provider": "Ministry of Social Justice & Empowerment & Ministry of Tribal Affairs, GoI",
@@ -907,13 +940,13 @@
     "source_portal": "National Scholarship Portal (NSP)",
     "source_url": "https://scholarships.gov.in/",
     "is_external": false,
-    "created_at": "2026-09-07T09:58:12.309Z",
-    "updated_at": "2026-09-07T09:58:12.309Z"
+    "created_at": "2026-09-18T05:47:58.760Z",
+    "updated_at": "2026-09-18T05:47:58.760Z"
   }
 },
 {
   "model": "scholarships.scholarship",
-  "pk": 30,
+  "pk": 49,
   "fields": {
     "name": "AICTE Pragati Scholarship Scheme for Girl Students",
     "provider": "All India Council for Technical Education (AICTE), Ministry of Education",
@@ -929,13 +962,13 @@
     "source_portal": "National Scholarship Portal (NSP)",
     "source_url": "https://scholarships.gov.in/",
     "is_external": false,
-    "created_at": "2026-09-07T09:58:12.313Z",
-    "updated_at": "2026-09-07T09:58:12.313Z"
+    "created_at": "2026-09-18T05:47:58.767Z",
+    "updated_at": "2026-09-18T05:47:58.767Z"
   }
 },
 {
   "model": "scholarships.scholarship",
-  "pk": 31,
+  "pk": 50,
   "fields": {
     "name": "HDFC Bank Parivartan's Educational Crisis Support Scholarship (ECSS)",
     "provider": "HDFC Bank CSR Foundation / Buddy4Study",
@@ -951,35 +984,35 @@
     "source_portal": "Buddy4Study",
     "source_url": "https://www.buddy4study.com/page/hdfc-bank-parivartans-ecss-programme",
     "is_external": false,
-    "created_at": "2026-09-07T09:58:12.317Z",
-    "updated_at": "2026-09-07T09:58:12.317Z"
+    "created_at": "2026-09-18T05:47:58.774Z",
+    "updated_at": "2026-09-18T05:47:58.774Z"
   }
 },
 {
   "model": "scholarships.scholarship",
-  "pk": 32,
+  "pk": 51,
   "fields": {
     "name": "Reliance Foundation Undergraduate Scholarship",
-    "provider": "Reliance Foundation",
-    "description": "Prestigious scholarship program empowering young students with grants to support undergraduate study in any stream of study across recognized colleges in India.",
-    "amount": "Up to Rs 2,00,000 for the full duration of undergraduate degree",
+    "provider": "Reliance Foundation (Buddy4Study)",
+    "description": "Empowering top-ranking students with holistic financial assistance and leadership mentoring.",
+    "amount": "₹2,00,000 (Over degree duration)",
     "education_level": "bachelor",
-    "eligibility": "First-year full-time undergraduate students who scored minimum 60% in Class 12 board examination. Includes an aptitude test.",
-    "income_limit": "Household income up to Rs 15,00,000 (preference given to < Rs 2,50,000)",
-    "category": "Undergraduate Merit-cum-Means",
-    "course": "All Undergraduate Degree Streams (Arts, Science, Commerce, Engineering, Law)",
-    "required_documents": "Class 12 Marksheet, College Bonafide/Admission Letter, Family Income Certificate, Aadhaar Card, Passport Photograph",
-    "application_deadline": "2026-10-15",
-    "source_portal": "Reliance Foundation Scholarships",
-    "source_url": "https://www.scholarships.reliancefoundation.org/",
-    "is_external": false,
-    "created_at": "2026-09-07T09:58:12.320Z",
-    "updated_at": "2026-09-07T09:58:12.320Z"
+    "eligibility": "First-year degree students; Aptitude test qualification; Family income ≤ ₹2.5 Lakhs.",
+    "income_limit": "≤ ₹2,50,000",
+    "category": "Merit-cum-Means",
+    "course": "Any recognized UG Degree",
+    "required_documents": "12th Marksheet, Bonafide Certificate, Income Proof",
+    "application_deadline": "2026-11-07",
+    "source_portal": "Buddy4Study",
+    "source_url": "https://www.buddy4study.com/page/reliance-foundation-undergraduate-scholarships",
+    "is_external": true,
+    "created_at": "2026-09-18T05:47:58.781Z",
+    "updated_at": "2026-09-18T05:47:58.863Z"
   }
 },
 {
   "model": "scholarships.scholarship",
-  "pk": 33,
+  "pk": 52,
   "fields": {
     "name": "Santoor Women's Scholarship",
     "provider": "Wipro Cares & Azim Premji Foundation",
@@ -995,13 +1028,13 @@
     "source_portal": "Buddy4Study",
     "source_url": "https://www.buddy4study.com/page/santoor-scholarship-programme",
     "is_external": false,
-    "created_at": "2026-09-07T09:58:12.324Z",
-    "updated_at": "2026-09-07T09:58:12.324Z"
+    "created_at": "2026-09-18T05:47:58.788Z",
+    "updated_at": "2026-09-18T05:47:58.788Z"
   }
 },
 {
   "model": "scholarships.scholarship",
-  "pk": 34,
+  "pk": 53,
   "fields": {
     "name": "Kotak Kanya Scholarship",
     "provider": "Kotak Education Foundation",
@@ -1017,13 +1050,13 @@
     "source_portal": "Buddy4Study",
     "source_url": "https://www.buddy4study.com/page/kotak-kanya-scholarship",
     "is_external": false,
-    "created_at": "2026-09-07T09:58:12.327Z",
-    "updated_at": "2026-09-07T09:58:12.327Z"
+    "created_at": "2026-09-18T05:47:58.795Z",
+    "updated_at": "2026-09-18T05:47:58.795Z"
   }
 },
 {
   "model": "scholarships.scholarship",
-  "pk": 35,
+  "pk": 54,
   "fields": {
     "name": "SBI Asha Scholarship Programme",
     "provider": "SBI Foundation (CSR arm of State Bank of India)",
@@ -1039,13 +1072,13 @@
     "source_portal": "Buddy4Study",
     "source_url": "https://www.buddy4study.com/page/sbi-asha-scholarship-program",
     "is_external": false,
-    "created_at": "2026-09-07T09:58:12.332Z",
-    "updated_at": "2026-09-07T09:58:12.332Z"
+    "created_at": "2026-09-18T05:47:58.803Z",
+    "updated_at": "2026-09-18T05:47:58.803Z"
   }
 },
 {
   "model": "scholarships.scholarship",
-  "pk": 36,
+  "pk": 55,
   "fields": {
     "name": "Keep India Smiling Foundational Scholarship Programme",
     "provider": "Colgate-Palmolive (India) Limited",
@@ -1061,13 +1094,13 @@
     "source_portal": "Buddy4Study",
     "source_url": "https://www.buddy4study.com/page/colgate-keep-india-smiling-scholarship",
     "is_external": false,
-    "created_at": "2026-09-07T09:58:12.335Z",
-    "updated_at": "2026-09-07T09:58:12.335Z"
+    "created_at": "2026-09-18T05:47:58.810Z",
+    "updated_at": "2026-09-18T05:47:58.810Z"
   }
 },
 {
   "model": "scholarships.scholarship",
-  "pk": 37,
+  "pk": 56,
   "fields": {
     "name": "Vidyasaarathi Rural Youth Higher Education Scholarship",
     "provider": "Protean eGov Technologies / Vidyasaarathi Portal",
@@ -1083,13 +1116,167 @@
     "source_portal": "Vidyasaarathi Portal",
     "source_url": "https://www.vidyasaarathi.co.in/",
     "is_external": false,
-    "created_at": "2026-09-07T09:58:12.338Z",
-    "updated_at": "2026-09-07T09:58:12.338Z"
+    "created_at": "2026-09-18T05:47:58.817Z",
+    "updated_at": "2026-09-18T05:47:58.817Z"
+  }
+},
+{
+  "model": "scholarships.scholarship",
+  "pk": 57,
+  "fields": {
+    "name": "HDFC Bank Parivartan’s ECSS Programme",
+    "provider": "HDFC Bank (Buddy4Study Partner)",
+    "description": "Annual financial assistance for meritorious rural students facing personal or financial crisis.",
+    "amount": "₹75,000 / year",
+    "education_level": "bachelor",
+    "eligibility": "Enrolled in undergraduate degree or diploma; Annual family income ≤ ₹2.5 Lakhs.",
+    "income_limit": "≤ ₹2,50,000",
+    "category": "Merit-cum-Means",
+    "course": "All Undergraduate & Professional Courses",
+    "required_documents": "Marksheets, Income Certificate, College Fee Receipt, Aadhaar",
+    "application_deadline": "2026-11-02",
+    "source_portal": "Buddy4Study",
+    "source_url": "https://www.buddy4study.com/page/hdfc-bank-parivartans-ecss-programme",
+    "is_external": true,
+    "created_at": "2026-09-18T05:47:58.833Z",
+    "updated_at": "2026-09-18T05:47:58.833Z"
+  }
+},
+{
+  "model": "scholarships.scholarship",
+  "pk": 58,
+  "fields": {
+    "name": "Tata Trust Medical and Healthcare Grant",
+    "provider": "Tata Trusts (Buddy4Study Partner)",
+    "description": "Full and partial tuition support for students from agrarian families pursuing nursing, pharmacy, and allied health.",
+    "amount": "Up to ₹1,00,000",
+    "education_level": "bachelor",
+    "eligibility": "Min. 60% marks in 12th; Priority for students from backward rural districts.",
+    "income_limit": "≤ ₹4,00,000",
+    "category": "Healthcare Merit",
+    "course": "B.Sc Nursing, B.Pharm, Paramedical",
+    "required_documents": "Marksheets, Admission Proof, Tahsildar Income Certificate",
+    "application_deadline": "2026-11-17",
+    "source_portal": "Buddy4Study",
+    "source_url": "https://www.buddy4study.com/page/tata-trusts-scholarship",
+    "is_external": true,
+    "created_at": "2026-09-18T05:47:58.853Z",
+    "updated_at": "2026-09-18T05:47:58.853Z"
+  }
+},
+{
+  "model": "scholarships.scholarship",
+  "pk": 59,
+  "fields": {
+    "name": "Santoor Women’s Rural Scholarship",
+    "provider": "Wipro Cares (Buddy4Study)",
+    "description": "Empowering rural young women to pursue higher education after 12th standard in state universities.",
+    "amount": "₹24,000 / year",
+    "education_level": "bachelor",
+    "eligibility": "Female applicants passed 10th & 12th from government schools in rural areas.",
+    "income_limit": "Rural / General",
+    "category": "Women Empowerment",
+    "course": "Humanities, Science, Commerce",
+    "required_documents": "Govt School Transfer Certificate, 12th Marksheet, Aadhaar",
+    "application_deadline": "2026-10-23",
+    "source_portal": "Buddy4Study",
+    "source_url": "https://www.buddy4study.com/page/santoor-scholarship-programme",
+    "is_external": true,
+    "created_at": "2026-09-18T05:47:58.872Z",
+    "updated_at": "2026-09-18T05:47:58.872Z"
+  }
+},
+{
+  "model": "scholarships.scholarship",
+  "pk": 60,
+  "fields": {
+    "name": "Keep India Smiling Foundational Scholarship",
+    "provider": "Colgate-Palmolive (Buddy4Study)",
+    "description": "Financial support and foundational mentoring for deserving candidates from underserved backgrounds.",
+    "amount": "₹30,000 / year",
+    "education_level": "12th",
+    "eligibility": "Passed 10th with at least 75%; Enrolled in 11th/12th; Family income ≤ ₹5 Lakhs.",
+    "income_limit": "≤ ₹5,00,000",
+    "category": "Foundational",
+    "course": "Higher Secondary (11th & 12th)",
+    "required_documents": "10th Marksheet, School ID, Income Proof",
+    "application_deadline": "2026-10-28",
+    "source_portal": "Buddy4Study",
+    "source_url": "https://www.buddy4study.com/page/keep-india-smiling-foundational-scholarship-programme",
+    "is_external": true,
+    "created_at": "2026-09-18T05:47:58.882Z",
+    "updated_at": "2026-09-18T05:47:58.882Z"
+  }
+},
+{
+  "model": "scholarships.scholarship",
+  "pk": 61,
+  "fields": {
+    "name": "Vidyasaarathi SNL Polytechnic Diploma Grant",
+    "provider": "NSDL Vidyasaarathi",
+    "description": "Tuition concession and book grant for students enrolled in rural technical polytechnic diplomas.",
+    "amount": "₹15,000 / year",
+    "education_level": "diploma",
+    "eligibility": "Minimum 50% in 10th standard; Enrolled in 3-year Polytechnic course.",
+    "income_limit": "≤ ₹3,00,000",
+    "category": "Technical Education",
+    "course": "Diploma in Mechanical, Electrical, Civil, IT",
+    "required_documents": "Diploma Admission Letter, Fee Receipt, Bank Passbook",
+    "application_deadline": "2026-11-12",
+    "source_portal": "Buddy4Study",
+    "source_url": "https://www.vidyasaarathi.co.in/",
+    "is_external": true,
+    "created_at": "2026-09-18T05:47:58.892Z",
+    "updated_at": "2026-09-18T05:47:58.892Z"
+  }
+},
+{
+  "model": "scholarships.scholarship",
+  "pk": 62,
+  "fields": {
+    "name": "Central Sector Scheme of Scholarships for College Students",
+    "provider": "Department of Higher Education (NSP Portal)",
+    "description": "Financial assistance to meritorious students from low-income families to meet day-to-day expenses while pursuing higher studies.",
+    "amount": "₹12,000 – ₹20,000 / year",
+    "education_level": "bachelor",
+    "eligibility": "Above 80th percentile in 12th Board examinations; Family income below ₹4.5 Lakhs.",
+    "income_limit": "≤ ₹4,50,000",
+    "category": "Central Sector",
+    "course": "Graduation / Post Graduation",
+    "required_documents": "Aadhaar, Bank Account, 12th Marksheet, Income Certificate",
+    "application_deadline": "2026-11-22",
+    "source_portal": "National Scholarship Portal",
+    "source_url": "https://scholarships.gov.in/",
+    "is_external": true,
+    "created_at": "2026-09-18T05:47:58.900Z",
+    "updated_at": "2026-09-18T05:47:58.900Z"
+  }
+},
+{
+  "model": "scholarships.scholarship",
+  "pk": 63,
+  "fields": {
+    "name": "Post-Matric Scholarship for SC/ST/OBC Students",
+    "provider": "Ministry of Social Justice & Empowerment (NSP)",
+    "description": "100% compulsory fee reimbursement and maintenance allowance for post-secondary education.",
+    "amount": "Full Tuition + ₹13,500 Allowance",
+    "education_level": "bachelor",
+    "eligibility": "Belonging to SC/ST/OBC category; Enrolled in recognized state university or college.",
+    "income_limit": "≤ ₹2,50,000",
+    "category": "Affirmative Grant",
+    "course": "Degree, Engineering, Agriculture, Arts",
+    "required_documents": "Community Certificate, Income Certificate, Domicile Certificate",
+    "application_deadline": "2026-11-27",
+    "source_portal": "National Scholarship Portal",
+    "source_url": "https://scholarships.gov.in/",
+    "is_external": true,
+    "created_at": "2026-09-18T05:47:58.909Z",
+    "updated_at": "2026-09-18T05:47:58.909Z"
   }
 },
 {
   "model": "government_schemes.governmentscheme",
-  "pk": 23,
+  "pk": 44,
   "fields": {
     "name": "PM Surya Ghar: Muft Bijli Yojana",
     "department": "Ministry of New and Renewable Energy (MNRE)",
@@ -1104,13 +1291,13 @@
     "source_portal": "myScheme.gov.in",
     "source_url": "https://www.myscheme.gov.in/schemes/pmsgmby",
     "is_external": false,
-    "created_at": "2026-09-07T09:58:12.249Z",
-    "updated_at": "2026-09-07T09:58:12.249Z"
+    "created_at": "2026-09-18T05:47:58.637Z",
+    "updated_at": "2026-09-18T05:47:58.637Z"
   }
 },
 {
   "model": "government_schemes.governmentscheme",
-  "pk": 24,
+  "pk": 45,
   "fields": {
     "name": "PM Vishwakarma Scheme",
     "department": "Ministry of Micro, Small and Medium Enterprises (MSME)",
@@ -1125,13 +1312,13 @@
     "source_portal": "myScheme.gov.in",
     "source_url": "https://www.myscheme.gov.in/schemes/pm-vishwakarma",
     "is_external": false,
-    "created_at": "2026-09-07T09:58:12.253Z",
-    "updated_at": "2026-09-07T09:58:12.253Z"
+    "created_at": "2026-09-18T05:47:58.647Z",
+    "updated_at": "2026-09-18T05:47:58.647Z"
   }
 },
 {
   "model": "government_schemes.governmentscheme",
-  "pk": 25,
+  "pk": 46,
   "fields": {
     "name": "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)",
     "department": "Ministry of Agriculture & Farmers Welfare",
@@ -1146,13 +1333,13 @@
     "source_portal": "myScheme.gov.in",
     "source_url": "https://www.myscheme.gov.in/schemes/pm-kisan",
     "is_external": false,
-    "created_at": "2026-09-07T09:58:12.258Z",
-    "updated_at": "2026-09-07T09:58:12.258Z"
+    "created_at": "2026-09-18T05:47:58.655Z",
+    "updated_at": "2026-09-18T05:47:58.655Z"
   }
 },
 {
   "model": "government_schemes.governmentscheme",
-  "pk": 26,
+  "pk": 47,
   "fields": {
     "name": "Prime Minister's Employment Generation Programme (PMEGP)",
     "department": "Ministry of MSME / Khadi and Village Industries Commission (KVIC)",
@@ -1167,34 +1354,34 @@
     "source_portal": "myScheme.gov.in",
     "source_url": "https://www.myscheme.gov.in/schemes/pmegp",
     "is_external": false,
-    "created_at": "2026-09-07T09:58:12.262Z",
-    "updated_at": "2026-09-07T09:58:12.262Z"
+    "created_at": "2026-09-18T05:47:58.663Z",
+    "updated_at": "2026-09-18T05:47:58.663Z"
   }
 },
 {
   "model": "government_schemes.governmentscheme",
-  "pk": 27,
+  "pk": 48,
   "fields": {
     "name": "Pradhan Mantri Awas Yojana - Gramin (PMAY-G)",
     "department": "Ministry of Rural Development",
     "category": "housing",
-    "description": "National flagship housing mission providing financial assistance to houseless and people living in dilapidated or kutcha houses to build a pucca dwelling unit with clean energy and sanitation.",
-    "target_beneficiaries": "Rural homeless households and families living in kutcha or dilapidated houses identified via SECC/Awas+ lists.",
-    "benefits": "Unit financial assistance of Rs 1,20,000 in plain areas and Rs 1,30,000 in hilly/difficult areas, plus 90-95 days of unskilled wage labor under MGNREGA (~Rs 27,000) and Rs 12,000 for toilet under SBM-G.",
-    "eligibility": "Rural households without pucca house, verified via Gram Sabha and SECC/Awas+ survey data. Priority to SC/ST, women-headed, and disabled individuals.",
-    "required_documents": "Aadhaar Card, Bank Account Details (DBT enabled), MGNREGA Job Card Number, Land/Homestead Right Certificate",
-    "application_process": "Beneficiary list prepared by Gram Sabha and verified via Awaas+ app. Geotagged milestone photos at foundation, plinth, and lintel stages trigger direct bank transfers.",
+    "description": "Assistance for construction of pucca houses with basic amenities for rural families living in kutcha/dilapidated homes.",
+    "target_beneficiaries": "Houseless rural families and those living in 0, 1 or 2 room kutcha houses (SECC list)",
+    "benefits": "₹1,20,000 in plain areas / ₹1,30,000 in hilly/difficult areas + 90 days MGNREGA wages",
+    "eligibility": "Identified through SECC 2011 priority list and verified by Gram Sabha.",
+    "required_documents": "Aadhaar Card, Bank Account Details, MGNREGA Job Card, Land Ownership Proof",
+    "application_process": "Through Gram Panchayat office or online via AwaasSoft portal.",
     "official_website": "https://pmayg.nic.in/",
     "source_portal": "myScheme.gov.in",
     "source_url": "https://www.myscheme.gov.in/schemes/pmay-g",
-    "is_external": false,
-    "created_at": "2026-09-07T09:58:12.267Z",
-    "updated_at": "2026-09-07T09:58:12.267Z"
+    "is_external": true,
+    "created_at": "2026-09-18T05:47:58.671Z",
+    "updated_at": "2026-09-18T05:47:58.930Z"
   }
 },
 {
   "model": "government_schemes.governmentscheme",
-  "pk": 28,
+  "pk": 49,
   "fields": {
     "name": "Pradhan Mantri Fasal Bima Yojana (PMFBY)",
     "department": "Ministry of Agriculture & Farmers Welfare",
@@ -1209,13 +1396,13 @@
     "source_portal": "myScheme.gov.in",
     "source_url": "https://www.myscheme.gov.in/schemes/pmfby",
     "is_external": false,
-    "created_at": "2026-09-07T09:58:12.270Z",
-    "updated_at": "2026-09-07T09:58:12.270Z"
+    "created_at": "2026-09-18T05:47:58.678Z",
+    "updated_at": "2026-09-18T05:47:58.678Z"
   }
 },
 {
   "model": "government_schemes.governmentscheme",
-  "pk": 29,
+  "pk": 50,
   "fields": {
     "name": "Ayushman Bharat - PM Jan Arogya Yojana (AB-PMJAY)",
     "department": "National Health Authority, Ministry of Health & Family Welfare",
@@ -1230,13 +1417,13 @@
     "source_portal": "myScheme.gov.in",
     "source_url": "https://www.myscheme.gov.in/schemes/ab-pmjay",
     "is_external": false,
-    "created_at": "2026-09-07T09:58:12.274Z",
-    "updated_at": "2026-09-07T09:58:12.274Z"
+    "created_at": "2026-09-18T05:47:58.684Z",
+    "updated_at": "2026-09-18T05:47:58.684Z"
   }
 },
 {
   "model": "government_schemes.governmentscheme",
-  "pk": 30,
+  "pk": 51,
   "fields": {
     "name": "Mahatma Gandhi NREGA (MGNREGS)",
     "department": "Ministry of Rural Development",
@@ -1251,13 +1438,13 @@
     "source_portal": "myScheme.gov.in",
     "source_url": "https://www.myscheme.gov.in/schemes/mgnrega",
     "is_external": false,
-    "created_at": "2026-09-07T09:58:12.277Z",
-    "updated_at": "2026-09-07T09:58:12.277Z"
+    "created_at": "2026-09-18T05:47:58.691Z",
+    "updated_at": "2026-09-18T05:47:58.691Z"
   }
 },
 {
   "model": "government_schemes.governmentscheme",
-  "pk": 31,
+  "pk": 52,
   "fields": {
     "name": "Lakhpati Didi Initiative (DAY-NRLM)",
     "department": "Ministry of Rural Development",
@@ -1272,13 +1459,13 @@
     "source_portal": "myScheme.gov.in",
     "source_url": "https://www.myscheme.gov.in/schemes/lakhpatididi",
     "is_external": false,
-    "created_at": "2026-09-07T09:58:12.281Z",
-    "updated_at": "2026-09-07T09:58:12.281Z"
+    "created_at": "2026-09-18T05:47:58.698Z",
+    "updated_at": "2026-09-18T05:47:58.698Z"
   }
 },
 {
   "model": "government_schemes.governmentscheme",
-  "pk": 32,
+  "pk": 53,
   "fields": {
     "name": "Pradhan Mantri Mudra Yojana (PMMY)",
     "department": "Department of Financial Services, Ministry of Finance",
@@ -1293,34 +1480,34 @@
     "source_portal": "myScheme.gov.in",
     "source_url": "https://www.myscheme.gov.in/schemes/pmmy",
     "is_external": false,
-    "created_at": "2026-09-07T09:58:12.285Z",
-    "updated_at": "2026-09-07T09:58:12.285Z"
+    "created_at": "2026-09-18T05:47:58.705Z",
+    "updated_at": "2026-09-18T05:47:58.705Z"
   }
 },
 {
   "model": "government_schemes.governmentscheme",
-  "pk": 33,
+  "pk": 54,
   "fields": {
     "name": "Pradhan Mantri Matsya Sampada Yojana (PMMSY)",
-    "department": "Department of Fisheries, Ministry of Fisheries, Animal Husbandry & Dairying",
+    "department": "Department of Fisheries",
     "category": "agriculture",
-    "description": "Flagship scheme to bring about ecologically sustainable, economically viable Blue Revolution through focused investment in fish production, hatcheries, cold storage, and aquaculture value chain.",
-    "target_beneficiaries": "Fishers, fish farmers, fish workers, SHGs, JLGs, fisheries cooperatives, and rural youth setting up aquaculture projects.",
-    "benefits": "Government financial assistance of 40% (general category) and up to 60% (women, SC/ST) on capital investment for new pond construction, biofloc units, recirculatory aquaculture systems (RAS), and refrigerated transport.",
-    "eligibility": "Individual fish farmers, groups, or enterprises with suitable land or water bodies, or valid lease agreements.",
-    "required_documents": "Aadhaar Card, Land/Water Body Ownership or Lease Agreement (minimum 7-10 years), Detailed Project Report (DPR), Bank Account Details",
-    "application_process": "Submit project proposal to the District Fisheries Officer or apply via PMMSY MIS portal (pmmsy.dof.gov.in). Approved proposals receive back-ended subsidy upon project completion.",
+    "description": "Financial subsidy and infrastructure development for aquaculture, pond fish farming, and biofloc units in rural villages.",
+    "target_beneficiaries": "Fish farmers, coastal/inland youth, SHGs, and rural entrepreneurs",
+    "benefits": "40% to 60% capital subsidy on pond construction, motorized boats, cold storage, and fingerlings.",
+    "eligibility": "Individual farmers or cooperatives having access to water bodies or land.",
+    "required_documents": "Land/Water Lease Deed, Project Proposal, Aadhaar, Bank Details",
+    "application_process": "Submit DPR to District Fisheries Office or through PMMSY online portal.",
     "official_website": "https://pmmsy.dof.gov.in/",
     "source_portal": "myScheme.gov.in",
     "source_url": "https://www.myscheme.gov.in/schemes/pmmsy",
-    "is_external": false,
-    "created_at": "2026-09-07T09:58:12.288Z",
-    "updated_at": "2026-09-07T09:58:12.288Z"
+    "is_external": true,
+    "created_at": "2026-09-18T05:47:58.712Z",
+    "updated_at": "2026-09-18T05:47:58.961Z"
   }
 },
 {
   "model": "government_schemes.governmentscheme",
-  "pk": 34,
+  "pk": 55,
   "fields": {
     "name": "Kisan Credit Card (KCC) Scheme",
     "department": "Ministry of Agriculture & Farmers Welfare / RBI / NABARD",
@@ -1335,8 +1522,197 @@
     "source_portal": "myScheme.gov.in",
     "source_url": "https://www.myscheme.gov.in/schemes/kcc",
     "is_external": false,
-    "created_at": "2026-09-07T09:58:12.292Z",
-    "updated_at": "2026-09-07T09:58:12.292Z"
+    "created_at": "2026-09-18T05:47:58.720Z",
+    "updated_at": "2026-09-18T05:47:58.720Z"
+  }
+},
+{
+  "model": "government_schemes.governmentscheme",
+  "pk": 56,
+  "fields": {
+    "name": "PM Kisan Samman Nidhi (PM-KISAN)",
+    "department": "Ministry of Agriculture & Farmers Welfare",
+    "category": "agriculture",
+    "description": "Direct income support of ₹6,000 per year in three equal 4-monthly installments to all landholding farmer families.",
+    "target_beneficiaries": "Small, marginal, and rural landholder farmers",
+    "benefits": "₹6,000/year directly transferred to Aadhaar-seeded bank account (DBT)",
+    "eligibility": "Farmer families with cultivable landholding in revenue records; Aadhaar authenticated.",
+    "required_documents": "Aadhaar Card, Land Record Details (Patta/Khatoni), Bank Passbook",
+    "application_process": "Online at pmkisan.gov.in, via Common Service Center (CSC), or State Agriculture Office.",
+    "official_website": "https://pmkisan.gov.in/",
+    "source_portal": "myScheme.gov.in",
+    "source_url": "https://www.myscheme.gov.in/schemes/pm-kisan",
+    "is_external": true,
+    "created_at": "2026-09-18T05:47:58.919Z",
+    "updated_at": "2026-09-18T05:47:58.919Z"
+  }
+},
+{
+  "model": "government_schemes.governmentscheme",
+  "pk": 57,
+  "fields": {
+    "name": "Ayushman Bharat - PMJAY Health Insurance",
+    "department": "National Health Authority (Ministry of Health)",
+    "category": "healthcare",
+    "description": "World’s largest health assurance scheme providing comprehensive secondary and tertiary hospitalization cover.",
+    "target_beneficiaries": "Vulnerable and low-income rural families (Bottom 40% population)",
+    "benefits": "Cashless health insurance cover up to ₹5,00,000 per family per year at empaneled hospitals.",
+    "eligibility": "Listed in SECC 2011 database or verified ration card holder under NFSA.",
+    "required_documents": "Aadhaar Card, Ration Card, PMJAY e-Card",
+    "application_process": "Create Ayushman Card at any empaneled hospital, CSC Center, or via PMJAY App.",
+    "official_website": "https://pmjay.gov.in/",
+    "source_portal": "myScheme.gov.in",
+    "source_url": "https://www.myscheme.gov.in/schemes/pmjay",
+    "is_external": true,
+    "created_at": "2026-09-18T05:47:58.941Z",
+    "updated_at": "2026-09-18T05:47:58.941Z"
+  }
+},
+{
+  "model": "government_schemes.governmentscheme",
+  "pk": 58,
+  "fields": {
+    "name": "National Rural Livelihoods Mission (NRLM - Aajeevika)",
+    "department": "Ministry of Rural Development",
+    "category": "women",
+    "description": "Poverty alleviation initiative promoting self-employment and organization of rural poor into Self Help Groups (SHGs).",
+    "target_beneficiaries": "Rural women, SHGs, and marginalized households",
+    "benefits": "Revolving fund, Community Investment Fund (CIF), and collateral-free bank loans up to ₹20 Lakhs with interest subvention.",
+    "eligibility": "Rural women residing in target village clusters forming groups of 10-20 members.",
+    "required_documents": "SHG Resolution Copy, Member Aadhaar details, Group Bank Account",
+    "application_process": "Through Village Organization (VO), Block Resource Center, or Gram Panchayat Desk.",
+    "official_website": "https://aajeevika.gov.in/",
+    "source_portal": "myScheme.gov.in",
+    "source_url": "https://www.myscheme.gov.in/schemes/day-nrlm",
+    "is_external": true,
+    "created_at": "2026-09-18T05:47:58.951Z",
+    "updated_at": "2026-09-18T05:47:58.951Z"
+  }
+},
+{
+  "model": "government_schemes.governmentscheme",
+  "pk": 59,
+  "fields": {
+    "name": "PM-KISAN Samman Nidhi Direct Benefit Transfer",
+    "department": "Ministry of Agriculture & Farmers Welfare, GoI",
+    "category": "agriculture",
+    "description": "",
+    "target_beneficiaries": "Small, marginal, and tenant farmers across rural India",
+    "benefits": "₹6,000 per year transferred directly in 3 equal installments of ₹2,000 to farmer bank accounts.",
+    "eligibility": "All landholding farmer families with cultivable land in rural and semi-urban revenue records.",
+    "required_documents": "",
+    "application_process": "Apply online via pmkisan.gov.in using Aadhaar, Land revenue record (Patta/Chitta), and active Bank Account.",
+    "official_website": "",
+    "source_portal": "PM-KISAN Portal",
+    "source_url": "https://pmkisan.gov.in/",
+    "is_external": true,
+    "created_at": "2026-09-18T05:47:58.970Z",
+    "updated_at": "2026-09-18T05:47:58.970Z"
+  }
+},
+{
+  "model": "government_schemes.governmentscheme",
+  "pk": 60,
+  "fields": {
+    "name": "Kisan Credit Card (KCC) Subsidized Agri-Loan",
+    "department": "Ministry of Agriculture / RBI / NABARD",
+    "category": "agriculture",
+    "description": "",
+    "target_beneficiaries": "Cultivators, sharecroppers, animal husbandry & fisheries farmers",
+    "benefits": "Institutional crop credit up to ₹3,00,000 at concessional 4% interest with 3% prompt repayment incentive.",
+    "eligibility": "All rural farmers, dairy farmers, fishers, and self-help group members.",
+    "required_documents": "",
+    "application_process": "1-page simplified KCC form linked to PM-KISAN account submitted via official portal or rural bank branch.",
+    "official_website": "",
+    "source_portal": "PM-KISAN Portal",
+    "source_url": "https://pmkisan.gov.in/",
+    "is_external": true,
+    "created_at": "2026-09-18T05:47:58.984Z",
+    "updated_at": "2026-09-18T05:47:58.984Z"
+  }
+},
+{
+  "model": "government_schemes.governmentscheme",
+  "pk": 61,
+  "fields": {
+    "name": "Chief Minister Uzhavar Pathukappu Thittam (Farmers Security)",
+    "department": "Department of Revenue & Disaster Management, Govt of Tamil Nadu",
+    "category": "social_welfare",
+    "description": "",
+    "target_beneficiaries": "Rural agricultural workers and marginal farm families in Tamil Nadu",
+    "benefits": "Comprehensive social security, education scholarship for farmers children, marriage assistance, and pension.",
+    "eligibility": "Registered agricultural labourers, tenant farmers, and small farmers holding membership card in Tamil Nadu.",
+    "required_documents": "",
+    "application_process": "Apply through e-Sevai portal using Aadhaar, Uzhavar Card, Ration Card, and Bank Passbook.",
+    "official_website": "",
+    "source_portal": "Tamil Nadu e-Sevai / TNeGA",
+    "source_url": "https://www.tnesevai.tn.gov.in/",
+    "is_external": true,
+    "created_at": "2026-09-18T05:47:58.995Z",
+    "updated_at": "2026-09-18T05:47:58.995Z"
+  }
+},
+{
+  "model": "government_schemes.governmentscheme",
+  "pk": 62,
+  "fields": {
+    "name": "Pudhumai Penn Scheme (Moovalur Ramamirtham Ammaiyar)",
+    "department": "Social Welfare and Women Empowerment Department, TN",
+    "category": "education",
+    "description": "",
+    "target_beneficiaries": "Rural girl students pursuing Undergraduate, Diploma, or ITI courses",
+    "benefits": "Monthly financial aid of ₹1,000 deposited directly into girl students bank accounts until degree/diploma completion.",
+    "eligibility": "Girl students who studied from 6th to 12th standard in Tamil Nadu Government schools and enrolled in higher education.",
+    "required_documents": "",
+    "application_process": "Online application verified by college nodal officer and processed via State DBT portal.",
+    "official_website": "",
+    "source_portal": "Tamil Nadu e-Sevai / TNeGA",
+    "source_url": "https://www.tnesevai.tn.gov.in/",
+    "is_external": true,
+    "created_at": "2026-09-18T05:47:59.004Z",
+    "updated_at": "2026-09-18T05:47:59.004Z"
+  }
+},
+{
+  "model": "government_schemes.governmentscheme",
+  "pk": 63,
+  "fields": {
+    "name": "e-NAM Electronic National Agriculture Market Linkage",
+    "department": "Small Farmers Agribusiness Consortium (SFAC) / Ministry of Agriculture",
+    "category": "agriculture",
+    "description": "",
+    "target_beneficiaries": "Smallholders and Farmer Producer Organizations (FPOs)",
+    "benefits": "Online bidding from traders across India, transparent electronic payment directly to bank, and assaying quality grading.",
+    "eligibility": "All farmers selling grains, pulses, oilseeds, fruits, and vegetables in linked APMC mandis.",
+    "required_documents": "",
+    "application_process": "Register online on enam.gov.in or at nearest e-NAM mandi helpdesk with Land record and Bank Passbook.",
+    "official_website": "",
+    "source_portal": "e-NAM (National Agriculture Market)",
+    "source_url": "https://www.enam.gov.in/",
+    "is_external": true,
+    "created_at": "2026-09-18T05:47:59.129Z",
+    "updated_at": "2026-09-18T05:47:59.129Z"
+  }
+},
+{
+  "model": "government_schemes.governmentscheme",
+  "pk": 64,
+  "fields": {
+    "name": "NABARD Self-Help Group (SHG) Bank Linkage Credit Scheme",
+    "department": "National Bank for Agriculture and Rural Development (NABARD)",
+    "category": "women_empowerment",
+    "description": "",
+    "target_beneficiaries": "Rural women entrepreneurs, SHG federations, and joint liability groups",
+    "benefits": "Collateral-free group term loan and cash credit up to ₹10 Lakhs at subsidized interest for livelihood activities.",
+    "eligibility": "Women Self-Help Groups (SHGs) functioning regularly for at least 6 months with savings and internal lending records.",
+    "required_documents": "",
+    "application_process": "Apply through nearest Rural Bank / Cooperative Bank branch with SHG resolution and grading passbook.",
+    "official_website": "",
+    "source_portal": "NABARD Rural Development Portal",
+    "source_url": "https://www.nabard.org/",
+    "is_external": true,
+    "created_at": "2026-09-18T05:47:59.137Z",
+    "updated_at": "2026-09-18T05:47:59.137Z"
   }
 },
 {
@@ -1525,7 +1901,7 @@
     "source_url": "https://www.skillindiadigital.gov.in/",
     "is_external": true,
     "created_at": "2026-09-02T10:38:37.554Z",
-    "updated_at": "2026-09-02T14:23:17.036Z"
+    "updated_at": "2026-09-18T05:47:59.050Z"
   }
 },
 {
@@ -1546,7 +1922,7 @@
     "source_url": "https://pmvishwakarma.gov.in/",
     "is_external": true,
     "created_at": "2026-09-02T10:38:37.562Z",
-    "updated_at": "2026-09-02T14:23:17.043Z"
+    "updated_at": "2026-09-18T05:47:59.060Z"
   }
 },
 {
@@ -1567,7 +1943,7 @@
     "source_url": "https://www.skillindiadigital.gov.in/",
     "is_external": true,
     "created_at": "2026-09-02T10:38:37.568Z",
-    "updated_at": "2026-09-02T14:23:17.049Z"
+    "updated_at": "2026-09-18T05:47:59.069Z"
   }
 },
 {
@@ -1588,7 +1964,7 @@
     "source_url": "https://www.skillindiadigital.gov.in/",
     "is_external": true,
     "created_at": "2026-09-02T10:38:37.575Z",
-    "updated_at": "2026-09-02T14:23:17.055Z"
+    "updated_at": "2026-09-18T05:47:59.081Z"
   }
 },
 {
@@ -1768,7 +2144,7 @@
     "source_url": "https://www.kviconline.gov.in/pmegpeportal/pmegphome/index.jsp",
     "is_external": true,
     "created_at": "2026-09-02T10:38:37.581Z",
-    "updated_at": "2026-09-02T14:23:17.061Z"
+    "updated_at": "2026-09-18T05:47:59.093Z"
   }
 },
 {
@@ -1788,7 +2164,7 @@
     "source_url": "https://www.startupindia.gov.in/",
     "is_external": true,
     "created_at": "2026-09-02T10:38:37.588Z",
-    "updated_at": "2026-09-02T14:23:17.068Z"
+    "updated_at": "2026-09-18T05:47:59.103Z"
   }
 },
 {
@@ -1808,7 +2184,47 @@
     "source_url": "https://www.kviconline.gov.in/pmegpeportal/pmegphome/index.jsp",
     "is_external": true,
     "created_at": "2026-09-02T10:38:37.599Z",
-    "updated_at": "2026-09-02T14:23:17.074Z"
+    "updated_at": "2026-09-18T05:47:59.111Z"
+  }
+},
+{
+  "model": "business.businessopportunity",
+  "pk": 12,
+  "fields": {
+    "name": "Zero-Cost Udyam MSME Registration & Priority Credit Linkage",
+    "category": "service",
+    "description": "Official lifetime registration for rural micro-enterprises unlocking collateral-free bank loans, electricity rebates, and tender preference.",
+    "investment_level": "low",
+    "opportunity_level": "easy",
+    "required_skills": "Basic business accounting, mobile OTP verification",
+    "expected_income": "Opens up priority MSME loans up to ₹25 Lakhs",
+    "market_demand": "Mandatory legal requirement for all Indian enterprises",
+    "resources": "Aadhaar, PAN card, business bank account, active mobile number",
+    "source_portal": "Udyam MSME Registration Portal",
+    "source_url": "https://udyamregistration.gov.in/",
+    "is_external": true,
+    "created_at": "2026-09-18T05:41:48.143Z",
+    "updated_at": "2026-09-18T05:47:59.120Z"
+  }
+},
+{
+  "model": "business.businessopportunity",
+  "pk": 13,
+  "fields": {
+    "name": "Pradhan Mantri MUDRA Yojana (Shishu, Kishore, Tarun Loans)",
+    "category": "manufacturing",
+    "description": "Institutional micro-credit up to ₹10 Lakhs without collateral for non-farm income generating small manufacturing and retail units.",
+    "investment_level": "low",
+    "opportunity_level": "easy",
+    "required_skills": "Vocational trade knowledge, enterprise business plan",
+    "expected_income": "₹30,000 – ₹75,000 / month net profit",
+    "market_demand": "Very High across rural tailoring, food stalls, repair shops, and agro-service",
+    "resources": "Project proposal, KYC documents, quotation of machinery, Mudra application",
+    "source_portal": "Pradhan Mantri MUDRA Yojana (PMMY)",
+    "source_url": "https://www.mudra.org.in/",
+    "is_external": true,
+    "created_at": "2026-09-18T05:41:48.168Z",
+    "updated_at": "2026-09-18T05:47:59.146Z"
   }
 },
 {
@@ -1824,6 +2240,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-02T03:51:10.649Z",
     "updated_date": "2026-09-02T03:51:10.649Z"
   }
@@ -1841,6 +2259,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-02T03:56:22.476Z",
     "updated_date": "2026-09-02T03:56:22.476Z"
   }
@@ -1858,6 +2278,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-02T04:04:59.780Z",
     "updated_date": "2026-09-02T04:04:59.781Z"
   }
@@ -1875,6 +2297,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-02T04:09:37.733Z",
     "updated_date": "2026-09-02T04:09:37.733Z"
   }
@@ -1892,6 +2316,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-02T04:14:36.680Z",
     "updated_date": "2026-09-02T04:14:36.680Z"
   }
@@ -1909,6 +2335,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-02T04:19:59.447Z",
     "updated_date": "2026-09-02T04:19:59.447Z"
   }
@@ -1926,6 +2354,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-02T04:20:53.743Z",
     "updated_date": "2026-09-02T04:20:53.743Z"
   }
@@ -1943,6 +2373,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-02T05:38:42.432Z",
     "updated_date": "2026-09-02T05:38:42.433Z"
   }
@@ -1960,6 +2392,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-02T06:43:05.843Z",
     "updated_date": "2026-09-02T06:43:05.843Z"
   }
@@ -1977,6 +2411,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-02T06:44:07.978Z",
     "updated_date": "2026-09-02T06:44:07.978Z"
   }
@@ -1994,6 +2430,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-02T06:44:48.907Z",
     "updated_date": "2026-09-02T06:44:48.907Z"
   }
@@ -2011,6 +2449,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-02T07:39:18.026Z",
     "updated_date": "2026-09-02T07:39:18.026Z"
   }
@@ -2028,6 +2468,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-02T10:01:17.861Z",
     "updated_date": "2026-09-02T10:01:17.861Z"
   }
@@ -2045,6 +2487,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-02T10:01:29.608Z",
     "updated_date": "2026-09-02T10:01:29.608Z"
   }
@@ -2062,6 +2506,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-02T10:02:22.568Z",
     "updated_date": "2026-09-02T10:02:22.568Z"
   }
@@ -2079,6 +2525,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-02T10:03:50.834Z",
     "updated_date": "2026-09-02T10:03:50.834Z"
   }
@@ -2096,6 +2544,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-02T10:14:07.062Z",
     "updated_date": "2026-09-02T10:14:07.062Z"
   }
@@ -2113,6 +2563,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-02T10:14:14.816Z",
     "updated_date": "2026-09-02T10:14:14.816Z"
   }
@@ -2130,6 +2582,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-02T10:14:54.061Z",
     "updated_date": "2026-09-02T10:14:54.062Z"
   }
@@ -2147,6 +2601,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-02T10:20:43.930Z",
     "updated_date": "2026-09-02T10:20:43.930Z"
   }
@@ -2164,6 +2620,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-02T10:28:54.970Z",
     "updated_date": "2026-09-02T10:29:44.249Z"
   }
@@ -2181,6 +2639,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-02T14:29:23.438Z",
     "updated_date": "2026-09-02T14:29:23.438Z"
   }
@@ -2198,6 +2658,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-02T14:30:15.006Z",
     "updated_date": "2026-09-02T14:30:15.006Z"
   }
@@ -2215,6 +2677,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-07T09:38:55.696Z",
     "updated_date": "2026-09-07T16:26:16.398Z"
   }
@@ -2232,6 +2696,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-07T09:43:33.545Z",
     "updated_date": "2026-09-07T16:26:16.391Z"
   }
@@ -2249,6 +2715,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-07T09:44:23.769Z",
     "updated_date": "2026-09-07T16:26:16.385Z"
   }
@@ -2266,6 +2734,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-07T14:56:52.984Z",
     "updated_date": "2026-09-07T16:26:16.374Z"
   }
@@ -2283,6 +2753,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-07T15:18:42.839Z",
     "updated_date": "2026-09-07T15:18:42.839Z"
   }
@@ -2300,6 +2772,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-07T15:35:46.157Z",
     "updated_date": "2026-09-07T15:35:46.157Z"
   }
@@ -2317,6 +2791,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-07T15:36:04.692Z",
     "updated_date": "2026-09-07T15:36:04.692Z"
   }
@@ -2334,6 +2810,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-07T15:37:02.256Z",
     "updated_date": "2026-09-07T15:37:02.256Z"
   }
@@ -2351,6 +2829,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-07T15:37:29.720Z",
     "updated_date": "2026-09-07T15:37:29.720Z"
   }
@@ -2368,6 +2848,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-07T15:39:58.132Z",
     "updated_date": "2026-09-07T15:39:58.132Z"
   }
@@ -2385,6 +2867,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-07T15:58:35.323Z",
     "updated_date": "2026-09-07T16:26:16.368Z"
   }
@@ -2402,6 +2886,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-07T16:04:53.836Z",
     "updated_date": "2026-09-07T16:26:16.358Z"
   }
@@ -2419,6 +2905,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-07T16:25:43.008Z",
     "updated_date": "2026-09-07T16:25:43.008Z"
   }
@@ -2436,6 +2924,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-07T16:30:48.745Z",
     "updated_date": "2026-09-07T16:30:48.745Z"
   }
@@ -2453,6 +2943,8 @@
     "applicant_phone": "",
     "applicant_location": "",
     "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-07T16:48:34.848Z",
     "updated_date": "2026-09-07T16:48:34.848Z"
   }
@@ -2470,6 +2962,8 @@
     "applicant_phone": "9842109876",
     "applicant_location": "Tiruchirappalli, Tamil Nadu",
     "cover_note": "First-generation rural college applicant for B.Sc Agriculture",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-09T07:09:33.447Z",
     "updated_date": "2026-09-09T07:09:33.447Z"
   }
@@ -2487,8 +2981,314 @@
     "applicant_phone": "9840012345",
     "applicant_location": "Thanjavur, Tamil Nadu",
     "cover_note": "Farmer holding 2.5 acres dryland requiring crop credit",
+    "source_portal": "",
+    "source_url": "",
     "applied_date": "2026-09-09T07:10:09.187Z",
     "updated_date": "2026-09-09T07:10:09.187Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 42,
+  "fields": {
+    "user": 7,
+    "opportunity_type": "job",
+    "opportunity_id": 10,
+    "opportunity_name": "Office Assistant",
+    "organization": "Corporate Solutions Ltd",
+    "status": "applied",
+    "applicant_phone": "9876543210",
+    "applicant_location": "Madurai, Tamil Nadu",
+    "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
+    "applied_date": "2026-09-17T08:58:03.714Z",
+    "updated_date": "2026-09-17T08:58:03.715Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 43,
+  "fields": {
+    "user": 7,
+    "opportunity_type": "job",
+    "opportunity_id": 9,
+    "opportunity_name": "Call Center Executive",
+    "organization": "Customer Care Solutions",
+    "status": "applied",
+    "applicant_phone": "9876543210",
+    "applicant_location": "Madurai, Tamil Nadu",
+    "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
+    "applied_date": "2026-09-17T08:58:11.051Z",
+    "updated_date": "2026-09-17T08:58:11.051Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 44,
+  "fields": {
+    "user": 7,
+    "opportunity_type": "scholarship",
+    "opportunity_id": 26,
+    "opportunity_name": "National Means-cum-Merit Scholarship Scheme (NMMSS)",
+    "organization": "Department of School Education & Literacy, Ministry of Education, GoI",
+    "status": "applied",
+    "applicant_phone": "9876543210",
+    "applicant_location": "Madurai, Tamil Nadu",
+    "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
+    "applied_date": "2026-09-17T08:58:52.205Z",
+    "updated_date": "2026-09-17T08:58:52.205Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 45,
+  "fields": {
+    "user": 7,
+    "opportunity_type": "scheme",
+    "opportunity_id": 33,
+    "opportunity_name": "Pradhan Mantri Matsya Sampada Yojana (PMMSY)",
+    "organization": "Department of Fisheries, Ministry of Fisheries, Animal Husbandry & Dairying",
+    "status": "applied",
+    "applicant_phone": "9876543210",
+    "applicant_location": "Madurai, Tamil Nadu",
+    "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
+    "applied_date": "2026-09-17T08:59:11.266Z",
+    "updated_date": "2026-09-17T08:59:11.266Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 46,
+  "fields": {
+    "user": 7,
+    "opportunity_type": "skill",
+    "opportunity_id": 8,
+    "opportunity_name": "Food Processing",
+    "organization": "Ministry of Food Processing",
+    "status": "applied",
+    "applicant_phone": "9876543210",
+    "applicant_location": "Madurai, Tamil Nadu",
+    "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
+    "applied_date": "2026-09-17T08:59:34.884Z",
+    "updated_date": "2026-09-17T08:59:34.884Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 47,
+  "fields": {
+    "user": 7,
+    "opportunity_type": "business",
+    "opportunity_id": 8,
+    "opportunity_name": "Online Tutoring and Education",
+    "organization": "Micro-Enterprise Track",
+    "status": "applied",
+    "applicant_phone": "9876543210",
+    "applicant_location": "Madurai, Tamil Nadu",
+    "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
+    "applied_date": "2026-09-17T08:59:48.948Z",
+    "updated_date": "2026-09-17T08:59:48.948Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 48,
+  "fields": {
+    "user": 7,
+    "opportunity_type": "job",
+    "opportunity_id": 1,
+    "opportunity_name": "Data Entry Operator",
+    "organization": "ABC Tech Solutions",
+    "status": "applied",
+    "applicant_phone": "9876543210",
+    "applicant_location": "Madurai, Tamil Nadu",
+    "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
+    "applied_date": "2026-09-17T09:00:03.654Z",
+    "updated_date": "2026-09-17T09:00:03.654Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 49,
+  "fields": {
+    "user": 7,
+    "opportunity_type": "scheme",
+    "opportunity_id": 23,
+    "opportunity_name": "PM Surya Ghar: Muft Bijli Yojana",
+    "organization": "Ministry of New and Renewable Energy (MNRE)",
+    "status": "applied",
+    "applicant_phone": "9876543210",
+    "applicant_location": "Madurai, Tamil Nadu",
+    "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
+    "applied_date": "2026-09-17T09:00:30.168Z",
+    "updated_date": "2026-09-17T09:00:30.168Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 50,
+  "fields": {
+    "user": 7,
+    "opportunity_type": "job",
+    "opportunity_id": 14,
+    "opportunity_name": "Rural Logistics & Delivery Executive",
+    "organization": "India Post Payments & Gramin Logistics",
+    "status": "applied",
+    "applicant_phone": "9876543210",
+    "applicant_location": "Salem, Tamil Nadu",
+    "cover_note": "",
+    "source_portal": "",
+    "source_url": "",
+    "applied_date": "2026-09-17T09:50:17.169Z",
+    "updated_date": "2026-09-17T09:50:17.169Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 51,
+  "fields": {
+    "user": 7,
+    "opportunity_type": "job",
+    "opportunity_id": 14,
+    "opportunity_name": "Rural Logistics & Delivery Executive",
+    "organization": "India Post Payments & Gramin Logistics",
+    "status": "applied",
+    "applicant_phone": "9876543210",
+    "applicant_location": "Salem, Tamil Nadu",
+    "cover_note": "Interested in this rural opportunity.",
+    "source_portal": "",
+    "source_url": "",
+    "applied_date": "2026-09-17T10:02:59.583Z",
+    "updated_date": "2026-09-17T10:02:59.583Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 52,
+  "fields": {
+    "user": 7,
+    "opportunity_type": "scholarship",
+    "opportunity_id": 29,
+    "opportunity_name": "Post-Matric Scholarship Scheme for SC & ST Students",
+    "organization": "Ministry of Social Justice & Empowerment & Ministry of Tribal Affairs, GoI",
+    "status": "applied",
+    "applicant_phone": "9876543210",
+    "applicant_location": "Salem, Tamil Nadu",
+    "cover_note": "Interested in this rural opportunity.",
+    "source_portal": "",
+    "source_url": "",
+    "applied_date": "2026-09-17T10:03:05.743Z",
+    "updated_date": "2026-09-17T10:03:05.743Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 53,
+  "fields": {
+    "user": 7,
+    "opportunity_type": "job",
+    "opportunity_id": 14,
+    "opportunity_name": "Rural Logistics & Delivery Executive",
+    "organization": "India Post Payments & Gramin Logistics",
+    "status": "applied",
+    "applicant_phone": "9876543210",
+    "applicant_location": "Salem, Tamil Nadu",
+    "cover_note": "Interested in this rural opportunity.",
+    "source_portal": "",
+    "source_url": "",
+    "applied_date": "2026-09-17T10:04:35.285Z",
+    "updated_date": "2026-09-17T10:04:35.285Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 54,
+  "fields": {
+    "user": 7,
+    "opportunity_type": "scholarship",
+    "opportunity_id": 29,
+    "opportunity_name": "Post-Matric Scholarship Scheme for SC & ST Students",
+    "organization": "Ministry of Social Justice & Empowerment & Ministry of Tribal Affairs, GoI",
+    "status": "applied",
+    "applicant_phone": "9876543210",
+    "applicant_location": "Salem, Tamil Nadu",
+    "cover_note": "Interested in this rural opportunity.",
+    "source_portal": "",
+    "source_url": "",
+    "applied_date": "2026-09-17T10:05:00.403Z",
+    "updated_date": "2026-09-17T10:05:00.403Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 55,
+  "fields": {
+    "user": 7,
+    "opportunity_type": "scheme",
+    "opportunity_id": 34,
+    "opportunity_name": "Kisan Credit Card (KCC) Scheme",
+    "organization": "Ministry of Agriculture & Farmers Welfare / RBI / NABARD",
+    "status": "applied",
+    "applicant_phone": "9876543210",
+    "applicant_location": "Salem, Tamil Nadu",
+    "cover_note": "Interested in this rural opportunity.",
+    "source_portal": "",
+    "source_url": "",
+    "applied_date": "2026-09-17T10:05:05.677Z",
+    "updated_date": "2026-09-17T10:05:05.677Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 56,
+  "fields": {
+    "user": 7,
+    "opportunity_type": "skill",
+    "opportunity_id": 12,
+    "opportunity_name": "Digital Saksharta for Rural Women Entrepreneurs",
+    "organization": "National Digital Literacy Mission",
+    "status": "applied",
+    "applicant_phone": "9876543210",
+    "applicant_location": "Salem, Tamil Nadu",
+    "cover_note": "Interested in this rural opportunity.",
+    "source_portal": "",
+    "source_url": "",
+    "applied_date": "2026-09-17T10:05:11.560Z",
+    "updated_date": "2026-09-17T10:05:11.560Z"
+  }
+},
+{
+  "model": "applications.application",
+  "pk": 57,
+  "fields": {
+    "user": 7,
+    "opportunity_type": "business",
+    "opportunity_id": 11,
+    "opportunity_name": "Cold-Pressed Groundnut & Sesame Oil Expeller",
+    "organization": "Micro-Enterprise Track",
+    "status": "applied",
+    "applicant_phone": "9876543210",
+    "applicant_location": "Salem, Tamil Nadu",
+    "cover_note": "Interested in this rural opportunity.",
+    "source_portal": "",
+    "source_url": "",
+    "applied_date": "2026-09-17T10:05:16.972Z",
+    "updated_date": "2026-09-17T10:05:16.972Z"
   }
 },
 {

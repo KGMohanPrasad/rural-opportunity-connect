@@ -28,6 +28,8 @@ class Application(models.Model):
     applicant_phone = models.CharField(max_length=25, blank=True, default='')
     applicant_location = models.CharField(max_length=100, blank=True, default='')
     cover_note = models.TextField(blank=True, default='')
+    source_portal = models.CharField(max_length=120, blank=True, default='')
+    source_url = models.URLField(max_length=500, blank=True, default='')
     applied_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
@@ -36,6 +38,43 @@ class Application(models.Model):
 
     def __str__(self):
         return f"{self.user.user.username} - {self.opportunity_name}"
+
+    def get_opportunity(self):
+        try:
+            if self.opportunity_type == 'job':
+                from opportunities.models import Job
+                return Job.objects.filter(id=self.opportunity_id).first()
+            elif self.opportunity_type == 'scholarship':
+                from scholarships.models import Scholarship
+                return Scholarship.objects.filter(id=self.opportunity_id).first()
+            elif self.opportunity_type == 'scheme':
+                from government_schemes.models import GovernmentScheme
+                return GovernmentScheme.objects.filter(id=self.opportunity_id).first()
+            elif self.opportunity_type == 'skill':
+                from skills.models import SkillProgram
+                return SkillProgram.objects.filter(id=self.opportunity_id).first()
+            elif self.opportunity_type == 'business':
+                from business.models import BusinessOpportunity
+                return BusinessOpportunity.objects.filter(id=self.opportunity_id).first()
+        except Exception:
+            return None
+        return None
+
+    def get_partner_url(self):
+        if self.source_url:
+            return self.source_url
+        opp = self.get_opportunity()
+        if opp:
+            return getattr(opp, 'source_url', '') or getattr(opp, 'official_url', '') or getattr(opp, 'apply_url', '')
+        return ''
+
+    def get_partner_name(self):
+        if self.source_portal:
+            return self.source_portal
+        opp = self.get_opportunity()
+        if opp:
+            return getattr(opp, 'source_portal', '') or getattr(opp, 'department', '') or getattr(opp, 'provider', '') or self.organization
+        return self.organization or 'Official Partner'
 
 
 class DocumentChecklist(models.Model):

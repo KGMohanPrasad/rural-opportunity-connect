@@ -238,23 +238,11 @@ def apply_opportunity(request):
     if not opp_name:
         opp_name = f"Opportunity #{opp_id}"
 
-    # Flow 2 Enforcement: External opportunities require applying on the official portal!
-    if is_external:
-        return JsonResponse({
-            'status': 'external_portal',
-            'is_external': True,
-            'source_portal': source_portal or 'Official Portal',
-            'source_url': source_url or '#',
-            'message': f'Application for "{opp_name}" is handled directly by the official {source_portal or "external"} portal.',
-            'opportunity_name': opp_name
-        })
-
     # Application details resolution
     applicant_name = (request.POST.get('applicant_name') or request.POST.get('guest_name') or '').strip()
     applicant_phone = (request.POST.get('applicant_phone') or request.POST.get('phone') or '').strip()
     applicant_location = (request.POST.get('applicant_location') or request.POST.get('location') or '').strip()
     cover_note = (request.POST.get('cover_note') or '').strip()
-
 
     if request.user.is_authenticated:
         profile, _ = UserProfile.objects.get_or_create(user=request.user)
@@ -302,6 +290,9 @@ def apply_opportunity(request):
 
     total_active = Application.objects.filter(user=profile).count()
 
+    has_partner_redirect = bool(source_url and source_url != '#' and source_url.startswith('http'))
+    partner_portal_name = source_portal or org or 'Official Portal'
+
     if existing_app:
         if is_ajax:
             return JsonResponse({
@@ -309,13 +300,17 @@ def apply_opportunity(request):
                 'already_applied': True,
                 'message': f'You have already applied for "{existing_app.opportunity_name}".',
                 'application_id': getattr(existing_app, 'id', opp_id),
+                'reference_id': f"ROC-{getattr(existing_app, 'id', opp_id):05d}",
                 'opportunity_name': existing_app.opportunity_name,
+                'redirect_to_partner': has_partner_redirect,
+                'partner_url': source_url if has_partner_redirect else '',
+                'partner_portal': partner_portal_name,
                 'active_applications_count': total_active
             })
         messages.info(request, f'You have already applied for "{existing_app.opportunity_name}".')
         return redirect('applications' if request.user.is_authenticated else 'jobs_list')
 
-    # Create verified application in database
+    # Create verified application in database with partner information
     app = Application.objects.create(
         user=profile,
         opportunity_type=opp_type,
@@ -325,7 +320,9 @@ def apply_opportunity(request):
         status='applied',
         applicant_phone=applicant_phone,
         applicant_location=applicant_location,
-        cover_note=cover_note
+        cover_note=cover_note,
+        source_portal=partner_portal_name,
+        source_url=source_url if has_partner_redirect else ''
     )
 
     # Track in guest session
@@ -342,16 +339,19 @@ def apply_opportunity(request):
         return JsonResponse({
             'status': 'success',
             'already_applied': False,
-            'message': f'Application for "{opp_name}" submitted successfully! 🎉',
+            'message': f'Application for "{opp_name}" recorded live in Tracker! Proceeding to {partner_portal_name}...',
             'application_id': app.id,
             'reference_id': f'ROC-{app.id:05d}',
             'opportunity_name': opp_name,
-            'is_external': is_external,
-            'source_portal': source_portal,
-            'source_url': source_url,
+            'is_external': is_external or has_partner_redirect,
+            'redirect_to_partner': has_partner_redirect,
+            'partner_portal': partner_portal_name,
+            'partner_url': source_url if has_partner_redirect else '',
+            'tracker_url': '/applications/',
             'active_applications_count': updated_active
         })
 
-
     messages.success(request, f'Application for "{opp_name}" submitted successfully! 🎉')
+    if has_partner_redirect:
+        return redirect(source_url)
     return redirect('applications' if request.user.is_authenticated else 'jobs_list')

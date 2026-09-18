@@ -17,12 +17,20 @@ class ExternalIntegrationsService:
 
     CONNECTED_PORTALS = [
         {
-            'name': 'Buddy4Study',
-            'type': 'Scholarships & Education CSR',
-            'website': 'https://www.buddy4study.com/',
-            'icon': '🎓',
-            'badge': 'Verified Partner',
-            'description': 'India’s largest scholarship network connecting students with corporate CSR, NGO, and merit funding.'
+            'name': 'myScheme.gov.in',
+            'type': 'Welfare & DBT Subsidies',
+            'website': 'https://www.myscheme.gov.in/',
+            'icon': '🌾',
+            'badge': 'National Platform',
+            'description': 'Unified discovery portal across 1,000+ central and state government citizen welfare schemes.'
+        },
+        {
+            'name': 'PM-KISAN Portal',
+            'type': 'Direct Farmer Income Transfer',
+            'website': 'https://pmkisan.gov.in/',
+            'icon': '🌱',
+            'badge': 'Ministry of Agriculture',
+            'description': 'Government of India central DBT transfer delivering direct financial benefit to rural farmers.'
         },
         {
             'name': 'National Scholarship Portal (NSP)',
@@ -33,12 +41,12 @@ class ExternalIntegrationsService:
             'description': 'Government of India central portal for post-matric, higher education, and affirmative grants.'
         },
         {
-            'name': 'myScheme.gov.in',
-            'type': 'Welfare & DBT Subsidies',
-            'website': 'https://www.myscheme.gov.in/',
-            'icon': '🌾',
-            'badge': 'National Platform',
-            'description': 'Unified discovery portal across 1,000+ central and state government citizen welfare schemes.'
+            'name': 'Buddy4Study',
+            'type': 'Scholarships & Education CSR',
+            'website': 'https://www.buddy4study.com/',
+            'icon': '🎓',
+            'badge': 'Verified Partner',
+            'description': 'India’s largest scholarship network connecting students with corporate CSR, NGO, and merit funding.'
         },
         {
             'name': 'National Career Service (NCS)',
@@ -65,6 +73,46 @@ class ExternalIntegrationsService:
             'description': 'Financial subsidies and launchpad for rural village industries and agro-processing startups.'
         },
         {
+            'name': 'Tamil Nadu e-Sevai / TNeGA',
+            'type': 'State Single-Window & Certificates',
+            'website': 'https://www.tnesevai.tn.gov.in/',
+            'icon': '🏛️',
+            'badge': 'Tamil Nadu Govt',
+            'description': 'Unified online delivery of state certificates, welfare schemes, and citizen livelihood services.'
+        },
+        {
+            'name': 'Udyam MSME Registration Portal',
+            'type': 'Micro & Small Enterprise Gateway',
+            'website': 'https://udyamregistration.gov.in/',
+            'icon': '🏭',
+            'badge': 'Ministry of MSME',
+            'description': 'Official zero-cost portal for MSME registration, priority lending, and state capital subsidies.'
+        },
+        {
+            'name': 'e-NAM (National Agriculture Market)',
+            'type': 'Agri-Commodity Trading & Fair Price',
+            'website': 'https://www.enam.gov.in/',
+            'icon': '🚜',
+            'badge': 'Central Agri Market',
+            'description': 'Pan-India electronic trading network uniting APMC mandis for competitive farmer price realization.'
+        },
+        {
+            'name': 'NABARD Rural Development Portal',
+            'type': 'Rural Banking & SHG Credit',
+            'website': 'https://www.nabard.org/',
+            'icon': '🏦',
+            'badge': 'Apex Rural Bank',
+            'description': 'National Bank for Agriculture and Rural Development funding watershed, solar pumps, and SHG credit.'
+        },
+        {
+            'name': 'Pradhan Mantri MUDRA Yojana (PMMY)',
+            'type': 'Micro-Credit & Collateral-Free Loans',
+            'website': 'https://www.mudra.org.in/',
+            'icon': '🪙',
+            'badge': 'PMMY / DFS',
+            'description': 'Institutional finance up to ₹10 Lakhs (Shishu, Kishore, Tarun) for non-farm rural micro-enterprises.'
+        },
+        {
             'name': 'DigiLocker',
             'type': 'Digital Document Verification',
             'website': 'https://www.digilocker.gov.in/',
@@ -87,12 +135,24 @@ class ExternalIntegrationsService:
                 count = Scholarship.objects.filter(source_portal__icontains='National Scholarship').count()
             elif 'myScheme' in name:
                 count = GovernmentScheme.objects.filter(source_portal__icontains='myScheme').count()
+            elif 'PM-KISAN' in name:
+                count = GovernmentScheme.objects.filter(source_portal__icontains='PM-KISAN').count()
             elif 'Career Service' in name or 'NCS' in name:
                 count = Job.objects.filter(source_portal__icontains='National Career Service').count()
             elif 'Skill India' in name:
                 count = SkillProgram.objects.filter(source_portal__icontains='Skill India').count()
             elif 'Startup India' in name or 'PMEGP' in name:
                 count = BusinessOpportunity.objects.filter(source_portal__icontains='PMEGP').count()
+            elif 'e-Sevai' in name or 'TNeGA' in name:
+                count = GovernmentScheme.objects.filter(source_portal__icontains='TNeGA').count()
+            elif 'Udyam' in name or 'MSME' in name:
+                count = BusinessOpportunity.objects.filter(source_portal__icontains='Udyam').count()
+            elif 'e-NAM' in name:
+                count = GovernmentScheme.objects.filter(source_portal__icontains='e-NAM').count()
+            elif 'NABARD' in name:
+                count = GovernmentScheme.objects.filter(source_portal__icontains='NABARD').count()
+            elif 'MUDRA' in name:
+                count = BusinessOpportunity.objects.filter(source_portal__icontains='MUDRA').count()
             elif 'DigiLocker' in name:
                 count = 8
 
@@ -568,21 +628,207 @@ class ExternalIntegrationsService:
         return count
 
     @classmethod
+    def sync_pmkisan_schemes(cls):
+        """Fetch and populate verified agricultural schemes from PM-KISAN Portal."""
+        items = [
+            {
+                'name': 'PM-KISAN Samman Nidhi Direct Benefit Transfer',
+                'department': 'Ministry of Agriculture & Farmers Welfare, GoI',
+                'category': 'agriculture',
+                'benefits': '₹6,000 per year transferred directly in 3 equal installments of ₹2,000 to farmer bank accounts.',
+                'eligibility': 'All landholding farmer families with cultivable land in rural and semi-urban revenue records.',
+                'application_process': 'Apply online via pmkisan.gov.in using Aadhaar, Land revenue record (Patta/Chitta), and active Bank Account.',
+                'target_beneficiaries': 'Small, marginal, and tenant farmers across rural India',
+                'source_portal': 'PM-KISAN Portal',
+                'source_url': 'https://pmkisan.gov.in/',
+                'is_external': True
+            },
+            {
+                'name': 'Kisan Credit Card (KCC) Subsidized Agri-Loan',
+                'department': 'Ministry of Agriculture / RBI / NABARD',
+                'category': 'agriculture',
+                'benefits': 'Institutional crop credit up to ₹3,00,000 at concessional 4% interest with 3% prompt repayment incentive.',
+                'eligibility': 'All rural farmers, dairy farmers, fishers, and self-help group members.',
+                'application_process': '1-page simplified KCC form linked to PM-KISAN account submitted via official portal or rural bank branch.',
+                'target_beneficiaries': 'Cultivators, sharecroppers, animal husbandry & fisheries farmers',
+                'source_portal': 'PM-KISAN Portal',
+                'source_url': 'https://pmkisan.gov.in/',
+                'is_external': True
+            }
+        ]
+        count = 0
+        for data in items:
+            name = data.pop('name')
+            GovernmentScheme.objects.update_or_create(name=name, defaults=data)
+            count += 1
+        return count
+
+    @classmethod
+    def sync_tnesevai_schemes(cls):
+        """Fetch and populate Tamil Nadu state welfare and certificate schemes from TNeGA / e-Sevai."""
+        items = [
+            {
+                'name': 'Chief Minister Uzhavar Pathukappu Thittam (Farmers Security)',
+                'department': 'Department of Revenue & Disaster Management, Govt of Tamil Nadu',
+                'category': 'social_welfare',
+                'benefits': 'Comprehensive social security, education scholarship for farmers children, marriage assistance, and pension.',
+                'eligibility': 'Registered agricultural labourers, tenant farmers, and small farmers holding membership card in Tamil Nadu.',
+                'application_process': 'Apply through e-Sevai portal using Aadhaar, Uzhavar Card, Ration Card, and Bank Passbook.',
+                'target_beneficiaries': 'Rural agricultural workers and marginal farm families in Tamil Nadu',
+                'source_portal': 'Tamil Nadu e-Sevai / TNeGA',
+                'source_url': 'https://www.tnesevai.tn.gov.in/',
+                'is_external': True
+            },
+            {
+                'name': 'Pudhumai Penn Scheme (Moovalur Ramamirtham Ammaiyar)',
+                'department': 'Social Welfare and Women Empowerment Department, TN',
+                'category': 'education',
+                'benefits': 'Monthly financial aid of ₹1,000 deposited directly into girl students bank accounts until degree/diploma completion.',
+                'eligibility': 'Girl students who studied from 6th to 12th standard in Tamil Nadu Government schools and enrolled in higher education.',
+                'application_process': 'Online application verified by college nodal officer and processed via State DBT portal.',
+                'target_beneficiaries': 'Rural girl students pursuing Undergraduate, Diploma, or ITI courses',
+                'source_portal': 'Tamil Nadu e-Sevai / TNeGA',
+                'source_url': 'https://www.tnesevai.tn.gov.in/',
+                'is_external': True
+            }
+        ]
+        count = 0
+        for data in items:
+            name = data.pop('name')
+            GovernmentScheme.objects.update_or_create(name=name, defaults=data)
+            count += 1
+        return count
+
+    @classmethod
+    def sync_udyam_msme_business(cls):
+        """Fetch and populate verified MSME registration & priority credit blueprints."""
+        items = [
+            {
+                'name': 'Zero-Cost Udyam MSME Registration & Priority Credit Linkage',
+                'category': 'service',
+                'description': 'Official lifetime registration for rural micro-enterprises unlocking collateral-free bank loans, electricity rebates, and tender preference.',
+                'investment_level': 'low',
+                'opportunity_level': 'easy',
+                'required_skills': 'Basic business accounting, mobile OTP verification',
+                'expected_income': 'Opens up priority MSME loans up to ₹25 Lakhs',
+                'market_demand': 'Mandatory legal requirement for all Indian enterprises',
+                'resources': 'Aadhaar, PAN card, business bank account, active mobile number',
+                'source_portal': 'Udyam MSME Registration Portal',
+                'source_url': 'https://udyamregistration.gov.in/',
+                'is_external': True
+            }
+        ]
+        count = 0
+        for data in items:
+            name = data.pop('name')
+            BusinessOpportunity.objects.update_or_create(name=name, defaults=data)
+            count += 1
+        return count
+
+    @classmethod
+    def sync_enam_schemes(cls):
+        """Fetch and populate e-NAM agricultural trading schemes."""
+        items = [
+            {
+                'name': 'e-NAM Electronic National Agriculture Market Linkage',
+                'department': 'Small Farmers Agribusiness Consortium (SFAC) / Ministry of Agriculture',
+                'category': 'agriculture',
+                'benefits': 'Online bidding from traders across India, transparent electronic payment directly to bank, and assaying quality grading.',
+                'eligibility': 'All farmers selling grains, pulses, oilseeds, fruits, and vegetables in linked APMC mandis.',
+                'application_process': 'Register online on enam.gov.in or at nearest e-NAM mandi helpdesk with Land record and Bank Passbook.',
+                'target_beneficiaries': 'Smallholders and Farmer Producer Organizations (FPOs)',
+                'source_portal': 'e-NAM (National Agriculture Market)',
+                'source_url': 'https://www.enam.gov.in/',
+                'is_external': True
+            }
+        ]
+        count = 0
+        for data in items:
+            name = data.pop('name')
+            GovernmentScheme.objects.update_or_create(name=name, defaults=data)
+            count += 1
+        return count
+
+    @classmethod
+    def sync_nabard_schemes(cls):
+        """Fetch and populate NABARD rural banking and SHG schemes."""
+        items = [
+            {
+                'name': 'NABARD Self-Help Group (SHG) Bank Linkage Credit Scheme',
+                'department': 'National Bank for Agriculture and Rural Development (NABARD)',
+                'category': 'women_empowerment',
+                'benefits': 'Collateral-free group term loan and cash credit up to ₹10 Lakhs at subsidized interest for livelihood activities.',
+                'eligibility': 'Women Self-Help Groups (SHGs) functioning regularly for at least 6 months with savings and internal lending records.',
+                'application_process': 'Apply through nearest Rural Bank / Cooperative Bank branch with SHG resolution and grading passbook.',
+                'target_beneficiaries': 'Rural women entrepreneurs, SHG federations, and joint liability groups',
+                'source_portal': 'NABARD Rural Development Portal',
+                'source_url': 'https://www.nabard.org/',
+                'is_external': True
+            }
+        ]
+        count = 0
+        for data in items:
+            name = data.pop('name')
+            GovernmentScheme.objects.update_or_create(name=name, defaults=data)
+            count += 1
+        return count
+
+    @classmethod
+    def sync_mudra_business(cls):
+        """Fetch and populate Pradhan Mantri MUDRA Yojana loan blueprints."""
+        items = [
+            {
+                'name': 'Pradhan Mantri MUDRA Yojana (Shishu, Kishore, Tarun Loans)',
+                'category': 'manufacturing',
+                'description': 'Institutional micro-credit up to ₹10 Lakhs without collateral for non-farm income generating small manufacturing and retail units.',
+                'investment_level': 'low',
+                'opportunity_level': 'easy',
+                'required_skills': 'Vocational trade knowledge, enterprise business plan',
+                'expected_income': '₹30,000 – ₹75,000 / month net profit',
+                'market_demand': 'Very High across rural tailoring, food stalls, repair shops, and agro-service',
+                'resources': 'Project proposal, KYC documents, quotation of machinery, Mudra application',
+                'source_portal': 'Pradhan Mantri MUDRA Yojana (PMMY)',
+                'source_url': 'https://www.mudra.org.in/',
+                'is_external': True
+            }
+        ]
+        count = 0
+        for data in items:
+            name = data.pop('name')
+            BusinessOpportunity.objects.update_or_create(name=name, defaults=data)
+            count += 1
+        return count
+
+    @classmethod
     def sync_all(cls):
-        """Syncs all external data sources and returns a summary dict."""
+        """Syncs all external data sources across all official partners and returns a summary dict."""
         b4s = cls.sync_buddy4study_scholarships()
         nsp = cls.sync_nsp_scholarships()
         myscheme = cls.sync_myscheme_schemes()
+        pmkisan = cls.sync_pmkisan_schemes()
+        tnesevai = cls.sync_tnesevai_schemes()
         ncs = cls.sync_ncs_jobs()
         skills = cls.sync_skillindia_courses()
         business = cls.sync_startupindia_business()
+        udyam = cls.sync_udyam_msme_business()
+        enam = cls.sync_enam_schemes()
+        nabard = cls.sync_nabard_schemes()
+        mudra = cls.sync_mudra_business()
+
+        total = b4s + nsp + myscheme + pmkisan + tnesevai + ncs + skills + business + udyam + enam + nabard + mudra
 
         return {
             'buddy4study': b4s,
             'nsp': nsp,
             'myscheme': myscheme,
+            'pm_kisan': pmkisan,
+            'tnesevai': tnesevai,
             'ncs': ncs,
             'skill_india': skills,
             'startup_india': business,
-            'total_synced': b4s + nsp + myscheme + ncs + skills + business
+            'udyam_msme': udyam,
+            'enam': enam,
+            'nabard': nabard,
+            'mudra': mudra,
+            'total_synced': total
         }

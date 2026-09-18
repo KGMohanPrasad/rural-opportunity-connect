@@ -109,6 +109,11 @@
                                 {{ app.get_opportunity_type_display }}
                             </span>
                             <span class="text-xs text-slate-400 font-mono">Ref: ROC-{{ app.id|stringformat:"05d" }}</span>
+                            {% if app.get_partner_name %}
+                            <span class="roc-badge roc-badge-cyan text-[10px] font-bold">
+                                <i class="fas fa-shield-halved text-[9px] mr-1"></i> Partner: {{ app.get_partner_name }}
+                            </span>
+                            {% endif %}
                         </div>
                         <h2 class="text-lg sm:text-xl font-bold text-slate-900">{{ app.opportunity_name }}</h2>
                         <p class="text-xs text-slate-500 font-medium">
@@ -181,24 +186,34 @@
                     </div>
                 </div>
 
-                <!-- Footer Status Note -->
+                <!-- Footer Status Note & Actions -->
                 <div class="pt-3 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
                     <p class="flex items-center gap-1.5">
                         <i class="fas fa-info-circle text-brand-700"></i>
-                        Our coordination desk notifies registered phone and email when official nodal officers take action.
+                        Our coordination desk actively monitors verified partner updates for your registered phone & email.
                     </p>
-                    {% if app.opportunity_type == 'job' %}
-                        <a href="{% url 'job_detail' app.opportunity_id %}" class="text-brand-800 hover:text-brand-950 font-bold shrink-0">View Job Details →</a>
-                    {% elif app.opportunity_type == 'scholarship' %}
-                        <a href="{% url 'scholarship_detail' app.opportunity_id %}" class="text-brand-800 hover:text-brand-950 font-bold shrink-0">View Scholarship Details →</a>
-                    {% elif app.opportunity_type == 'scheme' %}
-                        <a href="{% url 'scheme_detail' app.opportunity_id %}" class="text-brand-800 hover:text-brand-950 font-bold shrink-0">View Scheme Details →</a>
-                    {% elif app.opportunity_type == 'skill' %}
-                        <a href="{% url 'skill_detail' app.opportunity_id %}" class="text-brand-800 hover:text-brand-950 font-bold shrink-0">View Skill Details →</a>
-                    {% elif app.opportunity_type == 'business' %}
-                        <a href="{% url 'business_detail' app.opportunity_id %}" class="text-brand-800 hover:text-brand-950 font-bold shrink-0">View Blueprint →</a>
-                    {% endif %}
+                    <div class="flex items-center gap-3 shrink-0 flex-wrap">
+                        {% if app.get_partner_url %}
+                        <a href="{{ app.get_partner_url }}" target="_blank" rel="noopener noreferrer"
+                           class="btn-primary text-xs py-1.5 px-3.5 rounded-xl font-bold inline-flex items-center gap-1.5 shadow-xs bg-gradient-to-r from-blue-600 to-cyan-600 text-white">
+                            <span>Proceed on Partner Portal</span>
+                            <i class="fas fa-arrow-up-right-from-square text-[10px]"></i>
+                        </a>
+                        {% endif %}
+                        {% if app.opportunity_type == 'job' %}
+                            <a href="{% url 'job_detail' app.opportunity_id %}" class="text-brand-800 hover:text-brand-950 font-bold shrink-0">View Details →</a>
+                        {% elif app.opportunity_type == 'scholarship' %}
+                            <a href="{% url 'scholarship_detail' app.opportunity_id %}" class="text-brand-800 hover:text-brand-950 font-bold shrink-0">View Details →</a>
+                        {% elif app.opportunity_type == 'scheme' %}
+                            <a href="{% url 'scheme_detail' app.opportunity_id %}" class="text-brand-800 hover:text-brand-950 font-bold shrink-0">View Details →</a>
+                        {% elif app.opportunity_type == 'skill' %}
+                            <a href="{% url 'skill_detail' app.opportunity_id %}" class="text-brand-800 hover:text-brand-950 font-bold shrink-0">View Details →</a>
+                        {% elif app.opportunity_type == 'business' %}
+                            <a href="{% url 'business_detail' app.opportunity_id %}" class="text-brand-800 hover:text-brand-950 font-bold shrink-0">View Details →</a>
+                        {% endif %}
+                    </div>
                 </div>
+            </div>
             </div>
             {% endfor %}
         {% else %}

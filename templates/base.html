@@ -526,6 +526,22 @@
                 <!-- Dynamically populated via JS -->
             </div>
 
+            <!-- Official Partner Notification Banner -->
+            <div id="qaPartnerBanner" class="hidden my-3 p-3.5 bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-200 rounded-2xl text-xs text-blue-950 flex items-start gap-3 shadow-xs">
+                <div class="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs shrink-0 mt-0.5 shadow-xs">
+                    <i class="fas fa-shield-halved"></i>
+                </div>
+                <div class="flex-1">
+                    <div class="flex items-center gap-1.5 flex-wrap">
+                        <span class="font-bold">Official Partner Workflow:</span>
+                        <span id="qaPartnerBannerName" class="font-black text-cyan-800 bg-white/80 px-2 py-0.5 rounded-lg border border-cyan-200">myScheme.gov.in</span>
+                    </div>
+                    <p class="text-[11px] text-blue-800/90 mt-1 leading-relaxed">
+                        Submitting will record this in your <strong>Live Application Tracker (Ref: ROC-xxxxx)</strong> and immediately open the verified official portal in a new tab to complete your scheme application.
+                    </p>
+                </div>
+            </div>
+
             <!-- FLOW 1: INTERNAL APPLICATION FORM -->
             <form id="quickApplyForm" novalidate onsubmit="submitQuickApplyModal(event)" class="space-y-4 pt-1">
                 {% csrf_token %}
@@ -616,7 +632,7 @@
                         This opportunity is officially hosted and processed on the verified <strong id="qaExternalPortalName" class="font-bold">Official Portal</strong> website.
                     </p>
                     <p class="text-[11px] text-blue-700/80">
-                        Click below to proceed directly to the authentic application page on the portal. No duplicate registration is required.
+                        Click below to proceed directly to the authentic application page on the portal.
                     </p>
                 </div>
 
@@ -643,6 +659,11 @@
                         Your application is active and monitored live in your pipeline.
                     </p>
                 </div>
+                <div id="qaAlreadyAppliedPartnerSection" class="hidden my-3 p-3 bg-blue-50 border border-blue-200 rounded-xl text-center">
+                    <a id="qaAlreadyAppliedPartnerBtn" href="#" target="_blank" rel="noopener noreferrer" class="btn-primary text-xs py-2 px-4 rounded-xl inline-flex items-center gap-1.5 font-bold">
+                        <span>Reopen Official Portal</span> <i class="fas fa-arrow-up-right-from-square text-[10px]"></i>
+                    </a>
+                </div>
                 <div class="pt-3 flex items-center justify-center gap-3">
                     <button type="button" onclick="closeQuickApplyModal()" class="btn-secondary text-xs py-2.5 px-4 rounded-xl cursor-pointer">
                         Close
@@ -659,20 +680,30 @@
                     <i class="fas fa-circle-check"></i>
                 </div>
                 <div>
-                    <h4 class="text-lg font-bold text-slate-900">Application Submitted Successfully ✓</h4>
+                    <h4 class="text-lg font-bold text-slate-900">Application Recorded in Live Tracker! ✓</h4>
                     <p class="text-xs text-slate-600 mt-1">
-                        Your application for <strong id="qaSuccessOppName" class="text-slate-900"></strong> has been recorded in the database.
+                        Your application for <strong id="qaSuccessOppName" class="text-slate-900"></strong> is recorded live in the database.
                     </p>
-                    <div class="mt-2 inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 rounded-lg text-xs font-mono text-slate-700">
-                        <span>Ref:</span>
+                    <div class="mt-2 inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-emerald-50 border border-emerald-200 rounded-xl text-xs font-mono text-emerald-800">
+                        <span>Tracker Ref:</span>
                         <strong id="qaSuccessRef">ROC-00000</strong>
+                        <span class="text-slate-400">•</span>
+                        <span class="font-bold uppercase tracking-wider text-[10px] text-emerald-700">Status: APPLIED</span>
                     </div>
-                    <div id="qaSuccessExternalSection" class="hidden mt-3 p-3 bg-blue-50 border border-blue-200 rounded-xl text-left">
-                        <div class="text-[11px] font-bold text-blue-900 mb-1">Official Portal Linkage:</div>
-                        <div class="text-[11px] text-blue-700 mb-2">You can also proceed to the official partner portal for direct examination / verification.</div>
-                        <a id="qaSuccessExternalUrl" href="#" target="_blank" rel="noopener noreferrer" class="btn-primary text-xs py-2 px-4 rounded-lg inline-flex items-center gap-1.5 font-bold">
-                            <span>Continue to Official Portal</span> <i class="fas fa-arrow-up-right-from-square text-[10px]"></i>
-                        </a>
+
+                    <div id="qaSuccessExternalSection" class="hidden mt-4 p-4 bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-200 rounded-2xl text-left space-y-2.5">
+                        <div class="flex items-center gap-2 text-xs font-bold text-blue-900">
+                            <i class="fas fa-arrow-up-right-from-square text-cyan-600"></i>
+                            <span>Official Partner Portal Opened</span>
+                        </div>
+                        <p class="text-xs text-blue-800/90 leading-relaxed">
+                            We have opened the official <strong id="qaSuccessPartnerName" class="font-extrabold text-blue-950">Partner Portal</strong> in a new tab so you can proceed with the official scheme application form.
+                        </p>
+                        <div class="pt-1 flex items-center gap-2">
+                            <a id="qaSuccessExternalUrl" href="#" target="_blank" rel="noopener noreferrer" class="btn-primary text-xs py-2 px-4 rounded-xl inline-flex items-center gap-1.5 font-bold shadow-xs">
+                                <span>Proceed on Partner Portal</span> <i class="fas fa-external-link-alt text-[10px]"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -681,7 +712,7 @@
                         Close
                     </button>
                     <a href="{% url 'applications' %}" class="btn-primary text-xs py-2.5 px-5 rounded-xl flex items-center gap-1.5 cursor-pointer">
-                        <i class="fas fa-list-check"></i> View Application Tracker
+                        <i class="fas fa-list-check"></i> View in Application Tracker
                     </a>
                 </div>
             </div>
@@ -1304,16 +1335,21 @@
                     }
 
                     // Opportunity Mode Badge (Direct vs Partner Portal)
-                    if (data.is_external) {
+                    const partnerBanner = document.getElementById('qaPartnerBanner');
+                    const partnerBannerName = document.getElementById('qaPartnerBannerName');
+                    if (data.is_external || data.source_portal || data.source_url) {
                         if (modeBadge) {
                             modeBadge.className = 'text-[10px] text-blue-700 font-bold bg-blue-50 px-2 py-0.5 rounded-full border border-blue-200';
-                            modeBadge.innerHTML = `<i class="fas fa-arrow-up-right-from-square"></i> ${data.source_portal || 'Official Portal'} Partner`;
+                            modeBadge.innerHTML = `<i class="fas fa-shield-halved text-cyan-600"></i> ${data.source_portal || 'Official Portal'} Partner`;
                         }
+                        if (partnerBanner) partnerBanner.classList.remove('hidden');
+                        if (partnerBannerName) partnerBannerName.textContent = data.source_portal || 'Official Portal';
                     } else {
                         if (modeBadge) {
                             modeBadge.className = 'text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200';
                             modeBadge.innerHTML = '<i class="fas fa-check-circle"></i> Direct Verification';
                         }
+                        if (partnerBanner) partnerBanner.classList.add('hidden');
                     }
                     if (flowExternal) flowExternal.classList.add('hidden');
                     if (flowAlreadyApplied) flowAlreadyApplied.classList.add('hidden');
@@ -1352,11 +1388,15 @@
             const flowSuccess = document.getElementById('qaFlowSuccess');
             const errorAlert = document.getElementById('qaErrorAlert');
             const submitBtn = document.getElementById('qaSubmitBtn');
+            const partnerBanner = document.getElementById('qaPartnerBanner');
+
             if (form) form.classList.remove('hidden');
             if (flowExternal) flowExternal.classList.add('hidden');
             if (flowAlreadyApplied) flowAlreadyApplied.classList.add('hidden');
             if (flowSuccess) flowSuccess.classList.add('hidden');
             if (errorAlert) errorAlert.classList.add('hidden');
+            if (partnerBanner) partnerBanner.classList.add('hidden');
+
             if (submitBtn) {
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = `<i class="fas fa-paper-plane"></i> Confirm & Submit Application`;
@@ -1429,7 +1469,7 @@
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    <span>Submitting Application...</span>
+                    <span>Recording in Live Tracker...</span>
                 `;
             }
 
@@ -1470,14 +1510,27 @@
                         flowSuccess.classList.remove('hidden');
                         const successOppName = document.getElementById('qaSuccessOppName');
                         const successRef = document.getElementById('qaSuccessRef');
-                        if (successOppName) successOppName.textContent = data.opportunity_name || name;
-                        if (successRef) successRef.textContent = `ROC-${String(data.application_id || 1).padStart(5, '0')}`;
-                        
                         const extSec = document.getElementById('qaSuccessExternalSection');
                         const extUrl = document.getElementById('qaSuccessExternalUrl');
-                        if (data.is_external && data.source_url) {
+                        const extPartnerName = document.getElementById('qaSuccessPartnerName');
+
+                        if (successOppName) successOppName.textContent = data.opportunity_name || name;
+                        if (successRef) successRef.textContent = data.reference_id || `ROC-${String(data.application_id || 1).padStart(5, '0')}`;
+                        
+                        if (data.redirect_to_partner && data.partner_url) {
                             if (extSec) extSec.classList.remove('hidden');
-                            if (extUrl) extUrl.href = data.source_url;
+                            if (extUrl) extUrl.href = data.partner_url;
+                            if (extPartnerName) extPartnerName.textContent = data.partner_portal || 'Official Partner Portal';
+
+                            // Automatically open official partner website in new tab so user can proceed
+                            try {
+                                const opened = window.open(data.partner_url, '_blank');
+                                if (!opened) {
+                                    console.log('Pop-up blocker active; direct link button displayed.');
+                                }
+                            } catch (tabErr) {
+                                console.warn('Could not auto-open partner tab:', tabErr);
+                            }
                         } else {
                             if (extSec) extSec.classList.add('hidden');
                         }
@@ -1515,7 +1568,13 @@
                         window.GlowCursor.particleBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, { r: 16, g: 185, b: 129 }, 24);
                     }
 
-                    showToast(`Application for "${name}" submitted successfully! 🎉`, 'success', 5000, '/applications/', 'View in Tracker →');
+                    showToast(`Application recorded in Live Tracker! Ref: ${data.reference_id || 'ROC-Active'}`, 'success', 5000, '/applications/', 'View in Tracker →');
+
+                    // Automatically guide the user to their Live Application Tracker in 2.8 seconds
+                    setTimeout(() => {
+                        window.location.href = '/applications/';
+                    }, 2800);
+
                 } else if (data.status === 'already_applied') {
                     const form = document.getElementById('quickApplyForm');
                     const flowAlreadyApplied = document.getElementById('qaFlowAlreadyApplied');
@@ -1524,33 +1583,21 @@
                         flowAlreadyApplied.classList.remove('hidden');
                         const msg = document.getElementById('qaAlreadyAppliedMsg');
                         if (msg) msg.textContent = data.message || `You have already applied for "${name}".`;
+                        
+                        const alreadySec = document.getElementById('qaAlreadyAppliedPartnerSection');
+                        const alreadyBtn = document.getElementById('qaAlreadyAppliedPartnerBtn');
+                        if (data.redirect_to_partner && data.partner_url) {
+                            if (alreadySec) alreadySec.classList.remove('hidden');
+                            if (alreadyBtn) alreadyBtn.href = data.partner_url;
+                        } else {
+                            if (alreadySec) alreadySec.classList.add('hidden');
+                        }
                     }
                     if (currentApplyBtn) {
                         markButtonAsApplied(currentApplyBtn);
                     }
                     if (data.active_applications_count !== undefined) {
                         updateActiveApplicationsCounter(data.active_applications_count);
-                    }
-                } else if (data.status === 'external_portal' || data.is_external) {
-                    const form = document.getElementById('quickApplyForm');
-                    const flowExternal = document.getElementById('qaFlowExternal');
-                    if (form) form.classList.add('hidden');
-                    if (flowExternal) {
-                        flowExternal.classList.remove('hidden');
-                        const portalNameEl = document.getElementById('qaExternalPortalName');
-                        const urlBtn = document.getElementById('qaExternalUrlBtn');
-                        if (portalNameEl) portalNameEl.textContent = data.source_portal || 'Official Portal';
-                        if (urlBtn) {
-                            if (data.source_url && data.source_url !== '#' && data.source_url.startsWith('http')) {
-                                urlBtn.href = data.source_url;
-                                urlBtn.classList.remove('opacity-50', 'pointer-events-none');
-                                urlBtn.innerHTML = `<span>Continue to Official Application</span> <i class="fas fa-arrow-up-right-from-square text-[11px]"></i>`;
-                            } else {
-                                urlBtn.href = '#';
-                                urlBtn.classList.add('opacity-50', 'pointer-events-none');
-                                urlBtn.innerHTML = `<span>Official Link Updating Soon</span>`;
-                            }
-                        }
                     }
                 } else {
                     // Show real error clearly
